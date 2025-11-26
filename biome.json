@@ -1,58 +1,51 @@
 {
-    "$schema": "https://biomejs.dev/schemas/1.5.0/schema.json",
-    "organizeImports": {
-        "enabled": true
-    },
-    "linter": {
-        "enabled": true,
-        "rules": {
-            "recommended": true
-        }
-    },
-    "formatter": {
-        "enabled": true,
-        "formatWithErrors": false,
-        "indentStyle": "space",
-        "indentWidth": 2,
-        "lineEnding": "lf",
-        "lineWidth": 100,
-        "attributePosition": "auto"
-    },
-    "javascript": {
-        "formatter": {
-            "quoteStyle": "single",
-            "jsxQuoteStyle": "double",
-            "quoteProperties": "asNeeded",
-            "trailingCommas": "es5",
-            "semicolons": "asNeeded",
-            "arrowParentheses": "always",
-            "bracketSpacing": true,
-            "bracketSameLine": false,
-            "attributePosition": "auto"
-        },
-        "globals": [
-            "chrome",
-            "marked",
-            "console",
-            "document",
-            "window",
-            "fetch",
-            "setInterval",
-            "clearInterval",
-            "setTimeout",
-            "alert",
-            "confirm"
-        ]
-    },
-    "files": {
-        "include": [
-            "extension/**/*.js",
-            "extension/**/*.html",
-            "docs/**/*.md"
-        ],
-        "ignore": [
-            "node_modules/**",
-            "extension/lib/**"
-        ]
+  "$schema": "https://biomejs.dev/schemas/1.5.0/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
     }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100,
+    "attributePosition": "auto"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "es5",
+      "semicolons": "asNeeded",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "bracketSameLine": false,
+      "attributePosition": "auto"
+    },
+    "globals": [
+      "chrome",
+      "marked",
+      "console",
+      "document",
+      "window",
+      "fetch",
+      "setInterval",
+      "clearInterval",
+      "setTimeout",
+      "alert",
+      "confirm"
+    ]
+  },
+  "files": {
+    "include": ["extension/**/*.js", "extension/**/*.html", "docs/**/*.md"],
+    "ignore": ["node_modules/**", "extension/lib/**"]
+  }
 }
