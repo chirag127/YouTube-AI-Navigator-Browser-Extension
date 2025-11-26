@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube AI Master - History</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #cc0000;
+      }
+      .search-bar {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+      .video-list {
+        list-style: none;
+        padding: 0;
+      }
+      .video-item {
+        border-bottom: 1px solid #eee;
+        padding: 15px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .video-item:last-child {
+        border-bottom: none;
+      }
+      .video-info {
+        flex-grow: 1;
+      }
+      .video-title {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        color: #0066cc;
+      }
+      .video-title:hover {
+        text-decoration: underline;
+      }
+      .video-meta {
+        font-size: 14px;
+        color: #666;
+      }
+      .actions {
+        margin-left: 20px;
+      }
+      .btn {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-left: 5px;
+      }
+      .btn-delete {
+        background-color: #ff4d4d;
+        color: white;
+      }
+      .btn-delete:hover {
+        background-color: #cc0000;
+      }
+      .no-results {
+        text-align: center;
+        color: #888;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Transcript History</h1>
+      <input
+        type="text"
+        id="search-input"
+        class="search-bar"
+        placeholder="Search saved videos..."
+      />
+      <ul id="video-list" class="video-list"></ul>
+      <div id="no-results" class="no-results" style="display: none">
+        No videos found.
+      </div>
+    </div>
+    <script type="module" src="history.js"></script>
+  </body>
+</html>

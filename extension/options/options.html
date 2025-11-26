@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <title>YouTube AI Master Options</title>
+    <style>
+      body {
+        padding: 20px;
+        font-family: sans-serif;
+      }
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+      }
+      button {
+        padding: 8px 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Options</h1>
+      <label for="apiKey">Gemini API Key:</label>
+      <input type="password" id="apiKey" placeholder="Enter your API Key" />
+
+      <label for="summaryLength">Summary Length:</label>
+      <select id="summaryLength">
+        <option value="Short">Short (Bullet points, ~100 words)</option>
+        <option value="Medium" selected>Medium (Standard paragraphs, ~300 words)</option>
+        <option value="Detailed">Detailed (Comprehensive, ~600 words)</option>
+      </select>
+
+      <label for="targetLanguage">Target Language:</label>
+      <select id="targetLanguage">
+        <option value="English" selected>English</option>
+        <option value="Spanish">Spanish</option>
+        <option value="French">French</option>
+        <option value="German">German</option>
+        <option value="Hindi">Hindi</option>
+        <option value="Chinese">Chinese</option>
+        <option value="Japanese">Japanese</option>
+        <option value="Portuguese">Portuguese</option>
+        <option value="Russian">Russian</option>
+        <option value="Italian">Italian</option>
+        <option value="Korean">Korean</option>
+        <option value="Dutch">Dutch</option>
+        <option value="Turkish">Turkish</option>
+        <option value="Arabic">Arabic</option>
+        <option value="Polish">Polish</option>
+        <option value="Swedish">Swedish</option>
+        <option value="Indonesian">Indonesian</option>
+        <option value="Vietnamese">Vietnamese</option>
+        <option value="Thai">Thai</option>
+      </select>
+
+      <button id="save-btn">Save</button>
+      <p id="status"></p>
+    </div>
+    <script src="options.js"></script>
+  </body>
+</html>
