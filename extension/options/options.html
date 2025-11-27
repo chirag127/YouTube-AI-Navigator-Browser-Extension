@@ -1,154 +1,357 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>YouTube AI Master - Settings</title>
+        <link rel="stylesheet" href="options.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="app-container">
+            <aside class="sidebar">
+                <div class="brand">
+                    <div class="logo-icon">⚡</div>
+                    <h1>AI Master</h1>
+                </div>
+                <nav class="nav-menu">
+                    <button class="nav-item active" data-tab="general">
+                        <span class="icon">⚙️</span> General
+                    </button>
+                    <button class="nav-item" data-tab="ai-config">
+                        <span class="icon">🤖</span> AI Configuration
+                    </button>
+                    <button class="nav-item" data-tab="segments">
+                        <span class="icon">🎯</span> Segments & Actions
+                    </button>
+                    <button class="nav-item" data-tab="advanced">
+                        <span class="icon">🔧</span> Advanced
+                    </button>
+                </nav>
+                <div class="sidebar-footer">
+                    <p>v1.0.0</p>
+                    <a
+                        href="https://github.com/chirag127/youtube-ai-master"
+                        target="_blank"
+                        >GitHub</a
+                    >
+                </div>
+            </aside>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube AI Master - Settings</title>
-  <link rel="stylesheet" href="options.css">
-</head>
+            <main class="content-area">
+                <!-- General Settings -->
+                <section id="general" class="tab-content active">
+                    <header class="section-header">
+                        <h2>General Settings</h2>
+                        <p>Configure basic extension behavior</p>
+                    </header>
 
-<body>
-  <div class="container">
-    <header>
-      <h1>⚡ YouTube AI Master</h1>
-      <p class="subtitle">Powered by Google Gemini AI</p>
-    </header>
+                    <div class="card">
+                        <h3>Language & Region</h3>
+                        <div class="form-group">
+                            <label for="outputLanguage">Output Language</label>
+                            <select id="outputLanguage" class="form-select">
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="de">German</option>
+                                <option value="it">Italian</option>
+                                <option value="pt">Portuguese</option>
+                                <option value="ru">Russian</option>
+                                <option value="ja">Japanese</option>
+                                <option value="ko">Korean</option>
+                                <option value="zh">Chinese (Simplified)</option>
+                                <option value="ar">Arabic</option>
+                                <option value="hi">Hindi</option>
+                            </select>
+                            <p class="help-text">
+                                Language used for summaries and AI responses.
+                            </p>
+                        </div>
+                    </div>
 
-    <main>
-      <section class="settings-section">
-        <h2>🔑 API Configuration</h2>
-        <div class="form-group">
-          <label for="apiKey">Gemini API Key *</label>
-          <input type="password" id="apiKey" placeholder="Enter your Gemini API key" autocomplete="off">
-          <small class="help-text">
-            Get your free API key from
-            <a href="https://ai.google.dev/" target="_blank" rel="noopener">Google AI Studio</a>
-          </small>
+                    <div class="card">
+                        <h3>Automation</h3>
+                        <div class="form-group checkbox-row">
+                            <div class="checkbox-label">
+                                <label for="autoAnalyze"
+                                    >Auto-Analyze Videos</label
+                                >
+                                <p class="help-text">
+                                    Automatically start analysis when a video
+                                    page loads.
+                                </p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="autoAnalyze" />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Data & Privacy</h3>
+                        <div class="form-group checkbox-row">
+                            <div class="checkbox-label">
+                                <label for="saveHistory">Save History</label>
+                                <p class="help-text">
+                                    Keep a local history of summarized videos.
+                                </p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="saveHistory" />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="form-actions">
+                            <button
+                                id="clearHistory"
+                                class="btn btn-danger-outline"
+                            >
+                                Clear History
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AI Configuration -->
+                <section id="ai-config" class="tab-content">
+                    <header class="section-header">
+                        <h2>AI Configuration</h2>
+                        <p>
+                            Manage your Gemini API connection and model settings
+                        </p>
+                    </header>
+
+                    <div class="card">
+                        <h3>API Connection</h3>
+                        <div class="form-group">
+                            <label for="apiKey">Gemini API Key</label>
+                            <div class="input-with-button">
+                                <input
+                                    type="password"
+                                    id="apiKey"
+                                    class="form-input"
+                                    placeholder="Enter your API key"
+                                />
+                                <button
+                                    id="toggleApiKey"
+                                    class="btn-icon"
+                                    title="Show/Hide"
+                                >
+                                    👁️
+                                </button>
+                            </div>
+                            <p class="help-text">
+                                Get your free key from
+                                <a href="https://ai.google.dev/" target="_blank"
+                                    >Google AI Studio</a
+                                >.
+                            </p>
+                        </div>
+                        <div class="form-actions">
+                            <button
+                                id="testConnection"
+                                class="btn btn-secondary"
+                            >
+                                Test Connection
+                            </button>
+                        </div>
+                        <div
+                            id="apiStatus"
+                            class="status-indicator hidden"
+                        ></div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Model Selection</h3>
+                        <div class="form-group">
+                            <label for="modelSelect">Gemini Model</label>
+                            <div class="select-wrapper">
+                                <select id="modelSelect" class="form-select">
+                                    <option value="" disabled selected>
+                                        Loading models...
+                                    </option>
+                                </select>
+                                <button
+                                    id="refreshModels"
+                                    class="btn-icon"
+                                    title="Refresh Models"
+                                >
+                                    🔄
+                                </button>
+                            </div>
+                            <p class="help-text">
+                                Select the AI model to use. Newer models may be
+                                faster or smarter.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>System Prompt</h3>
+                        <div class="form-group">
+                            <label for="customPrompt"
+                                >Custom Instructions</label
+                            >
+                            <textarea
+                                id="customPrompt"
+                                class="form-textarea"
+                                rows="4"
+                                placeholder="e.g., Focus on technical details, use bullet points..."
+                            ></textarea>
+                            <p class="help-text">
+                                Optional instructions to guide the AI's
+                                behavior.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Segments & Actions -->
+                <section id="segments" class="tab-content">
+                    <header class="section-header">
+                        <h2>Segments & Actions</h2>
+                        <p>Control how different video segments are handled</p>
+                    </header>
+
+                    <div class="card highlight-card">
+                        <div class="form-group checkbox-row">
+                            <div class="checkbox-label">
+                                <label for="enableSegments"
+                                    >Enable Segment Detection</label
+                                >
+                                <p class="help-text">
+                                    Analyze video to identify sponsors, intros,
+                                    and more.
+                                </p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="enableSegments" />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="card" id="segmentSettingsContainer">
+                        <div class="card-header-row">
+                            <h3>Category Actions</h3>
+                            <div class="global-actions">
+                                <button
+                                    id="skipAllBtn"
+                                    class="btn btn-sm btn-secondary"
+                                >
+                                    Set All to Skip
+                                </button>
+                                <button
+                                    id="speedAllBtn"
+                                    class="btn btn-sm btn-secondary"
+                                >
+                                    Set All to Speed Up
+                                </button>
+                                <button
+                                    id="resetAllBtn"
+                                    class="btn btn-sm btn-outline"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="segments-grid" id="segmentsGrid">
+                            <!-- Generated dynamically by JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Advanced -->
+                <section id="advanced" class="tab-content">
+                    <header class="section-header">
+                        <h2>Advanced</h2>
+                        <p>Backup, restore, and debug</p>
+                    </header>
+
+                    <div class="card">
+                        <h3>Backup & Restore</h3>
+                        <div class="form-actions">
+                            <button
+                                id="exportSettings"
+                                class="btn btn-secondary"
+                            >
+                                Export Settings JSON
+                            </button>
+                            <button
+                                id="importSettings"
+                                class="btn btn-secondary"
+                            >
+                                Import Settings JSON
+                            </button>
+                            <input
+                                type="file"
+                                id="importFile"
+                                accept=".json"
+                                style="display: none"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Troubleshooting</h3>
+                        <div class="form-group checkbox-row">
+                            <div class="checkbox-label">
+                                <label for="debugMode">Debug Mode</label>
+                                <p class="help-text">
+                                    Enable detailed logging to the console.
+                                </p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="debugMode" />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="form-actions mt-4">
+                            <button id="resetDefaults" class="btn btn-danger">
+                                Reset All Settings to Default
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <div id="toast" class="toast">Settings saved</div>
         </div>
 
-        <div class="form-group">
-          <label for="modelSelect">Gemini Model</label>
-          <select id="modelSelect">
-            <option value="gemini-2.5-flash">Gemini 2.5 Flash (Recommended - Fast & Cost-Effective)</option>
-            <option value="gemini-2.5-pro">Gemini 2.5 Pro (Advanced Reasoning)</option>
-            <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
-            <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
-            <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
-          </select>
-        </div>
-      </section>
+        <!-- Template for Segment Item -->
+        <template id="segmentItemTemplate">
+            <div class="segment-item" data-category="">
+                <div class="segment-info">
+                    <span class="segment-color"></span>
+                    <span class="segment-name">Category Name</span>
+                </div>
+                <div class="segment-controls">
+                    <select class="segment-action form-select-sm">
+                        <option value="ignore">Ignore</option>
+                        <option value="skip">Skip</option>
+                        <option value="speed">Speed Up</option>
+                    </select>
+                    <div class="speed-control hidden">
+                        <input
+                            type="range"
+                            class="speed-slider"
+                            min="1"
+                            max="16"
+                            step="0.5"
+                            value="2"
+                        />
+                        <span class="speed-value">2x</span>
+                    </div>
+                </div>
+            </div>
+        </template>
 
-      <section class="settings-section">
-        <h2>📝 Summary Settings</h2>
-        <div class="form-group">
-          <label for="summaryLength">Summary Length</label>
-          <select id="summaryLength">
-            <option value="short">Short (3-5 sentences)</option>
-            <option value="medium" selected>Medium (1-2 paragraphs)</option>
-            <option value="detailed">Detailed (Full breakdown)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="outputLanguage">Output Language</label>
-          <select id="outputLanguage">
-            <option value="en" selected>English</option>
-            <option value="es">Spanish</option>
-            <option value="fr">French</option>
-            <option value="de">German</option>
-            <option value="it">Italian</option>
-            <option value="pt">Portuguese</option>
-            <option value="ru">Russian</option>
-            <option value="ja">Japanese</option>
-            <option value="ko">Korean</option>
-            <option value="zh">Chinese (Simplified)</option>
-            <option value="ar">Arabic</option>
-            <option value="hi">Hindi</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="customPrompt">Custom System Prompt (Optional)</label>
-          <textarea id="customPrompt" rows="4"
-            placeholder="e.g., Focus on technical details and code examples..."></textarea>
-          <small class="help-text">Leave empty to use default prompts</small>
-        </div>
-      </section>
-
-      <section class="settings-section">
-        <h2>⚡ Auto-Analysis</h2>
-        <div class="form-group checkbox-group">
-          <label>
-            <input type="checkbox" id="autoAnalyze" checked>
-            Automatically analyze videos when page loads
-          </label>
-          <small class="help-text">When enabled, videos will be analyzed immediately without clicking a button</small>
-        </div>
-      </section>
-
-      <section class="settings-section">
-        <h2>🎯 Segment Classification</h2>
-        <div class="form-group checkbox-group">
-          <label>
-            <input type="checkbox" id="enableSegments" checked>
-            Enable Smart Segment Detection
-          </label>
-        </div>
-
-        <div class="form-group checkbox-group">
-          <label>
-            <input type="checkbox" id="autoSkipSponsors">
-            Auto-skip Sponsor Segments
-          </label>
-        </div>
-
-        <div class="form-group checkbox-group">
-          <label>
-            <input type="checkbox" id="autoSkipIntros">
-            Auto-skip Intros/Outros
-          </label>
-        </div>
-      </section>
-
-      <section class="settings-section">
-        <h2>💾 Data & Privacy</h2>
-        <div class="form-group checkbox-group">
-          <label>
-            <input type="checkbox" id="saveHistory" checked>
-            Save summaries to local history
-          </label>
-        </div>
-
-        <div class="form-group">
-          <button type="button" id="clearHistory" class="btn-secondary">
-            Clear All History
-          </button>
-        </div>
-      </section>
-
-      <div class="actions">
-        <button type="button" id="saveBtn" class="btn-primary">
-          Save Settings
-        </button>
-        <button type="button" id="testBtn" class="btn-secondary">
-          Test API Connection
-        </button>
-      </div>
-
-      <div id="statusMessage" class="status-message"></div>
-    </main>
-
-    <footer>
-      <p>
-        YouTube AI Master v1.0.0 |
-        <a href="https://github.com/chirag127/youtube-ai-master" target="_blank" rel="noopener">GitHub</a> |
-        <a href="#" id="privacyLink">Privacy Policy</a>
-      </p>
-    </footer>
-  </div>
-
-  <script src="options.js" type="module"></script>
-</body>
-
+        <script src="options.js" type="module"></script>
+    </body>
 </html>

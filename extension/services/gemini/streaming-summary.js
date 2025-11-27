@@ -69,6 +69,13 @@ A: Answer based on content...
 - Main theme 1
 - Main theme 2
 
+HIGHLIGHTING INSTRUCTIONS:
+- Use ==highlighted text== to mark important phrases, key terms, technical concepts, and critical information
+- Highlight: product names, technical terms, key statistics, important dates, crucial concepts, action items
+- Examples: "The ==React 19== update introduces ==Server Components==", "Sales increased by ==45%==", "Released on ==March 15th=="
+- Use highlighting sparingly (2-4 highlights per paragraph) for maximum impact
+- DO NOT highlight common words or entire sentences
+
 IMPORTANT: Use the video title (especially the community-curated title if provided), description, and keywords to provide better context and more accurate summaries. The community-curated title is often more descriptive and accurate than clickbait original titles.
 Include ${guide[len] || guide.Medium}.`
     }
@@ -126,14 +133,25 @@ Include ${guide[len] || guide.Medium}.`
 
     _md2html(md) {
         let h = md
+        // Convert headers
         h = h.replace(/^### (.*$)/gim, '<h3>$1</h3>')
         h = h.replace(/^## (.*$)/gim, '<h2>$1</h2>')
         h = h.replace(/^# (.*$)/gim, '<h1>$1</h1>')
+
+        // Convert highlighting ==text== to <mark> tags
+        h = h.replace(/==(.*?)==/g, '<mark class="yt-ai-highlight">$1</mark>')
+
+        // Convert bold and italic
         h = h.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         h = h.replace(/\*(.*?)\*/g, '<em>$1</em>')
+
+        // Convert lists
         h = h.replace(/^\- (.*$)/gim, '<li>$1</li>')
         h = h.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+
+        // Convert paragraphs
         h = h.split('\n\n').map(p => !p.startsWith('<') && p.trim() ? `<p>${p}</p>` : p).join('\n')
+
         return h
     }
 

@@ -178,6 +178,35 @@
     font-weight: 600;
 }
 
+/* Highlighted Important Phrases */
+.yt-ai-markdown mark,
+.yt-ai-markdown .yt-ai-highlight {
+    background: linear-gradient(
+        120deg,
+        rgba(255, 215, 0, 0.3) 0%,
+        rgba(255, 165, 0, 0.3) 100%
+    );
+    color: #ffd700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.5);
+    transition: all 0.2s ease;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(255, 215, 0, 0.1);
+}
+
+.yt-ai-markdown mark:hover,
+.yt-ai-markdown .yt-ai-highlight:hover {
+    background: linear-gradient(
+        120deg,
+        rgba(255, 215, 0, 0.4) 0%,
+        rgba(255, 165, 0, 0.4) 100%
+    );
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+}
+
 /* Transcript Segment */
 .yt-ai-segment {
     display: flex;
