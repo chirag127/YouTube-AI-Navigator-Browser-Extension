@@ -721,6 +721,7 @@ async function getInvidiousInstances() {
     console.log(`[Invidious] 🔍 Fetching fresh instance list from live API...`);
 
     const fallbackInstances = [
+        "https://inv.perditum.com",
         "https://inv.nadeko.net",
         "https://invidious.nerdvpn.de",
         "https://invidious.drgns.space",
@@ -767,6 +768,14 @@ async function getInvidiousInstances() {
             })
             .slice(0, 15)
             .map((entry) => entry[1].uri);
+
+        // Ensure inv.perditum.com is first
+        const priorityInstance = "https://inv.perditum.com";
+        const priorityIndex = instances.indexOf(priorityInstance);
+        if (priorityIndex > -1) {
+            instances.splice(priorityIndex, 1);
+        }
+        instances.unshift(priorityInstance);
 
         if (instances.length > 0) {
             console.log(

@@ -112,6 +112,48 @@ class MetadataExtractor {
             this.log("warn", `DOM extraction failed: ${e.message}`);
         }
 
+        // Try JSON-LD (SEO Data) - Strategy 3
+        if (
+            !metadata ||
+            !metadata.title ||
+            metadata.title === "Unknown Title"
+        ) {
+            try {
+                const jsonLd = this._extractJsonLd();
+                if (jsonLd && jsonLd.name) {
+                    metadata = {
+                        videoId,
+                        title: deArrowData?.title || jsonLd.name,
+                        originalTitle: jsonLd.name,
+                        deArrowTitle: deArrowData?.title || null,
+                        hasDeArrowTitle: !!deArrowData?.title,
+                        description: jsonLd.description || "",
+                        author: jsonLd.author?.name || "Unknown Channel",
+                        viewCount:
+                            jsonLd.interactionStatistic?.userInteractionCount ||
+                            "Unknown",
+                        publishDate: jsonLd.uploadDate || null,
+                        duration: null, // JSON-LD duration is often in ISO format, parsing needed if used
+                        keywords: [],
+                        category: jsonLd.genre || null,
+                        deArrowThumbnail: deArrowData?.thumbnail || null,
+                    };
+
+                    const source = metadata.hasDeArrowTitle
+                        ? "DeArrow + JSON-LD"
+                        : "JSON-LD";
+                    this.log(
+                        "success",
+                        `Metadata extracted from ${source}: ${metadata.title}`
+                    );
+                    this._setCache(videoId, metadata);
+                    return metadata;
+                }
+            } catch (e) {
+                this.log("warn", `JSON-LD extraction failed: ${e.message}`);
+            }
+        }
+
         // Fallback to Piped API only if DOM extraction failed or returned poor data
         if (usePiped) {
             try {
@@ -379,6 +421,20 @@ class MetadataExtractor {
         } catch (e) {
             return null;
         }
+    }
+
+    _extractJsonLd() {
+        try {
+            const script = document.querySelector(
+                'script[type="application/ld+json"]'
+            );
+            if (script && script.textContent) {
+                return JSON.parse(script.textContent);
+            }
+        } catch (e) {
+            return null;
+        }
+        return null;
     }
 
     async getInitialData() {

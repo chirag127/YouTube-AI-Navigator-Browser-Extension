@@ -13,7 +13,7 @@ const STRATEGIES = [
     youtubeDirectStrategy, // Priority 1: Uses ytInitialPlayerResponse caption URLs
     xhrStrategy, // Priority 2: Intercepts live network requests
     backgroundProxyStrategy, // Priority 5: Service worker fallback (can bypass CORS)
-    // invidiousStrategy,      // Priority 3: Third-party API (Disabled)
+    invidiousStrategy, // Priority 3: Third-party API (Enabled)
     // pipedStrategy,          // Priority 4: Third-party API (Disabled)
     domStrategy, // Priority 6: Last resort DOM scraping
 ].sort((a, b) => a.priority - b.priority);

@@ -77,6 +77,13 @@ class YouTubeExtractor {
             } catch (e) {
                 /* ignore */
             }
+        } else if (url.includes("/youtubei/v1/reel/")) {
+            try {
+                const data = await response.json();
+                this.emit("shorts_data", data);
+            } catch (e) {
+                /* ignore */
+            }
         }
     }
 
@@ -96,30 +103,41 @@ class YouTubeExtractor {
         // If not available, try to get from ytd-app element (Polymer data binding)
         if (!playerResponse) {
             try {
-                const app = document.querySelector('ytd-app');
-                playerResponse = app?.data?.playerResponse || app?.__data?.playerResponse;
-            } catch (e) { /* ignore */ }
+                const app = document.querySelector("ytd-app");
+                playerResponse =
+                    app?.data?.playerResponse || app?.__data?.playerResponse;
+            } catch (e) {
+                /* ignore */
+            }
         }
 
         // If still not available, try to scrape from script tags
         if (!playerResponse) {
             try {
-                for (const script of document.querySelectorAll('script')) {
-                    const text = script.textContent || '';
-                    const match = text.match(/ytInitialPlayerResponse\s*=\s*({.+?});/s);
+                for (const script of document.querySelectorAll("script")) {
+                    const text = script.textContent || "";
+                    const match = text.match(
+                        /ytInitialPlayerResponse\s*=\s*({.+?});/s
+                    );
                     if (match) {
                         playerResponse = JSON.parse(match[1]);
                         break;
                     }
                 }
-            } catch (e) { /* ignore */ }
+            } catch (e) {
+                /* ignore */
+            }
         }
 
         // Try to get from ytplayer.config
         if (!playerResponse && window.ytplayer?.config?.args?.player_response) {
             try {
-                playerResponse = JSON.parse(window.ytplayer.config.args.player_response);
-            } catch (e) { /* ignore */ }
+                playerResponse = JSON.parse(
+                    window.ytplayer.config.args.player_response
+                );
+            } catch (e) {
+                /* ignore */
+            }
         }
 
         return {
@@ -169,6 +187,20 @@ class YouTubeExtractor {
             channelId: details?.channelId,
             uploadDate: microformat?.uploadDate || "",
         };
+    }
+
+    extractShortsMetadata() {
+        const activeShort = document.querySelector(
+            "ytd-reel-video-renderer[is-active]"
+        );
+        if (!activeShort) return null;
+        // Scrape DOM for Shorts as fallback
+        const title = activeShort.querySelector(
+            ".ytd-reel-player-header-renderer-title"
+        )?.textContent;
+        const channel =
+            activeShort.querySelector(".ytd-channel-name")?.textContent;
+        return { title: title?.trim(), channel: channel?.trim() };
     }
 }
 
