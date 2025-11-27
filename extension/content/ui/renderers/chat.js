@@ -1,35 +1,15 @@
-/**
- * Chat renderer
- */
-
-/**
- * Render chat tab
- */
-export function renderChat(container) {
-    if (!container.querySelector('.yt-ai-chat-messages')) {
-        container.innerHTML = `
-      <div class="yt-ai-chat-messages" id="yt-ai-chat-messages">
-        <div class="yt-ai-chat-msg ai">
-          👋 Hi! Ask me anything about this video.
-        </div>
-      </div>
-    `
-    }
+export function renderChat(c) {
+  if (!c.querySelector('.yt-ai-chat-messages')) {
+    c.innerHTML = `<div class="yt-ai-chat-messages" id="yt-ai-chat-messages"><div class="yt-ai-chat-msg ai">👋 Hi! Ask me anything about this video.</div></div>`
+  }
 }
-
-/**
- * Add message to chat
- */
-export function addChatMessage(role, content) {
-    const messagesContainer = document.getElementById('yt-ai-chat-messages')
-    if (!messagesContainer) return
-
-    const msgDiv = document.createElement('div')
-    msgDiv.className = `yt-ai-chat-msg ${role}`
-    msgDiv.innerHTML = role === 'ai' ? marked.parse(content) : content
-
-    messagesContainer.appendChild(msgDiv)
-    messagesContainer.scrollTop = messagesContainer.scrollHeight
-
-    return msgDiv
+export function addChatMessage(r, t) {
+  const m = document.getElementById('yt-ai-chat-messages')
+  if (!m) return
+  const d = document.createElement('div')
+  d.className = `yt-ai-chat-msg ${r}`
+  d.innerHTML = r === 'ai' ? marked.parse(t) : t
+  m.appendChild(d)
+  m.scrollTop = m.scrollHeight
+  return d
 }

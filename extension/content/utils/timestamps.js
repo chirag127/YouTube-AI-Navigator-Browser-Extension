@@ -1,55 +1,21 @@
-/**
- * Make timestamps in text clickable
- */
-
 import { seekVideo } from './dom.js'
-
-/**
- * Make all timestamps in container clickable
- * @param {HTMLElement} container - Container element
- */
-export function makeTimestampsClickable(container) {
-    const pattern = /(\[|\()?(\d{1,2}):(\d{2})(\]|\))?/g
-    const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT)
-    const nodes = []
-
+export function makeTimestampsClickable(c) {
+    const p = /(\[|\()?(\d{1,2}):(\d{2})(\]|\))?/g, w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT), n = []
     let node
-    while ((node = walker.nextNode())) {
-        if (pattern.test(node.textContent)) {
-            nodes.push(node)
-        }
-    }
-
-    nodes.forEach(textNode => {
-        const text = textNode.textContent
-        const fragment = document.createDocumentFragment()
-        let lastIndex = 0
-
-        text.replace(pattern, (match, p1, mins, secs, p4, offset) => {
-            // Add text before match
-            if (offset > lastIndex) {
-                fragment.appendChild(
-                    document.createTextNode(text.substring(lastIndex, offset))
-                )
-            }
-
-            // Create clickable timestamp
-            const totalSecs = parseInt(mins) * 60 + parseInt(secs)
-            const link = document.createElement('span')
-            link.textContent = match
-            link.className = 'yt-ai-clickable-timestamp'
-            link.style.cssText = 'color:var(--yt-ai-accent);cursor:pointer;font-weight:600;text-decoration:underline;'
-            link.addEventListener('click', () => seekVideo(totalSecs))
-            fragment.appendChild(link)
-
-            lastIndex = offset + match.length
+    while ((node = w.nextNode())) if (p.test(node.textContent)) n.push(node)
+    n.forEach(t => {
+        const txt = t.textContent, f = document.createDocumentFragment(); let l = 0
+        txt.replace(p, (m, p1, mins, secs, p4, o) => {
+            if (o > l) f.appendChild(document.createTextNode(txt.substring(l, o)))
+            const s = parseInt(mins) * 60 + parseInt(secs), lnk = document.createElement('span')
+            lnk.textContent = m
+            lnk.className = 'yt-ai-clickable-timestamp'
+            lnk.style.cssText = 'color:var(--yt-ai-accent);cursor:pointer;font-weight:600;text-decoration:underline;'
+            lnk.addEventListener('click', () => seekVideo(s))
+            f.appendChild(lnk)
+            l = o + m.length
         })
-
-        // Add remaining text
-        if (lastIndex < text.length) {
-            fragment.appendChild(document.createTextNode(text.substring(lastIndex)))
-        }
-
-        textNode.parentNode.replaceChild(fragment, textNode)
+        if (l < txt.length) f.appendChild(document.createTextNode(txt.substring(l)))
+        t.parentNode.replaceChild(f, t)
     })
 }

@@ -1,97 +1,24 @@
-/**
- * Service to classify transcript segments using AI.
- */
 export class SegmentClassificationService {
-  /**
-   * @param {import('./GeminiService.js').GeminiService} geminiService
-   * @param {import('./ChunkingService.js').ChunkingService} chunkingService
-   */
-  constructor(geminiService, chunkingService) {
-    this.geminiService = geminiService
-    this.chunkingService = chunkingService
-  }
-
-  /**
-   * Classifies the transcript into segments (Sponsor, Content, etc.).
-   * @param {Array<{text: string, start: number, duration: number}>} transcript
-   * @returns {Promise<Array<{text: string, start: number, end: number, label: string}>>}
-   */
-  async classifyTranscript(transcript) {
-    if (!transcript || transcript.length === 0) return []
-
-    // 1. Format transcript with timestamps for Gemini
-    // We'll take chunks of the transcript to avoid token limits, but larger chunks than before.
-    // For now, let's try to send the whole thing if it fits, or chunk it by 10 mins.
-    // A 10 min video is roughly 1500 words ~ 2000 tokens. Gemini 1.5 Flash has 1M context.
-    // We can safely send the whole transcript for most videos (up to several hours).
-
-    const formattedTranscript = transcript
-      .map((t) => `[${t.start.toFixed(1)}] ${t.text}`)
-      .join('\n')
-
-    console.log('Sending transcript to Gemini for segmentation...')
-
+  constructor(g, c) { this.geminiService = g; this.chunkingService = c }
+  async classifyTranscript(t) {
+    if (!t || !t.length) return []
+    const f = t.map(s => `[${s.start.toFixed(1)}] ${s.text}`).join('\n')
     try {
-      // 2. Call Gemini to extract segments
-      const extractedSegments = await this.geminiService.extractSegments(formattedTranscript)
-
-      // 3. Process and fill gaps with "Content"
-      return this._fillContentGaps(extractedSegments, transcript)
-    } catch (error) {
-      console.error('Error classifying transcript:', error)
-      return []
-    }
+      const e = await this.geminiService.extractSegments(f)
+      return this._fillContentGaps(e, t)
+    } catch (e) { return [] }
   }
-
-  /**
-   * Fills the gaps between classified segments with "Content" label.
-   * @param {Array<{label: string, start: number, end: number}>} classifiedSegments
-   * @param {Array<{start: number, duration: number}>} originalTranscript
-   */
-  _fillContentGaps(classifiedSegments, originalTranscript) {
-    if (!originalTranscript.length) return []
-
-    const videoEnd =
-      originalTranscript[originalTranscript.length - 1].start +
-      originalTranscript[originalTranscript.length - 1].duration
-
-    // Sort segments by start time
-    const sorted = classifiedSegments.sort((a, b) => a.start - b.start)
-
-    const finalSegments = []
-    let currentTime = 0
-
-    for (const segment of sorted) {
-      // If there is a gap before this segment, fill it with Content
-      if (segment.start > currentTime + 1) {
-        // 1 second tolerance
-        finalSegments.push({
-          label: 'Content',
-          start: currentTime,
-          end: segment.start,
-          text: 'Main Content',
-        })
-      }
-
-      // Add the classified segment
-      finalSegments.push({
-        ...segment,
-        text: segment.description || segment.label,
-      })
-
-      currentTime = Math.max(currentTime, segment.end)
+  _fillContentGaps(c, o) {
+    if (!o.length) return []
+    const e = o[o.length - 1].start + o[o.length - 1].duration
+    const s = c.sort((a, b) => a.start - b.start)
+    const f = []; let t = 0
+    for (const seg of s) {
+      if (seg.start > t + 1) f.push({ label: 'Content', start: t, end: seg.start, text: 'Main Content' })
+      f.push({ ...seg, text: seg.description || seg.label })
+      t = Math.max(t, seg.end)
     }
-
-    // Fill remaining time
-    if (currentTime < videoEnd - 1) {
-      finalSegments.push({
-        label: 'Content',
-        start: currentTime,
-        end: videoEnd,
-        text: 'Main Content',
-      })
-    }
-
-    return finalSegments
+    if (t < e - 1) f.push({ label: 'Content', start: t, end: e, text: 'Main Content' })
+    return f
   }
 }

@@ -6,13 +6,31 @@ import { decodeHTML } from '../utils/dom.js'
 
 export class TranscriptService {
     constructor() {
-        this.invidiousInstances = [
+        this.invidiousInstances = []
+        this.instancesFetched = false
+        this.fallbackInstances = [
             'https://invidious.fdn.fr',
             'https://inv.nadeko.net',
-            'https://invidious.privacyredirect.com',
-            'https://invidious.protokolla.fi',
-            'https://yt.artemislena.eu'
+            'https://invidious.privacyredirect.com'
         ]
+    }
+
+    async _getInstances() {
+        if (this.instancesFetched && this.invidiousInstances.length > 0) return this.invidiousInstances
+        try {
+            const r = await fetch('https://api.invidious.io/instances.json?sort_by=type,users', { signal: AbortSignal.timeout(3000) })
+            if (!r.ok) throw new Error('Failed to fetch instances')
+            const data = await r.json()
+            this.invidiousInstances = data
+                .filter(x => x[1]?.type === 'https' && x[1]?.api === true && x[1]?.monitor?.statusClass === 'success')
+                .slice(0, 10)
+                .map(x => `https://${x[0]}`)
+            this.instancesFetched = true
+            if (this.invidiousInstances.length === 0) this.invidiousInstances = this.fallbackInstances
+        } catch (e) {
+            this.invidiousInstances = this.fallbackInstances
+        }
+        return this.invidiousInstances
     }
 
     /**
