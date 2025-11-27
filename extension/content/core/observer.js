@@ -3,14 +3,49 @@ import { injectWidget } from '../ui/widget.js'
 import { startAnalysis } from './analyzer.js'
 import { log, logError } from './debug.js'
 
+let lastUrl = window.location.href;
+let debounceTimer = null;
+
 export function initObserver() {
     log('Initializing observer...')
 
+    // Watch for URL changes (YouTube SPA navigation)
+    const urlObserver = new MutationObserver(() => {
+        if (window.location.href !== lastUrl) {
+            lastUrl = window.location.href;
+            log('URL changed:', lastUrl);
+
+            // Debounce to avoid multiple triggers
+            if (debounceTimer) clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                checkCurrentPage();
+            }, 300);
+        }
+    });
+
+    // Also listen for YouTube's navigation events
+    document.addEventListener('yt-navigate-finish', () => {
+        log('YouTube navigation finished');
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            checkCurrentPage();
+        }, 500);
+    });
+
+    // Watch for DOM changes that indicate page load
     const o = new MutationObserver(() => {
         if (window.location.pathname !== '/watch') return
         const u = new URLSearchParams(window.location.search), v = u.get('v')
-        if (v && v !== state.currentVideoId) handleNewVideo(v)
+        if (v && v !== state.currentVideoId) {
+            // Debounce to avoid multiple triggers
+            if (debounceTimer) clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                handleNewVideo(v);
+            }, 300);
+        }
     })
+
+    urlObserver.observe(document.body, { childList: true, subtree: true });
     o.observe(document.body, { childList: true, subtree: true })
 
     log('Observer started')

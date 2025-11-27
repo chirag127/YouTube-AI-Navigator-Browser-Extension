@@ -1,7 +1,7 @@
 // Load transcript when video page loads
 
 import { isVideoPage, getCurrentVideoId } from "../services/video/detector.js";
-import { hasCaptions, fetchTranscript } from "../services/transcript/index.js";
+import { TranscriptExtractor } from "./transcript/extractor.js";
 import { getCached, setCached } from "../services/transcript/cache.js";
 
 /**
@@ -25,13 +25,14 @@ export async function loadTranscript(languageCode) {
         return cached;
     }
 
-    // Check if captions available
-    if (!hasCaptions()) {
+    // Use TranscriptExtractor
+    const transcript = await TranscriptExtractor.extract(videoId, {
+        lang: languageCode,
+    });
+
+    if (!transcript || transcript.length === 0) {
         throw new Error("No captions available");
     }
-
-    // Fetch transcript
-    const transcript = await fetchTranscript(videoId, languageCode);
 
     // Cache result
     setCached(videoId, languageCode || "default", transcript);
@@ -47,14 +48,6 @@ export function initTranscriptLoader() {
         return;
     }
 
-    // Wait for player to be ready
-    const checkReady = setInterval(() => {
-        if (hasCaptions()) {
-            clearInterval(checkReady);
-            console.log("Transcript service ready");
-        }
-    }, 500);
-
-    // Timeout after 10 seconds
-    setTimeout(() => clearInterval(checkReady), 10000);
+    // We don't need to poll for captions anymore since TranscriptExtractor handles it
+    console.log("Transcript service ready (using TranscriptExtractor)");
 }

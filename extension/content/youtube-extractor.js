@@ -1,0 +1,144 @@
+/**
+ * YouTube Data Extractor
+ * Runs in the Main World to access ytInitialPlayerResponse and intercept network requests.
+ */
+class YouTubeExtractor {
+    constructor() {
+        this.originalFetch = window.fetch.bind(window);
+        this.listeners = new Map();
+        this.initInterceptor();
+        this.initNavigationListener();
+
+        // Listen for requests from Isolated World
+        window.addEventListener("message", (event) => {
+            if (event.source !== window) return;
+            if (event.data.type === "YT_GET_DATA") {
+                this.emit("data_response", this.getInitialData());
+            }
+        });
+
+        // Expose for debugging/manual access if needed
+        window._ytExtractor = this;
+
+        console.log("[YouTubeExtractor] Initialized in Main World");
+    }
+
+    initInterceptor() {
+        window.fetch = async (...args) => {
+            const [resource, config] = args;
+            const url = resource ? resource.toString() : "";
+
+            const response = await this.originalFetch(resource, config);
+
+            // Clone to avoid consuming the stream
+            const clone = response.clone();
+
+            // Async processing
+            this.processResponse(url, clone).catch((err) => {
+                console.error(
+                    "[YouTubeExtractor] Error processing response:",
+                    err
+                );
+            });
+
+            return response;
+        };
+    }
+
+    async processResponse(url, response) {
+        if (url.includes("/youtubei/v1/player")) {
+            try {
+                const data = await response.json();
+                this.emit("metadata", data);
+            } catch (e) {
+                /* ignore json parse errors */
+            }
+        } else if (url.includes("/youtubei/v1/next")) {
+            try {
+                const data = await response.json();
+                this.emit("comments", data);
+            } catch (e) {
+                /* ignore */
+            }
+        } else if (
+            url.includes("/api/timedtext") ||
+            url.includes("/youtubei/v1/get_transcript")
+        ) {
+            try {
+                const data = await response.json();
+                this.emit("transcript", data);
+            } catch (e) {
+                /* ignore */
+            }
+        } else if (url.includes("/youtubei/v1/live_chat/get_live_chat")) {
+            try {
+                const data = await response.json();
+                this.emit("live_chat", data);
+            } catch (e) {
+                /* ignore */
+            }
+        }
+    }
+
+    initNavigationListener() {
+        document.addEventListener("yt-navigate-finish", (e) => {
+            const videoId =
+                e.detail?.response?.playerResponse?.videoDetails?.videoId;
+            console.log("[YouTubeExtractor] Navigation finished:", videoId);
+            this.emit("navigation", { videoId, detail: e.detail });
+        });
+    }
+
+    getInitialData() {
+        return {
+            playerResponse: window.ytInitialPlayerResponse,
+            initialData: window.ytInitialData,
+            cfg: window.ytcfg?.data_,
+        };
+    }
+
+    on(event, callback) {
+        if (!this.listeners.has(event)) {
+            this.listeners.set(event, []);
+        }
+        this.listeners.get(event)?.push(callback);
+    }
+
+    emit(event, data) {
+        const listeners = this.listeners.get(event);
+        if (listeners) {
+            listeners.forEach((cb) => cb(data));
+        }
+        // Also post to Content Script (Isolated World)
+        window.postMessage(
+            { type: `YT_${event.toUpperCase()}`, payload: data },
+            "*"
+        );
+    }
+
+    // Helper to manually extract current metadata if needed
+    extractMetadata() {
+        const playerResponse = window.ytInitialPlayerResponse;
+        if (!playerResponse) return null;
+
+        const details = playerResponse.videoDetails;
+        const microformat =
+            playerResponse.microformat?.playerMicroformatRenderer;
+
+        return {
+            title: details?.title,
+            videoId: details?.videoId,
+            author: details?.author,
+            viewCount: details?.viewCount,
+            lengthSeconds: details?.lengthSeconds,
+            description: details?.shortDescription,
+            isLive: details?.isLiveContent,
+            keywords: details?.keywords || [],
+            channelId: details?.channelId,
+            uploadDate: microformat?.uploadDate || "",
+        };
+    }
+}
+
+// Initialize
+new YouTubeExtractor();
