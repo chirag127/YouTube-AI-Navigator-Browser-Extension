@@ -14,27 +14,14 @@ export class GeminiService {
         return onChunk ? this.generateContentStream(fp, m, onChunk) : this.generateContent(fp, m);
     }
 
-    /**
-     * Generate streaming summary with clickable timestamps
-     * @param {Array} transcript - Transcript segments
-     * @param {Object} options - { model, language, length }
-     * @param {Function} onChunk - Callback(chunk, fullText, timestamps)
-     * @returns {Promise<Object>} - { summary, timestamps }
-     */
     async generateStreamingSummaryWithTimestamps(transcript, options = {}, onChunk) {
         return this.streamingSummary.generateStreamingSummary(transcript, options, onChunk);
     }
 
-    /**
-     * Convert markdown summary to HTML with clickable timestamps
-     */
     convertSummaryToHTML(markdownText, videoId) {
         return this.streamingSummary.convertToHTMLWithClickableTimestamps(markdownText, videoId);
     }
 
-    /**
-     * Attach click handlers to timestamp links in a container
-     */
     attachTimestampHandlers(containerElement) {
         return this.streamingSummary.attachTimestampClickHandlers(containerElement);
     }

@@ -4,6 +4,7 @@ import { showLoading, showError } from '../ui/components/loading.js'
 import { renderSummary } from '../ui/renderers/summary.js'
 import { injectSegmentMarkers } from '../segments/markers.js'
 import { setupAutoSkip } from '../segments/autoskip.js'
+import { renderTimeline } from '../segments/timeline.js'
 const transcriptService = new TranscriptService()
 export async function startAnalysis() {
     if (state.isAnalyzing || !state.currentVideoId) return
@@ -19,7 +20,12 @@ export async function startAnalysis() {
         const r = await chrome.runtime.sendMessage({ action: 'ANALYZE_VIDEO', transcript: state.currentTranscript, metadata: { ...m, videoId: state.currentVideoId }, options: { length: 'Medium' } })
         if (!r.success) throw new Error(r.error || 'Analysis failed')
         state.analysisData = r.data
-        if (state.analysisData.segments) { injectSegmentMarkers(state.analysisData.segments); setupAutoSkip(state.analysisData.segments) }
+        if (state.analysisData.segments) {
+            injectSegmentMarkers(state.analysisData.segments)
+            setupAutoSkip(state.analysisData.segments)
+            const v = document.querySelector('video')
+            if (v) renderTimeline(state.analysisData.segments, v.duration)
+        }
         renderSummary(c, state.analysisData)
     } catch (e) { showError(c, e.message) } finally { state.isAnalyzing = false }
 }

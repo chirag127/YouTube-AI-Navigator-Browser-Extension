@@ -1,10 +1,4 @@
-/**
- * YouTube AI Master - Main Entry Point
- * Modular content script for YouTube video analysis
- */
-
 (async () => {
-    // Exit if not on YouTube
     if (window.location.hostname !== 'www.youtube.com') {
         return
     }
@@ -12,15 +6,10 @@
     console.log('YouTube AI Master: Starting...')
 
     try {
-        // Import initialization module
         const { initializeExtension, waitForPageReady } = await import(
             chrome.runtime.getURL('content/core/init.js')
         )
-
-        // Wait for page to be ready
         await waitForPageReady()
-
-        // Initialize extension
         const success = await initializeExtension()
 
         if (success) {
@@ -33,7 +22,6 @@
     }
 })()
 
-// Message listener for popup/sidepanel communication
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const action = request.action || request.type
 
@@ -73,14 +61,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 })
 
-/**
- * Get video metadata from page
- */
 async function handleGetMetadata(request, sendResponse) {
     try {
         const { videoId } = request
-
-        // Method 1: Try ytInitialPlayerResponse (most reliable)
         if (window.ytInitialPlayerResponse?.videoDetails) {
             const details = window.ytInitialPlayerResponse.videoDetails
             const metadata = {
@@ -94,8 +77,6 @@ async function handleGetMetadata(request, sendResponse) {
             sendResponse({ success: true, metadata })
             return
         }
-
-        // Method 2: Try DOM selectors (fallback)
         const titleEl = document.querySelector('h1.ytd-video-primary-info-renderer yt-formatted-string, h1.ytd-watch-metadata yt-formatted-string, h1.title yt-formatted-string')
         const channelEl = document.querySelector('ytd-channel-name a, #channel-name a, #owner-name a')
         const viewsEl = document.querySelector('#info-strings yt-formatted-string, .view-count, #count')
@@ -111,8 +92,6 @@ async function handleGetMetadata(request, sendResponse) {
             sendResponse({ success: true, metadata })
             return
         }
-
-        // Method 3: Wait a bit and try again (page might still be loading)
         console.log('[Metadata] Waiting for page to load...')
         await new Promise(resolve => setTimeout(resolve, 1000))
 
@@ -129,8 +108,6 @@ async function handleGetMetadata(request, sendResponse) {
             sendResponse({ success: true, metadata })
             return
         }
-
-        // Method 4: Provide minimal fallback (better than failing)
         console.warn('[Metadata] Using fallback metadata')
         const metadata = {
             title: document.title.replace(' - YouTube', '') || 'YouTube Video',
@@ -142,7 +119,6 @@ async function handleGetMetadata(request, sendResponse) {
 
     } catch (error) {
         console.error('[Metadata] Error:', error)
-        // Even on error, provide fallback to prevent UI breaking
         sendResponse({
             success: true,
             metadata: {
@@ -155,9 +131,6 @@ async function handleGetMetadata(request, sendResponse) {
     }
 }
 
-/**
- * Get video transcript
- */
 async function handleGetTranscript(request, sendResponse) {
     try {
         const { videoId } = request
@@ -183,9 +156,6 @@ async function handleGetTranscript(request, sendResponse) {
     }
 }
 
-/**
- * Get video comments
- */
 async function handleGetComments(request, sendResponse) {
     try {
         const { getComments } = await import(chrome.runtime.getURL('content/handlers/comments.js'))
@@ -197,9 +167,6 @@ async function handleGetComments(request, sendResponse) {
     }
 }
 
-/**
- * Seek video to timestamp
- */
 function handleSeekTo(request, sendResponse) {
     try {
         const { timestamp } = request
@@ -217,14 +184,9 @@ function handleSeekTo(request, sendResponse) {
     }
 }
 
-/**
- * Show segments on video timeline
- */
 async function handleShowSegments(request, sendResponse) {
     try {
         const { segments } = request
-        // This would integrate with the video player to show segment markers
-        // Implementation depends on your segment visualization approach
         sendResponse({ success: true })
     } catch (error) {
         console.error('Show segments error:', error)
