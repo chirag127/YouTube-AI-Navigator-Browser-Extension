@@ -2,22 +2,43 @@
     "manifest_version": 3,
     "name": "YouTube AI Master",
     "version": "1.0.0",
-    "description": "The ultimate free YouTube tool utilizing the Gemini Free API to summarize, segment, and interact with video content.",
+    "description": "The ultimate free YouTube tool utilizing Gemini AI to summarize, segment, and interact with video content.",
+    "icons": {
+        "16": "assets/icon16.png",
+        "48": "assets/icon48.png",
+        "128": "assets/icon128.png"
+    },
     "permissions": [
+        "storage",
         "activeTab",
-        "scripting",
-        "storage"
+        "scripting"
     ],
     "host_permissions": [
         "https://www.youtube.com/*",
+        "https://youtube.com/*",
         "https://generativelanguage.googleapis.com/*"
     ],
     "background": {
-        "service_worker": "background/background.js",
+        "service_worker": "background/service-worker.js",
         "type": "module"
     },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.youtube.com/*",
+                "https://youtube.com/*"
+            ],
+            "js": [
+                "content/main.js"
+            ],
+            "css": [
+                "content/content.css"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
     "action": {
-        "default_title": "YouTube AI Master",
+        "default_popup": "popup/popup.html",
         "default_icon": {
             "16": "assets/icon16.png",
             "48": "assets/icon48.png",
@@ -25,34 +46,21 @@
         }
     },
     "options_page": "options/options.html",
-    "content_scripts": [
-        {
-            "matches": [
-                "https://www.youtube.com/*"
-            ],
-            "js": [
-                "lib/marked.min.js",
-                "content/content.js"
-            ],
-            "css": [
-                "content/content.css"
-            ]
-        }
-    ],
     "web_accessible_resources": [
         {
             "resources": [
-                "assets/*",
-                "content/content.css"
+                "content/*.js",
+                "content/**/*.js",
+                "sidepanel/sidepanel.html",
+                "sidepanel/sidepanel.css",
+                "sidepanel/sidepanel.js",
+                "lib/marked.min.js",
+                "assets/*"
             ],
             "matches": [
-                "https://www.youtube.com/*"
+                "https://www.youtube.com/*",
+                "https://youtube.com/*"
             ]
         }
-    ],
-    "icons": {
-        "16": "assets/icon16.png",
-        "48": "assets/icon48.png",
-        "128": "assets/icon128.png"
-    }
+    ]
 }

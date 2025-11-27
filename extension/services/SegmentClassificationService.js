@@ -26,7 +26,7 @@ export class SegmentClassificationService {
     // We can safely send the whole transcript for most videos (up to several hours).
 
     const formattedTranscript = transcript
-      .map(t => `[${t.start.toFixed(1)}] ${t.text}`)
+      .map((t) => `[${t.start.toFixed(1)}] ${t.text}`)
       .join('\n')
 
     console.log('Sending transcript to Gemini for segmentation...')
@@ -51,8 +51,9 @@ export class SegmentClassificationService {
   _fillContentGaps(classifiedSegments, originalTranscript) {
     if (!originalTranscript.length) return []
 
-    const videoEnd = originalTranscript[originalTranscript.length - 1].start +
-                     originalTranscript[originalTranscript.length - 1].duration
+    const videoEnd =
+      originalTranscript[originalTranscript.length - 1].start +
+      originalTranscript[originalTranscript.length - 1].duration
 
     // Sort segments by start time
     const sorted = classifiedSegments.sort((a, b) => a.start - b.start)
@@ -62,19 +63,20 @@ export class SegmentClassificationService {
 
     for (const segment of sorted) {
       // If there is a gap before this segment, fill it with Content
-      if (segment.start > currentTime + 1) { // 1 second tolerance
+      if (segment.start > currentTime + 1) {
+        // 1 second tolerance
         finalSegments.push({
           label: 'Content',
           start: currentTime,
           end: segment.start,
-          text: 'Main Content'
+          text: 'Main Content',
         })
       }
 
       // Add the classified segment
       finalSegments.push({
         ...segment,
-        text: segment.description || segment.label
+        text: segment.description || segment.label,
       })
 
       currentTime = Math.max(currentTime, segment.end)
@@ -86,7 +88,7 @@ export class SegmentClassificationService {
         label: 'Content',
         start: currentTime,
         end: videoEnd,
-        text: 'Main Content'
+        text: 'Main Content',
       })
     }
 

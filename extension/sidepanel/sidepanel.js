@@ -192,10 +192,12 @@ analyzeBtn.addEventListener('click', async () => {
     renderTranscript(classifiedSegments)
 
     // Send segments to content script for visual markers and auto-skip
-    chrome.tabs.sendMessage(tab.id, {
-      action: 'SHOW_SEGMENTS',
-      segments: classifiedSegments,
-    }).catch(err => console.warn('Failed to send segments to content script:', err))
+    chrome.tabs
+      .sendMessage(tab.id, {
+        action: 'SHOW_SEGMENTS',
+        segments: classifiedSegments,
+      })
+      .catch((err) => console.warn('Failed to send segments to content script:', err))
 
     // 3. Get Options
     const options = await chrome.storage.local.get(['summaryLength', 'targetLanguage'])

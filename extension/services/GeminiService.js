@@ -27,9 +27,11 @@ export class GeminiService {
         const text = await response.text()
         let errorMsg = response.statusText
         try {
-            const errorData = JSON.parse(text)
-            errorMsg = errorData.error?.message || errorMsg
-        } catch (e) { /* ignore */ }
+          const errorData = JSON.parse(text)
+          errorMsg = errorData.error?.message || errorMsg
+        } catch (e) {
+          /* ignore */
+        }
         throw new Error(`Gemini API Error (List Models): ${errorMsg}`)
       }
 
@@ -216,7 +218,10 @@ export class GeminiService {
 
     try {
       const responseText = await this.generateContent(fullPrompt, model)
-      const cleanJson = responseText.replace(/```json/g, '').replace(/```/g, '').trim()
+      const cleanJson = responseText
+        .replace(/```json/g, '')
+        .replace(/```/g, '')
+        .trim()
       return JSON.parse(cleanJson)
     } catch (error) {
       console.error('Segment extraction failed:', error)
@@ -270,7 +275,10 @@ export class GeminiService {
     try {
       const responseText = await this.generateContent(prompt)
       // Clean up potential markdown code blocks in response
-      const cleanJson = responseText.replace(/```json/g, '').replace(/```/g, '').trim()
+      const cleanJson = responseText
+        .replace(/```json/g, '')
+        .replace(/```/g, '')
+        .trim()
       return JSON.parse(cleanJson)
     } catch (error) {
       console.error('Comprehensive analysis failed, falling back to individual calls:', error)
@@ -309,9 +317,9 @@ export class GeminiService {
       }
 
       if (this.models.length > 0) {
-        modelsToTry = this.models.map(m => m.name.replace('models/', ''))
+        modelsToTry = this.models.map((m) => m.name.replace('models/', ''))
       } else if (modelsToTry.length === 0) {
-         modelsToTry = ['gemini-2.0-flash-exp', 'gemini-1.5-flash', 'gemini-1.5-pro']
+        modelsToTry = ['gemini-2.0-flash-exp', 'gemini-1.5-flash', 'gemini-1.5-pro']
       }
     }
 
@@ -328,11 +336,11 @@ export class GeminiService {
         // If it's not a quota/rate limit error, maybe don't retry?
         // For now, we retry on everything to be safe, but we could filter.
         if (!error.message.includes('429') && !error.message.includes('Quota')) {
-           // If it's a bad request (400), retrying might not help, but let's try next model anyway.
+          // If it's a bad request (400), retrying might not help, but let's try next model anyway.
         }
 
         // Small delay before next retry
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        await new Promise((resolve) => setTimeout(resolve, 1000))
       }
     }
 
@@ -341,11 +349,13 @@ export class GeminiService {
 
   async _makeApiCall(prompt, modelName) {
     // Ensure model name doesn't have 'models/' prefix
-    const cleanModelName = modelName.startsWith('models/') ? modelName.replace('models/', '') : modelName
+    const cleanModelName = modelName.startsWith('models/')
+      ? modelName.replace('models/', '')
+      : modelName
     const url = `${this.baseUrl}/models/${cleanModelName}:generateContent?key=${this.apiKey}`
 
     const payload = {
-      contents: [{ parts: [{ text: prompt }] }]
+      contents: [{ parts: [{ text: prompt }] }],
     }
 
     const response = await fetch(url, {
@@ -360,7 +370,9 @@ export class GeminiService {
       try {
         const errorData = JSON.parse(text)
         errorMsg = errorData.error?.message || errorMsg
-      } catch (e) { /* ignore */ }
+      } catch (e) {
+        /* ignore */
+      }
       throw new Error(`Gemini API Error (${response.status}): ${errorMsg}`)
     }
 
