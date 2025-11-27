@@ -46,12 +46,19 @@ export class TranscriptService {
 
     /**
      * Main entry point - tries all methods in priority order
+     * Priority Order:
+     * 1. XHR Interceptor (Fastest if available)
+     * 2. Invidious API (Primary - CORS-free, reliable)
+     * 3. YouTube Direct API (Direct timedtext endpoint)
+     * 4. Background Proxy (Service worker fallback)
+     * 5. DOM Parser (ytInitialPlayerResponse)
      */
     async getTranscript(v, l = 'en') {
         logger.info(`Fetching transcript for video: ${v}, language: ${l}`)
 
         // Priority order as documented
         const methods = [
+            { name: 'XHR Interceptor', fn: () => this._method0_XHRInterceptor(v, l) },
             { name: 'Invidious API', fn: () => this._method1_InvidiousAPI(v, l) },
             { name: 'YouTube Direct API', fn: () => this._method2_YouTubeDirectAPI(v, l) },
             { name: 'Background Proxy', fn: () => this._method3_BackgroundProxy(v, l) },
@@ -142,6 +149,46 @@ export class TranscriptService {
 
         const renderer = playerResponse.captions.playerCaptionsTracklistRenderer
         return renderer?.captionTracks || []
+    }
+
+    // ============================================================================
+    // METHOD 0: XHR Interceptor (Fastest if available)
+    // ============================================================================
+    async _method0_XHRInterceptor(v, l) {
+        logger.debug(`[Method 0] XHR Interceptor for video ${v}, lang ${l}`)
+
+        const intercepted = this.getInterceptedTranscript(l)
+        if (!intercepted) {
+            throw new Error('No intercepted transcript available')
+        }
+
+        // Parse the intercepted data
+        try {
+            const data = JSON.parse(intercepted)
+            if (data.events) {
+                const segments = data.events
+                    .filter(e => e.segs)
+                    .map(e => ({
+                        start: e.tStartMs / 1000,
+                        duration: (e.dDurationMs || 0) / 1000,
+                        text: e.segs.map(s => s.utf8).join('')
+                    }))
+
+                if (segments.length > 0) {
+                    logger.debug(`[Method 0] Interceptor returned ${segments.length} segments`)
+                    return segments
+                }
+            }
+        } catch (e) {
+            // Try XML parsing
+            const segments = this._parseXML(intercepted)
+            if (segments.length > 0) {
+                logger.debug(`[Method 0] Interceptor returned ${segments.length} segments (XML)`)
+                return segments
+            }
+        }
+
+        throw new Error('Failed to parse intercepted transcript')
     }
 
     // ============================================================================

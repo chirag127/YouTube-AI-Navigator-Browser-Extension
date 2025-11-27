@@ -1,12 +1,42 @@
 import { GeminiAPI } from './api.js'
 import { ModelManager } from './models.js'
 import { prompts } from './prompts.js'
+import { StreamingSummaryService } from './streaming-summary.js'
 export class GeminiService {
-    constructor(k) { this.api = new GeminiAPI(k); this.models = new ModelManager(k, 'https://generativelanguage.googleapis.com/v1beta') }
+    constructor(k) {
+        this.api = new GeminiAPI(k);
+        this.models = new ModelManager(k, 'https://generativelanguage.googleapis.com/v1beta');
+        this.streamingSummary = new StreamingSummaryService(k);
+    }
     async fetchAvailableModels() { return this.models.fetch() }
     async generateSummary(t, p = 'Summarize the following video transcript.', m = null, o = {}, onChunk = null) {
         const fp = prompts.summary(t, o);
         return onChunk ? this.generateContentStream(fp, m, onChunk) : this.generateContent(fp, m);
+    }
+
+    /**
+     * Generate streaming summary with clickable timestamps
+     * @param {Array} transcript - Transcript segments
+     * @param {Object} options - { model, language, length }
+     * @param {Function} onChunk - Callback(chunk, fullText, timestamps)
+     * @returns {Promise<Object>} - { summary, timestamps }
+     */
+    async generateStreamingSummaryWithTimestamps(transcript, options = {}, onChunk) {
+        return this.streamingSummary.generateStreamingSummary(transcript, options, onChunk);
+    }
+
+    /**
+     * Convert markdown summary to HTML with clickable timestamps
+     */
+    convertSummaryToHTML(markdownText, videoId) {
+        return this.streamingSummary.convertToHTMLWithClickableTimestamps(markdownText, videoId);
+    }
+
+    /**
+     * Attach click handlers to timestamp links in a container
+     */
+    attachTimestampHandlers(containerElement) {
+        return this.streamingSummary.attachTimestampClickHandlers(containerElement);
     }
     async chatWithVideo(q, c, m = null) { return this.generateContent(prompts.chat(q, c), m) }
     async analyzeCommentSentiment(c, m = null) { if (!c || !c.length) return 'No comments available to analyze.'; return this.generateContent(prompts.comments(c), m) }

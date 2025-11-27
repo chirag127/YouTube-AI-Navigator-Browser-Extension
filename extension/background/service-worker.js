@@ -10,6 +10,7 @@ import { StorageService } from '../services/storage/index.js'
 
 // Service instances (initialized on demand)
 let geminiService, chunkingService, segmentClassificationService, storageService
+let keepAliveInterval = null
 
 async function initializeServices(apiKey) {
   if (!apiKey) throw new Error('API Key required')
@@ -18,6 +19,21 @@ async function initializeServices(apiKey) {
   segmentClassificationService = new SegmentClassificationService(geminiService, chunkingService)
   storageService = new StorageService()
   try { await geminiService.fetchAvailableModels() } catch (e) { }
+}
+
+// Keep service worker alive during long operations
+function startKeepAlive() {
+  if (keepAliveInterval) return
+  keepAliveInterval = setInterval(() => {
+    chrome.runtime.getPlatformInfo(() => { })
+  }, 20000)
+}
+
+function stopKeepAlive() {
+  if (keepAliveInterval) {
+    clearInterval(keepAliveInterval)
+    keepAliveInterval = null
+  }
 }
 
 async function getApiKey() {
@@ -247,59 +263,64 @@ function decodeHTMLEntities(text) {
  */
 async function handleAnalyzeVideo(request, sendResponse) {
   const { transcript, metadata, options = {} } = request
+  startKeepAlive()
 
-  const apiKey = await getApiKey()
-  if (!apiKey) {
-    sendResponse({
-      success: false,
-      error: 'API Key not configured. Please set your Gemini API key in extension options.',
-    })
-    return
-  }
-
-  await initializeServices(apiKey)
-
-  // Format transcript for AI (plain text for analysis)
-  const plainText = transcript.map((t) => t.text).join(' ')
-
-  // Generate comprehensive analysis (summary + FAQ + insights)
-  const analysis = await geminiService.generateComprehensiveAnalysis(plainText, {
-    length: options.length || 'Medium',
-    language: options.language || 'English',
-  })
-
-  // Classify segments
-  let segments = []
   try {
-    segments = await segmentClassificationService.classifyTranscript(transcript)
-  } catch (e) {
-    console.warn('Segment classification failed:', e)
-  }
-
-  // Save to history if enabled
-  const settings = await chrome.storage.sync.get('saveHistory')
-  if (settings.saveHistory !== false && storageService) {
-    try {
-      await storageService.saveTranscript(
-        metadata?.videoId || 'unknown',
-        metadata,
-        transcript,
-        analysis.summary
-      )
-    } catch (e) {
-      console.warn('Failed to save to history:', e)
+    const apiKey = await getApiKey()
+    if (!apiKey) {
+      sendResponse({
+        success: false,
+        error: 'API Key not configured. Please set your Gemini API key in extension options.',
+      })
+      return
     }
-  }
 
-  sendResponse({
-    success: true,
-    data: {
-      summary: analysis.summary,
-      faq: analysis.faq,
-      insights: analysis.insights,
-      segments,
-    },
-  })
+    await initializeServices(apiKey)
+
+    // Format transcript for AI (plain text for analysis)
+    const plainText = transcript.map((t) => t.text).join(' ')
+
+    // Generate comprehensive analysis (summary + FAQ + insights)
+    const analysis = await geminiService.generateComprehensiveAnalysis(plainText, {
+      length: options.length || 'Medium',
+      language: options.language || 'English',
+    })
+
+    // Classify segments
+    let segments = []
+    try {
+      segments = await segmentClassificationService.classifyTranscript(transcript)
+    } catch (e) {
+      console.warn('Segment classification failed:', e)
+    }
+
+    // Save to history if enabled
+    const settings = await chrome.storage.sync.get('saveHistory')
+    if (settings.saveHistory !== false && storageService) {
+      try {
+        await storageService.saveTranscript(
+          metadata?.videoId || 'unknown',
+          metadata,
+          transcript,
+          analysis.summary
+        )
+      } catch (e) {
+        console.warn('Failed to save to history:', e)
+      }
+    }
+
+    sendResponse({
+      success: true,
+      data: {
+        summary: analysis.summary,
+        faq: analysis.faq,
+        insights: analysis.insights,
+        segments,
+      },
+    })
+  } finally {
+    stopKeepAlive()
+  }
 }
 
 /**

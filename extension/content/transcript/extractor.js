@@ -58,8 +58,9 @@ class TranscriptExtractor {
                     this._saveToCache(videoId, lang, result)
                     return result
                 }
+                this.logger.error(`Preferred method '${preferredMethod}' returned empty result`)
             } catch (e) {
-                this.logger.warn(`Preferred method '${preferredMethod}' failed:`, e.message)
+                this.logger.error(`Preferred method '${preferredMethod}' failed:`, e.message)
             }
         }
 
@@ -84,9 +85,10 @@ class TranscriptExtractor {
                     this._saveToCache(videoId, lang, result)
                     return result
                 }
+                this.logger.warn(`Method '${method}' returned empty result`)
             } catch (e) {
                 lastError = e
-                this.logger.debug(`Method '${method}' failed:`, e.message)
+                this.logger.error(`Method '${method}' failed:`, e.message)
             }
         }
 
@@ -95,6 +97,12 @@ class TranscriptExtractor {
 
     /**
      * Extract using specific method
+     * Priority Order:
+     * 1. XHR Interceptor (Fastest if available)
+     * 2. Invidious API (Primary - CORS-free, reliable)
+     * 3. YouTube Direct API (Direct timedtext endpoint)
+     * 4. Background Proxy (Service worker fallback)
+     * 5. DOM Parser (ytInitialPlayerResponse)
      */
     async _extractWithMethod(method, videoId, lang, timeout) {
         const timeoutPromise = new Promise((_, reject) => {
@@ -127,7 +135,9 @@ class TranscriptExtractor {
     async _extractFromInterceptor(videoId, lang) {
         const transcript = transcriptInterceptor.getTranscript(videoId, lang)
         if (!transcript || transcript.length === 0) {
-            throw new Error('No intercepted transcript available')
+            const error = new Error('No intercepted transcript available')
+            this.logger.error('XHR Interceptor method failed:', error.message)
+            throw error
         }
         return transcript
     }
@@ -143,7 +153,9 @@ class TranscriptExtractor {
         })
 
         if (!response.success || !response.data) {
-            throw new Error(response.error || 'Invidious API failed')
+            const error = new Error(response.error || 'Invidious API failed')
+            this.logger.error('Invidious API method failed:', error.message)
+            throw error
         }
 
         return response.data
