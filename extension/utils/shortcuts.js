@@ -1,6 +1,9 @@
 export const cl = (...args) => console.log(...args);
 export const ce = (...args) => console.error(...args);
 export const cw = (...args) => console.warn(...args);
+export const ci = (...args) => console.info(...args);
+export const jstr = JSON.stringify;
+export const jpar = JSON.parse;
 export const qs = (s, p = document) => p.querySelector(s);
 export const qsa = (s, p = document) => [...p.querySelectorAll(s)];
 export const ael = (e, t, h, o) => e.addEventListener(t, h, o);

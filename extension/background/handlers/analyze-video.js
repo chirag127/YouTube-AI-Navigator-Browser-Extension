@@ -1,6 +1,7 @@
 import { initializeServices, getServices } from "../services.js";
 import { getApiKey } from "../utils/api-key.js";
 import geniusLyricsAPI from "../../api/genius-lyrics.js";
+import sponsorBlockAPI from "../../api/sponsorblock.js";
 
 let keepAliveInterval = null;
 
@@ -88,6 +89,24 @@ export async function handleAnalyzeVideo(request, sendResponse) {
             } catch (e) {}
         }
 
+        // Fetch SponsorBlock segments
+        let sponsorBlockSegments = [];
+        if (videoId) {
+            try {
+                sponsorBlockSegments = await sponsorBlockAPI.fetchSegments(
+                    videoId
+                );
+                console.log(
+                    `[AnalyzeVideo] SponsorBlock segments: ${sponsorBlockSegments.length}`
+                );
+            } catch (e) {
+                console.warn(
+                    "[AnalyzeVideo] SponsorBlock fetch failed:",
+                    e.message
+                );
+            }
+        }
+
         if ((!transcript || !transcript.length) && !lyrics) {
             throw new Error("No transcript or lyrics available");
         }
@@ -104,6 +123,7 @@ export async function handleAnalyzeVideo(request, sendResponse) {
             lyrics: lyrics,
             comments: comments || [],
             metadata: metadata,
+            sponsorBlockSegments: sponsorBlockSegments,
         };
 
         const analysis = await gemini.generateComprehensiveAnalysis(

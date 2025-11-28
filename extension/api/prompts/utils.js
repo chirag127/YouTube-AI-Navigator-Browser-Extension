@@ -1,4 +1,9 @@
-export const buildContextString = ({ metadata, lyrics, comments }) => {
+export const buildContextString = ({
+    metadata,
+    lyrics,
+    comments,
+    sponsorBlockSegments,
+}) => {
     let title = `Original Title: ${
         metadata?.originalTitle || metadata?.title || "Unknown"
     }`;
@@ -12,6 +17,28 @@ export const buildContextString = ({ metadata, lyrics, comments }) => {
             comments
                 .slice(0, 10)
                 .map((c) => `- ${c.textDisplay}`)
+                .join("\n");
+    }
+
+    let sponsorBlockCtx = "";
+    if (sponsorBlockSegments?.length) {
+        const formatTime = (s) => {
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60);
+            return `${m}:${sec.toString().padStart(2, "0")}`;
+        };
+
+        sponsorBlockCtx =
+            "\n\nCommunity Segments (SponsorBlock):\n" +
+            sponsorBlockSegments
+                .map(
+                    (seg) =>
+                        `- [${seg.category}] ${formatTime(
+                            seg.start
+                        )} - ${formatTime(seg.end)} (${seg.votes} votes${
+                            seg.locked ? ", locked" : ""
+                        })`
+                )
                 .join("\n");
     }
 
@@ -30,5 +57,6 @@ export const buildContextString = ({ metadata, lyrics, comments }) => {
             : ""
     }
     ${commentsCtx}
+    ${sponsorBlockCtx}
     `;
 };

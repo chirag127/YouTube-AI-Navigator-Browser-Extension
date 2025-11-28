@@ -1,16 +1,18 @@
+import { buildContextString } from "./utils.js";
+
 export const chat = (question, context, metadata) => {
-    let title = `Original Title: ${
-        metadata?.originalTitle || metadata?.title || "Unknown"
-    }`;
-    if (metadata?.deArrowTitle)
-        title += `\nCommunity Title (DeArrow): ${metadata.deArrowTitle}`;
+    const contextObj = {
+        metadata: metadata || {},
+        transcript: context,
+        lyrics: null,
+        comments: [],
+        sponsorBlockSegments: [],
+    };
 
     return `
     Role: You are a helpful AI assistant for a YouTube video.
 
-    Context:
-    ${title}
-    Channel: ${metadata?.author || "Unknown"}
+    ${buildContextString(contextObj)}
 
     Video Transcript Context: ${context}
 
@@ -20,5 +22,6 @@ export const chat = (question, context, metadata) => {
     - Answer based ONLY on the video context provided.
     - Be concise and helpful.
     - If the answer is not in the video, state that clearly.
+    - Reference timestamps or community segments when relevant.
     `;
 };
