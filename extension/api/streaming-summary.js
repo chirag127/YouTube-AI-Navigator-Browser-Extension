@@ -8,6 +8,7 @@ export class StreamingSummaryService {
     }
 
     async generateStreamingSummary(transcript, options, onChunk) {
+        console.log("[StreamingSummary] generateStreamingSummary started", { options });
         const prompt = prompts.comprehensive(transcript, options);
         // This actually delegates to the main Gemini service call in `gemini.js` which handles the API call.
         // But `gemini.js` calls `this.streamingSummary.generateStreamingSummary`.
@@ -109,6 +110,7 @@ export class StreamingSummaryService {
         }
 
         if (!success) {
+            console.error("[StreamingSummary] All models failed", lastError);
             throw new Error(
                 `All models failed. Last error: ${lastError?.message}`
             );
@@ -118,6 +120,13 @@ export class StreamingSummaryService {
         const summary = this.extractSection(fullText, "Summary");
         const insights = this.extractSection(fullText, "Key Insights");
         const faq = this.extractSection(fullText, "FAQ");
+
+        console.log("[StreamingSummary] Extraction complete", {
+            summaryLength: summary.length,
+            insightsLength: insights.length,
+            faqLength: faq.length,
+            timestampsCount: extractedTimestamps.length
+        });
 
         return {
             summary: summary || fullText, // Fallback to full text if parsing fails

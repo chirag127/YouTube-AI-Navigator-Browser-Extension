@@ -330,8 +330,13 @@ async function handleAnalyzeVideo(request, sendResponse) {
     startKeepAlive();
 
     try {
+        console.log("[Background] handleAnalyzeVideo started", {
+            videoId,
+            options,
+        });
         const apiKey = await getApiKey();
         if (!apiKey) {
+            console.warn("[Background] API Key missing");
             sendResponse({
                 success: false,
                 error: "API Key not configured. Please set your Gemini API key in extension options.",
@@ -360,6 +365,7 @@ async function handleAnalyzeVideo(request, sendResponse) {
             }
         }
 
+        console.log("[Background] Starting Gemini analysis...");
         // Pass metadata to the analysis
         const analysis =
             await geminiService.generateStreamingSummaryWithTimestamps(
@@ -372,11 +378,21 @@ async function handleAnalyzeVideo(request, sendResponse) {
                 }
             );
 
+        console.log("[Background] Gemini analysis complete", {
+            hasSummary: !!analysis.summary,
+            hasFaq: !!analysis.faq,
+            hasInsights: !!analysis.insights,
+        });
+
         let segments = [];
         try {
+            console.log("[Background] Starting segment classification...");
             segments = await segmentClassificationService.classifyTranscript(
                 transcript
             );
+            console.log("[Background] Segment classification complete", {
+                count: segments.length,
+            });
         } catch (e) {
             console.warn("Segment classification failed:", e);
         }
@@ -408,6 +424,9 @@ async function handleAnalyzeVideo(request, sendResponse) {
                 timestamps: analysis.timestamps,
             },
         });
+    } catch (error) {
+        console.error("[Background] handleAnalyzeVideo failed:", error);
+        sendResponse({ success: false, error: error.message });
     } finally {
         stopKeepAlive();
     }

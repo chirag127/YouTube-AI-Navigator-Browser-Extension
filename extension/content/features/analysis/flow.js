@@ -34,7 +34,11 @@ export async function startAnalysis() {
             contentArea,
             `Analyzing ${transcript.length} segments with AI...`
         );
+        console.log("[Flow] Starting AI analysis...", {
+            transcriptLength: transcript.length,
+        });
         const result = await analyzeVideo(transcript, metadata);
+        console.log("[Flow] AI analysis result received", result);
 
         if (!result.success) {
             throw new Error(result.error || "Analysis failed");
