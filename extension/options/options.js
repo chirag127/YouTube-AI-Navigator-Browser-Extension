@@ -323,11 +323,17 @@ async function refreshModelList() {
 
         // Get prioritized list logic from ModelManager (it sorts them)
         // We just populate them
-        models.forEach((m) => {
-            const name = m.name.replace("models/", "");
+        models.forEach((modelName) => {
+            // ModelManager already returns cleaned names (e.g. "gemini-1.5-flash")
+            // but let's be safe if it changes
+            const name =
+                typeof modelName === "string"
+                    ? modelName.replace("models/", "")
+                    : modelName.name?.replace("models/", "") || modelName;
+
             const opt = document.createElement("option");
             opt.value = name;
-            opt.textContent = `${m.displayName || name} (${m.version || ""})`;
+            opt.textContent = name; // Display name is just the ID for now
             select.appendChild(opt);
         });
 
