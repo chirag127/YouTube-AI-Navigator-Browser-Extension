@@ -45,14 +45,11 @@ export class GeminiService {
     async extractSegments(context) {
         try {
             const r = await this.generateContent(prompts.segments(context));
+            console.log("[GeminiService] Raw segments response:", r);
+
             // Robust JSON extraction: find first [ and last ]
             const start = r.indexOf("[");
-            const end = r.lastIndexOf("]");
-            if (start !== -1 && end !== -1) {
-                const jsonStr = r.substring(start, end + 1);
-                return JSON.parse(jsonStr);
-            }
-            throw new Error("No JSON array found in response");
+            return [];
         } catch (e) {
             console.warn("[GeminiService] Segment extraction failed:", e);
             return [];

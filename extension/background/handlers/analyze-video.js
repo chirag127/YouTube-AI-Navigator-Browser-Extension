@@ -42,7 +42,15 @@ export async function handleAnalyzeVideo(request, sendResponse) {
 
         if (useCache && videoId) {
             const cached = await storage.getVideoData(videoId);
-            if (cached?.summary && cached?.segments) {
+            // Only use cache if we have summary AND segments (and segments is not empty array)
+            if (
+                cached?.summary &&
+                cached?.segments &&
+                cached.segments.length > 0
+            ) {
+                console.log(
+                    "[AnalyzeVideo] Returning cached data with segments"
+                );
                 sendResponse({
                     success: true,
                     fromCache: true,
@@ -55,6 +63,13 @@ export async function handleAnalyzeVideo(request, sendResponse) {
                     },
                 });
                 return;
+            } else if (cached?.summary) {
+                console.log(
+                    "[AnalyzeVideo] Cache exists but segments missing/empty. Re-generating segments..."
+                );
+                // If we have summary but no segments, we might want to just generate segments
+                // But for simplicity and robustness, let's re-run the whole flow or at least the segment part.
+                // Given the structure, we'll proceed to generate.
             }
         }
 
@@ -101,13 +116,20 @@ export async function handleAnalyzeVideo(request, sendResponse) {
         );
 
         let segments = [];
+        console.log("[AnalyzeVideo] Options:", JSON.stringify(options));
         if (options.generateSegments) {
+            console.log("[AnalyzeVideo] Generating segments...");
             segments = await segmentClassification.classifyTranscript({
                 transcript: transcript || [],
                 metadata,
                 lyrics,
                 comments,
             });
+            console.log("[AnalyzeVideo] Segments generated:", segments.length);
+        } else {
+            console.log(
+                "[AnalyzeVideo] Segment generation disabled in options"
+            );
         }
 
         if (videoId && storage) {
