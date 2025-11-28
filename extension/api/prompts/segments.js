@@ -13,8 +13,8 @@ export const segments = (context) => {
 
     CRITICAL:
     1. Use SHORT keys.
-    2. Descriptions MUST be concise summaries (max 15 words). NO raw transcript.
-    3. Include timestamp range in description (e.g., "Summary").
+    2. MERGE adjacent segments of the same category if they cover the same topic. Do NOT fragment continuous topics.
+    3. Descriptions MUST be concise summaries (max 15 words). NO raw transcript.
 
     Context:
     ${buildContextString(context)}
