@@ -68,6 +68,14 @@ _Note: The extension works perfectly with just the Gemini Key. The other APIs si
 
 The codebase is engineered for production-grade reliability, performance, and maintainability.
 
+### **Unbreakable UI Architecture**
+
+The user interface is built to survive the hostile environment of the modern web:
+
+-   **Self-Healing DOM Injection:** A dedicated `MutationObserver` monitors the YouTube sidebar 60 times per second. If the AI Widget is displaced, covered, or removed by YouTube's dynamic navigation, it is instantly re-injected at the top.
+-   **Z-Index Supremacy:** Engineered with a calculated stacking context (`z-index: 2202`) to ensure it floats above all YouTube native elements, including playlists, transcripts, and ads.
+-   **SPA-Aware Navigation:** The extension listens to YouTube's internal `yt-navigate-finish` events to handle soft navigations seamlessly, ensuring the widget is always present without page reloads.
+
 ### **Modular Design Pattern**
 
 We strictly adhere to the **Single Responsibility Principle** with maximum modularity:

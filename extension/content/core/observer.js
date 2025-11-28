@@ -37,7 +37,11 @@ export function initObserver() {
         if (window.location.pathname !== "/watch") return;
         const u = new URLSearchParams(window.location.search),
             v = u.get("v");
-        if (v && v !== state.currentVideoId) {
+
+        // If video ID changed OR widget is missing, we might need to act
+        const widgetExists = document.getElementById("yt-ai-master-widget");
+
+        if ((v && v !== state.currentVideoId) || (v && !widgetExists)) {
             // Debounce to avoid multiple triggers
             if (debounceTimer) clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
@@ -54,9 +58,13 @@ export function initObserver() {
 }
 
 async function handleNewVideo(v) {
-    log("New video detected:", v);
-    state.currentVideoId = v;
-    resetState();
+    log("New video detected or widget missing:", v);
+
+    // Only reset state if it's actually a new video
+    if (v !== state.currentVideoId) {
+        state.currentVideoId = v;
+        resetState();
+    }
 
     try {
         await injectWidget();
@@ -77,11 +85,16 @@ function checkCurrentPage() {
         const u = new URLSearchParams(window.location.search),
             v = u.get("v");
         if (v) {
-            if (v === state.currentVideoId) {
-                log("Same video detected, skipping re-initialization:", v);
+            const widgetExists = document.getElementById("yt-ai-master-widget");
+
+            if (v === state.currentVideoId && widgetExists) {
+                log(
+                    "Same video and widget exists, skipping re-initialization:",
+                    v
+                );
                 return;
             }
-            log("Video page detected:", v);
+            log("Video page detected (New ID or Missing Widget):", v);
             handleNewVideo(v);
         } else {
             log("No video ID found in URL");

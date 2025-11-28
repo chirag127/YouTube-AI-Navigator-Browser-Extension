@@ -31,9 +31,6 @@ export const segments = (context) => {
        - Calculate the total duration of the video based on the transcript.
        - If a single category (e.g., Sponsor, Self Promotion, etc.) occupies MORE THAN 50% of the video's total duration:
          - Set "fullVideoLabel" to that category's code (e.g., "S").
-         - DO NOT create any segments for that specific category. The "fullVideoLabel" covers it.
-         - Only create segments for OTHER categories (e.g., if full video is Sponsor, still mark Intermissions or Self Promotion if they exist).
-       - If no category exceeds 50%, set "fullVideoLabel" to null.
        - Many videos are completely being sponsored by one company. So does will be the full sponsor.
     5. SPONSORBLOCK (STRICT PRIORITY):
        - IF Community Segments are provided: They are VERIFIED GROUND TRUTH. Use their EXACT times/categories.
