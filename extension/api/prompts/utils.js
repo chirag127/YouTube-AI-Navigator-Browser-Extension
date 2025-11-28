@@ -17,7 +17,7 @@ export const buildContextString = ({
             "\nTop Comments:\n" +
             comments
                 .slice(0, 10)
-                .map((c) => `- ${c.textDisplay}`)
+                .map((c) => `- ${c.author}: ${c.text} (Likes: ${c.likes})`)
                 .join("\n");
     }
 

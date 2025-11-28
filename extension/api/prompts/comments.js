@@ -1,7 +1,5 @@
 export const comments = (comments) => {
-    const text = comments
-        .map((c) => `- ${c.authorText}: ${c.textDisplay}`)
-        .join("\n");
+    const text = comments.map((c) => `- ${c.author}: ${c.text}`).join("\n");
     return `
     Task: Analyze the sentiment and key themes of these YouTube comments.
 
