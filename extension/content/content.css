@@ -9,7 +9,7 @@
     --yt-ai-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-/* Widget Container */
+/* Widget Container - ALWAYS AT TOP */
 #yt-ai-master-widget {
     background: var(--yt-ai-bg);
     border: 1px solid var(--yt-ai-border);
@@ -23,9 +23,10 @@
     max-height: 700px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Ensure visibility and stacking */
-    position: relative;
-    z-index: 2202;
+    /* CRITICAL: Ensure widget is always at top */
+    position: relative !important;
+    z-index: 2202 !important;
+    order: -9999 !important; /* Force to top in flex layouts */
 }
 
 #yt-ai-master-widget:hover {

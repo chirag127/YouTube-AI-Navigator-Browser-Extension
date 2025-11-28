@@ -210,16 +210,24 @@ function setupObservers(container) {
         resizeObserver.observe(player);
     }
 
-    // 2. Position Enforcement (Keep at top)
+    // 2. Position Enforcement (Keep at top) - Enhanced
     if (containerObserver) containerObserver.disconnect();
     containerObserver = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
             if (mutation.type === "childList") {
+                // Check if widget was removed
+                const removedNodes = Array.from(mutation.removedNodes);
+                if (removedNodes.includes(widgetContainer)) {
+                    log("Widget was removed, reattaching...");
+                    setTimeout(() => reattachWidget(), 100);
+                    return;
+                }
+
                 // Check if we are still the first child
                 if (container.firstChild !== widgetContainer) {
                     // Avoid infinite loops by checking if we are just being moved
-                    const nodes = Array.from(mutation.addedNodes);
-                    if (!nodes.includes(widgetContainer)) {
+                    const addedNodes = Array.from(mutation.addedNodes);
+                    if (!addedNodes.includes(widgetContainer)) {
                         ensureWidgetAtTop(container);
                     }
                 }
@@ -227,7 +235,30 @@ function setupObservers(container) {
         }
     });
 
-    containerObserver.observe(container, { childList: true });
+    containerObserver.observe(container, {
+        childList: true,
+        subtree: false
+    });
+
+    // 3. Watch for container replacement (YouTube SPA navigation)
+    const bodyObserver = new MutationObserver(() => {
+        if (!document.contains(widgetContainer)) {
+            log("Widget lost from DOM tree, reattaching...");
+            reattachWidget();
+        } else if (widgetContainer.parentElement !== lastKnownContainer) {
+            log("Widget parent changed, updating observers...");
+            const newParent = widgetContainer.parentElement;
+            if (newParent) {
+                lastKnownContainer = newParent;
+                setupObservers(newParent);
+            }
+        }
+    });
+
+    bodyObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 }
 
 export function getWidget() {

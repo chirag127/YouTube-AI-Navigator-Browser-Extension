@@ -70,6 +70,18 @@ async function handleNewVideo(v) {
         await injectWidget();
         log("Widget injected successfully");
 
+        // Double-check position after a short delay (YouTube may still be loading)
+        setTimeout(() => {
+            const widget = document.getElementById("yt-ai-master-widget");
+            if (widget && widget.parentElement) {
+                const parent = widget.parentElement;
+                if (parent.firstChild !== widget) {
+                    log("Widget not at top after injection, correcting...");
+                    parent.insertBefore(widget, parent.firstChild);
+                }
+            }
+        }, 500);
+
         if (state.settings.autoAnalyze) {
             setTimeout(() => startAnalysis(), 1500);
         }
