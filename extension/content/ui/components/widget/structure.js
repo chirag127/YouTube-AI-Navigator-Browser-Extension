@@ -3,8 +3,7 @@ export function createWidgetHTML() {
     <div class="yt-ai-header">
         <div class="yt-ai-title">✨ YouTube AI Master</div>
         <div class="yt-ai-header-actions">
-            <button id="yt-ai-refresh-btn" class="yt-ai-icon-btn" title="Re-analyze">🔄</button>
-            <button id="yt-ai-settings-btn" class="yt-ai-icon-btn" title="Settings">⚙️</button>
+
             <button id="yt-ai-close-btn" class="yt-ai-icon-btn" title="Close">❌</button>
         </div>
     </div>
