@@ -1,6 +1,7 @@
 const colors = {
     Sponsor: "#00d26a",
-    "Unpaid/Self Promotion": "#ffff00",
+    "Self Promotion": "#ffff00",
+    "Unpaid Promotion": "#ff8800",
     "Exclusive Access": "#008b45",
     "Interaction Reminder (Subscribe)": "#a020f0",
     Highlight: "#ff0055",
@@ -27,9 +28,8 @@ export const renderTimeline = (segs, dur) => {
         const m = document.createElement("div");
         const l = (s.start / dur) * 100;
         const w = ((s.end - s.start) / dur) * 100;
-        m.style.cssText = `position:absolute;left:${l}%;width:${w}%;height:100%;background:${
-            colors[s.label] || "#fff"
-        };opacity:0.6;pointer-events:auto;cursor:pointer`;
+        m.style.cssText = `position:absolute;left:${l}%;width:${w}%;height:100%;background:${colors[s.label] || "#fff"
+            };opacity:0.6;pointer-events:auto;cursor:pointer`;
         m.title = `${s.label}: ${s.description}`;
         m.onclick = () => {
             const v = document.querySelector("video");

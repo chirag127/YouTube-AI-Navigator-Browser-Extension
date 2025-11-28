@@ -156,14 +156,17 @@ export function renderSegments(container, segments) {
 
 ```javascript
 const colors = {
-    Sponsor: "#ff0", // Yellow
-    "Interaction Reminder": "#0f0", // Green
-    "Self Promotion": "#f80", // Orange
-    "Unpaid Promotion": "#0ff", // Cyan
-    Highlight: "#f0f", // Magenta
-    "Preview/Recap": "#88f", // Light Blue
-    "Hook/Greetings": "#aaa", // Gray
-    "Tangents/Jokes": "#fa0", // Dark Orange
+    Sponsor: "#00d26a", // Green
+    "Interaction Reminder (Subscribe)": "#a020f0", // Purple
+    "Self Promotion": "#ffff00", // Yellow
+    "Unpaid Promotion": "#ff8800", // Orange
+    Highlight: "#ff0055", // Pink
+    "Intermission/Intro Animation": "#00ffff", // Cyan
+    "Endcards/Credits": "#0000ff", // Blue
+    "Preview/Recap": "#00bfff", // Light Blue
+    "Hook/Greetings": "#4169e1", // Royal Blue
+    "Tangents/Jokes": "#9400d3", // Dark Violet
+    "Exclusive Access": "#008b45", // Dark Green
 };
 ```
 

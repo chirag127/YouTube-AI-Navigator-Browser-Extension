@@ -367,8 +367,11 @@
 .yt-ai-segment-item.InteractionReminderSubscribe {
     border-left-color: #a020f0;
 }
-.yt-ai-segment-item.UnpaidSelfPromotion {
+.yt-ai-segment-item.SelfPromotion {
     border-left-color: #ffff00;
+}
+.yt-ai-segment-item.UnpaidPromotion {
+    border-left-color: #ff8800;
 }
 .yt-ai-segment-item.ExclusiveAccess {
     border-left-color: #008b45;

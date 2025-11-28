@@ -21,7 +21,8 @@ export const DEFAULT_SETTINGS = {
 
 export const SEGMENT_CATEGORIES = [
     { id: "Sponsor", label: "Sponsor", color: "#00d26a" },
-    { id: "Unpaid/Self Promotion", label: "Self Promotion", color: "#ffff00" },
+    { id: "Self Promotion", label: "Self Promotion", color: "#ffff00" },
+    { id: "Unpaid Promotion", label: "Unpaid Promotion", color: "#ff8800" },
     { id: "Exclusive Access", label: "Exclusive Access", color: "#008b45" },
     {
         id: "Interaction Reminder (Subscribe)",

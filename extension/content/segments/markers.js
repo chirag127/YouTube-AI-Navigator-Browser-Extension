@@ -28,7 +28,8 @@ export function injectSegmentMarkers(s) {
 function getSegmentColor(l) {
     const c = {
         Sponsor: "#00d26a",
-        "Unpaid/Self Promotion": "#ffff00",
+        "Self Promotion": "#ffff00",
+        "Unpaid Promotion": "#ff8800",
         "Exclusive Access": "#008b45",
         "Interaction Reminder (Subscribe)": "#a020f0",
         Highlight: "#ff0055",
