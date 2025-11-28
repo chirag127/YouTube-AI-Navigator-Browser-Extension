@@ -168,6 +168,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     await handleSaveComments(sanitized, sendResponse);
                     break;
 
+                case "OPEN_OPTIONS":
+                    chrome.runtime.openOptionsPage();
+                    sendResponse({ success: true });
+                    break;
+
                 default:
                     console.warn("Unknown message type:", action);
                     sendResponse({

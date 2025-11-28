@@ -6,6 +6,7 @@ class YouTubeExtractor {
     constructor() {
         this.originalFetch = window.fetch.bind(window);
         this.listeners = new Map();
+        this.interceptedUrls = new Set(); // To avoid infinite loops
         this.initInterceptor();
         this.initNavigationListener();
 
@@ -28,13 +29,15 @@ class YouTubeExtractor {
             const [resource, config] = args;
             const url = resource ? resource.toString() : "";
 
+            // Avoid intercepting our own re-fetches
+            if (this.interceptedUrls.has(url)) {
+                return this.originalFetch(resource, config);
+            }
+
             const response = await this.originalFetch(resource, config);
 
-            // Clone to avoid consuming the stream
-            const clone = response.clone();
-
             // Async processing
-            this.processResponse(url, clone).catch((err) => {
+            this.processResponse(url, response).catch((err) => {
                 console.error(
                     "[YouTubeExtractor] Error processing response:",
                     err
@@ -48,14 +51,16 @@ class YouTubeExtractor {
     async processResponse(url, response) {
         if (url.includes("/youtubei/v1/player")) {
             try {
-                const data = await response.json();
+                const clone = response.clone();
+                const data = await clone.json();
                 this.emit("metadata", data);
             } catch (e) {
                 /* ignore json parse errors */
             }
         } else if (url.includes("/youtubei/v1/next")) {
             try {
-                const data = await response.json();
+                const clone = response.clone();
+                const data = await clone.json();
                 this.emit("comments", data);
             } catch (e) {
                 /* ignore */
@@ -64,26 +69,60 @@ class YouTubeExtractor {
             url.includes("/api/timedtext") ||
             url.includes("/youtubei/v1/get_transcript")
         ) {
-            try {
-                const data = await response.json();
-                this.emit("transcript", data);
-            } catch (e) {
-                /* ignore */
-            }
+            // Found transcript URL!
+            // Instead of cloning/reading the original response (which might fail or be empty),
+            // we capture the URL and re-fetch it explicitly.
+            this.handleTimedTextUrl(url);
         } else if (url.includes("/youtubei/v1/live_chat/get_live_chat")) {
             try {
-                const data = await response.json();
+                const clone = response.clone();
+                const data = await clone.json();
                 this.emit("live_chat", data);
             } catch (e) {
                 /* ignore */
             }
         } else if (url.includes("/youtubei/v1/reel/")) {
             try {
-                const data = await response.json();
+                const clone = response.clone();
+                const data = await clone.json();
                 this.emit("shorts_data", data);
             } catch (e) {
                 /* ignore */
             }
+        }
+    }
+
+    async handleTimedTextUrl(url) {
+        if (this.interceptedUrls.has(url)) return; // Already handling/handled
+
+        console.log("[YouTubeExtractor] Captured transcript URL, re-fetching:", url);
+        this.interceptedUrls.add(url);
+
+        try {
+            // Perform a clean fetch using the original fetch function
+            const response = await this.originalFetch(url);
+
+            // Check if response is ok
+            if (!response.ok) {
+                console.error("[YouTubeExtractor] Re-fetch failed:", response.status);
+                this.interceptedUrls.delete(url); // Allow retry
+                return;
+            }
+
+            const data = await response.json();
+
+            console.log("[YouTubeExtractor] Successfully re-fetched transcript data");
+            this.emit("transcript", data);
+
+            // Remove from set after a while to allow future refreshes if needed,
+            // but keep it briefly to avoid immediate duplicate processing
+            setTimeout(() => {
+                this.interceptedUrls.delete(url);
+            }, 10000);
+
+        } catch (error) {
+            console.error("[YouTubeExtractor] Error re-fetching transcript:", error);
+            this.interceptedUrls.delete(url);
         }
     }
 

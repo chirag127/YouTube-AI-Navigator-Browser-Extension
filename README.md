@@ -1,159 +1,158 @@
 # YouTube AI Master
 
-Free YouTube extension using Google Gemini AI for video summarization, segment classification, and interactive chat. A powerful open-source alternative to paid tools.
+**The Ultimate YouTube AI Companion**
 
-## Features
-
--   **AI Summaries**: Instant video overviews in 3 lengths (Short/Medium/Detailed)
--   **Smart Segments**: Auto-classify sponsors, intros, highlights, promotions
--   **Auto-Skip**: Skip sponsors/intros automatically with visual notifications
--   **Multilingual**: Summarize in 40+ languages
--   **Interactive Chat**: Ask questions about video content
--   **FAQ Generation**: Auto-generate FAQs from videos
--   **Transcript Export**: Clean, clickable transcripts with timestamps
--   **Comment Analysis**: Sentiment analysis of top comments
--   **History**: Save and search analyzed videos
-
-## Installation
-
-### Quick Start
-
-1. Clone repository: `git clone https://github.com/yourusername/youtube-ai-master.git`
-2. Open Chrome → `chrome://extensions/`
-3. Enable "Developer mode"
-4. Click "Load unpacked" → Select `extension` folder
-5. Get free Gemini API key from [Google AI Studio](https://ai.google.dev/)
-6. Open extension options → Paste API key
-
-### Requirements
-
--   Chrome/Edge browser
--   Free Gemini API key (no credit card required)
-
-## Usage
-
-1. Navigate to any YouTube video
-2. Widget appears in sidebar automatically
-3. Click "Analyze Video" or enable auto-analysis in settings
-4. Switch tabs: Summary | Transcript | Segments | Comments
-5. Click timestamps to jump to specific moments
-
-### Keyboard Shortcuts
-
--   `Ctrl+Enter` - Send chat message
--   `Ctrl+K` - Focus chat input
--   `Ctrl+R` - Reanalyze video
--   `Esc` - Clear input
-
-## Architecture
-
-```
-extension/
-├── manifest.json          # Extension config
-├── background/            # Service worker (API calls, processing)
-├── content/               # YouTube page integration
-│   ├── core/              # State management, video detection
-│   ├── transcript/        # Multi-method transcript extraction
-│   ├── ui/                # Widget components and renderers
-│   └── utils/             # Time formatting, DOM helpers
-├── services/              # Business logic
-│   ├── gemini/            # AI service (API, models, streaming)
-│   ├── segments/          # Segment classification
-│   ├── storage/           # History management
-│   └── chunking/          # Text processing
-├── options/               # Settings page
-├── popup/                 # Quick access popup
-├── sidepanel/             # Alternative UI
-└── history/               # Analysis history viewer
-```
-
-### Transcript Extraction
-
-Multi-method fallback system:
-
-1. **Invidious API** - Privacy-focused, CORS-free
-2. **YouTube Direct API** - Official captions
-3. **DOM Parsing** - ytInitialPlayerResponse fallback
-
-### AI Models
-
-Supports latest Gemini models:
-
--   `gemini-2.5-pro` - Most powerful
--   `gemini-2.0-flash` - Fast & capable
--   `gemini-2.5-flash-lite` - Lightweight
--   `gemini-1.5-pro` - Balanced
--   `gemini-1.5-flash` - Quick responses
-
-## Development
-
-```bash
-# Install dependencies
-npm install
-
-# Lint code
-npx biome check extension
-
-# Load extension
-# Chrome → chrome://extensions/ → Load unpacked → extension/
-```
-
-## Configuration
-
-### Settings (chrome://extensions → YouTube AI Master → Options)
-
--   **API Key**: Your Gemini API key
--   **Model**: AI model selection
--   **Summary Length**: Short/Medium/Detailed
--   **Output Language**: 40+ languages
--   **Auto-Analysis**: Analyze videos on page load
--   **Auto-Skip**: Skip sponsors/intros automatically
--   **Save History**: Store analysis results
-
-### API Limits (Free Tier)
-
--   15 requests/minute
--   1500 requests/day
--   1M token context window
-
-## Troubleshooting
-
-| Issue                     | Solution                                   |
-| ------------------------- | ------------------------------------------ |
-| "No captions found"       | Video lacks captions - try another video   |
-| "API Key not configured"  | Add Gemini API key in options              |
-| Widget not appearing      | Refresh page, check you're on `/watch` URL |
-| Rate limiting (429)       | Wait 1 minute, reduce analysis frequency   |
-| Service worker terminated | Extension auto-recovers, refresh if needed |
-
-## Privacy
-
--   **100% Client-Side**: All processing in your browser
--   **No Tracking**: Zero analytics or telemetry
--   **Local Storage**: API key stored locally only
--   **No Third-Party**: Only connects to YouTube & Gemini API
--   **Open Source**: Audit the code yourself
-
-## Contributing
-
-1. Fork repository
-2. Create feature branch: `git checkout -b feature-name`
-3. Commit changes: `git commit -m 'Add feature'`
-4. Push branch: `git push origin feature-name`
-5. Open Pull Request
-
-## License
-
-MIT License - Free forever, no restrictions
-
-## Credits
-
--   **Google Gemini AI** - Powerful language models
--   **marked.js** - Markdown rendering
--   **Invidious** - Privacy-focused YouTube API
+Turn long videos into instant insights. YouTube AI Master uses advanced AI (Gemini) to summarize, segment, and let you chat with any YouTube video.
 
 ---
 
-**Made with ❤️ for the YouTube learning community**
+## 🌟 Features
 
-[Report Bug](https://github.com/yourusername/youtube-ai-master/issues) • [Request Feature](https://github.com/yourusername/youtube-ai-master/issues) • [Discussions](https://github.com/yourusername/youtube-ai-master/discussions)
+### 🧠 **Summary & Key Insights**
+- **Instant Summaries:** Get a concise overview of the video's content in seconds.
+- **Key Insights:** Extract the most valuable points, takeaways, and actionable advice.
+- **Customizable Length:** Choose between Short, Medium, or Long summaries.
+
+### 💬 **Chat with Video**
+- **Interactive Q&A:** Ask questions about the video content and get answers based on the transcript.
+- **Context-Aware:** The AI understands the full context of the video.
+
+### 📊 **Segments & Navigation**
+- **Smart Segmentation:** Automatically breaks the video into logical chapters with topics.
+- **Timeline Integration:** Visual markers on the video player timeline (if supported) to skip to specific sections.
+- **Auto-Skip:** Configure the extension to automatically skip sponsors, intros, or interaction reminders.
+
+### 📝 **Transcript & Comments**
+- **Full Transcript:** View and search the full video transcript with timestamps.
+- **Comment Analysis:** Get a sentiment analysis and summary of what viewers are saying.
+
+### 🎨 **Modern Design & Widget**
+- **Sidebar Widget:** Seamlessly integrated into the YouTube interface.
+- **Closeable:** Easily hide the widget when not needed.
+- **Dark/Light Mode:** Automatically adapts to your system or YouTube theme.
+
+### 🚀 **Performance & Privacy**
+- **Efficient:** Optimized for speed and low memory usage.
+- **Secure:** Your API keys are stored locally.
+
+---
+
+## 🛠️ Installation
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/yourusername/youtube-ai-master.git
+    cd youtube-ai-master
+    ```
+
+2.  **Load Unpacked Extension:**
+    - Open Chrome and navigate to `chrome://extensions/`.
+    - Enable **Developer mode** (toggle in the top right).
+    - Click **Load unpacked**.
+    - Select the `extension` folder from this repository.
+
+3.  **Configure API Key:**
+    - Click the extension icon or the "Settings" button in the widget.
+    - Enter your Google Gemini API Key (get one from [Google AI Studio](https://aistudio.google.com/)).
+    - Save.
+
+---
+
+## 📚 Code Documentation
+
+The codebase is designed with extreme modularity to ensure debuggability and maintainability. Here is a detailed guide to every file in the extension.
+
+### 📂 `extension/background/`
+The service worker handles long-running tasks, cross-origin requests, and state management.
+
+-   **`service-worker.js`**: The central hub.
+    -   **Proxying:** Handles API requests (Transcript, Metadata, Gemini) to bypass CORS restrictions encountered by content scripts.
+    -   **Transcript Strategy:** Implements fallback logic for fetching transcripts (YouTube Direct -> Invidious -> Piped).
+    -   **Settings:** Manages retrieval of user settings (`apiKey`, `model`, etc.) from Chrome storage.
+    -   **Message Handling:** Listens for `ANALYZE_VIDEO`, `FETCH_TRANSCRIPT`, `OPEN_OPTIONS`, etc.
+-   **`security/sender-check.js`**: Verifies that messages originate from trusted parts of the extension.
+-   **`security/validator.js`**: Validates the structure and content of incoming messages to prevent injection attacks.
+
+### 📂 `extension/content/`
+Scripts injected directly into the YouTube page.
+
+#### **Root Files**
+-   **`youtube-extractor.js`**: **Critical Component.** Injected into the "Main World" (page context) to intercept network requests.
+    -   **Interception:** Hooks into `window.fetch` to detect `timedtext` (transcript) requests.
+    -   **Re-Fetch Logic:** When a transcript URL is detected, it captures it and *explicitly re-fetches* it. This ensures we get a fresh stream of data, solving issues where the original stream was already consumed by YouTube.
+    -   **Data Emitter:** Emits events (`transcript`, `metadata`, `comments`) to the extension's isolated world via `window.postMessage`.
+-   **`main.js`**: The entry point. Detects if the current page is YouTube, injects the `youtube-extractor.js`, and initializes the UI.
+-   **`content.css`**: Contains all the styles for the Sidebar Widget. Uses modern CSS variables for theming (Dark/Light mode) and "glassmorphism" effects.
+-   **`transcript-loader.js`**: Legacy loader, now largely delegates to the `TranscriptExtractor` service.
+
+#### **`content/core/`** (Core Logic)
+-   **`init.js`**: Orchestrates the startup sequence (Load settings -> Init Observer -> Init UI).
+-   **`observer.js`**: Watches for URL changes (SPA navigation) to trigger re-analysis when the user clicks a new video.
+-   **`state.js`**: A centralized store for the current video's state (`currentVideoId`, `transcript`, `analysisData`).
+-   **`debug.js`**: Utility for consistent logging with prefixes.
+-   **`analyzer.js`**: **Legacy entry point** (kept for compatibility). Re-exports functionality from `features/analysis/`.
+
+#### **`content/features/analysis/`** (Analysis Logic)
+-   **`index.js`**: Public API for the analysis feature.
+-   **`flow.js`**: The main orchestration flow:
+    1.  Extract Metadata.
+    2.  Extract Transcript.
+    3.  Send to AI (Gemini) via background script.
+    4.  Render results.
+-   **`service.js`**: Handles the communication with the background script for the actual analysis request.
+
+#### **`content/ui/`** (User Interface)
+-   **`widget.js`**: Manages the lifecycle of the Sidebar Widget (Injection, Removal, Event Wiring).
+-   **`components/widget/structure.js`**: Returns the raw HTML string for the widget structure. Separated for readability.
+-   **`tabs.js`**: Handles tab switching logic (Summary vs. Transcript vs. Chat).
+-   **`renderers/`**:
+    -   **`summary.js`**: Renders the Markdown summary into the UI.
+    -   **`transcript.js`**: Renders the interactive transcript list.
+    -   **`segments.js`**: Renders video segments/chapters.
+    -   **`chat.js`**: Renders the chat interface.
+
+#### **`content/transcript/`**
+-   **`extractor.js`**: High-level service to get transcripts. Checks cache first, then tries the `fetcher.js` strategies.
+
+### 📂 `extension/services/`
+Shared business logic used by both Background and Content scripts.
+
+#### **`services/transcript/`** (The "Brain" of Extraction)
+-   **`fetcher.js`**: Orchestrates the **Priority-Based Fallback System**. It tries strategies in this order:
+    1.  **YouTube Direct**: Uses the `captions` object found in the player metadata.
+    2.  **XHR Interception**: Uses the URL captured by `youtube-extractor.js`.
+    3.  **Background Proxy**: Asks the service worker to fetch (bypasses CORS).
+    4.  **Invidious**: Tries to fetch from Invidious instances (fallback API).
+    5.  **DOM**: Scrapes the interactive transcript panel (last resort).
+-   **`strategies/`**: Individual files for each of the above strategies (`youtube-direct-strategy.js`, `xhr-strategy.js`, etc.).
+
+#### **`services/gemini/`**
+-   **`index.js`**: Wrapper for the Google Gemini API. Handles prompt construction, context management for chat, and JSON parsing of AI responses.
+
+#### **`services/storage/`**
+-   **`index.js`**: Wrapper around `chrome.storage.local` to save/load analysis history and user preferences.
+
+### 📂 `extension/sidepanel/`
+Code for the browser sidepanel (if used instead of the injected widget).
+-   **`sidepanel.html`**: HTML structure.
+-   **`sidepanel.js`**: Logic for the sidepanel UI (similar to `content/ui/widget.js` but for the native sidebar).
+
+---
+
+## 🧪 Debugging Guide
+
+1.  **Open Developer Tools**: Right-click anywhere on the YouTube page -> Inspect.
+2.  **Console Logs**: Look for logs prefixed with:
+    -   `[YouTubeExtractor]`: Network interception logs (Main World).
+    -   `[Transcript]`: Transcript fetching strategy logs.
+    -   `[Fetcher]`: Detailed fallback attempts.
+3.  **Network Tab**: Filter by `timedtext` to see raw transcript requests.
+4.  **Breakpoints**:
+    -   To debug interception: `extension/content/youtube-extractor.js`.
+    -   To debug analysis flow: `extension/content/features/analysis/flow.js`.
+
+---
+
+## 📜 License
+
+MIT License. See [LICENSE](LICENSE) for details.
