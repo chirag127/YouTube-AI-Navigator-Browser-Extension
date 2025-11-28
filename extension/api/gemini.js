@@ -47,8 +47,46 @@ export class GeminiService {
             const r = await this.generateContent(prompts.segments(context));
             console.log("[GeminiService] Raw segments response:", r);
 
-            // Robust JSON extraction: find first [ and last ]
+            // Robust JSON extraction
             const start = r.indexOf("[");
+            const end = r.lastIndexOf("]");
+
+            if (start !== -1 && end !== -1) {
+                const jsonStr = r.substring(start, end + 1);
+                try {
+                    const parsed = JSON.parse(jsonStr);
+                    if (Array.isArray(parsed)) {
+                        return parsed.map((p) => ({
+                            start: p.s ?? p.start,
+                            end: p.e ?? p.end,
+                            label: p.l ?? p.label,
+                            title: p.t ?? p.title,
+                            description: p.d ?? p.description,
+                        }));
+                    }
+                } catch (e) {
+                    console.warn("[GeminiService] JSON parse failed:", e);
+                }
+            }
+
+            // Fallback for markdown
+            const cleanR = r
+                .replace(/```json/g, "")
+                .replace(/```/g, "")
+                .trim();
+            if (cleanR.startsWith("[") && cleanR.endsWith("]")) {
+                try {
+                    const parsed = JSON.parse(cleanR);
+                    return parsed.map((p) => ({
+                        start: p.s ?? p.start,
+                        end: p.e ?? p.end,
+                        label: p.l ?? p.label,
+                        title: p.t ?? p.title,
+                        description: p.d ?? p.description,
+                    }));
+                } catch (e) {}
+            }
+
             return [];
         } catch (e) {
             console.warn("[GeminiService] Segment extraction failed:", e);

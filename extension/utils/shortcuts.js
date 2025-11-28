@@ -1,0 +1,9 @@
+export const cl = (...args) => console.log(...args);
+export const ce = (...args) => console.error(...args);
+export const cw = (...args) => console.warn(...args);
+export const qs = (s, p = document) => p.querySelector(s);
+export const qsa = (s, p = document) => [...p.querySelectorAll(s)];
+export const ael = (e, t, h, o) => e.addEventListener(t, h, o);
+export const rel = (e, t, h, o) => e.removeEventListener(t, h, o);
+export const celem = (t) => document.createElement(t);
+export const getById = (id) => document.getElementById(id);

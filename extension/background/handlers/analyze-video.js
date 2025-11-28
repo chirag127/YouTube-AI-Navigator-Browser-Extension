@@ -117,7 +117,7 @@ export async function handleAnalyzeVideo(request, sendResponse) {
 
         let segments = [];
         console.log("[AnalyzeVideo] Options:", JSON.stringify(options));
-        if (options.generateSegments) {
+        if (options.generateSegments !== false) {
             console.log("[AnalyzeVideo] Generating segments...");
             segments = await segmentClassification.classifyTranscript({
                 transcript: transcript || [],

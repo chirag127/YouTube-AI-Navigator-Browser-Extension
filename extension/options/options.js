@@ -40,41 +40,47 @@ const SEGMENT_CATEGORIES = [
 const DEFAULT_SEGMENT_CONFIG = { action: "ignore", speed: 2 };
 
 // DOM Elements
-const elements = {
-    tabs: document.querySelectorAll(".nav-item"),
-    contents: document.querySelectorAll(".tab-content"),
-    apiKey: document.getElementById("apiKey"),
-    toggleApiKey: document.getElementById("toggleApiKey"),
-    modelSelect: document.getElementById("modelSelect"),
-    refreshModels: document.getElementById("refreshModels"),
-    testConnection: document.getElementById("testConnection"),
-    apiStatus: document.getElementById("apiStatus"),
-    outputLanguage: document.getElementById("outputLanguage"),
-    autoAnalyze: document.getElementById("autoAnalyze"),
-    saveHistory: document.getElementById("saveHistory"),
-    clearHistory: document.getElementById("clearHistory"),
-    customPrompt: document.getElementById("customPrompt"),
-    enableSegments: document.getElementById("enableSegments"),
-    segmentsGrid: document.getElementById("segmentsGrid"),
-    skipAllBtn: document.getElementById("skipAllBtn"),
-    speedAllBtn: document.getElementById("speedAllBtn"),
-    resetAllBtn: document.getElementById("resetAllBtn"),
-    exportSettings: document.getElementById("exportSettings"),
-    importSettings: document.getElementById("importSettings"),
-    importFile: document.getElementById("importFile"),
-    resetDefaults: document.getElementById("resetDefaults"),
-    debugMode: document.getElementById("debugMode"),
-    transcriptMethod: document.getElementById("transcriptMethod"),
-    transcriptLanguage: document.getElementById("transcriptLanguage"),
-    toast: document.getElementById("toast"),
-};
+let elements = {};
+
+function initializeElements() {
+    elements = {
+        tabs: document.querySelectorAll(".nav-item"),
+        contents: document.querySelectorAll(".tab-content"),
+        apiKey: document.getElementById("apiKey"),
+        toggleApiKey: document.getElementById("toggleApiKey"),
+        modelSelect: document.getElementById("modelSelect"),
+        refreshModels: document.getElementById("refreshModels"),
+        testConnection: document.getElementById("testConnection"),
+        apiStatus: document.getElementById("apiStatus"),
+        outputLanguage: document.getElementById("outputLanguage"),
+        autoAnalyze: document.getElementById("autoAnalyze"),
+        saveHistory: document.getElementById("saveHistory"),
+        clearHistory: document.getElementById("clearHistory"),
+        customPrompt: document.getElementById("customPrompt"),
+        enableSegments: document.getElementById("enableSegments"),
+        segmentsGrid: document.getElementById("segmentsGrid"),
+        skipAllBtn: document.getElementById("skipAllBtn"),
+        speedAllBtn: document.getElementById("speedAllBtn"),
+        resetAllBtn: document.getElementById("resetAllBtn"),
+        exportSettings: document.getElementById("exportSettings"),
+        importSettings: document.getElementById("importSettings"),
+        importFile: document.getElementById("importFile"),
+        resetDefaults: document.getElementById("resetDefaults"),
+        debugMode: document.getElementById("debugMode"),
+        transcriptMethod: document.getElementById("transcriptMethod"),
+        transcriptLanguage: document.getElementById("transcriptLanguage"),
+        toast: document.getElementById("toast"),
+    };
+}
 
 // State
 let currentSettings = { ...DEFAULT_SETTINGS };
 let modelManager = null;
 
 // Initialization
+// Initialization
 document.addEventListener("DOMContentLoaded", async () => {
+    initializeElements();
     await loadSettings();
     setupEventListeners();
     setupTabs();
