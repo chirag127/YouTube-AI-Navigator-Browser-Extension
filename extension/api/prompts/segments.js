@@ -14,9 +14,7 @@ export const segments = (context) => {
 
     CRITICAL INSTRUCTION: You MUST generate at least one segment labeled "Content".
     - If specific segments are found, the "Content" segment should cover the main body of the video.
-    - If NO specific segments are found (or transcript is missing), generate a SINGLE "Content" segment covering the entire video duration (0 to ${
-        context.metadata?.lengthSeconds || "End"
-    }).
+    - If NO specific segments are found (or transcript is missing), generate a SINGLE "Content" segment covering the entire video duration.
 
     Context:
     ${buildContextString(context)}
@@ -37,8 +35,10 @@ export const segments = (context) => {
     JSON Format:
     [
         {
-            "start": number (seconds),
-            "end": number,
+            "start": number (seconds, MUST be a number),
+            "end": number (seconds, MUST be a number, use ${
+                context.metadata?.lengthSeconds || -1
+            } if unknown),
             "label": "Category Name",
             "title": "Short descriptive title (max 5 words)",
             "description": "Detailed description of what happens in this segment",

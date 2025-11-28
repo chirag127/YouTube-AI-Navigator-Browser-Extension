@@ -24,20 +24,22 @@ export function renderSegments(c, s) {
     const h = s
         .map((x) => {
             const color = colors[x.label] || "#fff";
-            const isHighlight = x.label === "Highlight";
 
-            // Highlight has only start timestamp, others have start + end
-            const timeHtml = isHighlight
-                ? `<span class="yt-ai-timestamp" data-time="${
-                      x.start
-                  }">${formatTime(x.start)}</span>`
-                : `<span class="yt-ai-timestamp" data-time="${
-                      x.start
-                  }">${formatTime(
-                      x.start
-                  )}</span> - <span class="yt-ai-timestamp" data-time="${
-                      x.end
-                  }">${formatTime(x.end)}</span>`;
+            // Use the pre-calculated timestamps from validator if available, otherwise fallback
+            const timestamps = x.timestamps || [
+                { type: "start", time: x.start },
+                { type: "end", time: x.end },
+            ];
+
+            const timeHtml = timestamps
+                .map((ts) => {
+                    return `<span class="yt-ai-timestamp" data-time="${
+                        ts.time
+                    }" title="Click to seek to ${formatTime(
+                        ts.time
+                    )}">${formatTime(ts.time)}</span>`;
+                })
+                .join(" - ");
 
             return `<div class="yt-ai-segment-item" style="border-left:4px solid ${color}">
       <div class="yt-ai-segment-label">${x.label}</div>
