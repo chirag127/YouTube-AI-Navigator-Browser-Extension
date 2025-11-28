@@ -8,16 +8,20 @@ import { strategy as invidiousStrategy } from "./strategies/invidious-strategy.j
 import { strategy as pipedStrategy } from "./strategies/piped-strategy.js";
 import { strategy as domStrategy } from "./strategies/dom-strategy.js";
 import { strategy as domAutomationStrategy } from "./strategies/dom-automation-strategy.js";
+import { strategy as speechToTextStrategy } from "./strategies/speech-to-text-strategy.js";
+import { strategy as geniusStrategy } from "./strategies/genius-strategy.js";
 
 // Prioritize strategies that work from content script context
 const STRATEGIES = [
     domAutomationStrategy, // Priority 1: Automates UI to open/scrape transcript
-    youtubeDirectStrategy, // Priority 2: Uses ytInitialPlayerResponse caption URLs
-    xhrStrategy, // Priority 3: Intercepts live network requests
-    backgroundProxyStrategy, // Priority 4: Service worker fallback (can bypass CORS)
-    invidiousStrategy, // Priority 5: Third-party API (Enabled)
-    // pipedStrategy,          // Priority 6: Third-party API (Disabled)
-    domStrategy, // Priority 7: Last resort DOM scraping
+    // youtubeDirectStrategy, // Priority 2: Uses ytInitialPlayerResponse caption URLs
+    // xhrStrategy, // Priority 3: Intercepts live network requests
+    geniusStrategy, // Priority 4: Genius Lyrics (Music Videos only)
+    // backgroundProxyStrategy, // Priority 5: Disabled (Failed in logs)
+    // invidiousStrategy, // Priority 6: Disabled (Often blocked)
+    // pipedStrategy,          // Priority 7: Third-party API (Disabled)
+    // domStrategy, // Priority 8: Disabled (Brittle)
+    speechToTextStrategy, // Priority 9: Fallback (Gemini Audio Transcription)
 ].sort((a, b) => a.priority - b.priority);
 
 /**

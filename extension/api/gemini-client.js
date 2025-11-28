@@ -34,12 +34,14 @@ export class GeminiClient {
         try {
             cl(`[GeminiClient] Calling model: ${model}`);
 
+            const contents = Array.isArray(prompt)
+                ? [{ parts: prompt }]
+                : [{ parts: [{ text: prompt }] }];
+
             const response = await this.httpClient.fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: prompt }] }],
-                }),
+                body: JSON.stringify({ contents }),
             });
 
             const data = await response.json();

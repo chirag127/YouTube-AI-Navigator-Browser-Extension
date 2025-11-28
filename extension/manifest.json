@@ -83,12 +83,13 @@
                 "sidepanel/sidepanel.html",
                 "sidepanel/sidepanel.css",
                 "sidepanel/sidepanel.js",
-                "assets/*"
+                "assets/*",
+                "utils/*.js"
             ],
             "matches": [
-                "https://www.youtube.com/*",
-                "https://youtube.com/*"
-            ]
-        }
-    ]
+    "https://www.youtube.com/*",
+    "https://youtube.com/*"
+]
+}
+]
 }

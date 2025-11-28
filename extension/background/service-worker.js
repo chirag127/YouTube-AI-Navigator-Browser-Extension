@@ -19,6 +19,8 @@ import {
 import { handleGetCachedData } from "./handlers/cache.js";
 import { handleSaveChatMessage } from "./handlers/chat-history.js";
 import { handleSaveComments } from "./handlers/comments-storage.js";
+import { handleTranscribeAudio } from "./handlers/transcribe-audio.js";
+import { handleGetLyrics } from "./handlers/get-lyrics.js";
 
 chrome.runtime.onInstalled.addListener((details) => {
     if (details.reason === "install") {
@@ -101,6 +103,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     break;
                 case "SAVE_COMMENTS":
                     await handleSaveComments(sanitized, sendResponse);
+                    break;
+                case "TRANSCRIBE_AUDIO":
+                    await handleTranscribeAudio(sanitized, sendResponse);
+                    break;
+                case "GET_LYRICS":
+                    await handleGetLyrics(sanitized, sendResponse);
                     break;
                 case "OPEN_OPTIONS":
                     chrome.runtime.openOptionsPage();

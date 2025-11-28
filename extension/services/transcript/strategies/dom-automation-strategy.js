@@ -86,7 +86,7 @@ class DOMAutomationStrategy {
             'button[aria-label="Show transcript"]',
             'ytd-button-renderer[aria-label="Show transcript"]',
             '#primary-button button[aria-label="Show transcript"]',
-            'button:contains("Show transcript")', // Pseudo-selector logic needed if strict selector fails
+            // 'button:contains("Show transcript")', // Removed: Invalid selector causes crash
         ];
 
         let showTranscriptBtn = null;
