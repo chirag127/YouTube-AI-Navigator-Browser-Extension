@@ -8,7 +8,9 @@ export class StreamingSummaryService {
     }
 
     async generateStreamingSummary(transcript, options, onChunk) {
-        console.log("[StreamingSummary] generateStreamingSummary started", { options });
+        console.log("[StreamingSummary] generateStreamingSummary started", {
+            options,
+        });
         const prompt = prompts.comprehensive(transcript, options);
         // This actually delegates to the main Gemini service call in `gemini.js` which handles the API call.
         // But `gemini.js` calls `this.streamingSummary.generateStreamingSummary`.
@@ -90,7 +92,13 @@ export class StreamingSummaryService {
 
                 success = true;
                 console.log(
-                    `[StreamingSummary] Success with model: ${currentModel}`
+                    `[StreamingSummary] Success with model: ${currentModel}. FullText length: ${fullText.length}`
+                );
+                console.log(
+                    `[StreamingSummary] FullText preview: ${fullText.substring(
+                        0,
+                        100
+                    )}...`
                 );
                 break; // Success!
             } catch (e) {
@@ -125,7 +133,7 @@ export class StreamingSummaryService {
             summaryLength: summary.length,
             insightsLength: insights.length,
             faqLength: faq.length,
-            timestampsCount: extractedTimestamps.length
+            timestampsCount: extractedTimestamps.length,
         });
 
         return {

@@ -1,8 +1,21 @@
 export const prompts = {
     summary: (transcript, options) => {
+        const { metadata, lyrics } = options;
+        const title = metadata?.deArrowTitle || metadata?.title || "Unknown Title";
+        const contextInfo = `
+        Video Title: ${title}
+        ${metadata?.deArrowTitle ? "(Community Contributed Title)" : ""}
+        Channel: ${metadata?.author || "Unknown"}
+        Description: ${metadata?.description || "N/A"}
+        ${lyrics ? `\nLyrics Source: ${lyrics.source}\nLyrics:\n${lyrics.lyrics}\n` : ""}
+        `;
+
         return `
         Role: You are an expert video summarizer.
         Task: Create a concise summary of the following video transcript.
+
+        Context:
+        ${contextInfo}
 
         Constraints:
         - Length: ${options.length || "Medium"}
@@ -15,11 +28,13 @@ export const prompts = {
     },
 
     chat: (question, context, metadata) => {
+        const title = metadata?.deArrowTitle || metadata?.title || "Unknown";
         return `
         Role: You are a helpful AI assistant for a YouTube video.
-        Context: The user is watching a video titled "${
-            metadata?.title || "Unknown"
-        }".
+        Context: The user is watching a video titled "${title}".
+        ${metadata?.deArrowTitle ? "Note: This is a community-contributed title (DeArrow)." : ""}
+        Channel: ${metadata?.author || "Unknown"}
+
         Video Transcript Context: ${context}
 
         User Question: ${question}
@@ -54,10 +69,14 @@ export const prompts = {
     },
 
     faq: (transcript, metadata) => {
+        const title = metadata?.deArrowTitle || metadata?.title || "";
         return `
         Task: Generate 5-7 Frequently Asked Questions (FAQ) that this video answers, along with their concise answers.
 
-        Video Title: ${metadata?.title || ""}
+        Video Title: ${title}
+        ${metadata?.deArrowTitle ? "(Community Contributed Title)" : ""}
+        Channel: ${metadata?.author || "Unknown"}
+
         Transcript:
         ${transcript}
 
@@ -67,10 +86,17 @@ export const prompts = {
         `;
     },
 
-    segments: (transcript) => {
+    segments: (transcript, metadata) => {
+        const title = metadata?.deArrowTitle || metadata?.title || "";
         return `
         Task: Segment the following transcript into logical chapters based on the categories below.
         Return ONLY a raw JSON array. No markdown formatting.
+
+        Context:
+        Video Title: ${title}
+        ${metadata?.deArrowTitle ? "(Community Contributed Title)" : ""}
+        Channel: ${metadata?.author || "Unknown"}
+        Description: ${metadata?.description ? metadata.description.substring(0, 500) + "..." : "N/A"}
 
         Categories (Use EXACTLY these labels):
         - Sponsor: Paid promotion, paid referrals and direct advertisements. Not for self-promotion or free shoutouts to causes/creators/websites/products they like.
@@ -103,9 +129,23 @@ export const prompts = {
     },
 
     comprehensive: (transcript, options) => {
+        const { metadata, lyrics } = options;
+        const title = metadata?.deArrowTitle || metadata?.title || "Unknown Title";
+
+        const contextInfo = `
+        Video Title: ${title}
+        ${metadata?.deArrowTitle ? "(Community Contributed Title - Use this for context)" : ""}
+        Channel: ${metadata?.author || "Unknown"}
+        Description: ${metadata?.description || "N/A"}
+        ${lyrics ? `\nLyrics Source: ${lyrics.source}\nLyrics:\n${lyrics.lyrics}\n` : ""}
+        `;
+
         return `
         Role: You are an advanced AI video analyst.
         Task: Provide a comprehensive analysis of this video.
+
+        Context:
+        ${contextInfo}
 
         Directives:
         1. **Summary**: A ${options.length || "Medium"} length summary.
@@ -130,3 +170,4 @@ export const prompts = {
         `;
     },
 };
+

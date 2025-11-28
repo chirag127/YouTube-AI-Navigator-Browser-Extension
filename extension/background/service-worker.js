@@ -4,6 +4,7 @@ import { SegmentClassificationService } from "../services/segments/index.js";
 import { StorageService } from "../services/storage/index.js";
 import { verifySender } from "./security/sender-check.js";
 import { validateMessage, sanitizeRequest } from "./security/validator.js";
+import geniusLyricsAPI from "../api/genius-lyrics.js";
 
 let geminiService,
     chunkingService,
@@ -365,8 +366,36 @@ async function handleAnalyzeVideo(request, sendResponse) {
             }
         }
 
-        console.log("[Background] Starting Gemini analysis...");
-        // Pass metadata to the analysis
+        // 3. Fetch Lyrics if it's a music video
+        let lyrics = null;
+        if (
+            metadata?.category === "Music" ||
+            metadata?.title?.toLowerCase().includes("official video") ||
+            metadata?.title?.toLowerCase().includes("lyrics")
+        ) {
+            console.log(
+                "[Background] Detecting music video, fetching lyrics..."
+            );
+            try {
+                lyrics = await geniusLyricsAPI.getLyrics(
+                    metadata.title,
+                    metadata.author
+                );
+                if (lyrics) {
+                    console.log("[Background] Lyrics found:", lyrics.title);
+                }
+            } catch (e) {
+                console.warn("[Background] Failed to fetch lyrics:", e);
+            }
+        }
+
+        console.log("[Background] Starting Gemini analysis...", {
+            hasLyrics: !!lyrics,
+            metadataTitle: metadata?.title,
+            deArrowTitle: metadata?.deArrowTitle,
+        });
+
+        // Pass metadata and lyrics to the analysis
         const analysis =
             await geminiService.generateStreamingSummaryWithTimestamps(
                 transcript,
@@ -375,6 +404,7 @@ async function handleAnalyzeVideo(request, sendResponse) {
                     language: options.language || "English",
                     length: options.length || "Medium",
                     metadata: metadata, // Include video metadata for better context
+                    lyrics: lyrics, // Include lyrics if available
                 }
             );
 
