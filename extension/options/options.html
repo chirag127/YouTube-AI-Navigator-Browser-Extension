@@ -21,14 +21,35 @@
                 <button class="nav-item active" data-tab="general">
                     <span class="icon">⚙️</span> General
                 </button>
+                <button class="nav-item" data-tab="cache">
+                    <span class="icon">💾</span> Cache
+                </button>
+                <button class="nav-item" data-tab="transcript">
+                    <span class="icon">📝</span> Transcript
+                </button>
+                <button class="nav-item" data-tab="comments">
+                    <span class="icon">💬</span> Comments
+                </button>
+                <button class="nav-item" data-tab="metadata">
+                    <span class="icon">📊</span> Metadata
+                </button>
+                <button class="nav-item" data-tab="scroll">
+                    <span class="icon">📜</span> Scroll & UI
+                </button>
                 <button class="nav-item" data-tab="ai-config">
                     <span class="icon">🤖</span> AI Configuration
                 </button>
                 <button class="nav-item" data-tab="segments">
-                    <span class="icon">🎯</span> Segments & Actions
+                    <span class="icon">🎯</span> Segments
+                </button>
+                <button class="nav-item" data-tab="performance">
+                    <span class="icon">⚡</span> Performance
                 </button>
                 <button class="nav-item" data-tab="external-apis">
                     <span class="icon">🌐</span> External APIs
+                </button>
+                <button class="nav-item" data-tab="notifications">
+                    <span class="icon">🔔</span> Notifications
                 </button>
                 <button class="nav-item" data-tab="advanced">
                     <span class="icon">🔧</span> Advanced
@@ -54,309 +75,7 @@
                 </div>
             </div>
 
-            <!-- General Settings -->
-            <section id="general" class="tab-content active">
-                <header class="section-header">
-                    <h2>General Settings</h2>
-                    <p>Configure basic extension behavior</p>
-                </header>
-
-                <div class="card">
-                    <h3>Language & Region</h3>
-                    <div class="form-group">
-                        <label for="outputLanguage">Output Language</label>
-                        <select id="outputLanguage" class="form-select">
-                            <option value="en">English</option>
-                            <option value="es">Spanish</option>
-                            <option value="fr">French</option>
-                            <option value="de">German</option>
-                            <option value="it">Italian</option>
-                            <option value="pt">Portuguese</option>
-                            <option value="ru">Russian</option>
-                            <option value="ja">Japanese</option>
-                            <option value="ko">Korean</option>
-                            <option value="zh">Chinese (Simplified)</option>
-                            <option value="ar">Arabic</option>
-                            <option value="hi">Hindi</option>
-                        </select>
-                        <p class="help-text">
-                            Language used for summaries and AI responses.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>Transcript Settings</h3>
-                    <div class="form-group">
-                        <label for="transcriptMethod">Transcript Method</label>
-                        <select id="transcriptMethod" class="form-select">
-                            <option value="auto">Auto (Best Available)</option>
-                            <option value="innertube">InnerTube API (Primary)</option>
-                            <option value="invidious">Invidious API</option>
-                            <option value="dom">DOM Parser</option>
-                            <option value="piped">Piped API</option>
-                        </select>
-                        <p class="help-text">Choose transcript extraction method</p>
-                    </div>
-                    <div class="form-group">
-                        <label for="transcriptLanguage">Transcript Language</label>
-                        <select id="transcriptLanguage" class="form-select">
-                            <option value="en">English</option>
-                            <option value="es">Spanish</option>
-                            <option value="fr">French</option>
-                            <option value="de">German</option>
-                            <option value="it">Italian</option>
-                            <option value="pt">Portuguese</option>
-                            <option value="ru">Russian</option>
-                            <option value="ja">Japanese</option>
-                            <option value="ko">Korean</option>
-                            <option value="zh">Chinese (Simplified)</option>
-                            <option value="ar">Arabic</option>
-                            <option value="hi">Hindi</option>
-                        </select>
-                        <p class="help-text">Preferred language for transcripts</p>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="transcriptAutoClose">Auto-Close Widget</label>
-                            <p class="help-text">Automatically collapse widget after transcript loads</p>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="transcriptAutoClose" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="transcriptAutoCloseDelay">Auto-Close Delay (ms)</label>
-                        <input type="number" id="transcriptAutoCloseDelay" class="form-input" min="0" max="5000"
-                            step="100" value="1000" />
-                        <p class="help-text">Delay before auto-closing (0-5000ms)</p>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="transcriptAutoCloseOnCached">Auto-Close on Cached Data</label>
-                            <p class="help-text">Also close widget when showing cached transcripts</p>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="transcriptAutoCloseOnCached" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="includeTimestamps">Include Timestamps</label>
-                            <p class="help-text">Show timestamps in transcript display</p>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="includeTimestamps" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>Cache Settings</h3>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="cacheEnabled">Enable Caching</label>
-                            <p class="help-text">Store fetched data locally to avoid re-fetching</p>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="cacheEnabled" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="cacheTTL">Cache Duration (hours)</label>
-                        <input type="number" id="cacheTTL" class="form-input" min="1" max="168" value="24" />
-                        <p class="help-text">How long to keep cached data (1-168 hours)</p>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="cacheTranscripts">Cache Transcripts</label>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="cacheTranscripts" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="cacheComments">Cache Comments</label>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="cacheComments" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="cacheMetadata">Cache Metadata</label>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="cacheMetadata" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>Scroll Behavior</h3>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="autoScrollToComments">Auto-Scroll to Comments</label>
-                            <p class="help-text">Automatically scroll down when extracting comments (DISABLED by
-                                default)</p>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="autoScrollToComments" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="scrollBackAfterComments">Scroll Back After Comments</label>
-                            <p class="help-text">Return to top after comment extraction</p>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="scrollBackAfterComments" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="showScrollNotification">Show Scroll Notification</label>
-                            <p class="help-text">Display "Scrolled to top" notification</p>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="showScrollNotification" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>Comments Settings</h3>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="commentsEnabled">Enable Comments</label>
-                            <p class="help-text">Extract and analyze video comments</p>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="commentsEnabled" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="commentsLimit">Comments Limit</label>
-                        <input type="number" id="commentsLimit" class="form-input" min="5" max="100" value="20" />
-                        <p class="help-text">Maximum number of comments to fetch (5-100)</p>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="analyzeSentiment">Analyze Sentiment</label>
-                            <p class="help-text">Perform AI sentiment analysis on comments</p>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="analyzeSentiment" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>Metadata Inclusion</h3>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="includeTitle">Include Title</label>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="includeTitle" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="includeAuthor">Include Author</label>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="includeAuthor" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="includeViews">Include Views</label>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="includeViews" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="includeDuration">Include Duration</label>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="includeDuration" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="includeDescription">Include Description</label>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="includeDescription" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="includeTags">Include Tags</label>
-                        </div>
-                        <label class="switch sm">
-                            <input type="checkbox" id="includeTags" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>Automation</h3>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="autoAnalyze">Auto-Analyze Videos</label>
-                            <p class="help-text">Automatically start analysis when a video page loads</p>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="autoAnalyze" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3>Data & Privacy</h3>
-                    <div class="form-group checkbox-row">
-                        <div class="checkbox-label">
-                            <label for="saveHistory">Save History</label>
-                            <p class="help-text">
-                                Keep a local history of summarized videos.
-                            </p>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" id="saveHistory" />
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="form-actions">
-                        <button id="clearHistory" class="btn btn-danger-outline">
-                            Clear History
-                        </button>
-                    </div>
-                </div>
-            </section>
+            <!-- Tabs will be loaded dynamically here -->
 
             <!-- AI Configuration -->
             <section id="ai-config" class="tab-content">

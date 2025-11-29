@@ -1,55 +1,37 @@
 // Auto-Save Utility with Debouncing
 export class AutoSave {
-    constructor(settingsManager, delay = 500) {
+    constructor(settingsManager, delay = 500, notificationManager = null) {
         this.settings = settingsManager;
         this.delay = delay;
         this.timeout = null;
-        this.indicator = null;
-        this.createIndicator();
-    }
-
-    createIndicator() {
-        this.indicator = document.createElement('div');
-        this.indicator.id = 'auto-save-indicator';
-        this.indicator.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 8px 16px;
-            background: #4caf50;
-            color: white;
-            border-radius: 4px;
-            font-size: 14px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 10000;
-            pointer-events: none;
-        `;
-        document.body.appendChild(this.indicator);
-    }
-
-    show(message = 'Saving...') {
-        this.indicator.textContent = message;
-        this.indicator.style.opacity = '1';
-    }
-
-    hide() {
-        this.indicator.style.opacity = '0';
+        this.notifications = notificationManager;
+        this.saveCount = 0;
     }
 
     async save(path, value) {
         clearTimeout(this.timeout);
-        this.show('Saving...');
+
+        if (this.notifications) {
+            this.notifications.saving('Saving...');
+        }
 
         this.timeout = setTimeout(async () => {
             try {
+                console.log(`[AutoSave] Saving ${path} =`, value);
                 await this.settings.update(path, value);
-                this.show('✓ Saved');
-                setTimeout(() => this.hide(), 1500);
+                this.saveCount++;
+
+                if (this.notifications) {
+                    this.notifications.success(`Setting saved: ${path.split('.').pop()}`);
+                }
+
+                console.log(`[AutoSave] ✓ Saved successfully (count: ${this.saveCount})`);
             } catch (e) {
-                this.show('✗ Save failed');
                 console.error('[AutoSave] Failed:', e);
-                setTimeout(() => this.hide(), 2000);
+
+                if (this.notifications) {
+                    this.notifications.error(`Failed to save: ${e.message}`);
+                }
             }
         }, this.delay);
     }

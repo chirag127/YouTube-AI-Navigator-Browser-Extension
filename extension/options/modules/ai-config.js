@@ -1,42 +1,62 @@
 import { ModelManager } from "../../api/gemini.js";
 
 export class AIConfig {
-    constructor(settingsManager, uiManager) {
+    constructor(settingsManager, autoSave) {
         this.settings = settingsManager;
-        this.ui = uiManager;
+        this.autoSave = autoSave;
         this.modelManager = null;
     }
 
     async init() {
-        const s = this.settings.get();
+        this.loadSettings();
+        this.attachListeners();
+    }
+
+    loadSettings() {
+        const config = this.settings.get();
 
         // Initialize ModelManager
-        if (ModelManager) {
+        if (ModelManager && config.ai?.apiKey) {
             this.modelManager = new ModelManager(
-                s.apiKey,
+                config.ai.apiKey,
                 "https://generativelanguage.googleapis.com/v1beta"
             );
         }
 
         const els = {
             apiKey: document.getElementById("apiKey"),
+            modelSelect: document.getElementById("modelSelect"),
+            customPrompt: document.getElementById("customPrompt"),
+        };
+
+        // Load values from correct path
+        if (els.apiKey) els.apiKey.value = config.ai?.apiKey || "";
+        if (els.customPrompt) els.customPrompt.value = config.ai?.customPrompt || "";
+        if (els.modelSelect && config.ai?.model) {
+            els.modelSelect.value = config.ai.model;
+        }
+
+        // Initial load of models if key exists
+        if (config.ai?.apiKey) {
+            this.refreshModelList(els.modelSelect);
+        }
+    }
+
+    attachListeners() {
+        const els = {
+            apiKey: document.getElementById("apiKey"),
             toggleApiKey: document.getElementById("toggleApiKey"),
             modelSelect: document.getElementById("modelSelect"),
             refreshModels: document.getElementById("refreshModels"),
             testConnection: document.getElementById("testConnection"),
-            apiStatus: document.getElementById("apiStatus"),
             customPrompt: document.getElementById("customPrompt"),
         };
 
-        // Load values
-        if (els.apiKey) els.apiKey.value = s.apiKey || "";
-        if (els.customPrompt) els.customPrompt.value = s.customPrompt || "";
-
-        // Listeners
+        // API Key with auto-save
         if (els.apiKey) {
             els.apiKey.addEventListener("change", async (e) => {
                 const newKey = e.target.value.trim();
-                await this.settings.save({ apiKey: newKey });
+                await this.autoSave.save('ai.apiKey', newKey);
 
                 // Re-init model manager
                 this.modelManager = new ModelManager(
@@ -49,25 +69,23 @@ export class AIConfig {
 
         if (els.toggleApiKey) {
             els.toggleApiKey.addEventListener("click", () => {
-                els.apiKey.type =
-                    els.apiKey.type === "password" ? "text" : "password";
+                els.apiKey.type = els.apiKey.type === "password" ? "text" : "password";
             });
         }
 
+        // Custom prompt with auto-save
         if (els.customPrompt) {
-            els.customPrompt.addEventListener("change", (e) =>
-                this.settings.save({ customPrompt: e.target.value.trim() })
-            );
+            this.autoSave.attachToInput(els.customPrompt, 'ai.customPrompt');
         }
 
+        // Model selection with auto-save
         if (els.modelSelect) {
             els.modelSelect.addEventListener("change", (e) => {
                 let model = e.target.value;
-                // Ensure no models/ prefix
                 if (model.startsWith("models/")) {
                     model = model.replace("models/", "");
                 }
-                this.settings.save({ model });
+                this.autoSave.save('ai.model', model);
             });
         }
 
@@ -79,13 +97,8 @@ export class AIConfig {
 
         if (els.testConnection) {
             els.testConnection.addEventListener("click", () =>
-                this.testConnection(els)
+                this.testConnection()
             );
-        }
-
-        // Initial load of models if key exists
-        if (s.apiKey) {
-            await this.refreshModelList(els.modelSelect);
         }
     }
 
@@ -95,20 +108,22 @@ export class AIConfig {
         select.disabled = true;
 
         try {
+            if (!this.modelManager) {
+                throw new Error('Model manager not initialized. Please set API key first.');
+            }
+
             const models = await this.modelManager.fetch();
             select.innerHTML = "";
 
             if (models.length === 0) {
-                select.innerHTML =
-                    '<option value="" disabled>No models found</option>';
+                select.innerHTML = '<option value="" disabled>No models found</option>';
                 return;
             }
 
             models.forEach((modelName) => {
-                const name =
-                    typeof modelName === "string"
-                        ? modelName.replace("models/", "")
-                        : modelName.name?.replace("models/", "") || modelName;
+                const name = typeof modelName === "string"
+                    ? modelName.replace("models/", "")
+                    : modelName.name?.replace("models/", "") || modelName;
 
                 const opt = document.createElement("option");
                 opt.value = name;
@@ -116,55 +131,50 @@ export class AIConfig {
                 select.appendChild(opt);
             });
 
-            const s = this.settings.get();
-            let savedModel = s.model;
+            const config = this.settings.get();
+            let savedModel = config.ai?.model;
 
-            // Strip models/ prefix from saved model if present
             if (savedModel && savedModel.startsWith("models/")) {
                 savedModel = savedModel.replace("models/", "");
-                // Update storage with cleaned model name
-                this.settings.save({ model: savedModel });
+                await this.autoSave.save('ai.model', savedModel);
             }
 
             if (savedModel && models.includes(savedModel)) {
                 select.value = savedModel;
             } else if (models.length > 0) {
-                // Select first available model
                 select.value = models[0];
-                this.settings.save({ model: models[0] });
+                await this.autoSave.save('ai.model', models[0]);
             }
         } catch (e) {
             console.error("Failed to fetch models:", e);
-            select.innerHTML =
-                '<option value="" disabled>Failed to load models</option>';
-            this.ui.showToast("Failed to fetch models", "error");
+            select.innerHTML = '<option value="" disabled>Failed to load models</option>';
+            if (this.autoSave.notifications) {
+                this.autoSave.notifications.error(`Failed to fetch models: ${e.message}`);
+            }
         } finally {
             select.disabled = false;
         }
     }
 
-    async testConnection(els) {
-        const btn = els.testConnection;
-        const status = els.apiStatus;
-        const s = this.settings.get();
+    async testConnection() {
+        const btn = document.getElementById("testConnection");
+        const status = document.getElementById("apiStatus");
+        const modelSelect = document.getElementById("modelSelect");
+        const config = this.settings.get();
 
         btn.disabled = true;
         btn.textContent = "Testing...";
         status.className = "status-indicator hidden";
 
         try {
-            if (!s.apiKey) throw new Error("API Key is missing");
+            if (!config.ai?.apiKey) throw new Error("API Key is missing");
 
-            let model =
-                els.modelSelect.value || "gemini-2.5-flash-preview-09-2025";
+            let model = modelSelect?.value || config.ai?.model || "gemini-2.0-flash-exp";
 
-            // Ensure model name doesn't have 'models/' prefix for the URL
             if (model.startsWith("models/")) {
                 model = model.replace("models/", "");
             }
 
-            // Add -latest suffix ONLY if it's a base model name without version/date
-            // Don't add if it has a date (e.g. -09-2025), version number (e.g. -001), or is experimental/preview
             if (
                 !model.includes("-latest") &&
                 !model.match(/-\d{3}$/) &&
@@ -176,7 +186,7 @@ export class AIConfig {
             }
 
             const response = await fetch(
-                `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${s.apiKey}`,
+                `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${config.ai.apiKey}`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -188,18 +198,24 @@ export class AIConfig {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(
-                    errorData.error?.message || response.statusText
-                );
+                throw new Error(errorData.error?.message || response.statusText);
             }
 
-            status.textContent = "Connection Successful!";
+            status.textContent = "✓ Connection Successful!";
             status.className = "status-indicator success";
             status.classList.remove("hidden");
+
+            if (this.autoSave.notifications) {
+                this.autoSave.notifications.success('API connection verified');
+            }
         } catch (e) {
-            status.textContent = `Connection Failed: ${e.message}`;
+            status.textContent = `✗ Connection Failed: ${e.message}`;
             status.className = "status-indicator error";
             status.classList.remove("hidden");
+
+            if (this.autoSave.notifications) {
+                this.autoSave.notifications.error(`Connection failed: ${e.message}`);
+            }
         } finally {
             btn.disabled = false;
             btn.textContent = "Test Connection";

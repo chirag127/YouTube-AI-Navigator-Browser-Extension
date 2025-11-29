@@ -1,0 +1,93 @@
+<section id="cache" class="tab-content">
+    <header class="section-header">
+        <h2>Cache Settings</h2>
+        <p>Manage local data caching for faster performance</p>
+    </header>
+
+    <div class="card">
+        <h3>Cache Control</h3>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="cacheEnabled">Enable Caching</label>
+                <p class="help-text">Store fetched data locally to avoid re-fetching</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="cacheEnabled" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="cacheTTL">Cache Duration (hours)</label>
+            <input type="number" id="cacheTTL" class="form-input" min="1" max="168" value="24" />
+            <p class="help-text">How long to keep cached data (1-168 hours)</p>
+        </div>
+        <div class="form-group">
+            <label for="cacheMaxSize">Maximum Cache Size (MB)</label>
+            <input type="number" id="cacheMaxSize" class="form-input" min="10" max="500" value="50" />
+            <p class="help-text">Maximum storage space for cache (10-500 MB)</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Cache Types</h3>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="cacheTranscripts">Cache Transcripts</label>
+                <p class="help-text">Store video transcripts locally</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="cacheTranscripts" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="cacheComments">Cache Comments</label>
+                <p class="help-text">Store video comments locally</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="cacheComments" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="cacheMetadata">Cache Metadata</label>
+                <p class="help-text">Store video metadata locally</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="cacheMetadata" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="cacheSegments">Cache Segments</label>
+                <p class="help-text">Store segment data locally</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="cacheSegments" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="cacheSummaries">Cache AI Summaries</label>
+                <p class="help-text">Store AI-generated summaries</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="cacheSummaries" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Cache Management</h3>
+        <div class="form-actions">
+            <button id="clearCache" class="btn btn-secondary">Clear All Cache</button>
+            <button id="viewCacheStats" class="btn btn-outline">View Cache Statistics</button>
+        </div>
+        <div id="cacheStats" class="status-indicator hidden"></div>
+    </div>
+</section>

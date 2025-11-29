@@ -1,0 +1,114 @@
+<section id="scroll" class="tab-content">
+    <header class="section-header">
+        <h2>Scroll & UI Settings</h2>
+        <p>Configure scrolling behavior and user interface</p>
+    </header>
+
+    <div class="card">
+        <h3>Scroll Behavior</h3>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="autoScrollToComments">Auto-Scroll to Comments</label>
+                <p class="help-text">Automatically scroll down when extracting comments (DISABLED by default)</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="autoScrollToComments" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="scrollBackAfterComments">Scroll Back After Comments</label>
+                <p class="help-text">Return to top after comment extraction</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="scrollBackAfterComments" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="showScrollNotification">Show Scroll Notification</label>
+                <p class="help-text">Display "Scrolled to top" notification</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="showScrollNotification" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="smoothScroll">Smooth Scrolling</label>
+                <p class="help-text">Enable smooth scroll animations</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="smoothScroll" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="scrollSpeed">Scroll Speed</label>
+            <select id="scrollSpeed" class="form-select">
+                <option value="slow">Slow</option>
+                <option value="medium">Medium</option>
+                <option value="fast">Fast</option>
+                <option value="instant">Instant</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="autoScrollDelay">Auto-Scroll Delay (ms)</label>
+            <input type="number" id="autoScrollDelay" class="form-input" min="0" max="5000" step="100" value="500" />
+            <p class="help-text">Delay before auto-scrolling (0-5000ms)</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>UI Preferences</h3>
+        <div class="form-group">
+            <label for="uiTheme">Theme</label>
+            <select id="uiTheme" class="form-select">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="auto">Auto (System)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="uiFontSize">Font Size</label>
+            <select id="uiFontSize" class="form-select">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="uiAnimationsEnabled">Enable Animations</label>
+                <p class="help-text">Show UI animations and transitions</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="uiAnimationsEnabled" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="uiShowTooltips">Show Tooltips</label>
+                <p class="help-text">Display helpful tooltips</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="uiShowTooltips" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="uiCompactMode">Compact Mode</label>
+                <p class="help-text">Use compact UI layout</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="uiCompactMode" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+</section>

@@ -1,53 +1,37 @@
 export class ExternalAPIs {
-    constructor(settingsManager, uiManager) {
+    constructor(settingsManager, autoSave) {
         this.settings = settingsManager;
-        this.ui = uiManager;
+        this.autoSave = autoSave;
     }
 
     init() {
-        const els = {
-            tmdbApiKey: document.getElementById("tmdbApiKey"),
-            twitchClientId: document.getElementById("twitchClientId"),
-            twitchAccessToken: document.getElementById("twitchAccessToken"),
-            newsDataApiKey: document.getElementById("newsDataApiKey"),
-            googleFactCheckApiKey: document.getElementById(
-                "googleFactCheckApiKey"
-            ),
-        };
+        this.loadSettings();
+        this.attachListeners();
+    }
 
-        const s = this.settings.get();
-        if (els.tmdbApiKey) els.tmdbApiKey.value = s.tmdbApiKey || "";
-        if (els.twitchClientId)
-            els.twitchClientId.value = s.twitchClientId || "";
-        if (els.twitchAccessToken)
-            els.twitchAccessToken.value = s.twitchAccessToken || "";
-        if (els.newsDataApiKey)
-            els.newsDataApiKey.value = s.newsDataApiKey || "";
-        if (els.googleFactCheckApiKey)
-            els.googleFactCheckApiKey.value = s.googleFactCheckApiKey || "";
+    loadSettings() {
+        const config = this.settings.get();
+        const apis = config.externalApis || {};
 
-        // Listeners
-        if (els.tmdbApiKey)
-            els.tmdbApiKey.addEventListener("change", (e) =>
-                this.settings.save({ tmdbApiKey: e.target.value.trim() })
-            );
-        if (els.twitchClientId)
-            els.twitchClientId.addEventListener("change", (e) =>
-                this.settings.save({ twitchClientId: e.target.value.trim() })
-            );
-        if (els.twitchAccessToken)
-            els.twitchAccessToken.addEventListener("change", (e) =>
-                this.settings.save({ twitchAccessToken: e.target.value.trim() })
-            );
-        if (els.newsDataApiKey)
-            els.newsDataApiKey.addEventListener("change", (e) =>
-                this.settings.save({ newsDataApiKey: e.target.value.trim() })
-            );
-        if (els.googleFactCheckApiKey)
-            els.googleFactCheckApiKey.addEventListener("change", (e) =>
-                this.settings.save({
-                    googleFactCheckApiKey: e.target.value.trim(),
-                })
-            );
+        this.setValue('tmdbApiKey', apis.tmdb || '');
+        this.setValue('twitchClientId', apis.twitchClientId || '');
+        this.setValue('twitchAccessToken', apis.twitchAccessToken || '');
+        this.setValue('newsDataApiKey', apis.newsData || '');
+        this.setValue('googleFactCheckApiKey', apis.googleFactCheck || '');
+    }
+
+    attachListeners() {
+        this.autoSave.attachToAll({
+            tmdbApiKey: { path: 'externalApis.tmdb' },
+            twitchClientId: { path: 'externalApis.twitchClientId' },
+            twitchAccessToken: { path: 'externalApis.twitchAccessToken' },
+            newsDataApiKey: { path: 'externalApis.newsData' },
+            googleFactCheckApiKey: { path: 'externalApis.googleFactCheck' }
+        });
+    }
+
+    setValue(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.value = value;
     }
 }

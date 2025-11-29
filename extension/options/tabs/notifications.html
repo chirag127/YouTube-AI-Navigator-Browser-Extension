@@ -1,0 +1,101 @@
+<section id="notifications" class="tab-content">
+    <header class="section-header">
+        <h2>Notifications</h2>
+        <p>Configure how and when you receive notifications</p>
+    </header>
+
+    <div class="card">
+        <h3>General Notifications</h3>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="notificationsEnabled">Enable Notifications</label>
+                <p class="help-text">Show notifications for important events</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="notificationsEnabled" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="notificationPosition">Notification Position</label>
+            <select id="notificationPosition" class="form-select">
+                <option value="top-right">Top Right</option>
+                <option value="top-left">Top Left</option>
+                <option value="bottom-right">Bottom Right</option>
+                <option value="bottom-left">Bottom Left</option>
+                <option value="top-center">Top Center</option>
+                <option value="bottom-center">Bottom Center</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="notificationDuration">Display Duration (ms)</label>
+            <input type="number" id="notificationDuration" class="form-input" min="1000" max="10000" step="500"
+                value="3000" />
+            <p class="help-text">How long notifications stay visible (1000-10000ms)</p>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="notificationSound">Enable Sound</label>
+                <p class="help-text">Play sound with notifications</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="notificationSound" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Event Notifications</h3>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="notifyOnSave">Show on Save</label>
+                <p class="help-text">Notify when settings are saved</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="notifyOnSave" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="notifyOnError">Show on Error</label>
+                <p class="help-text">Notify when errors occur</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="notifyOnError" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="notifyOnProgress">Show Progress</label>
+                <p class="help-text">Show progress notifications for long operations</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="notifyOnProgress" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="notifyOnComplete">Show on Complete</label>
+                <p class="help-text">Notify when analysis completes</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="notifyOnComplete" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="notifyOnSegmentSkip">Show on Segment Skip</label>
+                <p class="help-text">Notify when segments are skipped</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="notifyOnSegmentSkip" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,91 @@
+<section id="comments" class="tab-content">
+    <header class="section-header">
+        <h2>Comments Settings</h2>
+        <p>Configure comment extraction and analysis</p>
+    </header>
+
+    <div class="card">
+        <h3>Comment Extraction</h3>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="commentsEnabled">Enable Comments</label>
+                <p class="help-text">Extract and analyze video comments</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="commentsEnabled" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="commentsLimit">Comments Limit</label>
+            <input type="number" id="commentsLimit" class="form-input" min="5" max="100" value="20" />
+            <p class="help-text">Maximum number of comments to fetch (5-100)</p>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="includeReplies">Include Replies</label>
+                <p class="help-text">Also fetch comment replies</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="includeReplies" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="commentsSortBy">Sort Comments By</label>
+            <select id="commentsSortBy" class="form-select">
+                <option value="top">Top Comments</option>
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Comment Analysis</h3>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="analyzeSentiment">Analyze Sentiment</label>
+                <p class="help-text">Perform AI sentiment analysis on comments</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="analyzeSentiment" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="filterSpam">Filter Spam</label>
+                <p class="help-text">Automatically filter spam comments</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="filterSpam" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Display Options</h3>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="showAuthorBadges">Show Author Badges</label>
+                <p class="help-text">Display verified/member badges</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="showAuthorBadges" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+                <label for="highlightPinned">Highlight Pinned Comments</label>
+                <p class="help-text">Highlight pinned comments</p>
+            </div>
+            <label class="switch sm">
+                <input type="checkbox" id="highlightPinned" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+</section>

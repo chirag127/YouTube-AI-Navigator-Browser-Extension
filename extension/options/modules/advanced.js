@@ -1,27 +1,30 @@
-import { DEFAULT_SETTINGS } from "./settings-manager.js";
-
 export class AdvancedSettings {
-    constructor(settingsManager, uiManager) {
+    constructor(settingsManager, autoSave) {
         this.settings = settingsManager;
-        this.ui = uiManager;
+        this.autoSave = autoSave;
     }
 
     init() {
+        this.loadSettings();
+        this.attachListeners();
+    }
+
+    loadSettings() {
+        const config = this.settings.get();
+        this.setChecked('debugMode', config.advanced?.debugMode ?? false);
+    }
+
+    attachListeners() {
+        this.autoSave.attachToAll({
+            debugMode: { path: 'advanced.debugMode' }
+        });
+
         const els = {
-            debugMode: document.getElementById("debugMode"),
             exportSettings: document.getElementById("exportSettings"),
             importSettings: document.getElementById("importSettings"),
             importFile: document.getElementById("importFile"),
             resetDefaults: document.getElementById("resetDefaults"),
         };
-
-        const s = this.settings.get();
-        if (els.debugMode) {
-            els.debugMode.checked = s.debugMode;
-            els.debugMode.addEventListener("change", (e) =>
-                this.settings.save({ debugMode: e.target.checked })
-            );
-        }
 
         if (els.exportSettings) {
             els.exportSettings.addEventListener("click", () => {
@@ -50,12 +53,20 @@ export class AdvancedSettings {
                 reader.onload = async (ev) => {
                     try {
                         const imported = JSON.parse(ev.target.result);
-                        await this.settings.save(imported);
-                        // Reload page to reflect changes
-                        window.location.reload();
+                        const success = await this.settings.import(JSON.stringify(imported));
+                        if (success) {
+                            if (this.autoSave.notifications) {
+                                this.autoSave.notifications.success('Settings imported successfully');
+                            }
+                            setTimeout(() => window.location.reload(), 1000);
+                        } else {
+                            throw new Error('Import failed');
+                        }
                     } catch (err) {
                         console.error("Import failed:", err);
-                        this.ui.showToast("Invalid settings file", "error");
+                        if (this.autoSave.notifications) {
+                            this.autoSave.notifications.error('Invalid settings file');
+                        }
                     }
                 };
                 reader.readAsText(file);
@@ -64,11 +75,19 @@ export class AdvancedSettings {
 
         if (els.resetDefaults) {
             els.resetDefaults.addEventListener("click", async () => {
-                if (confirm("Reset all settings to default?")) {
+                if (confirm("Reset all settings to default? This cannot be undone.")) {
                     await this.settings.reset();
-                    window.location.reload();
+                    if (this.autoSave.notifications) {
+                        this.autoSave.notifications.success('Settings reset to defaults');
+                    }
+                    setTimeout(() => window.location.reload(), 1000);
                 }
             });
         }
+    }
+
+    setChecked(id, checked) {
+        const el = document.getElementById(id);
+        if (el) el.checked = checked;
     }
 }
