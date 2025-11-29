@@ -1,6 +1,5 @@
 import { geniusLyricsAPI as geniusAPI } from '../../api/genius-lyrics.js';
-import { e } from '../../utils/shortcuts/log.js';
-
+import { e } from '../../utils/shortcuts/global.js';
 export async function handleGetLyrics(req, rsp) {
   try {
     const { title, artist } = req;

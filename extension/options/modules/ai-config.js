@@ -1,11 +1,6 @@
 import { ModelManager } from '../../api/gemini.js';
-import { gebi as i, on, ce, ap, tc, ih, rc, vl } from '../../utils/shortcuts/doc.js';
-import { ft } from '../../utils/shortcuts/network.js';
-import { js, jp, isS } from '../../utils/shortcuts/core.js';
-import { ce as cr } from '../../utils/shortcuts/doc.js';
-
-import { inc, fe } from '../../utils/shortcuts/array.js';
-import { mt, rp, tr, sw } from '../../utils/shortcuts/string.js';
+import { gebi as i, on, ap, tc, ih, rc, vl, el as cr } from '../../utils/shortcuts/dom.js';
+import { ft, js, jp, isS, inc, fe, mt, rp, tr, sw } from '../../utils/shortcuts/core.js';
 
 export class AIConfig {
   constructor(s, a) {
@@ -81,7 +76,7 @@ export class AIConfig {
         await this.a.save('ai.model', m[0]);
       }
     } catch (x) {
-      ce('Failed to fetch models:', x);
+      console.error('Failed to fetch models:', x);
       ih(sel, '<option value="" disabled>Failed to load</option>');
       this.a.notifications?.error(`Failed: ${x.message}`);
     } finally {

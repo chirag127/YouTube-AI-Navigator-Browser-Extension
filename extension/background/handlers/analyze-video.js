@@ -3,12 +3,11 @@ import { getApiKey as gk } from '../utils/api-key.js';
 import { geniusLyricsAPI as gl } from '../../api/genius-lyrics.js';
 import { sponsorBlockAPI as sb } from '../../api/sponsorblock.js';
 import { ContextManager as CM } from '../../services/context-manager.js';
-import { l, w, e } from '../../utils/shortcuts/log.js';
-import { interval as si, clearInterval as ci, delay as to } from '../../utils/shortcuts/time.js';
-import { rt as cr } from '../../utils/shortcuts/runtime.js';
-import { sync as css, sg } from '../../utils/shortcuts/storage.js';
-import { ok, E } from '../../utils/shortcuts/core.js';
-import { ic, lc } from '../../utils/shortcuts/string.js';
+import { l, w, e, si, ci, st as to } from '../../utils/shortcuts/global.js';
+import { r as cr } from '../../utils/shortcuts/runtime.js';
+import { sg, ss } from '../../utils/shortcuts/storage.js';
+import { ok } from '../../utils/shortcuts/core.js';
+import { inc as ic, lc } from '../../utils/shortcuts/string.js';
 import { np, pc } from '../../utils/shortcuts/async.js';
 let ka = null;
 const ska = () => {
@@ -74,19 +73,19 @@ export async function handleAnalyzeVideo(q, r) {
     let ec = {};
     try {
       l('[AV]Ctx');
-      if (!css) throw new E('Sync NA');
+      if (!ss) throw new Error('Sync NA');
       const st = await sg(null);
       if (!st || !ok(st).length) w('[AV]No set');
-      if (!m) throw new E('No meta');
+      if (!m) throw new Error('No meta');
       const cm = new CM(st);
       const fp = cm.fetchContext(m);
-      const tp = np((_, j) => to(() => j(new E('TO')), 1e4));
+      const tp = np((_, j) => to(() => j(new Error('TO')), 1e4));
       ec = await pc([fp, tp]);
       l('[AV]Ctx ok');
     } catch (x) {
       e('[AV]Ctx:', x.message);
     }
-    if ((!t || !t.length) && !ly) throw new E('No content');
+    if ((!t || !t.length) && !ly) throw new Error('No content');
     const ac = {
       transcript: t || [],
       lyrics: ly,

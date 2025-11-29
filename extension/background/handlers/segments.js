@@ -1,6 +1,5 @@
 import { initializeServices, getServices } from '../services.js';
 import { getApiKey } from '../utils/api-key.js';
-
 export async function handleClassifySegments(req, rsp) {
   const { transcript, settings } = req;
   const k = settings?.apiKey || (await getApiKey());

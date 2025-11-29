@@ -1,5 +1,5 @@
 export const keys = Object.keys;
-export const vals = Object.values;
+export const vl = Object.values;
 export const ents = Object.entries;
 export const assign = Object.assign;
 export const json = JSON.stringify;

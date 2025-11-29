@@ -1,7 +1,5 @@
-import { sg, ss } from '../../utils/shortcuts/storage.js';
-import { l } from '../../utils/../../utils/shortcuts/log.js';
-import { ce } from '../../utils/shortcuts/dom.js';
-import { js, jp, nw as nt } from '../../utils/shortcuts/core.js';
+import { sync as sg } from '../../utils/shortcuts/runtime.js';
+import { log as l, err as e, js, jp, now as nt } from '../../utils/shortcuts/core.js';
 
 export const SEGMENT_CATEGORIES = [
   { id: 'sponsor', label: 'Sponsor', color: '#00d400' },
@@ -24,7 +22,7 @@ export class SettingsManager {
   }
   async load() {
     try {
-      const r = await sg('config');
+      const r = await sg.get('config');
       l('[SettingsManager] Loaded from storage:', r);
       if (r.config && Object.keys(r.config).length > 0)
         this.settings = this.mergeWithDefaults(r.config);
@@ -35,7 +33,7 @@ export class SettingsManager {
       l('[SettingsManager] Final settings:', this.settings);
       return this.settings;
     } catch (x) {
-      ce('[SettingsManager] Load error:', x);
+      e('[SettingsManager] Load error:', x);
       this.settings = this.getDefaults();
       return this.settings;
     }
@@ -45,13 +43,13 @@ export class SettingsManager {
       this.settings._meta = this.settings._meta || {};
       this.settings._meta.lastUpdated = nt();
       l('[SettingsManager] Saving to storage:', this.settings);
-      await ss({ config: this.settings });
-      const v = await sg('config');
+      await sg.set({ config: this.settings });
+      const v = await sg.get('config');
       l('[SettingsManager] Verified save:', v);
       this.notify();
       return true;
     } catch (x) {
-      ce('[SettingsManager] Save error:', x);
+      e('[SettingsManager] Save error:', x);
       throw x;
     }
   }
@@ -229,7 +227,7 @@ export class SettingsManager {
       await this.save();
       return true;
     } catch (x) {
-      ce('[Settings] Import failed:', x);
+      e('[Settings] Import failed:', x);
       return false;
     }
   }

@@ -1,6 +1,5 @@
 import { initializeServices, getServices } from '../services.js';
 import { getApiKey } from '../utils/api-key.js';
-
 export async function handleSaveChatMessage(req, rsp) {
   const { videoId, message } = req;
   const k = await getApiKey();

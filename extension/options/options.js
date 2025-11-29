@@ -16,9 +16,9 @@ import { CommentsSettings } from './modules/comments-settings.js';
 import { MetadataSettings } from './modules/metadata-settings.js';
 import { ScrollSettings } from './modules/scroll-settings.js';
 import { on, id as i } from '../utils/shortcuts/dom.js';
-import { log as l, err as e, vals as vs } from '../utils/shortcuts/core.js';
-import { url, tc } from '../utils/shortcuts/runtime.js';
-
+import { log as l, err as e, vl as vs } from '../utils/shortcuts/core.js';
+import { url } from '../utils/shortcuts/runtime.js';
+import { tc } from '../utils/shortcuts/tabs.js';
 on(document, 'DOMContentLoaded', async () => {
   l('[Options] Initializing...');
   const settingsManager = new SettingsManager();
@@ -33,11 +33,11 @@ on(document, 'DOMContentLoaded', async () => {
   l('[Options] Loading dynamic tabs...');
   await tabLoader.loadAll();
   const settings = settingsManager.get();
-  const welcomeBanner = i('welcome-banner');
-  const startSetupBtn = i('start-setup-btn');
-  const dismissBannerBtn = i('dismiss-banner-btn');
+  const welcomeBanner = i('#welcome-banner');
+  const startSetupBtn = i('#start-setup-btn');
+  const dismissBannerBtn = i('#dismiss-banner-btn');
   if (!settings._meta?.onboardingCompleted && !settings.ai?.apiKey) {
-    welcomeBanner.style.display = 'block';
+    if (welcomeBanner) welcomeBanner.style.display = 'block';
   }
   startSetupBtn &&
     on(startSetupBtn, 'click', () => {
@@ -45,7 +45,7 @@ on(document, 'DOMContentLoaded', async () => {
     });
   dismissBannerBtn &&
     on(dismissBannerBtn, 'click', () => {
-      welcomeBanner.style.display = 'none';
+      if (welcomeBanner) welcomeBanner.style.display = 'none';
     });
   uiManager.setupTabs();
   l('[Options] Initializing modules...');

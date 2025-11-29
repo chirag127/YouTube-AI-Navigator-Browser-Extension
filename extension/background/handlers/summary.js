@@ -1,9 +1,7 @@
 import { initializeServices, getServices } from '../services.js';
 import { getApiKey } from '../utils/api-key.js';
-import { mf } from '../../utils/shortcuts/math.js';
-import { mp } from '../../utils/shortcuts/array.js';
-import { jn } from '../../utils/shortcuts/array.js';
-
+import { fl as mf } from '../../utils/shortcuts/math.js';
+import { mp, jn } from '../../utils/shortcuts/array.js';
 export async function handleGenerateSummary(req, rsp) {
   const { transcript, settings, metadata } = req;
   const k = settings?.apiKey || (await getApiKey());

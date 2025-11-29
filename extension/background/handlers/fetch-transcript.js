@@ -1,7 +1,7 @@
-import { rep, tr, pF, jp, fl, mp, jn } from '../../utils/shortcuts/core.js';
+import { rp as rep, tr } from '../../utils/shortcuts/string.js';
+import { pf as pF, jp, l } from '../../utils/shortcuts/global.js';
+import { fl, mp, jn } from '../../utils/shortcuts/array.js';
 import { ft as tf } from '../../utils/shortcuts/network.js';
-import { l } from '../../utils/shortcuts/log.js';
-
 function dec(t) {
   const e = {
     '&amp;': '&',
@@ -13,7 +13,6 @@ function dec(t) {
   };
   return rep(t, /&[^;]+;/g, m => e[m] || m);
 }
-
 function pXML(x) {
   const s = [],
     r = /<text start="([\d.]+)"(?:\s+dur="([\d.]+)")?[^>]*>([^<]*)<\/text>/g;
@@ -24,7 +23,6 @@ function pXML(x) {
   }
   return s;
 }
-
 async function fYT(vid, lNg = 'en') {
   const fs = ['json3', 'srv3'];
   for (const f of fs) {
@@ -59,7 +57,6 @@ async function fYT(vid, lNg = 'en') {
   }
   return { success: false, error: 'YouTube Direct API failed' };
 }
-
 export async function handleFetchTranscript(req, rsp) {
   const { videoId, lang = 'en' } = req;
   const ms = [{ name: 'YouTube Direct API', fn: () => fYT(videoId, lang) }];

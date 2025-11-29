@@ -1,5 +1,5 @@
-import { id as i, on, ce, $$ } from '../../utils/shortcuts/dom.js';
-import { slr as lr } from '../../utils/shortcuts/storage.js';
+import { id as i, on, ce, qsa as $$ } from '../../utils/shortcuts/dom.js';
+import { local as lr } from '../../utils/shortcuts/runtime.js';
 import { cf } from '../../utils/shortcuts/platform_api.js';
 
 export class GeneralSettings {
@@ -33,7 +33,7 @@ export class GeneralSettings {
     if (ch)
       on(ch, 'click', async () => {
         if (cf('Clear all history? This cannot be undone.')) {
-          await lr('comprehensive_history');
+          await lr.remove('comprehensive_history');
           this.a.notifications?.success('History cleared');
         }
       });

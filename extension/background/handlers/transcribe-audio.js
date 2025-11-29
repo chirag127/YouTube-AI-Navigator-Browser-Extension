@@ -1,22 +1,20 @@
 import { GeminiClient } from '../../api/gemini-client.js';
-import { l, w, e } from '../../utils/shortcuts/log.js';
-import { jp, E } from '../../utils/shortcuts/core.js';
-import { rep, tr } from '../../utils/shortcuts/string.js';
+import { l, w, e, jp } from '../../utils/shortcuts/global.js';
+import { rp as rep, tr } from '../../utils/shortcuts/string.js';
 import { sg } from '../../utils/shortcuts/storage.js';
 import { ft } from '../../utils/shortcuts/network.js';
-
 export async function handleTranscribeAudio(req, rsp) {
   try {
     const { audioUrl, lang } = req;
-    if (!audioUrl) throw new E('No audio URL provided');
+    if (!audioUrl) throw new Error('No audio URL provided');
     const s = await sg(['apiKey', 'model']);
-    if (!s.apiKey) throw new E('Gemini API key not found');
+    if (!s.apiKey) throw new Error('Gemini API key not found');
     let m = s.model || 'gemini-2.5-flash-lite-preview-09-2025';
     if (m.startsWith('models/')) m = rep(m, 'models/', '');
     const c = new GeminiClient(s.apiKey);
     l('[TranscribeAudio] Fetching audio...', audioUrl);
     const ar = await ft(audioUrl);
-    if (!ar.ok) throw new E(`Failed to fetch audio: ${ar.status}`);
+    if (!ar.ok) throw new Error(`Failed to fetch audio: ${ar.status}`);
     const ab = await ar.arrayBuffer();
     const b64 = btoa(new Uint8Array(ab).reduce((d, b) => d + String.fromCharCode(b), ''));
     l(`[TranscribeAudio] Audio fetched. Size: ${ab.byteLength} bytes`);
@@ -32,7 +30,7 @@ export async function handleTranscribeAudio(req, rsp) {
       w('[TranscribeAudio] JSON parse failed, trying to extract array', x);
       const m = txt.match(/\[.*\]/s);
       if (m) seg = jp(m[0]);
-      else throw new E('Failed to parse transcription response');
+      else throw new Error('Failed to parse transcription response');
     }
     rsp({ success: true, segments: seg });
   } catch (x) {
