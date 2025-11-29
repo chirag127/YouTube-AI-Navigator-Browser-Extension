@@ -1,9 +1,9 @@
-import { log as l, warn as w, err as e } from '../../utils/shortcuts/core.js';
+import { l, w, e } from '../../utils/shortcuts/log.js';
 import { on, qs as $ } from '../../utils/shortcuts/dom.js';
-import { sg, sg as lg } from '../../utils/shortcuts/core.js';
+import { sg, slg as lg } from '../../utils/shortcuts/storage.js';
 import { ft } from '../../utils/shortcuts/network.js';
 import { js } from '../../utils/shortcuts/core.js';
-import { mp, jn } from '../../utils/shortcuts/core.js';
+import { mp, jn } from '../../utils/shortcuts/array.js';
 
 class CommentsExtractor {
   constructor() {

@@ -1,6 +1,4 @@
 export const comments = comments => {
-  console.log('[Comments Prompt] Received comments:', comments);
-  console.log('[Comments Prompt] Comments count:', comments?.length);
 
   if (!comments || comments.length === 0) {
     return `No comments available to analyze.`;

@@ -1,5 +1,8 @@
 import { fetchTranscript } from '../../services/transcript/fetcher.js';
-import { log as l, err as e, cw, jp, st } from '../../utils/shortcuts/core.js';
+import { l, e } from '../../utils/shortcuts/log.js';
+import { cw } from '../../utils/shortcuts/windows.js';
+import { jp } from '../../utils/shortcuts/core.js';
+import { st } from '../../utils/shortcuts/time.js';
 import { on, qsa as $$ } from '../../utils/shortcuts/dom.js';
 
 class TranscriptExtractor {

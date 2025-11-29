@@ -1,8 +1,8 @@
 import { on, of as off } from '../../../utils/shortcuts/dom.js';
-import { st } from '../../../utils/shortcuts/core.js';
+import { st } from '../../../utils/shortcuts/time.js';
 
 export const name = 'XHR Interceptor';
-export const priority = 1;
+export const priority = 10;
 
 export const extract = async (vid, lang = 'en') => {
   const ev = await waitForInterceptedData(vid, lang, 3000);

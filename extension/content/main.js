@@ -2,9 +2,11 @@
   if (window.location.hostname !== 'www.youtube.com') return;
   const { l, e } = await import(chrome.runtime.getURL('utils/shortcuts/log.js'));
   const { url } = await import(chrome.runtime.getURL('utils/shortcuts/runtime.js'));
-  const { rt: cr } = await import(chrome.runtime.getURL('utils/shortcuts/core.js'));
+  const { rt: cr } = await import(chrome.runtime.getURL('utils/shortcuts/runtime.js'));
   const { ce, ap, qs: $ } = await import(chrome.runtime.getURL('utils/shortcuts/dom.js'));
-  const { sg: cl, st: to, nw } = await import(chrome.runtime.getURL('utils/shortcuts/core.js'));
+  const { sg: cl } = await import(chrome.runtime.getURL('utils/shortcuts/storage.js'));
+  const { st: to } = await import(chrome.runtime.getURL('utils/shortcuts/time.js'));
+  const { nw } = await import(chrome.runtime.getURL('utils/shortcuts/core.js'));
   const { d: doc } = await import(chrome.runtime.getURL('utils/shortcuts/dom.js'));
 
   const s = ce('script');

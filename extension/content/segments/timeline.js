@@ -1,5 +1,5 @@
 import { id as i, qs as $ } from '../../utils/shortcuts/dom.js';
-import { rt as cr } from '../../utils/shortcuts/core.js';
+import { rt as cr } from '../../utils/shortcuts/runtime.js';
 
 const colors = {
   Sponsor: '#00d26a',

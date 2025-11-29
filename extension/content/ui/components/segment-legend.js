@@ -1,4 +1,5 @@
-import { oe, mp, jn } from '../../../utils/shortcuts/core.js';
+import { oe } from '../../../utils/shortcuts/core.js';
+import { mp, jn } from '../../../utils/shortcuts/array.js';
 import { id as ge, ce } from '../../../utils/shortcuts/dom.js';
 
 const colors = {

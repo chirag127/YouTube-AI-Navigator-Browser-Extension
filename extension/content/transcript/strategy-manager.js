@@ -2,9 +2,11 @@ import * as xhrIntercept from './strategies/xhr-intercept.js';
 import * as youtubeDirect from './strategies/youtube-direct.js';
 import * as backgroundProxy from './strategies/background-proxy.js';
 import * as domParser from './strategies/dom-parser.js';
-import { log as l, err as e, cw } from '../../utils/shortcuts/core.js';
+import * as invidious from './strategies/invidious.js';
+import { l, e } from '../../utils/shortcuts/log.js';
+import { cw } from '../../utils/shortcuts/windows.js';
 
-const strategies = [xhrIntercept, youtubeDirect, backgroundProxy, domParser].sort(
+const strategies = [xhrIntercept, youtubeDirect, backgroundProxy, domParser, invidious].sort(
   (a, b) => a.priority - b.priority
 );
 

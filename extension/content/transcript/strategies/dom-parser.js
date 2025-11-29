@@ -2,7 +2,7 @@ import { ft } from '../../../utils/shortcuts/network.js';
 import { qs as $, qsa as $$ } from '../../../utils/shortcuts/dom.js';
 
 export const name = 'DOM Parser';
-export const priority = 5;
+export const priority = 50;
 
 export const extract = async (vid, lang = 'en') => {
   if (window.ytInitialPlayerResponse?.captions) {

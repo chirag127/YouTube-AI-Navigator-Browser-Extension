@@ -4,7 +4,7 @@ import { attachEventListeners } from '../handlers/events.js';
 import { log, logError, waitForElement } from '../core/debug.js';
 import { createWidgetHTML } from './components/widget/structure.js';
 import { qs as $, id as ge, on, ce } from '../../utils/shortcuts/dom.js';
-import { si, csi, st } from '../../utils/shortcuts/core.js';
+import { si, csi, st } from '../../utils/shortcuts/time.js';
 
 let widgetContainer = null,
   resizeObserver = null,

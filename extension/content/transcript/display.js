@@ -1,4 +1,4 @@
-import { rt as cr } from '../../utils/shortcuts/core.js';
+import { rt as cr } from '../../utils/shortcuts/runtime.js';
 
 export function createTranscriptDisplay(s) {
   const c = cr('div');

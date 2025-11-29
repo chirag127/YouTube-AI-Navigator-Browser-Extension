@@ -2,7 +2,9 @@ import { state, resetState } from './state.js';
 import { injectWidget } from '../ui/widget.js';
 import { startAnalysis } from './analyzer.js';
 import { isWidgetProperlyVisible } from '../utils/dom.js';
-import { log as l, err as e, st, ct as co, loc } from '../../utils/shortcuts/core.js';
+import { l, e } from '../../utils/shortcuts/log.js';
+import { st, ct as co } from '../../utils/shortcuts/time.js';
+import { loc } from '../../utils/shortcuts/dom.js';
 import { on, id } from '../../utils/shortcuts/dom.js';
 
 let lastUrl = st.loc.href;

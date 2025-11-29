@@ -1,6 +1,6 @@
 import { sendChatMessage } from './chat.js';
 import { on } from '../../utils/shortcuts/dom.js';
-import { log as l } from '../../utils/shortcuts/core.js';
+import { l } from '../../utils/shortcuts/log.js';
 import { qs } from '../../utils/shortcuts/dom.js';
 
 export function attachEventListeners(w) {

@@ -1,6 +1,7 @@
 import { seekVideo } from './dom.js';
 import { on, fc, ap, tx, tc, dc as doc } from '../../utils/shortcuts/dom.js';
-import { rt as cr, pI, sb as sbs, rp } from '../../utils/shortcuts/core.js';
+import { rt as cr, pI } from '../../utils/shortcuts/runtime.js';
+import { sb as sbs, rp } from '../../utils/shortcuts/string.js';
 
 export function makeTimestampsClickable(c) {
   const p = /(\[|[(])?(\d{1,2}):(\d{2})(\]|[)])?/g,

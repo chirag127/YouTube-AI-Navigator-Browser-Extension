@@ -1,5 +1,6 @@
 import { getVideoElement } from '../utils/dom.js';
-import { sg, st } from '../../utils/shortcuts/core.js';
+import { sg } from '../../utils/shortcuts/storage.js';
+import { st } from '../../utils/shortcuts/time.js';
 import { id as i, on, of as off, ce } from '../../utils/shortcuts/dom.js';
 
 let as = [];

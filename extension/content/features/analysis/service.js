@@ -1,4 +1,5 @@
-import { msg, log as l } from '../../../utils/shortcuts/core.js';
+import { msg } from '../../../utils/shortcuts/runtime.js';
+import { l } from '../../../utils/shortcuts/log.js';
 
 export async function analyzeVideo(t, m, c = [], o = { length: 'Medium' }) {
   l('[Service] Sending ANALYZE_VIDEO message', {

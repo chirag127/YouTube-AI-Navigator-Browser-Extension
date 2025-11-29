@@ -1,8 +1,8 @@
 import { state } from '../core/state.js';
 
 import { on, of as off } from '../../utils/shortcuts/dom.js';
-import { loc } from '../../utils/shortcuts/core.js';
-import { log, err } from '../../utils/shortcuts/core.js';
+import { loc } from '../../utils/shortcuts/dom.js';
+import { l as log, e as err } from '../../utils/shortcuts/log.js';
 import { qs as $, qsa as $$ } from '../../utils/shortcuts/dom.js';
 
 export class AutoLiker {
