@@ -1,11 +1,2 @@
-export const l = console.log;
-export const e = console.error;
-export const to = setTimeout;
-export const st = setTimeout;
-export const si = setInterval;
-export const ct = clearTimeout;
-export const ci = clearInterval;
-export const en = encodeURIComponent;
-export const de = decodeURIComponent;
 export const jp = JSON.parse;
 export const js = JSON.stringify;

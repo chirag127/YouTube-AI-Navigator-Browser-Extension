@@ -6,3 +6,17 @@ export const slg = k => chrome.storage.local.get(k);
 export const sls = (k, v) => chrome.storage.local.set(typeof k === 'string' ? { [k]: v } : k);
 export const slr = k => chrome.storage.local.remove(k);
 export const slc = () => chrome.storage.local.clear();
+
+export const sy = (k, v) => {
+  if (v === null) return sr(k);
+  if (v !== undefined) return ss(k, v);
+  if (typeof k === 'object') return ss(k);
+  return sg(k);
+};
+
+export const sl = (k, v) => {
+  if (v === null) return slr(k);
+  if (v !== undefined) return sls(k, v);
+  if (typeof k === 'object') return sls(k);
+  return slg(k);
+};
