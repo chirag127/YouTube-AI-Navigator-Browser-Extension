@@ -1,6 +1,5 @@
 import { state, resetState } from './state.js';
 import { injectWidget } from '../ui/widget.js';
-import { startAnalysis } from './analyzer.js';
 import { isWidgetProperlyVisible } from '../utils/dom.js';
 import { err as e, to as st, ct } from '../../utils/shortcuts/core.js';
 import { on as ae, qs, mo } from '../../utils/shortcuts/dom.js';
@@ -51,7 +50,16 @@ async function handleNewVideo(v) {
         }
       }
     }, 500);
-    if (state.settings.autoAnalyze) st(() => startAnalysis(), 1500);
+    if (state.settings.autoAnalyze) {
+      st(async () => {
+        try {
+          const { startAnalysis } = await import('./analyzer.js');
+          startAnalysis();
+        } catch (err) {
+          e('Analysis start fail', err);
+        }
+      }, 1500);
+    }
   } catch (x) {
     e('Widget inj fail', x);
   }

@@ -1,5 +1,5 @@
 import { state } from '../../core/state.js';
-import TranscriptExtractor from '../../transcript/extractor.js';
+import { extractTranscript } from '../../transcript/strategy-manager.js';
 import { metadataExtractor } from '../../metadata/extractor.js';
 import { getComments } from '../../handlers/comments.js';
 import { showLoading, showError } from '../../ui/components/loading.js';
@@ -24,7 +24,8 @@ export async function startAnalysis() {
     showLoading(ca, 'Extracting transcript...');
     let ts = [];
     try {
-      ts = await TranscriptExtractor.extract(state.currentVideoId);
+      const result = await extractTranscript(state.currentVideoId);
+      ts = result.success ? result.data : [];
     } catch (e) {
       cw('[Flow] Transcript extraction failed:', e);
     }
