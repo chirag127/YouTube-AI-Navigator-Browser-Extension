@@ -5,42 +5,63 @@ import { ft } from '../utils/shortcuts/network.js';
 import { cht as ctab } from '../utils/shortcuts/chrome.js';
 import { rt } from '../utils/shortcuts/runtime.js';
 import { to as st, wn as win } from '../utils/shortcuts/global.js';
+import { l, e } from '../utils/shortcuts/log.js';
 class OnboardingFlow {
   constructor() {
+    l('Onboarding:Constructor');
     this.currentStep = 0;
     this.totalSteps = 4;
     this.settings = {};
     this.init();
+    l('Onboarding:Constructor:Done');
   }
   async init() {
+    l('Onboarding:Init');
     await this.loadSettings();
     this.setupEventListeners();
     this.updateUI();
+    l('Onboarding:Init:Done');
   }
   async loadSettings() {
-    const r = await sg('config');
-    this.settings = r.config || this.getDefaults();
+    l('Onboarding:LoadSettings');
+    try {
+      const r = await sg('config');
+      this.settings = r.config || this.getDefaults();
+      l('Onboarding:LoadSettings:Done');
+    } catch (err) {
+      e('Err:LoadSettings', err);
+    }
   }
   async saveSettings(p, v) {
-    const k = p.split('.'),
-      l = k.pop(),
-      t = k.reduce((o, key) => {
-        o[key] = o[key] || {};
-        return o[key];
-      }, this.settings);
-    t[l] = v;
-    await ss('config', this.settings);
+    l('Onboarding:SaveSettings');
+    try {
+      const k = p.split('.'),
+        last = k.pop(),
+        t = k.reduce((o, key) => {
+          o[key] = o[key] || {};
+          return o[key];
+        }, this.settings);
+      t[last] = v;
+      await ss('config', this.settings);
+      l('Onboarding:SaveSettings:Done');
+    } catch (err) {
+      e('Err:SaveSettings', err);
+    }
   }
   getDefaults() {
-    return {
+    l('Onboarding:GetDefaults');
+    const defaults = {
       ai: { GAK: '', model: 'gemini-2.5-flash-lite-preview-09-2025' },
       automation: { autoAnalyze: true },
       segments: { enabled: true },
       ui: { outputLanguage: 'en' },
       _meta: { onboardingCompleted: false, version: '1.0.0', lastUpdated: nt() },
     };
+    l('Onboarding:GetDefaults:Done');
+    return defaults;
   }
   setupEventListeners() {
+    l('Onboarding:SetupEventListeners');
     on(ge('nextBtn'), 'click', () => this.nextStep());
     on(ge('backBtn'), 'click', () => this.prevStep());
     const tak = ge('toggleApiKeyBtn'),
@@ -65,17 +86,23 @@ class OnboardingFlow {
         win.close();
       });
     if (fb) on(fb, 'click', () => this.completeOnboarding());
+    l('Onboarding:SetupEventListeners:Done');
   }
   toggleApiKeyVisibility() {
+    l('Onboarding:ToggleApiKeyVisibility');
     const i = ge('apiKeyInput');
     i.type = i.type === 'password' ? 'text' : 'password';
+    l('Onboarding:ToggleApiKeyVisibility:Done');
   }
   onApiKeyInput() {
+    l('Onboarding:OnApiKeyInput');
     const s = ge('apiKeyStatus');
     s.className = 'status-message';
     s.textContent = '';
+    l('Onboarding:OnApiKeyInput:Done');
   }
   async testApiKey() {
+    l('Onboarding:TestApiKey');
     const i = ge('apiKeyInput'),
       b = ge('testApiKeyBtn'),
       s = ge('apiKeyStatus'),
@@ -83,6 +110,7 @@ class OnboardingFlow {
     if (!k) {
       s.className = 'status-message error';
       s.textContent = 'Please enter an API key';
+      l('Onboarding:TestApiKey:Done');
       return;
     }
     b.disabled = true;
@@ -114,7 +142,9 @@ class OnboardingFlow {
       s.className = 'status-message success';
       s.textContent = '✓ Connection successful! API key saved.';
       st(() => this.nextStep(), 1500);
+      l('Onboarding:TestApiKey:Done');
     } catch (e) {
+      e('Err:TestApiKey', e);
       s.className = 'status-message error';
       s.textContent = `✗ ${e.message}`;
     } finally {
@@ -123,18 +153,23 @@ class OnboardingFlow {
     }
   }
   nextStep() {
+    l('Onboarding:NextStep');
     if (this.currentStep < this.totalSteps - 1) {
       this.currentStep++;
       this.updateUI();
     }
+    l('Onboarding:NextStep:Done');
   }
   prevStep() {
+    l('Onboarding:PrevStep');
     if (this.currentStep > 0) {
       this.currentStep--;
       this.updateUI();
     }
+    l('Onboarding:PrevStep:Done');
   }
   updateUI() {
+    l('Onboarding:UpdateUI');
     const s = [...$$('.step')],
       d = [...$$('.step-dot')],
       pf = ge('progressFill'),
@@ -154,6 +189,7 @@ class OnboardingFlow {
     bb.disabled = this.currentStep === 0;
     nb.style.display = this.currentStep === this.totalSteps - 1 ? 'none' : 'block';
     this.loadStepData();
+    l('Onboarding:UpdateUI:Done');
   }
   async loadStepData() {
     if (this.currentStep === 1) {
