@@ -4,4 +4,3 @@ export const uo = u => new URL(u);
 export const up = s => new URLSearchParams(s);
 export const uv = u => URL.revokeObjectURL(u);
 export const ub = o => URL.createObjectURL(o);
-export const url = p => chrome.runtime.getURL(p);

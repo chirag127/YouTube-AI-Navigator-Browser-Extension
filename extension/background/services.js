@@ -2,7 +2,8 @@ import { ChunkingService } from '../services/chunking/index.js';
 import { GeminiService } from '../api/gemini.js';
 import { SegmentClassificationService } from '../services/segments/index.js';
 import { StorageService } from '../services/storage/index.js';
-import { E } from '../utils/shortcuts/index.js';
+import { E } from '../utils/shortcuts/core.js';
+import { w } from '../utils/shortcuts/log.js';
 
 let services = {
   gemini: null,
@@ -28,7 +29,7 @@ export async function initializeServices(apiKey) {
   try {
     await services.gemini.fetchAvailableModels();
   } catch (err) {
-    console.warn('[Services] Failed to fetch models:', err.message);
+    w('[Services] Failed to fetch models:', err.message);
   }
 
   services.initialized = true;

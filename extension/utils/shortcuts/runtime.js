@@ -23,3 +23,9 @@ export const url = (p) => chrome.runtime.getURL(p);
  * Shortcut for chrome.runtime
  */
 export const rt = chrome.runtime;
+
+/**
+ * Shortcut for chrome.runtime.getManifest
+ * @returns {object}
+ */
+export const rg = () => chrome.runtime.getManifest();

@@ -1,5 +1,22 @@
-
+export const ev = Event;
+export const ce = CustomEvent;
+export const me = MessageEvent;
+export const ee = ErrorEvent;
+export const pe = ProgressEvent;
+export const ke = KeyboardEvent;
+export const mse = MouseEvent;
+export const we = WheelEvent;
+export const te = TouchEvent;
+export const fe = FocusEvent;
+export const ie = InputEvent;
+export const de = DragEvent;
+export const ae = AnimationEvent;
+export const tre = TransitionEvent;
+export const pde = (t, d, b) =>
+    new CustomEvent(t, { detail: d, bubbles: b ?? true, cancelable: true });
+export const dp = (e, ev) => e.dispatchEvent(ev);
+export const pd = e => e.preventDefault();
+export const sp = e => e.stopPropagation();
+export const si = e => e.stopImmediatePropagation();
 export const on = (t, e, f, o) => t.addEventListener(e, f, o);
-
-
 export const off = (t, e, f, o) => t.removeEventListener(e, f, o);

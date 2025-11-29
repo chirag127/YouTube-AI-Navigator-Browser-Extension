@@ -59,7 +59,7 @@ export async function handleAnalyzeVideo(q, r) {
       try {
         ly = await gl.getLyrics(m.title, m.author);
       } catch (x) {
-
+        w('[AV]Lyrics:', x.message);
       }
     }
     let sb2 = [];
@@ -126,7 +126,7 @@ export async function handleAnalyzeVideo(q, r) {
           timestamps: an.timestamps,
         });
       } catch (x) {
-        w('[AV]Lyrics:', x.message);
+        w('[AV]Save:', x.message);
       }
     }
     r({
