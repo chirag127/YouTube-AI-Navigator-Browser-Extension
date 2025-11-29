@@ -1,4 +1,4 @@
-import { l, e, $, st } from '../../utils/shortcuts.js';
+import { l, e, $, st } from '../utils/shortcuts.js';
 
 export function log(m, d) {
   const t = new Date().toISOString().split('T')[1].slice(0, -1);

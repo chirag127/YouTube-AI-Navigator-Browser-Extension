@@ -3,7 +3,7 @@ import { injectWidget } from '../ui/widget.js';
 import { startAnalysis } from './analyzer.js';
 import { log, logError } from './debug.js';
 import { isWidgetProperlyVisible } from '../utils/dom.js';
-import { st, cst, ge, on, loc } from '../../utils/shortcuts.js';
+import { st, cst, ge, on, loc } from '../utils/shortcuts.js';
 
 let lastUrl = loc.href;
 let dt = null;

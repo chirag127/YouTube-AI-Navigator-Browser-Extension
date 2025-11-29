@@ -1,7 +1,7 @@
 import { startAnalysis } from '../core/analyzer.js';
 import { state } from '../core/state.js';
 import { sendChatMessage } from './chat.js';
-import { l, on } from '../../utils/shortcuts.js';
+import { l, on } from '../utils/shortcuts.js';
 
 export function attachEventListeners(w) {
   l('[Events] Attaching listeners to widget');

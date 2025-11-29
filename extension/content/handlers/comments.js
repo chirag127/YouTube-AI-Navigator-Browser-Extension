@@ -1,4 +1,4 @@
-import { l, w, e, on, msg, sg, lg, qsa, qs, ft, js, mp, jn } from '../../utils/shortcuts.js';
+import { l, w, e, on, msg, sg, lg, $$, $, ft, js, mp, jn } from '../utils/shortcuts.js';
 
 class CommentsExtractor {
   constructor() {

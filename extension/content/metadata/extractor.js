@@ -1,124 +1,100 @@
-// Video Metadata Extractor - DeArrow + DOM extraction
 import deArrowAPI from '../../api/dearrow.js';
+import { l, w, e, qs, on, st, jp } from '../utils/shortcuts.js';
 
 class MetadataExtractor {
   constructor() {
     this.cache = new Map();
-    this.cacheTimeout = 300000; // 5min
+    this.cacheTimeout = 300000;
   }
 
-  log(level, msg) {
-    const icons = { info: 'ℹ️', success: '✅', warn: '⚠️', error: '❌' };
-    const logFn = level === 'error' ? console.error : level === 'warn' ? console.warn : console.log;
-    logFn(`[MetadataExtractor] ${icons[level]} ${msg}`);
+  log(lvl, msg) {
+    const i = { info: 'ℹ️', success: '✅', warn: '⚠️', error: '❌' };
+    const f = lvl === 'error' ? e : lvl === 'warn' ? w : l;
+    f(`[MetadataExtractor] ${i[lvl]} ${msg}`);
   }
 
-  async extract(videoId, options = {}) {
-    const { useDeArrow = true, usePrivateDeArrow = true } = options;
-
-    this.log('info', `Extracting metadata for: ${videoId}`);
-
-    // Check cache first
-    const cached = this._getCache(videoId);
-    if (cached) {
+  async extract(vid, opt = {}) {
+    const { useDeArrow = true, usePrivateDeArrow = true } = opt;
+    this.log('info', `Extracting metadata for: ${vid}`);
+    const c = this._getCache(vid);
+    if (c) {
       this.log('success', 'Cache hit');
-      return cached;
+      return c;
     }
-
-    let metadata = null;
-    let deArrowData = null;
-
-    // Try DeArrow first for community-submitted better titles
+    let md = null,
+      da = null;
     if (useDeArrow) {
       try {
         this.log('info', 'Fetching DeArrow data...');
-        deArrowData = await deArrowAPI.getVideoMetadata(videoId, {
-          usePrivateAPI: usePrivateDeArrow,
-        });
-
-        if (deArrowData?.hasDeArrowData && deArrowData.title) {
-          this.log('success', `DeArrow title found: ${deArrowData.title}`);
-        }
-      } catch (e) {
-        this.log('warn', `DeArrow fetch failed: ${e.message}`);
+        da = await deArrowAPI.getVideoMetadata(vid, { usePrivateAPI: usePrivateDeArrow });
+        if (da?.hasDeArrowData && da.title) this.log('success', `DeArrow title found: ${da.title}`);
+      } catch (x) {
+        this.log('warn', `DeArrow fetch failed: ${x.message}`);
       }
     }
-
-    // Get data from Main World Extractor for DOM fallback
-    const initialData = await this.getInitialData();
-    const playerResponse = initialData?.playerResponse;
-
-    // Try DOM extraction (fastest and most reliable for other metadata)
+    const id = await this.getInitialData();
+    const pr = id?.playerResponse;
     try {
-      const originalTitle = this._extractTitle(playerResponse);
-
-      metadata = {
-        videoId,
-        // Use DeArrow title if available, otherwise use original
-        title: deArrowData?.title || originalTitle,
-        originalTitle: originalTitle, // Keep original for reference
-        deArrowTitle: deArrowData?.title || null,
-        hasDeArrowTitle: !!deArrowData?.title,
-        description: this._extractDescription(playerResponse),
-        author: this._extractAuthor(playerResponse),
-        viewCount: this._extractViewCount(playerResponse),
-        publishDate: this._extractPublishDate(playerResponse),
-        duration: this._extractDuration(playerResponse),
-        keywords: this._extractKeywords(playerResponse),
-        category: this._extractCategory(playerResponse),
-        deArrowThumbnail: deArrowData?.thumbnail || null,
+      const ot = this._extractTitle(pr);
+      md = {
+        videoId: vid,
+        title: da?.title || ot,
+        originalTitle: ot,
+        deArrowTitle: da?.title || null,
+        hasDeArrowTitle: !!da?.title,
+        description: this._extractDescription(pr),
+        author: this._extractAuthor(pr),
+        viewCount: this._extractViewCount(pr),
+        publishDate: this._extractPublishDate(pr),
+        duration: this._extractDuration(pr),
+        keywords: this._extractKeywords(pr),
+        category: this._extractCategory(pr),
+        deArrowThumbnail: da?.thumbnail || null,
       };
-
-      // If we got good data from DOM, use it
-      if (metadata.title && metadata.title !== 'Unknown Title') {
-        const source = metadata.hasDeArrowTitle ? 'DeArrow + DOM' : 'DOM';
-        this.log('success', `Metadata extracted from ${source}: ${metadata.title}`);
-        this._setCache(videoId, metadata);
-        return metadata;
+      if (md.title && md.title !== 'Unknown Title') {
+        const src = md.hasDeArrowTitle ? 'DeArrow + DOM' : 'DOM';
+        this.log('success', `Metadata extracted from ${src}: ${md.title}`);
+        this._setCache(vid, md);
+        return md;
       }
-    } catch (e) {
-      this.log('warn', `DOM extraction failed: ${e.message}`);
+    } catch (x) {
+      this.log('warn', `DOM extraction failed: ${x.message}`);
     }
-
-    // Try JSON-LD (SEO Data) - Strategy 3
-    if (!metadata || !metadata.title || metadata.title === 'Unknown Title') {
+    if (!md || !md.title || md.title === 'Unknown Title') {
       try {
-        const jsonLd = this._extractJsonLd();
-        if (jsonLd && jsonLd.name) {
-          metadata = {
-            videoId,
-            title: deArrowData?.title || jsonLd.name,
-            originalTitle: jsonLd.name,
-            deArrowTitle: deArrowData?.title || null,
-            hasDeArrowTitle: !!deArrowData?.title,
-            description: jsonLd.description || '',
-            author: jsonLd.author?.name || 'Unknown Channel',
-            viewCount: jsonLd.interactionStatistic?.userInteractionCount || 'Unknown',
-            publishDate: jsonLd.uploadDate || null,
-            duration: null, // JSON-LD duration is often in ISO format, parsing needed if used
+        const jl = this._extractJsonLd();
+        if (jl && jl.name) {
+          md = {
+            videoId: vid,
+            title: da?.title || jl.name,
+            originalTitle: jl.name,
+            deArrowTitle: da?.title || null,
+            hasDeArrowTitle: !!da?.title,
+            description: jl.description || '',
+            author: jl.author?.name || 'Unknown Channel',
+            viewCount: jl.interactionStatistic?.userInteractionCount || 'Unknown',
+            publishDate: jl.uploadDate || null,
+            duration: null,
             keywords: [],
-            category: jsonLd.genre || null,
-            deArrowThumbnail: deArrowData?.thumbnail || null,
+            category: jl.genre || null,
+            deArrowThumbnail: da?.thumbnail || null,
           };
-
-          const source = metadata.hasDeArrowTitle ? 'DeArrow + JSON-LD' : 'JSON-LD';
-          this.log('success', `Metadata extracted from ${source}: ${metadata.title}`);
-          this._setCache(videoId, metadata);
-          return metadata;
+          const src = md.hasDeArrowTitle ? 'DeArrow + JSON-LD' : 'JSON-LD';
+          this.log('success', `Metadata extracted from ${src}: ${md.title}`);
+          this._setCache(vid, md);
+          return md;
         }
-      } catch (e) {
-        this.log('warn', `JSON-LD extraction failed: ${e.message}`);
+      } catch (x) {
+        this.log('warn', `JSON-LD extraction failed: ${x.message}`);
       }
     }
-
-    // If both failed, return what we have (even if incomplete)
-    if (!metadata || !metadata.title) {
-      metadata = {
-        videoId,
-        title: deArrowData?.title || 'Unknown Title',
+    if (!md || !md.title) {
+      md = {
+        videoId: vid,
+        title: da?.title || 'Unknown Title',
         originalTitle: 'Unknown Title',
-        deArrowTitle: deArrowData?.title || null,
-        hasDeArrowTitle: !!deArrowData?.title,
+        deArrowTitle: da?.title || null,
+        hasDeArrowTitle: !!da?.title,
         description: '',
         author: 'Unknown Channel',
         viewCount: 'Unknown',
@@ -126,188 +102,158 @@ class MetadataExtractor {
         duration: null,
         keywords: [],
         category: null,
-        deArrowThumbnail: deArrowData?.thumbnail || null,
+        deArrowThumbnail: da?.thumbnail || null,
       };
     }
-
-    this.log('success', `Metadata extracted: ${metadata.title}`);
-    this._setCache(videoId, metadata);
-    return metadata;
+    this.log('success', `Metadata extracted: ${md.title}`);
+    this._setCache(vid, md);
+    return md;
   }
 
-  _extractTitle(playerResponse) {
-    // Try multiple methods to get the title
-    const methods = [
-      () => document.querySelector('h1.ytd-watch-metadata yt-formatted-string')?.textContent,
-      () => document.querySelector('h1.title yt-formatted-string')?.textContent,
-      () => document.querySelector('meta[name="title"]')?.content,
-      () => document.querySelector('meta[property="og:title"]')?.content,
+  _extractTitle(pr) {
+    const m = [
+      () => qs('h1.ytd-watch-metadata yt-formatted-string')?.textContent,
+      () => qs('h1.title yt-formatted-string')?.textContent,
+      () => qs('meta[name="title"]')?.content,
+      () => qs('meta[property="og:title"]')?.content,
       () => document.title.replace(' - YouTube', ''),
-      () => playerResponse?.videoDetails?.title,
+      () => pr?.videoDetails?.title,
     ];
-
-    for (const method of methods) {
+    for (const f of m) {
       try {
-        const title = method();
-        if (title?.trim()) return title.trim();
+        const t = f();
+        if (t?.trim()) return t.trim();
       } catch (e) {
         continue;
       }
     }
-
     return 'Unknown Title';
   }
 
-  _extractDescription(playerResponse) {
-    // Try multiple methods to get the description
-    const methods = [
+  _extractDescription(pr) {
+    const m = [
       () => {
-        const expandButton = document.querySelector('tp-yt-paper-button#expand');
-        if (expandButton && !expandButton.hasAttribute('hidden')) {
-          expandButton.click();
-        }
-        return document.querySelector(
-          'ytd-text-inline-expander#description-inline-expander yt-attributed-string'
-        )?.textContent;
+        const b = qs('tp-yt-paper-button#expand');
+        if (b && !b.hasAttribute('hidden')) b.click();
+        return qs('ytd-text-inline-expander#description-inline-expander yt-attributed-string')
+          ?.textContent;
       },
-      () => document.querySelector('#description yt-formatted-string')?.textContent,
-      () => document.querySelector('meta[name="description"]')?.content,
-      () => document.querySelector('meta[property="og:description"]')?.content,
-      () => playerResponse?.videoDetails?.shortDescription,
+      () => qs('#description yt-formatted-string')?.textContent,
+      () => qs('meta[name="description"]')?.content,
+      () => qs('meta[property="og:description"]')?.content,
+      () => pr?.videoDetails?.shortDescription,
     ];
-
-    for (const method of methods) {
+    for (const f of m) {
       try {
-        const description = method();
-        if (description?.trim()) return description.trim();
+        const d = f();
+        if (d?.trim()) return d.trim();
       } catch (e) {
         continue;
       }
     }
-
     return '';
   }
 
-  _extractAuthor(playerResponse) {
-    const methods = [
-      () =>
-        document.querySelector('ytd-channel-name#channel-name yt-formatted-string a')?.textContent,
-      () => document.querySelector('#owner-name a')?.textContent,
-      () => document.querySelector('link[itemprop="name"]')?.content,
-      () => playerResponse?.videoDetails?.author,
+  _extractAuthor(pr) {
+    const m = [
+      () => qs('ytd-channel-name#channel-name yt-formatted-string a')?.textContent,
+      () => qs('#owner-name a')?.textContent,
+      () => qs('link[itemprop="name"]')?.content,
+      () => pr?.videoDetails?.author,
     ];
-
-    for (const method of methods) {
+    for (const f of m) {
       try {
-        const author = method();
-        if (author?.trim()) return author.trim();
+        const a = f();
+        if (a?.trim()) return a.trim();
       } catch (e) {
         continue;
       }
     }
-
     return 'Unknown Channel';
   }
 
-  _extractViewCount(playerResponse) {
-    const methods = [
-      () => {
-        const viewText = document.querySelector(
-          'ytd-video-view-count-renderer span.view-count'
-        )?.textContent;
-        return this._parseViewCount(viewText);
-      },
-      () => {
-        const viewText = document.querySelector('#info-container #count')?.textContent;
-        return this._parseViewCount(viewText);
-      },
-      () => playerResponse?.videoDetails?.viewCount,
+  _extractViewCount(pr) {
+    const m = [
+      () => this._parseViewCount(qs('ytd-video-view-count-renderer span.view-count')?.textContent),
+      () => this._parseViewCount(qs('#info-container #count')?.textContent),
+      () => pr?.videoDetails?.viewCount,
     ];
-
-    for (const method of methods) {
+    for (const f of m) {
       try {
-        const views = method();
-        if (views) return views;
+        const v = f();
+        if (v) return v;
       } catch (e) {
         continue;
       }
     }
-
     return 'Unknown';
   }
 
-  _parseViewCount(text) {
-    if (!text) return null;
-    const match = text.match(/[\d,]+/);
-    return match ? match[0].replace(/,/g, '') : null;
+  _parseViewCount(t) {
+    if (!t) return null;
+    const m = t.match(/[\d,]+/);
+    return m ? m[0].replace(/,/g, '') : null;
   }
 
-  _extractPublishDate(playerResponse) {
-    const methods = [
-      () => document.querySelector('meta[itemprop="uploadDate"]')?.content,
-      () => document.querySelector('#info-strings yt-formatted-string')?.textContent,
-      () => playerResponse?.microformat?.playerMicroformatRenderer?.publishDate,
+  _extractPublishDate(pr) {
+    const m = [
+      () => qs('meta[itemprop="uploadDate"]')?.content,
+      () => qs('#info-strings yt-formatted-string')?.textContent,
+      () => pr?.microformat?.playerMicroformatRenderer?.publishDate,
     ];
-
-    for (const method of methods) {
+    for (const f of m) {
       try {
-        const date = method();
-        if (date) return date;
+        const d = f();
+        if (d) return d;
       } catch (e) {
         continue;
       }
     }
-
     return null;
   }
 
-  _extractDuration(playerResponse) {
-    const methods = [
-      () => document.querySelector('meta[itemprop="duration"]')?.content,
+  _extractDuration(pr) {
+    const m = [
+      () => qs('meta[itemprop="duration"]')?.content,
       () => {
-        const video = document.querySelector('video');
-        return video?.duration ? Math.floor(video.duration) : null;
+        const v = qs('video');
+        return v?.duration ? Math.floor(v.duration) : null;
       },
-      () => playerResponse?.videoDetails?.lengthSeconds,
+      () => pr?.videoDetails?.lengthSeconds,
     ];
-
-    for (const method of methods) {
+    for (const f of m) {
       try {
-        const duration = method();
-        if (duration) return duration;
+        const d = f();
+        if (d) return d;
       } catch (e) {
         continue;
       }
     }
-
     return null;
   }
 
-  _extractKeywords(playerResponse) {
-    const methods = [
+  _extractKeywords(pr) {
+    const m = [
       () =>
-        document
-          .querySelector('meta[name="keywords"]')
+        qs('meta[name="keywords"]')
           ?.content?.split(',')
           .map(k => k.trim()),
-      () => playerResponse?.videoDetails?.keywords,
+      () => pr?.videoDetails?.keywords,
     ];
-
-    for (const method of methods) {
+    for (const f of m) {
       try {
-        const keywords = method();
-        if (keywords?.length) return keywords;
+        const k = f();
+        if (k?.length) return k;
       } catch (e) {
         continue;
       }
     }
-
     return [];
   }
 
-  _extractCategory(playerResponse) {
+  _extractCategory(pr) {
     try {
-      return playerResponse?.microformat?.playerMicroformatRenderer?.category;
+      return pr?.microformat?.playerMicroformatRenderer?.category;
     } catch (e) {
       return null;
     }
@@ -315,10 +261,8 @@ class MetadataExtractor {
 
   _extractJsonLd() {
     try {
-      const script = document.querySelector('script[type="application/ld+json"]');
-      if (script && script.textContent) {
-        return JSON.parse(script.textContent);
-      }
+      const s = qs('script[type="application/ld+json"]');
+      if (s && s.textContent) return jp(s.textContent);
     } catch (e) {
       return null;
     }
@@ -326,34 +270,30 @@ class MetadataExtractor {
   }
 
   async getInitialData() {
-    return new Promise(resolve => {
-      const listener = event => {
-        if (event.source !== window) return;
-        if (event.data.type === 'YT_DATA_RESPONSE') {
-          window.removeEventListener('message', listener);
-          resolve(event.data.payload);
+    return new Promise(r => {
+      const lis = ev => {
+        if (ev.source !== window) return;
+        if (ev.data.type === 'YT_DATA_RESPONSE') {
+          window.removeEventListener('message', lis);
+          r(ev.data.payload);
         }
       };
-      window.addEventListener('message', listener);
+      on(window, 'message', lis);
       window.postMessage({ type: 'YT_GET_DATA' }, '*');
-
-      // Timeout fallback
-      setTimeout(() => {
-        window.removeEventListener('message', listener);
-        resolve(null);
+      st(() => {
+        window.removeEventListener('message', lis);
+        r(null);
       }, 1000);
     });
   }
 
-  _getCache(videoId) {
-    const cached = this.cache.get(videoId);
-    return cached && Date.now() - cached.ts < this.cacheTimeout ? cached.data : null;
+  _getCache(vid) {
+    const c = this.cache.get(vid);
+    return c && Date.now() - c.ts < this.cacheTimeout ? c.data : null;
   }
-
-  _setCache(videoId, data) {
-    this.cache.set(videoId, { data, ts: Date.now() });
+  _setCache(vid, d) {
+    this.cache.set(vid, { data: d, ts: Date.now() });
   }
-
   clearCache() {
     this.cache.clear();
     this.log('info', 'Cache cleared');

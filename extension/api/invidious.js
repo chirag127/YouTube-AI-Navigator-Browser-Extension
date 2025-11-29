@@ -1,4 +1,4 @@
-import { l, w, e, d, i, fj, ftx, jp, pI, pF, _cr, mp, fl, jn, tr, rp } from '../utils/shortcuts.js';
+import { l, w, e, d, i, fj, ftx, jp, pI, pF, cr, mp, fl, jn, tr, rp } from '../utils/shortcuts.js';
 
 const FALLBACK_INSTANCES = [
   'https://inv.nadeko.net',
@@ -130,7 +130,7 @@ function pcd(d) {
   try {
     const j = jp(d);
     if (j.events) return pj3(j);
-  } catch (e) {}
+  } catch (e) { }
   log.warn('Unknown fmt, generic parse');
   return pg(d);
 }

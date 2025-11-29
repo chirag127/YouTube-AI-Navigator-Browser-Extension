@@ -1,6 +1,6 @@
 import { state } from '../core/state.js';
 import { log, logError } from '../core/debug.js';
-import { $, $$, on, off, loc } from '../../utils/shortcuts.js';
+import { $, $$, on, off, loc } from '../utils/shortcuts.js';
 
 export class AutoLiker {
   constructor() {
