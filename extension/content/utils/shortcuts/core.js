@@ -20,3 +20,7 @@ export const oe = Object.entries;
 export const pI = (...a) => rt.getPlatformInfo(...a);
 export const si = setInterval;
 export const csi = clearInterval;
+export const loc = location;
+export const ct = clearTimeout;
+export const oa = Object.assign;
+export const Er = Error;

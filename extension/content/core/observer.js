@@ -2,8 +2,8 @@ import { state, resetState } from './state.js';
 import { injectWidget } from '../ui/widget.js';
 import { startAnalysis } from './analyzer.js';
 import { isWidgetProperlyVisible } from '../utils/dom.js';
-import { log as l, err as e, st } from '../../utils/shortcuts/core.js';
-import { on, qsa as $$ } from '../../utils/shortcuts/dom.js';
+import { log as l, err as e, st, ct as co, loc } from '../../utils/shortcuts/core.js';
+import { on, id } from '../../utils/shortcuts/dom.js';
 
 let lastUrl = st.loc.href;
 let dt = null;
@@ -13,15 +13,15 @@ export function initObserver() {
   const uo = new MutationObserver(() => {
     if (loc.href !== lastUrl) {
       lastUrl = loc.href;
-      log('URL changed:', lastUrl);
+      l('URL changed:', lastUrl);
       if (dt) co(dt);
-      dt = to(() => checkCurrentPage(), 300);
+      dt = st(() => checkCurrentPage(), 300);
     }
   });
   on(document, 'yt-navigate-finish', () => {
-    log('YouTube navigation finished');
+    l('YouTube navigation finished');
     if (dt) co(dt);
-    dt = to(() => checkCurrentPage(), 500);
+    dt = st(() => checkCurrentPage(), 500);
   });
   const o = new MutationObserver(() => {
     if (loc.pathname !== '/watch') return;
@@ -30,53 +30,53 @@ export function initObserver() {
     const w = id('yt-ai-master-widget');
     if ((v && v !== state.currentVideoId) || (v && !isWidgetProperlyVisible(w))) {
       if (dt) co(dt);
-      dt = to(() => handleNewVideo(v), 300);
+      dt = st(() => handleNewVideo(v), 300);
     }
   });
   uo.observe(document.body, { childList: true, subtree: true });
   o.observe(document.body, { childList: true, subtree: true });
-  log('Observer started');
+  l('Observer started');
   checkCurrentPage();
 }
 
 async function handleNewVideo(v) {
-  log('New video detected or widget missing:', v);
+  l('New video detected or widget missing:', v);
   if (v !== state.currentVideoId) {
     state.currentVideoId = v;
     resetState();
   }
   try {
     await injectWidget();
-    log('Widget injected successfully');
-    to(() => {
+    l('Widget injected successfully');
+    st(() => {
       const w = id('yt-ai-master-widget');
       if (w && w.parentElement) {
         const p = w.parentElement;
         if (p.firstChild !== w) {
-          log('Widget not at top after injection, correcting...');
+          l('Widget not at top after injection, correcting...');
           p.insertBefore(w, p.firstChild);
         }
       }
     }, 500);
-    if (state.settings.autoAnalyze) to(() => startAnalysis(), 1500);
-  } catch (e) {
-    logError('Widget injection failed', e);
+    if (state.settings.autoAnalyze) st(() => startAnalysis(), 1500);
+  } catch (x) {
+    e('Widget injection failed', x);
   }
 }
 
 function checkCurrentPage() {
-  log('Checking current page...');
+  l('Checking current page...');
   if (loc.pathname === '/watch') {
     const u = new URLSearchParams(loc.search),
       v = u.get('v');
     if (v) {
       const w = id('yt-ai-master-widget');
       if (v === state.currentVideoId && isWidgetProperlyVisible(w)) {
-        log('Same video and widget is properly visible, skipping re-initialization:', v);
+        l('Same video and widget is properly visible, skipping re-initialization:', v);
         return;
       }
-      log('Video page detected (New ID or Widget Not Properly Visible):', v);
+      l('Video page detected (New ID or Widget Not Properly Visible):', v);
       handleNewVideo(v);
-    } else log('No video ID found in URL');
-  } else log('Not on video page:', loc.pathname);
+    } else l('No video ID found in URL');
+  } else l('Not on video page:', loc.pathname);
 }

@@ -1,6 +1,9 @@
-import { l, w, e } from '../../utils/shortcuts/log.js';
-import { msg, sg, slc, st, log as l, warn as w, mp, jn } from '../../utils/shortcuts/core.js';
-import { ce, tc, ap, ih, dc as doc } from '../../utils/shortcuts/dom.js';
+import { l, w, e } from '../../utils/shortcuts/logging.js';
+import { on, $ } from '../../utils/shortcuts/dom.js';
+import { sg, slg as lg } from '../../utils/shortcuts/storage.js';
+import { ft } from '../../utils/shortcuts/network.js';
+import { js } from '../../utils/shortcuts/core.js';
+import { mp, jn } from '../../utils/shortcuts/array.js';
 
 class CommentsExtractor {
   constructor() {
@@ -143,7 +146,7 @@ class CommentsExtractor {
     return new Promise(r =>
       setTimeout(() => {
         const c = [];
-        const el = $$('ytd-comment-thread-renderer');
+        const el = $('ytd-comment-thread-renderer');
         l(`[CommentsExtractor] 📊 DOM Query Results:`, {
           selector: 'ytd-comment-thread-renderer',
           elementsFound: el.length,

@@ -1,7 +1,7 @@
 import { sendChatMessage } from './chat.js';
-import { on, of as off } from '../../utils/shortcuts/dom.js';
-import { st } from '../../utils/shortcuts/core.js';
-import { qs } from '../../utils/shortcuts/doc.js';
+import { on } from '../../utils/shortcuts/dom.js';
+import { l } from '../../utils/shortcuts/logging.js';
+import { qs } from '../../utils/shortcuts/dom.js';
 
 export function attachEventListeners(w) {
   l('[Events] Attaching listeners to widget');

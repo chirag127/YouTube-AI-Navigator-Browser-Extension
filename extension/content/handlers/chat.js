@@ -1,8 +1,8 @@
 import { state } from '../core/state.js';
 import { addChatMessage } from '../ui/renderers/chat.js';
 import { parseMarkdown } from '../../lib/marked-loader.js';
-import { id as ge, ce, qs as $ } from '../../utils/shortcuts/dom.js';
-import { msg } from '../../utils/shortcuts/runtime.js';
+import { id as ge } from '../../utils/shortcuts/dom.js';
+import { msg } from '../../utils/shortcuts/core.js';
 import { mp, jn } from '../../utils/shortcuts/array.js';
 
 export async function sendChatMessage() {

@@ -1,12 +1,11 @@
 (async () => {
   if (window.location.hostname !== 'www.youtube.com') return;
-  const { l, e } = await import(chrome.runtime.getURL('utils/shortcuts/log.js'));
-  const { url, rt: cr } = await import(chrome.runtime.getURL('utils/shortcuts/runtime.js'));
-  const { ce, ap, qa: $ } = await import(chrome.runtime.getURL('utils/shortcuts/doc.js'));
-  const { slg: cl } = await import(chrome.runtime.getURL('utils/shortcuts/storage.js'));
-  const { delay: to } = await import(chrome.runtime.getURL('utils/shortcuts/time.js'));
-  const { nw } = await import(chrome.runtime.getURL('utils/shortcuts/core.js'));
-  const { dc: doc } = await import(chrome.runtime.getURL('utils/shortcuts/platform_api.js'));
+  const { l, e } = await import(chrome.runtime.getURL('utils/shortcuts/logging.js'));
+  const { url } = await import(chrome.runtime.getURL('utils/shortcuts/runtime.js'));
+  const { cr } = await import(chrome.runtime.getURL('utils/shortcuts/chrome.js'));
+  const { ce, ap, $ } = await import(chrome.runtime.getURL('utils/shortcuts/dom.js'));
+  const { slg: cl, to, nw } = await import(chrome.runtime.getURL('utils/shortcuts/storage.js'));
+  const { dc: doc } = await import(chrome.runtime.getURL('utils/shortcuts/global.js'));
 
   const s = ce('script');
   s.type = 'module';
@@ -132,7 +131,7 @@
   };
   const hST = (r, p) => {
     try {
-      const v = $('video');
+      const v = $('video')[0];
       if (v) {
         v.currentTime = r.timestamp;
         p({ success: true });

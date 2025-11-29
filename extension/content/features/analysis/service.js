@@ -1,5 +1,4 @@
-```javascript
-import { msg, jp, js } from '../../../utils/shortcuts/core.js';
+import { msg, log as l } from '../../../utils/shortcuts/core.js';
 
 export async function analyzeVideo(t, m, c = [], o = { length: 'Medium' }) {
   l('[Service] Sending ANALYZE_VIDEO message', {

@@ -11,8 +11,7 @@ import { analyzeVideo } from './service.js';
 import { l } from '../../utils/shortcuts/logging.js';
 import { cw } from '../../utils/shortcuts/chrome.js';
 import { id as i, $ } from '../../utils/shortcuts/dom.js';
-import { msg } from '../../utils/shortcuts/runtime.js';
-import { E } from '../../utils/shortcuts/core.js';
+import { msg, Er } from '../../../utils/shortcuts/core.js';
 
 export async function startAnalysis() {
   if (state.isAnalyzing || !state.currentVideoId) return;
@@ -43,7 +42,7 @@ export async function startAnalysis() {
     });
     const r = await analyzeVideo(ts, md, cm);
     l('[Flow] AI analysis result received', r);
-    if (!r.success) throw new E(r.error || 'Analysis failed');
+    if (!r.success) throw new Er(r.error || 'Analysis failed');
     state.analysisData = r.data;
     if (state.analysisData.segments) {
       injectSegmentMarkers(state.analysisData.segments);
