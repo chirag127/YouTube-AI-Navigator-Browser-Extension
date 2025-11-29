@@ -22,6 +22,7 @@ import { handleSaveComments } from "./handlers/comments-storage.js";
 import { handleTranscribeAudio } from "./handlers/transcribe-audio.js";
 import { handleGetLyrics } from "./handlers/get-lyrics.js";
 import { handleGetTranscript as handleInnertubeTranscript, handleGetVideoInfo, handleGetComments } from "./handlers/innertube.js";
+import { handleGetVideoData } from "./handlers/video-data.js";
 
 import { migrateModelNames } from "../utils/migrate-model-names.js";
 
@@ -115,6 +116,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     break;
                 case "GET_LYRICS":
                     await handleGetLyrics(sanitized, sendResponse);
+                    break;
+                case "GET_VIDEO_DATA":
+                    sendResponse(await handleGetVideoData(sanitized));
                     break;
                 case "INNERTUBE_GET_TRANSCRIPT":
                     sendResponse(await handleInnertubeTranscript(sanitized));

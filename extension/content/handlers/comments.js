@@ -62,31 +62,61 @@ class CommentsExtractor {
     }
 
     async getComments() {
+        console.log("[CommentsExtractor] 💬 === STARTING COMMENT EXTRACTION ===");
+
         // Strategy 1: Intercepted Comments (Passive)
         if (this.hasIntercepted && this.comments.length > 0) {
-            console.log("[CommentsExtractor] Using intercepted comments");
+            console.log("[CommentsExtractor] ✅ Strategy 1: Using intercepted comments", {
+                count: this.comments.length
+            });
             return this.comments;
         }
+        console.log("[CommentsExtractor] ⏭️ Strategy 1: No intercepted comments available");
 
         // Strategy 2: InnerTube API (Primary - Most reliable)
         try {
-            console.log("[CommentsExtractor] Trying InnerTube API...");
-            const response = await chrome.runtime.sendMessage({
-                action: 'INNERTUBE_GET_COMMENTS',
-                videoId: this.getCurrentVideoId(),
+            const videoId = this.getCurrentVideoId();
+            console.log("[CommentsExtractor] 🔧 Strategy 2: Trying InnerTube API...", {
+                videoId,
                 limit: 20
             });
 
+            const messagePayload = {
+                action: 'INNERTUBE_GET_COMMENTS',
+                videoId,
+                limit: 20
+            };
+            console.log("[CommentsExtractor] 📤 Sending message to background:", messagePayload);
+
+            const response = await chrome.runtime.sendMessage(messagePayload);
+
+            console.log("[CommentsExtractor] 📥 Received response from background:", {
+                success: response?.success,
+                hasComments: !!response?.comments,
+                commentsCount: response?.comments?.length || 0,
+                error: response?.error,
+                fullResponse: response
+            });
+
             if (response.success && response.comments?.length > 0) {
-                console.log(`[CommentsExtractor] ✅ InnerTube fetched ${response.comments.length} comments`);
+                console.log(`[CommentsExtractor] ✅ Strategy 2: InnerTube fetched ${response.comments.length} comments`);
                 return response.comments;
+            } else {
+                console.warn(`[CommentsExtractor] ⚠️ Strategy 2: InnerTube returned no comments`, {
+                    success: response?.success,
+                    error: response?.error
+                });
             }
         } catch (e) {
-            console.warn("[CommentsExtractor] InnerTube fetch failed:", e);
+            console.error("[CommentsExtractor] ❌ Strategy 2: InnerTube fetch failed:", {
+                errorType: e.constructor.name,
+                errorMessage: e.message,
+                errorStack: e.stack
+            });
         }
 
         // Strategy 3: DOM Scraping (Fallback)
-        console.log("[CommentsExtractor] Falling back to DOM scraping");
+        console.log("[CommentsExtractor] 🔧 Strategy 3: Falling back to DOM scraping");
         return this.fetchCommentsFromDOM();
     }
 
@@ -114,40 +144,72 @@ class CommentsExtractor {
     }
 
     async fetchCommentsFromDOM() {
+        console.log("[CommentsExtractor] 🔍 Starting DOM scraping...");
+
         return new Promise((r) =>
             setTimeout(() => {
-                const c = [],
-                    e = document.querySelectorAll(
-                        "ytd-comment-thread-renderer"
-                    );
-                console.log(`[CommentsExtractor] Found ${e.length} comment elements in DOM`);
+                const c = [];
+                const e = document.querySelectorAll("ytd-comment-thread-renderer");
 
-                for (const el of e) {
-                    if (c.length >= 20) break;
+                console.log(`[CommentsExtractor] 📊 DOM Query Results:`, {
+                    selector: "ytd-comment-thread-renderer",
+                    elementsFound: e.length,
+                    documentReady: document.readyState,
+                    commentsSection: !!document.querySelector("ytd-comments"),
+                    commentsExpanded: !!document.querySelector("ytd-comments[expanded]")
+                });
+
+                if (e.length === 0) {
+                    console.warn("[CommentsExtractor] ⚠️ No comment elements found. Possible reasons:", {
+                        commentsNotLoaded: "User hasn't scrolled to comments section",
+                        commentsDisabled: "Comments may be disabled for this video",
+                        selectorChanged: "YouTube may have changed their DOM structure"
+                    });
+                }
+
+                for (let i = 0; i < e.length; i++) {
+                    if (c.length >= 20) {
+                        console.log(`[CommentsExtractor] 🛑 Reached limit of 20 comments`);
+                        break;
+                    }
+
+                    const el = e[i];
                     try {
-                        const a = el
-                            .querySelector("#author-text")
-                            ?.textContent?.trim(),
-                            t = el
-                                .querySelector("#content-text")
-                                ?.textContent?.trim(),
-                            l =
-                                el
-                                    .querySelector("#vote-count-middle")
-                                    ?.textContent?.trim() || "0";
+                        const a = el.querySelector("#author-text")?.textContent?.trim();
+                        const t = el.querySelector("#content-text")?.textContent?.trim();
+                        const l = el.querySelector("#vote-count-middle")?.textContent?.trim() || "0";
 
-                        console.log(`[CommentsExtractor] Parsed comment - Author: ${a}, Text: ${t?.substring(0, 50)}...`);
+                        console.log(`[CommentsExtractor] 🔍 Comment ${i + 1}/${e.length}:`, {
+                            hasAuthor: !!a,
+                            hasText: !!t,
+                            author: a,
+                            textPreview: t?.substring(0, 50) + (t?.length > 50 ? '...' : ''),
+                            likes: l
+                        });
 
                         if (a && t) {
                             c.push({ author: a, text: t, likes: l });
                         } else {
-                            console.warn('[CommentsExtractor] Skipping comment - missing author or text');
+                            console.warn(`[CommentsExtractor] ⏭️ Skipping comment ${i + 1} - missing data:`, {
+                                hasAuthor: !!a,
+                                hasText: !!t
+                            });
                         }
-                    } catch (e) {
-                        console.error('[CommentsExtractor] Error parsing comment element:', e);
+                    } catch (err) {
+                        console.error(`[CommentsExtractor] ❌ Error parsing comment ${i + 1}:`, {
+                            errorType: err.constructor.name,
+                            errorMessage: err.message,
+                            element: el
+                        });
                     }
                 }
-                console.log(`[CommentsExtractor] Successfully extracted ${c.length} comments from DOM`);
+
+                console.log(`[CommentsExtractor] ✅ DOM scraping complete:`, {
+                    totalElements: e.length,
+                    successfullyParsed: c.length,
+                    failed: e.length - c.length
+                });
+
                 r(c);
             }, 1000)
         );

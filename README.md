@@ -518,6 +518,68 @@ Contributions are welcome! This project follows elite engineering standards:
 
 ---
 
+## 🐛 Debugging & Troubleshooting
+
+### InnerTube API Issues (Comments 403 Error)
+
+The extension includes comprehensive logging for debugging InnerTube API issues, particularly the 403 error when fetching comments.
+
+**Quick Debug Steps:**
+
+1. **Open DevTools**: Press `F12` → Console tab
+2. **Filter Logs**: Type `[InnerTube` in the console filter
+3. **Trigger Analysis**: Click analyze button on any YouTube video
+4. **Review Output**: Look for detailed logs with emoji indicators
+
+**Key Diagnostic Points:**
+
+```javascript
+// Check authentication status
+[InnerTube Diagnostics] 🍪 Cookie Report: {isLoggedIn: true/false}
+
+// Compare transcript vs comments
+[InnerTube BG] 📝 === TRANSCRIPT FETCH COMPLETE === ✅
+[InnerTube BG] 💬 === COMMENTS FETCH FAILED === ❌
+
+// Automatic diagnostic on 403 errors
+[InnerTube BG] 🚨 403 ERROR DETECTED - Running diagnostic...
+```
+
+**Common Fixes:**
+
+-   **Not Logged In**: Log into YouTube in your browser
+-   **Missing Cookies**: Clear YouTube cookies and log in again
+-   **Comments Disabled**: Try a different video (expected behavior)
+-   **Rate Limited**: Wait 1-2 minutes before retrying
+
+**Documentation:**
+
+-   📖 **[Quick Debug Reference](QUICK_DEBUG_REFERENCE.md)** - Fast troubleshooting guide
+-   📚 **[Complete Debugging Guide](INNERTUBE_DEBUGGING_GUIDE.md)** - Comprehensive debugging documentation
+-   🔧 **[Implementation Details](LOGGING_IMPLEMENTATION_SUMMARY.md)** - Technical implementation overview
+
+**Diagnostic Utility:**
+
+The extension includes an automatic diagnostic system that:
+
+-   Runs on first request and on 403 errors
+-   Checks authentication cookies (SAPISID, SSID, SID)
+-   Verifies extension permissions
+-   Tracks request/response history
+-   Provides actionable recommendations
+
+**Log Emoji Guide:**
+
+| Emoji | Meaning  | Emoji | Meaning    |
+| ----- | -------- | ----- | ---------- |
+| 💬    | Comments | 📝    | Transcript |
+| ✅    | Success  | ❌    | Error      |
+| 🔧    | Setup    | 📊    | Data       |
+| 🍪    | Cookies  | 🌐    | Network    |
+| 🚨    | Critical | 📋    | Report     |
+
+---
+
 ## 📄 License
 
 MIT License - see [LICENSE](LICENSE) for details.
