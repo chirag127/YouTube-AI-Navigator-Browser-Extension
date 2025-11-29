@@ -9,13 +9,13 @@ export class TabLoader {
   constructor() {
     this.tabs = {
       general: 'sections/general.html',
-      cache: 'sections/cache.html',
-      transcript: 'sections/transcript.html',
-      comments: 'sections/comments.html',
-      metadata: 'sections/metadata.html',
-      scroll: 'sections/scroll.html',
-      performance: 'sections/performance.html',
-      notifications: 'sections/notifications.html',
+      cache: 'tabs/cache.html',
+      transcript: 'tabs/transcript.html',
+      comments: 'tabs/comments.html',
+      metadata: 'tabs/metadata.html',
+      scroll: 'tabs/scroll.html',
+      performance: 'tabs/performance.html',
+      notifications: 'tabs/notifications.html',
     };
     this.loaded = new Set();
   }
