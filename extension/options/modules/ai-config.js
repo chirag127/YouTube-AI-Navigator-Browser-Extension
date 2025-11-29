@@ -64,8 +64,8 @@ export class AIConfig {
             els.modelSelect.addEventListener("change", (e) => {
                 let model = e.target.value;
                 // Ensure no models/ prefix
-                if (model.startsWith('models/')) {
-                    model = model.replace('models/', '');
+                if (model.startsWith("models/")) {
+                    model = model.replace("models/", "");
                 }
                 this.settings.save({ model });
             });
@@ -120,8 +120,8 @@ export class AIConfig {
             let savedModel = s.model;
 
             // Strip models/ prefix from saved model if present
-            if (savedModel && savedModel.startsWith('models/')) {
-                savedModel = savedModel.replace('models/', '');
+            if (savedModel && savedModel.startsWith("models/")) {
+                savedModel = savedModel.replace("models/", "");
                 // Update storage with cleaned model name
                 this.settings.save({ model: savedModel });
             }
@@ -155,16 +155,24 @@ export class AIConfig {
         try {
             if (!s.apiKey) throw new Error("API Key is missing");
 
-            let model = els.modelSelect.value || "gemini-2.5-flash-preview-09-2025";
+            let model =
+                els.modelSelect.value || "gemini-2.5-flash-preview-09-2025";
 
             // Ensure model name doesn't have 'models/' prefix for the URL
-            if (model.startsWith('models/')) {
-                model = model.replace('models/', '');
+            if (model.startsWith("models/")) {
+                model = model.replace("models/", "");
             }
 
-            // Add -latest suffix if not present and not already a versioned model
-            if (!model.includes('-latest') && !model.match(/-\d{3}$/)) {
-                model = model + '-latest';
+            // Add -latest suffix ONLY if it's a base model name without version/date
+            // Don't add if it has a date (e.g. -09-2025), version number (e.g. -001), or is experimental/preview
+            if (
+                !model.includes("-latest") &&
+                !model.match(/-\d{3}$/) &&
+                !model.match(/-\d{2}-\d{4}$/) &&
+                !model.includes("preview") &&
+                !model.includes("exp")
+            ) {
+                model = model + "-latest";
             }
 
             const response = await fetch(
@@ -180,7 +188,9 @@ export class AIConfig {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.error?.message || response.statusText);
+                throw new Error(
+                    errorData.error?.message || response.statusText
+                );
             }
 
             status.textContent = "Connection Successful!";
