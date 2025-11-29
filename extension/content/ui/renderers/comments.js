@@ -5,7 +5,7 @@ import { parseMarkdown } from '../../../lib/marked-loader.js';
 import { rs } from '../../utils/shortcuts/runtime.js';
 import { sg } from '../../utils/shortcuts/storage.js';
 import { to } from '../../utils/shortcuts/global.js';
-import { l, w } from '../../utils/shortcuts/log.js';;
+import { l, w } from '../../utils/shortcuts/log.js';
 import { mp, jn, slc } from '../../utils/shortcuts/array.js';
 import { ce, tc, ap, ih, dc as doc } from '../../utils/shortcuts/dom.js';
 export async function renderComments(c) {

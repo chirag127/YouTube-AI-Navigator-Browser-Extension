@@ -1,6 +1,6 @@
 import { sendChatMessage } from './chat.js';
 import { ae, qs } from '../../utils/shortcuts/dom.js';
-import { l } from '../../utils/shortcuts/log.js';;
+import { l } from '../../utils/shortcuts/log.js';
 export function attachEventListeners(w) {
   l('[Ev] Attaching');
   const c = qs('#yt-ai-chat-send', w);

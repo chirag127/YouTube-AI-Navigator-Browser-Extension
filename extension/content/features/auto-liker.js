@@ -1,6 +1,6 @@
 import { state } from '../core/state.js';
 import { ae, re, qs, qsa } from '../../utils/shortcuts/dom.js';
-import { l, e } from '../../utils/shortcuts/log.js';;
+import { l, e } from '../../utils/shortcuts/log.js';
 export class AutoLiker {
   constructor() {
     this.video = null;

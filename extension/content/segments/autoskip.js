@@ -1,6 +1,6 @@
 import { getVideoElement } from '../utils/dom.js';
 import { sg } from '../../utils/shortcuts/storage.js';
-import { to } from '../../utils/shortcuts/global.js';
+
 import { qs, ae, re, ce } from '../../utils/shortcuts/dom.js';
 let as = [];
 let en = false;
@@ -90,7 +90,7 @@ function showNotification(tx) {
     { duration: 2000, easing: 'ease-out', fill: 'forwards' }
   );
   document.body.appendChild(n);
-  st(() => {
+  to(() => {
     if (n.parentNode) n.remove();
   }, 2000);
 }
