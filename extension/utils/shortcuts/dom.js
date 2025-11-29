@@ -1,10 +1,13 @@
 export const $ = (s, p = document) => p.querySelector(s);
 export const $$ = (s, p = document) => [...p.querySelectorAll(s)];
+export const qs = $; // Alias for querySelector
+export const qsa = $$; // Alias for querySelectorAll
 export const ge = i => document.getElementById(i);
 export const gc = c => document.getElementsByClassName(c);
 export const gt = t => document.getElementsByTagName(t);
 export const gn = n => document.getElementsByName(n);
 export const cr = t => document.createElement(t);
+export const ce = cr; // Alias for createElement
 export const ctx = t => document.createTextNode(t);
 export const on = (el, ev, fn, o) => el.addEventListener(ev, fn, o);
 export const off = (el, ev, fn, o) => el.removeEventListener(ev, fn, o);

@@ -1,4 +1,3 @@
-```javascript
 import { GeminiClient } from './gemini-client.js';
 import { ModelManager } from './models.js';
 import { prompts } from './prompts/index.js';

@@ -1,9 +1,23 @@
-```javascript
 import { state } from '../../core/state.js';
 import { showLoading, showPlaceholder } from '../components/loading.js';
 import { getComments } from '../../handlers/comments.js';
 import { parseMarkdown } from '../../../lib/marked-loader.js';
-import { msg, sg, st, l, w, cr as ce, tc, ap, ih, slc, mp, jn, raf } from '../../utils/shortcuts.js';
+import {
+  msg,
+  sg,
+  st,
+  l,
+  w,
+  cr as ce,
+  tc,
+  ap,
+  ih,
+  slc,
+  mp,
+  jn,
+  raf,
+  doc,
+} from '../../utils/shortcuts.js';
 
 export async function renderComments(c) {
   if (state.analysisData?.commentAnalysis) {
@@ -28,7 +42,17 @@ export async function renderComments(c) {
       if (!state.analysisData) state.analysisData = {};
       state.analysisData.commentAnalysis = r.analysis;
       const html = await parseMarkdown(r.analysis);
-      ih(c, `<div class="yt-ai-markdown"><h3>💬 Comment Sentiment Analysis</h3>${html}<hr><h4>Top Comments (${cm.length})</h4>${jn(mp(slc(cm, 0, 5), x => `<div class="yt-ai-comment"><div class="yt-ai-comment-author">${x.author}</div><div class="yt-ai-comment-text">${x.text}</div><div class="yt-ai-comment-likes">👍 ${x.likes}</div></div>`), '')}</div>`);
+      ih(
+        c,
+        `<div class="yt-ai-markdown"><h3>💬 Comment Sentiment Analysis</h3>${html}<hr><h4>Top Comments (${cm.length})</h4>${jn(
+          mp(
+            slc(cm, 0, 5),
+            x =>
+              `<div class="yt-ai-comment"><div class="yt-ai-comment-author">${x.author}</div><div class="yt-ai-comment-text">${x.text}</div><div class="yt-ai-comment-likes">👍 ${x.likes}</div></div>`
+          ),
+          ''
+        )}</div>`
+      );
     }
   } catch (x) {
     ih(c, `<div class="yt-ai-error-msg">Failed: ${x.message}</div>`);
@@ -63,10 +87,11 @@ function scrollBackToTop(sn = true) {
 }
 
 function showScrollNotification() {
-  const n = cr('div');
+  const n = ce('div');
   n.id = 'yt-ai-scroll-notification';
   tc(n, '⬆️ Scrolled to top');
-  n.style.cssText = 'position:fixed;top:80px;right:20px;background:#3ea6ff;color:white;padding:12px 20px;border-radius:8px;font-family:\'Roboto\',Arial,sans-serif;font-size:14px;font-weight:500;z-index:10000;box-shadow:0 4px 12px rgba(0,0,0,0.3);animation:slideIn 0.3s ease-out;';
+  n.style.cssText =
+    "position:fixed;top:80px;right:20px;background:#3ea6ff;color:white;padding:12px 20px;border-radius:8px;font-family:'Roboto',Arial,sans-serif;font-size:14px;font-weight:500;z-index:10000;box-shadow:0 4px 12px rgba(0,0,0,0.3);animation:slideIn 0.3s ease-out;";
   ap(doc.body, n);
   st(() => {
     n.style.animation = 'slideOut 0.3s ease-in';

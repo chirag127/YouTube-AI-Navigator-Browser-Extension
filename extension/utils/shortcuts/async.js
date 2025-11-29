@@ -36,8 +36,10 @@ export const trycs = (fn, fb = null) => {
   }
 };
 export const prom = (r, v) => new Promise(r);
+export const p = prom; // Alias for new Promise
 export const pa = ps => Promise.all(ps);
 export const prc = ps => Promise.race(ps);
+export const pr = prc; // Alias for Promise.race
 export const pas = ps => Promise.allSettled(ps);
 export const pany = ps => Promise.any(ps);
 export const prs = v => Promise.resolve(v);

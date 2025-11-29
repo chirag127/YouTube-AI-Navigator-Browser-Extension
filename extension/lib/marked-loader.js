@@ -1,82 +1,41 @@
-/**
- * Simple markdown parser (CSP-compliant, no external dependencies)
- * Supports basic markdown features needed for AI-generated content
- */
+import { ce, rp, sw } from '../utils/shortcuts.js';
 
-/**
- * Parse markdown to HTML
- * @param {string} markdown - Markdown text to parse
- * @returns {Promise<string>} Parsed HTML
- */
-export async function parseMarkdown(markdown) {
-  if (!markdown) return '';
-
-  let html = markdown;
-
-  // Escape HTML to prevent XSS
-  const escapeHtml = text => {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+export async function parseMarkdown(m) {
+  if (!m) return '';
+  let h = m;
+  const eh = t => {
+    const d = ce('div');
+    d.textContent = t;
+    return d.innerHTML;
   };
-
-  // Headers (### Header)
-  html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-  html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-  html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
-
-  // Bold (**text** or __text__)
-  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
-
-  // Italic (*text* or _text_)
-  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-  html = html.replace(/_(.+?)_/g, '<em>$1</em>');
-
-  // Code blocks (```code```)
-  html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-
-  // Inline code (`code`)
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-
-  // Links [text](url)
-  html = html.replace(
+  h = rp(h, /^### (.*$)/gim, '<h3>$1</h3>');
+  h = rp(h, /^## (.*$)/gim, '<h2>$1</h2>');
+  h = rp(h, /^# (.*$)/gim, '<h1>$1</h1>');
+  h = rp(h, /\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  h = rp(h, /__(.+?)__/g, '<strong>$1</strong>');
+  h = rp(h, /\*(.+?)\*/g, '<em>$1</em>');
+  h = rp(h, /_(.+?)_/g, '<em>$1</em>');
+  h = rp(h, /```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+  h = rp(h, /`([^`]+)`/g, '<code>$1</code>');
+  h = rp(
+    h,
     /\[([^\]]+)\]\(([^)]+)\)/g,
     '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
   );
-
-  // Timestamps [MM:SS] or [HH:MM:SS]
-  html = html.replace(
+  h = rp(
+    h,
     /\[(\d{1,2}:\d{2}(?::\d{2})?)\]/g,
     '<button class="timestamp-btn" data-time="$1">$1</button>'
   );
-
-  // Unordered lists
-  html = html.replace(/^\* (.+)$/gim, '<li>$1</li>');
-  html = html.replace(/^- (.+)$/gim, '<li>$1</li>');
-  html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
-
-  // Ordered lists
-  html = html.replace(/^\d+\. (.+)$/gim, '<li>$1</li>');
-
-  // Line breaks
-  html = html.replace(/\n\n/g, '</p><p>');
-  html = html.replace(/\n/g, '<br>');
-
-  // Wrap in paragraph if not already wrapped
-  if (!html.startsWith('<')) {
-    html = `<p>${html}</p>`;
-  }
-
-  return html;
+  h = rp(h, /^\* (.+)$/gim, '<li>$1</li>');
+  h = rp(h, /^- (.+)$/gim, '<li>$1</li>');
+  h = rp(h, /(<li>.*<\/li>)/s, '<ul>$1</ul>');
+  h = rp(h, /^\d+\. (.+)$/gim, '<li>$1</li>');
+  h = rp(h, /\n\n/g, '</p><p>');
+  h = rp(h, /\n/g, '<br>');
+  if (!sw(h, '<')) h = `<p>${h}</p>`;
+  return h;
 }
-
-/**
- * Legacy function for compatibility
- * @returns {Promise<object>} Mock marked object
- */
 export async function loadMarked() {
-  return {
-    parse: md => parseMarkdown(md),
-  };
+  return { parse: md => parseMarkdown(md) };
 }

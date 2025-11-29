@@ -6,6 +6,7 @@ export const jpar = jp;
 export const ks = o => Object.keys(o);
 export const vs = o => Object.values(o);
 export const es = o => Object.entries(o);
+export const oe = es; // Alias for Object.entries
 export const as = (t, ...s) => Object.assign(t, ...s);
 export const oa = as;
 export const hk = (o, k) => Object.hasOwnProperty.call(o, k);

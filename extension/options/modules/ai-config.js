@@ -18,6 +18,7 @@ import {
   isS,
   rp,
   tr,
+  jp,
 } from '../../utils/shortcuts.js';
 
 export class AIConfig {

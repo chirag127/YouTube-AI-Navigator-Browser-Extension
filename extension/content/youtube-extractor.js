@@ -1,4 +1,4 @@
-import { e, $, $$, jp, inc, mt, tc, tr, uc, fc, ps, st, doc, win } from '../utils/shortcuts.js';
+import { l, e, $, $$, jp, inc, mt, tc, tr, uc, fc, ps, st, doc, win } from '../utils/shortcuts.js';
 class YTE {
   constructor() {
     this.of = win.fetch.bind(win);

@@ -1,44 +1,45 @@
 import { StorageService } from '../services/storage/index.js';
 import { parseMarkdown } from '../lib/marked-loader.js';
+import { ge, on, ce, $$, tab, js, jp, mfl, pI, pd, lc, inc, fl } from '../utils/shortcuts.js';
+
 const s = new StorageService(),
-  vl = document.getElementById('video-list'),
-  si = document.getElementById('search-input'),
-  nr = document.getElementById('no-results'),
-  vc = document.getElementById('video-count'),
-  dp = document.getElementById('detail-placeholder'),
-  dc = document.getElementById('detail-content'),
-  da = document.getElementById('detail-actions'),
-  ov = document.getElementById('open-video-btn'),
-  eb = document.getElementById('export-btn'),
-  ib = document.getElementById('import-btn'),
-  ifile = document.getElementById('import-file');
+  vl = ge('video-list'),
+  si = ge('search-input'),
+  nr = ge('no-results'),
+  vc = ge('video-count'),
+  dp = ge('detail-placeholder'),
+  dc = ge('detail-content'),
+  da = ge('detail-actions'),
+  ov = ge('open-video-btn'),
+  eb = ge('export-btn'),
+  ib = ge('import-btn'),
+  ifile = ge('import-file');
 let cid = null,
   hd = [];
-document.addEventListener('DOMContentLoaded', init);
+
+on(document, 'DOMContentLoaded', init);
 async function init() {
   await loadHistory();
   setupEvents();
 }
 function setupEvents() {
-  si.addEventListener('input', handleSearch);
-  eb.addEventListener('click', handleExport);
-  ib.addEventListener('click', () => ifile.click());
-  ifile.addEventListener('change', handleImport);
-  ov.addEventListener('click', openVideo);
+  on(si, 'input', handleSearch);
+  on(eb, 'click', handleExport);
+  on(ib, 'click', () => ifile.click());
+  on(ifile, 'change', handleImport);
+  on(ov, 'click', openVideo);
 }
 async function loadHistory() {
   hd = await s.getHistory();
   renderList(hd);
 }
 async function handleSearch(e) {
-  const q = e.target.value.toLowerCase();
+  const q = lc(e.target.value);
   if (!q) {
     renderList(hd);
     return;
   }
-  const f = hd.filter(
-    x => x.title?.toLowerCase().includes(q) || x.author?.toLowerCase().includes(q)
-  );
+  const f = fl(hd, x => inc(lc(x.title || ''), q) || inc(lc(x.author || ''), q));
   renderList(f);
 }
 function renderList(items) {
@@ -50,7 +51,7 @@ function renderList(items) {
   }
   nr.style.display = 'none';
   for (const i of items) {
-    const li = document.createElement('li');
+    const li = ce('li');
     li.className = 'video-item';
     if (i.videoId === cid) li.classList.add('active');
     const d = new Date(i.timestamp).toLocaleDateString('en-US', {
@@ -59,21 +60,21 @@ function renderList(items) {
       day: 'numeric',
     });
     li.innerHTML = `<div class="video-title">${esc(i.title || 'Untitled Video')}</div><div class="video-meta"><span>👤 ${esc(i.author || 'Unknown')}</span><span>📅 ${d}</span></div><div class="video-actions"><button class="btn btn-secondary view-btn" data-id="${i.videoId}">View</button><button class="btn btn-danger delete-btn" data-id="${i.videoId}">Delete</button></div>`;
-    li.querySelector('.view-btn').addEventListener('click', e => {
+    on(li.querySelector('.view-btn'), 'click', e => {
       e.stopPropagation();
       viewVideo(i.videoId);
     });
-    li.querySelector('.delete-btn').addEventListener('click', e => {
+    on(li.querySelector('.delete-btn'), 'click', e => {
       e.stopPropagation();
       deleteVideo(i.videoId);
     });
-    li.addEventListener('click', () => viewVideo(i.videoId));
+    on(li, 'click', () => viewVideo(i.videoId));
     vl.appendChild(li);
   }
 }
 async function viewVideo(v) {
   cid = v;
-  document.querySelectorAll('.video-item').forEach(x => {
+  $$('.video-item').forEach(x => {
     x.classList.remove('active');
     if (x.querySelector(`[data-id="${v}"]`)) x.classList.add('active');
   });
@@ -109,7 +110,7 @@ async function deleteVideo(v) {
   if (si.value) handleSearch({ target: si });
 }
 function openVideo() {
-  if (cid) chrome.tabs.create({ url: `https://www.youtube.com/watch?v=${cid}` });
+  if (cid) tab({ url: `https://www.youtube.com/watch?v=${cid}` });
 }
 async function handleExport() {
   try {
@@ -118,9 +119,9 @@ async function handleExport() {
       const f = await s.getTranscript(i.videoId);
       if (f) all.push(f);
     }
-    const b = new Blob([JSON.stringify(all, null, 2)], { type: 'application/json' }),
+    const b = new Blob([js(all, null, 2)], { type: 'application/json' }),
       u = URL.createObjectURL(b),
-      a = document.createElement('a');
+      a = ce('a');
     a.href = u;
     a.download = `youtube-ai-master-export-${new Date().toISOString().split('T')[0]}.json`;
     a.click();
@@ -135,7 +136,7 @@ async function handleImport(e) {
   if (!f) return;
   try {
     const t = await f.text(),
-      d = JSON.parse(t);
+      d = jp(t);
     if (!Array.isArray(d)) throw new Error('Invalid format: expected an array');
     let c = 0;
     for (const i of d) {
@@ -152,22 +153,22 @@ async function handleImport(e) {
   ifile.value = '';
 }
 function esc(t) {
-  const d = document.createElement('div');
+  const d = ce('div');
   d.textContent = t;
   return d.innerHTML;
 }
 function fmtDur(sec) {
   if (!sec) return '0:00';
-  const h = Math.floor(sec / 3600),
-    m = Math.floor((sec % 3600) / 60),
+  const h = mfl(sec / 3600),
+    m = mfl((sec % 3600) / 60),
     s = sec % 60;
   return h > 0
-    ? `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
-    : `${m}:${s.toString().padStart(2, '0')}`;
+    ? `${h}:${pd(m.toString(), 2, '0')}:${pd(s.toString(), 2, '0')}`
+    : `${m}:${pd(s.toString(), 2, '0')}`;
 }
 function fmtViews(v) {
   if (!v) return '0';
-  const n = parseInt(v, 10);
+  const n = pI(v, 10);
   return n >= 1000000
     ? `${(n / 1000000).toFixed(1)}M`
     : n >= 1000
