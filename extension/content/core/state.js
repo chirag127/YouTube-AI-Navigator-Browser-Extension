@@ -1,4 +1,4 @@
-import { local } from '../../utils/shortcuts/runtime.js';
+import { slg } from '../../utils/shortcuts/storage.js';
 import { assign } from '../../utils/shortcuts/core.js';
 
 export const state = {
@@ -23,7 +23,7 @@ export function resetState() {
 }
 export async function loadSettings() {
   try {
-    const r = await local.get([
+    const r = await slg([
       'autoAnalyze',
       'autoSkipSponsors',
       'autoSkipIntros',
