@@ -1,9 +1,13 @@
 const gu = p => chrome.runtime.getURL(p);
 
+const gu = p => chrome.runtime.getURL(p);
+
 const { seekVideo } = await import(gu('content/utils/dom.js'));
-const { on, fc, ap, tx, tc, dc: doc, ce } = await import(gu('utils/shortcuts/dom.js'));
+const { on, fc, ap, tx, txt, dc: doc, ce } = await import(gu('utils/shortcuts/dom.js'));
 const { pi: pI } = await import(gu('utils/shortcuts/global.js'));
 const { sb: sbs, rp } = await import(gu('utils/shortcuts/string.js'));
+
+const tc = n => n.textContent;
 export function makeTimestampsClickable(c) {
   const p = /(\[|[(])?(\d{1,2}):(\d{2})(\]|[)])?/g,
     w = doc.createTreeWalker(c, NodeFilter.SHOW_TEXT),
@@ -18,7 +22,7 @@ export function makeTimestampsClickable(c) {
       if (o > l) ap(f, tx(sbs(txt, l, o)));
       const s = pI(mins) * 60 + pI(secs),
         lnk = ce('span');
-      tc(lnk, m);
+      txt(lnk, m);
       lnk.className = 'yt-ai-clickable-timestamp';
       lnk.style.cssText =
         'color:var(--yt-ai-accent);cursor:pointer;font-weight:600;text-decoration:underline;';

@@ -1,5 +1,5 @@
 import { rp as rep, trm } from '../../utils/shortcuts/string.js';
-import { l, e, w } from '../../utils/shortcuts/logging.js';
+import { l } from '../../utils/shortcuts/logging.js';
 import { pf as pF } from '../../utils/shortcuts/global.js';
 import { jp } from '../../utils/shortcuts/core.js';
 import { afl, am, ajn } from '../../utils/shortcuts/array.js';

@@ -1,6 +1,6 @@
 import { gu } from '../../utils/shortcuts/runtime.js';
 
-const { l, w, e } = await import(gu('utils/shortcuts/log.js'));
+const { l, e } = await import(gu('utils/shortcuts/logging.js'));
 const { js } = await import(gu('utils/shortcuts/global.js'));
 const { ae, qsa: $$ } = await import(gu('utils/shortcuts/dom.js'));
 const { sg, slg: lg } = await import(gu('utils/shortcuts/storage.js'));
@@ -8,14 +8,21 @@ const { ft } = await import(gu('utils/shortcuts/network.js'));
 const { mp, jn } = await import(gu('utils/shortcuts/array.js'));
 class CommentsExtractor {
   constructor() {
-    this.comments = [];
-    this.hasIntercepted = false;
-    ae(window, 'message', ev => {
-      if (ev.source !== window) return;
-      if (ev.data.type === 'YT_COMMENTS') this.handleInterceptedComments(ev.data.payload);
-    });
+    l('CommentsExtractor:Start');
+    try {
+      this.comments = [];
+      this.hasIntercepted = false;
+      ae(window, 'message', ev => {
+        if (ev.source !== window) return;
+        if (ev.data.type === 'YT_COMMENTS') this.handleInterceptedComments(ev.data.payload);
+      });
+      l('CommentsExtractor:End');
+    } catch (err) {
+      e('Err:CommentsExtractor', err);
+    }
   }
   handleInterceptedComments(d) {
+    l('[CE] Handle intercepted start');
     try {
       const i =
         d.onResponseReceivedEndpoints?.[1]?.reloadContinuationItemsCommand?.continuationItems ||
@@ -42,72 +49,128 @@ class CommentsExtractor {
         if (nc.length > 0) {
           this.comments = [...this.comments, ...nc];
           this.hasIntercepted = true;
-          l(`[CE] Int ${nc.length}`);
+          l(`[CE] Int ${nc.length} comments`);
+        } else {
+          l('[CE] No new comments in intercepted data');
         }
+      } else {
+        l('[CE] No continuation items in intercepted data');
       }
     } catch (x) {
       e('[CE] Err int:', x);
     }
+    l('[CE] Handle intercepted end');
   }
   async getComments() {
+    l('[CE] Get comments start');
     const vid = this.getCurrentVideoId();
+    l(`[CE] Video ID: ${vid}`);
     const cfg = await this.getConfig();
-    if (!cfg.comments?.enabled) return [];
+    l(`[CE] Config loaded: comments enabled=${cfg.comments?.enabled}`);
+    if (!cfg.comments?.enabled) {
+      l('[CE] Comments disabled');
+      return [];
+    }
     if (cfg.cache?.enabled && cfg.cache?.comments) {
       try {
         const c = await this.checkCache(vid);
-        if (c && c.length > 0) return c;
+        if (c && c.length > 0) {
+          l(`[CE] Cache hit: ${c.length} comments`);
+          return c;
+        }
       } catch (x) {
-        w('[CE] Cache fail:', x.message);
+        l('[CE] Cache fail:', x.message);
       }
     }
-    if (this.hasIntercepted && this.comments.length > 0) return this.comments;
-    if (cfg.scroll?.autoScrollToComments) await this.scrollToComments();
-    return this.fetchCommentsFromDOM();
+    if (this.hasIntercepted && this.comments.length > 0) {
+      l(`[CE] Using intercepted: ${this.comments.length} comments`);
+      return this.comments;
+    }
+    if (cfg.scroll?.autoScrollToComments) {
+      l('[CE] Scrolling to comments');
+      await this.scrollToComments();
+    }
+    const result = await this.fetchCommentsFromDOM();
+    l(`[CE] Get comments end: ${result.length} comments`);
+    return result;
   }
   async getConfig() {
+    l('getConfig:Start');
     try {
       const r = await sg('config');
+      l('getConfig:End');
       return r.config || {};
     } catch (x) {
-      w('[CE] Cfg fail:', x);
+      l('[CE] Cfg fail:', x);
       return {};
     }
   }
   async checkCache(vid) {
-    const k = `video_${vid}_comments`;
-    const r = await lg(k);
-    if (r[k]) {
-      const c = r[k];
-      const age = Date.now() - c.timestamp;
-      if (age < 86400000 && c.data?.length > 0) return c.data;
+    l('checkCache:Start');
+    try {
+      const k = `video_${vid}_comments`;
+      const r = await lg(k);
+      if (r[k]) {
+        const c = r[k];
+        const age = Date.now() - c.timestamp;
+        if (age < 86400000 && c.data?.length > 0) {
+          l('checkCache:End');
+          return c.data;
+        }
+      }
+      l('checkCache:End');
+      return null;
+    } catch (err) {
+      e('Err:checkCache', err);
+      return null;
     }
-    return null;
   }
   async scrollToComments() {
-    const { getScrollManager } = await import(gu('content/utils/scroll-manager.js'));
-    const sm = getScrollManager();
-    await sm.scrollToComments();
+    l('scrollToComments:Start');
+    try {
+      const { getScrollManager } = await import(gu('content/utils/scroll-manager.js'));
+      const sm = getScrollManager();
+      await sm.scrollToComments();
+      l('scrollToComments:End');
+    } catch (err) {
+      e('Err:scrollToComments', err);
+    }
   }
   getCurrentVideoId() {
-    return new URLSearchParams(window.location.search).get('v');
+    l('getCurrentVideoId:Start');
+    try {
+      const result = new URLSearchParams(window.location.search).get('v');
+      l('getCurrentVideoId:End');
+      return result;
+    } catch (err) {
+      e('Err:getCurrentVideoId', err);
+      return null;
+    }
   }
   async getInitialDataFromMainWorld() {
-    return new Promise(r => {
-      const lis = ev => {
-        if (ev.source !== window) return;
-        if (ev.data.type === 'YT_DATA_RESPONSE') {
+    l('getInitialDataFromMainWorld:Start');
+    try {
+      const result = await new Promise(r => {
+        const lis = ev => {
+          if (ev.source !== window) return;
+          if (ev.data.type === 'YT_DATA_RESPONSE') {
+            window.removeEventListener('message', lis);
+            r(ev.data.payload);
+          }
+        };
+        ae(window, 'message', lis);
+        window.postMessage({ type: 'YT_GET_DATA' }, '*');
+        setTimeout(() => {
           window.removeEventListener('message', lis);
-          r(ev.data.payload);
-        }
-      };
-      ae(window, 'message', lis);
-      window.postMessage({ type: 'YT_GET_DATA' }, '*');
-      setTimeout(() => {
-        window.removeEventListener('message', lis);
-        r(null);
-      }, 1e3);
-    });
+          r(null);
+        }, 1e3);
+      });
+      l('getInitialDataFromMainWorld:End');
+      return result;
+    } catch (err) {
+      e('Err:getInitialDataFromMainWorld', err);
+      return null;
+    }
   }
   async fetchCommentsFromDOM() {
     l('[CE] Start DOM fetch');
@@ -122,7 +185,7 @@ class CommentsExtractor {
         const el = $$('ytd-comment-thread-renderer');
         l(`[CE] Found ${el.length} comment elements`);
         if (el.length === 0) {
-          w('[CE] No comment elements found');
+          l('[CE] No comment elements found');
           continue;
         }
         for (let i = 0; i < el.length; i++) {
@@ -136,7 +199,7 @@ class CommentsExtractor {
               c.push({ author: a, text: t, likes: lk });
               l(`[CE] Added comment ${c.length}: ${a}`);
             } else {
-              w(`[CE] Skip ${i + 1}: missing author or text`);
+              l(`[CE] Skip ${i + 1}: missing author or text`);
             }
           } catch (x) {
             e(`[CE] Err ${i + 1}:`, x);
@@ -146,7 +209,7 @@ class CommentsExtractor {
           l(`[CE] Success: ${c.length} comments`);
           return c;
         }
-        w(`[CE] No valid comments on attempt ${attempt}`);
+        l(`[CE] No valid comments on attempt ${attempt}`);
       } catch (x) {
         e(`[CE] Attempt ${attempt} failed:`, x);
       }
@@ -155,46 +218,56 @@ class CommentsExtractor {
     return [];
   }
   async fetchCommentsActive(k, t, c) {
+    l('fetchCommentsActive:Start');
     try {
       const r = await ft(`https://www.youtube.com/youtubei/v1/next?key=${k}`, {
         method: 'POST',
         body: js({ context: c, continuation: t }),
       });
       const d = await r.json();
-      return this.parseComments(d);
+      const result = this.parseComments(d);
+      l('fetchCommentsActive:End');
+      return result;
     } catch (x) {
-      e('[CE] Act fetch fail:', x);
+      e('Err:fetchCommentsActive', x);
       return { comments: [], nextToken: null };
     }
   }
   parseComments(d) {
-    const i =
-      d.onResponseReceivedEndpoints?.[1]?.reloadContinuationItemsCommand?.continuationItems ||
-      d.onResponseReceivedEndpoints?.[0]?.appendContinuationItemsAction?.continuationItems ||
-      d.frameworkUpdates?.entityBatchUpdate?.mutations;
-    const c = [];
-    let nt = null;
-    if (i) {
-      for (const it of i) {
-        if (it.commentThreadRenderer) {
-          const cm = it.commentThreadRenderer.comment.commentRenderer;
-          c.push({
-            id: cm.commentId,
-            author: cm.authorText?.simpleText || 'Unknown',
-            text:
-              jn(
-                mp(cm.contentText?.runs || [], r => r.text),
-                ''
-              ) || '',
-            likes: cm.voteCount?.simpleText || '0',
-            publishedTime: cm.publishedTimeText?.runs?.[0]?.text || '',
-          });
-        } else if (it.continuationItemRenderer) {
-          nt = it.continuationItemRenderer.continuationEndpoint.continuationCommand.token;
+    l('parseComments:Start');
+    try {
+      const i =
+        d.onResponseReceivedEndpoints?.[1]?.reloadContinuationItemsCommand?.continuationItems ||
+        d.onResponseReceivedEndpoints?.[0]?.appendContinuationItemsAction?.continuationItems ||
+        d.frameworkUpdates?.entityBatchUpdate?.mutations;
+      const c = [];
+      let nt = null;
+      if (i) {
+        for (const it of i) {
+          if (it.commentThreadRenderer) {
+            const cm = it.commentThreadRenderer.comment.commentRenderer;
+            c.push({
+              id: cm.commentId,
+              author: cm.authorText?.simpleText || 'Unknown',
+              text:
+                jn(
+                  mp(cm.contentText?.runs || [], r => r.text),
+                  ''
+                ) || '',
+              likes: cm.voteCount?.simpleText || '0',
+              publishedTime: cm.publishedTimeText?.runs?.[0]?.text || '',
+            });
+          } else if (it.continuationItemRenderer) {
+            nt = it.continuationItemRenderer.continuationEndpoint.continuationCommand.token;
+          }
         }
       }
+      l('parseComments:End');
+      return { comments: c, nextToken: nt };
+    } catch (err) {
+      e('Err:parseComments', err);
+      return { comments: [], nextToken: null };
     }
-    return { comments: c, nextToken: nt };
   }
 }
 const ex = new CommentsExtractor();

@@ -1,5 +1,5 @@
 import { rt as cr } from '../../utils/shortcuts/runtime.js';
-import { l, e, w } from '../../utils/shortcuts/logging.js';
+import { l } from '../../utils/shortcuts/logging.js';
 
 export const verifySender = s => {
   l('VerifySender');

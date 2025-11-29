@@ -7,41 +7,53 @@ const { renderSegments } = await import(gu('content/ui/renderers/segments.js'));
 const { renderChat } = await import(gu('content/ui/renderers/chat.js'));
 const { renderComments } = await import(gu('content/ui/renderers/comments.js'));
 const { qs: $, qsa: $$, id: ge, on } = await import(gu('utils/shortcuts/dom.js'));
-const { e } = await import(gu('utils/shortcuts/log.js'));
+const { l, e } = await import(gu('utils/shortcuts/logging.js'));
 
 export function initTabs(c) {
-  $$('.yt-ai-tab', c).forEach(t => on(t, 'click', () => switchTab(t.dataset.tab, c)));
+  l('initTabs:Start');
+  try {
+    $$('.yt-ai-tab', c).forEach(t => on(t, 'click', () => switchTab(t.dataset.tab, c)));
+    l('initTabs:End');
+  } catch (err) {
+    e('Err:initTabs', err);
+  }
 }
 
 export function switchTab(n, container) {
-  const c = container || ge('yt-ai-master-widget');
-  if (!c) return;
-  $$('.yt-ai-tab', c).forEach(t => t.classList.remove('active'));
-  $(`[data-tab="${n}"]`, c)?.classList.add('active');
-  const i = $('#yt-ai-chat-input-area', c);
-  if (i) i.style.display = n === 'chat' ? 'flex' : 'none';
-  const a = $('#yt-ai-content-area', c);
-  if (!a) return;
+  l('switchTab:Start');
   try {
-    switch (n) {
-      case 'summary':
-        renderSummary(a, state.analysisData || {});
-        break;
-      case 'transcript':
-        renderTranscript(a, state.currentTranscript || []);
-        break;
-      case 'segments':
-        renderSegments(a, state.analysisData || {});
-        break;
-      case 'chat':
-        renderChat(a);
-        break;
-      case 'comments':
-        renderComments(a);
-        break;
+    const c = container || ge('yt-ai-master-widget');
+    if (!c) return;
+    $$('.yt-ai-tab', c).forEach(t => t.classList.remove('active'));
+    $(`[data-tab="${n}"]`, c)?.classList.add('active');
+    const i = $('#yt-ai-chat-input-area', c);
+    if (i) i.style.display = n === 'chat' ? 'flex' : 'none';
+    const a = $('#yt-ai-content-area', c);
+    if (!a) return;
+    try {
+      switch (n) {
+        case 'summary':
+          renderSummary(a, state.analysisData || {});
+          break;
+        case 'transcript':
+          renderTranscript(a, state.currentTranscript || []);
+          break;
+        case 'segments':
+          renderSegments(a, state.analysisData || {});
+          break;
+        case 'chat':
+          renderChat(a);
+          break;
+        case 'comments':
+          renderComments(a);
+          break;
+      }
+      l('switchTab:End');
+    } catch (x) {
+      e('Err:switchTab', x);
+      a.innerHTML = `<div class="yt-ai-error">Error loading tab content</div>`;
     }
-  } catch (x) {
-    e('Error switching tab:', x);
-    a.innerHTML = `<div class="yt-ai-error">Error loading tab content</div>`;
+  } catch (err) {
+    e('Err:switchTab', err);
   }
 }

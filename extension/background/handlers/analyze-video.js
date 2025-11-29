@@ -12,7 +12,7 @@ import { inc as ic, lwc } from '../../utils/shortcuts/string.js';
 import { np, pc } from '../../utils/shortcuts/async.js';
 let ka = null;
 const ska = () => {
-  if (!ka) ka = si(() => cr.getPlatformInfo(() => { }), 2e4);
+  if (!ka) ka = si(() => cr.getPlatformInfo(() => {}), 2e4);
 };
 const stka = () => {
   if (ka) {

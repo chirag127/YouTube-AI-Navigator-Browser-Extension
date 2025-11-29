@@ -1,6 +1,6 @@
 import { initializeServices, getServices } from '../services.js';
 import { getApiKey } from '../utils/api-key.js';
-import { l } from '../../utils/shortcuts/logging.js';
+import { l, e } from '../../utils/shortcuts/logging.js';
 export async function handleGetCachedData(req, rsp) {
   l('GetCached');
   try {

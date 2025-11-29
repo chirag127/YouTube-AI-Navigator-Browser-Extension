@@ -10,11 +10,12 @@ const { injectSegmentMarkers } = await import(gu('content/segments/markers.js'))
 const { setupAutoSkip } = await import(gu('content/segments/autoskip.js'));
 const { renderTimeline } = await import(gu('content/segments/timeline.js'));
 const { analyzeVideo } = await import(gu('content/features/analysis/service.js'));
-const { l, w } = await import(gu('utils/shortcuts/log.js'));
+const { l, e } = await import(gu('utils/shortcuts/logging.js'));
 const { id: i, $ } = await import(gu('utils/shortcuts/dom.js'));
 const { msg } = await import(gu('utils/shortcuts/runtime.js'));
 const { E: Er } = await import(gu('utils/shortcuts/core.js'));
 export async function startAnalysis() {
+  l('startAnalysis:Start');
   if (state.isAnalyzing || !state.currentVideoId) return;
   state.isAnalyzing = true;
   const ca = i('yt-ai-content-area');
@@ -26,16 +27,16 @@ export async function startAnalysis() {
     try {
       const result = await extractTranscript(state.currentVideoId);
       ts = result.success ? result.data : [];
-    } catch (e) {
-      w('[Flow] Transcript extraction failed:', e);
+    } catch (err) {
+      l('[Flow] Transcript extraction failed:', err);
     }
     state.currentTranscript = ts || [];
     showLoading(ca, 'Extracting comments...');
     let cm = [];
     try {
       cm = await getComments();
-    } catch (e) {
-      w('[Flow] Comments extraction failed:', e);
+    } catch (err) {
+      l('[Flow] Comments extraction failed:', err);
     }
     showLoading(ca, `Analyzing content with AI...`);
     l('[Flow] Starting AI analysis...', {
@@ -66,17 +67,25 @@ export async function startAnalysis() {
         keyPoints: state.analysisData.keyPoints,
         chatHistory: state.chatHistory || [],
       });
-    } catch (e) {
-      w('[Flow] History save failed:', e);
+    } catch (err) {
+      l('[Flow] History save failed:', err);
     }
     switchTab('summary');
-  } catch (e) {
-    showError(ca, e.message);
+    l('startAnalysis:End');
+  } catch (err) {
+    showError(ca, err.message);
+    e('Err:startAnalysis', err);
   } finally {
     state.isAnalyzing = false;
   }
 }
 
 async function saveToHistory(d) {
-  await msg({ action: 'SAVE_HISTORY', data: d });
+  l('saveToHistory:Start');
+  try {
+    await msg({ action: 'SAVE_HISTORY', data: d });
+    l('saveToHistory:End');
+  } catch (err) {
+    e('Err:saveToHistory', err);
+  }
 }

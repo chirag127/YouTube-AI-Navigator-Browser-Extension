@@ -3,7 +3,7 @@
   if (window.location.hostname !== 'www.youtube.com') return;
   const { r, ru: gu } = await import(chrome.runtime.getURL('utils/shortcuts/runtime.js'));
   const { ce: el, qs } = await import(gu('utils/shortcuts/dom.js'));
-  const { l, e } = await import(gu('utils/shortcuts/log.js'));
+  const { l, e } = await import(gu('utils/shortcuts/logging.js'));
   const { to } = await import(gu('utils/shortcuts/global.js'));
   const { sl } = await import(gu('utils/shortcuts/storage.js'));
   const s = el('script');
@@ -26,13 +26,15 @@
     const a = m.action || m.type;
     switch (a) {
       case 'START_ANALYSIS':
+        l('START_ANALYSIS:Start');
         import(gu('content/core/analyzer.js'))
           .then(({ startAnalysis: sa }) => {
             sa();
             p({ success: true });
+            l('START_ANALYSIS:End');
           })
           .catch(x => {
-            e('Imp fail:', x);
+            e('Err:START_ANALYSIS', x);
             p({ success: false, error: x.message });
           });
         return true;
@@ -60,10 +62,12 @@
   });
   const hGM = async (m, p) => {
     try {
+      l('hGM:Start');
       const { MetadataExtractor: ME } = await import(gu('content/metadata/extractor.js'));
       p({ success: true, metadata: await ME.extract(m.videoId) });
+      l('hGM:End');
     } catch (x) {
-      e('[Meta] Err:', x);
+      e('Err:hGM', x);
       p({
         success: true,
         metadata: {
@@ -77,6 +81,7 @@
   };
   const hGT = async (m, p) => {
     try {
+      l('hGT:Start');
       const { videoId: v } = m;
       const wc = await cTC(v);
       const { extractTranscript: gT } = await import(gu('content/transcript/strategy-manager.js'));
@@ -95,8 +100,9 @@
         }
       }
       p({ success: true, transcript: t });
+      l('hGT:End');
     } catch (x) {
-      e('Tr fetch err:', x);
+      e('Err:hGT', x);
       let msg = x.message;
       if (msg.includes('Transcript is disabled')) msg = 'No caps enabled';
       else if (msg.includes('No transcript found')) msg = 'No caps avail';
@@ -105,14 +111,17 @@
   };
   const hGC = async (_, p) => {
     try {
+      l('hGC:Start');
       const { getComments: gC } = await import(gu('content/handlers/comments.js'));
       p({ success: true, comments: await gC() });
+      l('hGC:End');
     } catch (x) {
-      e('Comm err:', x);
+      e('Err:hGC', x);
       p({ comments: [] });
     }
   };
   const cTC = async v => {
+    l('cTC:Start');
     try {
       const k = `v_${v}_t`;
       const r = await sl.get(k);
@@ -121,40 +130,49 @@
           a = Date.now() - c.timestamp;
         if (a < 864e5 && c.data?.length > 0) {
           l(`[Tr] Cache hit`);
+          l('cTC:End');
           return true;
         }
       }
+      l('cTC:End');
       return false;
-    } catch {
+    } catch (err) {
+      e('Err:cTC', err);
       return false;
     }
   };
   const hST = (m, p) => {
     try {
+      l('hST:Start');
       const v = qs('video');
       if (v) {
         v.currentTime = m.timestamp;
         p({ success: true });
+        l('hST:End');
       } else throw new Error('No video');
     } catch (x) {
-      e('Seek err:', x);
+      e('Err:hST', x);
       p({ success: false, error: x.message });
     }
   };
   const hSS = async (_, p) => {
     try {
+      l('hSS:Start');
       p({ success: true });
+      l('hSS:End');
     } catch (x) {
-      e('Seg err:', x);
+      e('Err:hSS', x);
       p({ success: false, error: x.message });
     }
   };
   const hGVD = async (m, p) => {
     try {
+      l('hGVD:Start');
       const { VideoDataExtractor: VDE } = await import(gu('content/metadata/video-data.js'));
       p({ success: true, data: await VDE.extract(m.videoId) });
+      l('hGVD:End');
     } catch (x) {
-      e('GVD err:', x);
+      e('Err:hGVD', x);
       p({ success: false, error: x.message });
     }
   };
