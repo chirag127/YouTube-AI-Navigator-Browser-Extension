@@ -1,6 +1,44 @@
-export const qs = (s, p = document) => p.querySelector(s);
-export const qsa = (s, p = document) => p.querySelectorAll(s);
-export const ce = (t) => document.createElement(t);
-export const ac = (p, c) => p.appendChild(c);
-export const ael = (e, t, h, o) => e.addEventListener(t, h, o);
+export const $ = (s, p = document) => p.querySelector(s);
+export const $$ = (s, p = document) => [...p.querySelectorAll(s)];
+export const qs = $;
+export const qsa = $$;
 export const ge = (i) => document.getElementById(i);
+export const gc = (c) => document.getElementsByClassName(c);
+export const gt = (t) => document.getElementsByTagName(t);
+export const gn = (n) => document.getElementsByName(n);
+export const cr = (t) => document.createElement(t);
+export const ctx = (t) => document.createTextNode(t);
+export const on = (el, ev, fn, o) => el.addEventListener(ev, fn, o);
+export const off = (el, ev, fn, o) => el.removeEventListener(ev, fn, o);
+export const ap = (p, c) => p.appendChild(c);
+export const rm = (p, c) => p.removeChild(c);
+export const ac = (el, c) => el.classList.add(c);
+export const rc = (el, c) => el.classList.remove(c);
+export const tgl = (el, c) => el.classList.toggle(c);
+export const hc = (el, c) => el.classList.contains(c);
+export const sa = (el, k, v) => el.setAttribute(k, v);
+export const ga = (el, k) => el.getAttribute(k);
+export const ra = (el, k) => el.removeAttribute(k);
+export const ha = (el, k) => el.hasAttribute(k);
+export const ih = (e, h) => (e.innerHTML = h);
+export const tc = (e, t) => (e.textContent = t);
+export const val = (e, v) => {
+    if (v === undefined) return e.value;
+    e.value = v;
+};
+export const ds = (e, k, v) => {
+    if (v === undefined) return e.dataset[k];
+    e.dataset[k] = v;
+};
+export const stl = (e, k, v) => {
+    if (v === undefined) return e.style[k];
+    e.style[k] = v;
+};
+export const show = (e) => (e.style.display = "block");
+export const hide = (e) => (e.style.display = "none");
+export const tog = (e) =>
+    (e.style.display = e.style.display === "none" ? "block" : "none");
+export const viz = (e, v) => (e.style.visibility = v ? "visible" : "hidden");
+export const op = (e, o) => (e.style.opacity = o);
+export const dw = (e, w) => (e.style.width = w);
+export const dh = (e, h) => (e.style.height = h);

@@ -1,5 +1,5 @@
-export const l = console.log.bind(console);
-export const e = console.error.bind(console);
-export const w = console.warn.bind(console);
-export const d = console.debug.bind(console);
-export const i = console.info.bind(console);
+export const l = (m, ...a) => console.log(m, ...a);
+export const w = (m, ...a) => console.warn(m, ...a);
+export const e = (m, ...a) => console.error(m, ...a);
+export const d = (m, ...a) => console.debug(m, ...a);
+export const i = (m, ...a) => console.info(m, ...a);

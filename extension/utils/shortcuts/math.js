@@ -1,0 +1,11 @@
+export const mn = (a, b) => Math.min(a, b);
+export const mx = (a, b) => Math.max(a, b);
+export const mfl = (n) => Math.floor(n);
+export const mcl = (n) => Math.ceil(n);
+export const rnd = (n) => Math.round(n);
+export const abs = (n) => Math.abs(n);
+export const pw = (b, e) => Math.pow(b, e);
+export const sq = (n) => Math.sqrt(n);
+export const rndm = () => Math.random();
+export const pi = Math.PI;
+export const e2 = Math.E;
