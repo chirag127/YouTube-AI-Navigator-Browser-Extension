@@ -1,13 +1,11 @@
 import { getVideoElement } from '../utils/dom.js';
 import { sg } from '../../utils/shortcuts/storage.js';
-import { st } from '../../utils/shortcuts/time.js';
-import { id as i, on, of as off, ce } from '../../utils/shortcuts/dom.js';
-
+import { st } from '../../utils/shortcuts/global.js';
+import { qs, ae, re, ce } from '../../utils/shortcuts/dom.js';
 let as = [];
 let en = false;
 let opr = 1;
 let isu = false;
-
 export async function setupAutoSkip(s) {
   if (!s?.length) return;
   const st = await sg(null);
@@ -27,25 +25,23 @@ export async function setupAutoSkip(s) {
     en = true;
     const v = getVideoElement();
     if (v) {
-      off(v, 'timeupdate', handleAutoSkip);
-      on(v, 'timeupdate', handleAutoSkip);
+      re(v, 'timeupdate', handleAutoSkip);
+      ae(v, 'timeupdate', handleAutoSkip);
       opr = v.playbackRate;
     }
   } else disableAutoSkip();
 }
-
 function disableAutoSkip() {
   en = false;
   const v = getVideoElement();
   if (v) {
-    off(v, 'timeupdate', handleAutoSkip);
+    re(v, 'timeupdate', handleAutoSkip);
     if (isu) {
       v.playbackRate = opr;
       isu = false;
     }
   }
 }
-
 export function handleAutoSkip() {
   if (!en || !as.length) return;
   const v = getVideoElement();
@@ -75,10 +71,9 @@ export function handleAutoSkip() {
     isu = false;
   }
 }
-
 function showNotification(tx) {
   const id = 'yt-ai-skip-notif';
-  let n = i(id);
+  let n = qs('#' + id);
   if (n) n.remove();
   n = ce('div');
   n.id = id;

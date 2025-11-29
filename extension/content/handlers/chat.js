@@ -1,12 +1,11 @@
 import { state } from '../core/state.js';
 import { addChatMessage } from '../ui/renderers/chat.js';
 import { parseMarkdown } from '../../lib/marked-loader.js';
-import { id as ge } from '../../utils/shortcuts/dom.js';
-import { msg } from '../../utils/shortcuts/runtime.js';
+import { qs } from '../../utils/shortcuts/dom.js';
+import { rs } from '../../utils/shortcuts/runtime.js';
 import { mp, jn } from '../../utils/shortcuts/array.js';
-
 export async function sendChatMessage() {
-  const i = ge('yt-ai-chat-input'),
+  const i = qs('#yt-ai-chat-input'),
     q = i?.value?.trim();
   if (!q) return;
   await addChatMessage('user', q);
@@ -18,7 +17,7 @@ export async function sendChatMessage() {
       ' '
     );
     const md = null;
-    const r = await msg({ action: 'CHAT_WITH_VIDEO', question: q, context: ctx, metadata: md });
+    const r = await rs({ action: 'CHAT_WITH_VIDEO', question: q, context: ctx, metadata: md });
     el.innerHTML = r.success
       ? await parseMarkdown(r.answer || 'Sorry, I could not answer that.')
       : `Error: ${r.error}`;

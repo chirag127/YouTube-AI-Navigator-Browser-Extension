@@ -1,39 +1,28 @@
 import { deArrowAPI } from '../../api/dearrow.js';
-import { l, e } from '../../utils/shortcuts/log.js';
-import { cw } from '../../utils/shortcuts/windows.js';
-import { jp } from '../../utils/shortcuts/core.js';
-import { st } from '../../utils/shortcuts/time.js';
-import { on, qs as $ } from '../../utils/shortcuts/dom.js';
-
+import { l, e, w, jp, st } from '../../utils/shortcuts/global.js';
+import { ae, qs as $ } from '../../utils/shortcuts/dom.js';
 class MetadataExtractor {
   constructor() {
     this.cache = new Map();
     this.cacheTimeout = 300000;
   }
-
   log(lvl, msg) {
     const i = { info: 'ℹ️', success: '✅', warn: '⚠️', error: '❌' };
-    const f = lvl === 'error' ? e : lvl === 'warn' ? cw : l;
-    f(`[MetadataExtractor] ${i[lvl]} ${msg}`);
+    const f = lvl === 'error' ? e : lvl === 'warn' ? w : l;
+    f(`[ME] ${i[lvl]} ${msg}`);
   }
-
   async extract(vid, opt = {}) {
     const { useDeArrow = true, usePrivateDeArrow = true } = opt;
-    this.log('info', `Extracting metadata for: ${vid}`);
+    this.log('info', `Extr: ${vid}`);
     const c = this._getCache(vid);
-    if (c) {
-      this.log('success', 'Cache hit');
-      return c;
-    }
+    if (c) return c;
     let md = null,
       da = null;
     if (useDeArrow) {
       try {
-        this.log('info', 'Fetching DeArrow data...');
         da = await deArrowAPI.getVideoMetadata(vid, { usePrivateAPI: usePrivateDeArrow });
-        if (da?.hasDeArrowData && da.title) this.log('success', `DeArrow title found: ${da.title}`);
       } catch (x) {
-        this.log('warn', `DeArrow fetch failed: ${x.message}`);
+        this.log('warn', `DA fail: ${x.message}`);
       }
     }
     const id = await this.getInitialData();
@@ -56,13 +45,11 @@ class MetadataExtractor {
         deArrowThumbnail: da?.thumbnail || null,
       };
       if (md.title && md.title !== 'Unknown Title') {
-        const src = md.hasDeArrowTitle ? 'DeArrow + DOM' : 'DOM';
-        this.log('success', `Metadata extracted from ${src}: ${md.title}`);
         this._setCache(vid, md);
         return md;
       }
     } catch (x) {
-      this.log('warn', `DOM extraction failed: ${x.message}`);
+      this.log('warn', `DOM fail: ${x.message}`);
     }
     if (!md || !md.title || md.title === 'Unknown Title') {
       try {
@@ -83,13 +70,11 @@ class MetadataExtractor {
             category: jl.genre || null,
             deArrowThumbnail: da?.thumbnail || null,
           };
-          const src = md.hasDeArrowTitle ? 'DeArrow + JSON-LD' : 'JSON-LD';
-          this.log('success', `Metadata extracted from ${src}: ${md.title}`);
           this._setCache(vid, md);
           return md;
         }
       } catch (x) {
-        this.log('warn', `JSON-LD extraction failed: ${x.message}`);
+        this.log('warn', `JSON-LD fail: ${x.message}`);
       }
     }
     if (!md || !md.title) {
@@ -109,11 +94,9 @@ class MetadataExtractor {
         deArrowThumbnail: da?.thumbnail || null,
       };
     }
-    this.log('success', `Metadata extracted: ${md.title}`);
     this._setCache(vid, md);
     return md;
   }
-
   _extractTitle(pr) {
     const m = [
       () => $('h1.ytd-watch-metadata yt-formatted-string')?.textContent,
@@ -133,7 +116,6 @@ class MetadataExtractor {
     }
     return 'Unknown Title';
   }
-
   _extractDescription(pr) {
     const m = [
       () => {
@@ -157,7 +139,6 @@ class MetadataExtractor {
     }
     return '';
   }
-
   _extractAuthor(pr) {
     const m = [
       () => $('ytd-channel-name#channel-name yt-formatted-string a')?.textContent,
@@ -175,7 +156,6 @@ class MetadataExtractor {
     }
     return 'Unknown Channel';
   }
-
   _extractViewCount(pr) {
     const m = [
       () => this._parseViewCount($('ytd-video-view-count-renderer span.view-count')?.textContent),
@@ -192,13 +172,11 @@ class MetadataExtractor {
     }
     return 'Unknown';
   }
-
   _parseViewCount(t) {
     if (!t) return null;
     const m = t.match(/[\d,]+/);
     return m ? m[0].replace(/,/g, '') : null;
   }
-
   _extractPublishDate(pr) {
     const m = [
       () => $('meta[itemprop="uploadDate"]')?.content,
@@ -215,7 +193,6 @@ class MetadataExtractor {
     }
     return null;
   }
-
   _extractDuration(pr) {
     const m = [
       () => $('meta[itemprop="duration"]')?.content,
@@ -235,7 +212,6 @@ class MetadataExtractor {
     }
     return null;
   }
-
   _extractKeywords(pr) {
     const m = [
       () =>
@@ -254,7 +230,6 @@ class MetadataExtractor {
     }
     return [];
   }
-
   _extractCategory(pr) {
     try {
       return pr?.microformat?.playerMicroformatRenderer?.category;
@@ -262,7 +237,6 @@ class MetadataExtractor {
       return null;
     }
   }
-
   _extractJsonLd() {
     try {
       const s = $('script[type="application/ld+json"]');
@@ -272,7 +246,6 @@ class MetadataExtractor {
     }
     return null;
   }
-
   async getInitialData() {
     return new Promise(r => {
       const lis = ev => {
@@ -282,7 +255,7 @@ class MetadataExtractor {
           r(ev.data.payload);
         }
       };
-      on(window, 'message', lis);
+      ae(window, 'message', lis);
       window.postMessage({ type: 'YT_GET_DATA' }, '*');
       st(() => {
         window.removeEventListener('message', lis);
@@ -290,7 +263,6 @@ class MetadataExtractor {
       }, 1000);
     });
   }
-
   _getCache(vid) {
     const c = this.cache.get(vid);
     return c && Date.now() - c.ts < this.cacheTimeout ? c.data : null;
@@ -303,6 +275,5 @@ class MetadataExtractor {
     this.log('info', 'Cache cleared');
   }
 }
-
 export const metadataExtractor = new MetadataExtractor();
 export { MetadataExtractor };

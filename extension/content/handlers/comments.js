@@ -1,20 +1,17 @@
-import { l, w, e } from '../../utils/shortcuts/log.js';
-import { on, qs as $ } from '../../utils/shortcuts/dom.js';
+import { l, w, e, js } from '../../utils/shortcuts/global.js';
+import { ae, qs as $ } from '../../utils/shortcuts/dom.js';
 import { sg, slg as lg } from '../../utils/shortcuts/storage.js';
 import { ft } from '../../utils/shortcuts/network.js';
-import { js } from '../../utils/shortcuts/core.js';
 import { mp, jn } from '../../utils/shortcuts/array.js';
-
 class CommentsExtractor {
   constructor() {
     this.comments = [];
     this.hasIntercepted = false;
-    on(window, 'message', ev => {
+    ae(window, 'message', ev => {
       if (ev.source !== window) return;
       if (ev.data.type === 'YT_COMMENTS') this.handleInterceptedComments(ev.data.payload);
     });
   }
-
   handleInterceptedComments(d) {
     try {
       const i =
@@ -42,75 +39,48 @@ class CommentsExtractor {
         if (nc.length > 0) {
           this.comments = [...this.comments, ...nc];
           this.hasIntercepted = true;
-          l(`[CommentsExtractor] Intercepted ${nc.length} comments`);
+          l(`[CE] Int ${nc.length}`);
         }
       }
     } catch (x) {
-      e('[CommentsExtractor] Error parsing intercepted comments:', x);
+      e('[CE] Err int:', x);
     }
   }
-
   async getComments() {
-    l('[CommentsExtractor] 💬 === STARTING COMMENT EXTRACTION ===');
     const vid = this.getCurrentVideoId();
     const cfg = await this.getConfig();
-    if (!cfg.comments?.enabled) {
-      l('[CommentsExtractor] ⏭️ Comments disabled in settings');
-      return [];
-    }
+    if (!cfg.comments?.enabled) return [];
     if (cfg.cache?.enabled && cfg.cache?.comments) {
       try {
         const c = await this.checkCache(vid);
-        if (c && c.length > 0) {
-          l(`[CommentsExtractor] ✅ Strategy 0: Using cached comments (${c.length}) - NO SCROLL`);
-          return c;
-        }
+        if (c && c.length > 0) return c;
       } catch (x) {
-        w('[CommentsExtractor] ⚠️ Cache check failed:', x.message);
+        w('[CE] Cache fail:', x.message);
       }
     }
-    if (this.hasIntercepted && this.comments.length > 0) {
-      l('[CommentsExtractor] ✅ Strategy 1: Using intercepted comments', {
-        count: this.comments.length,
-      });
-      return this.comments;
-    }
-    l('[CommentsExtractor] ⏭️ Strategy 1: No intercepted comments available');
-    l('[CommentsExtractor] 🔧 Strategy 2: DOM scraping');
-    if (cfg.scroll?.autoScrollToComments) {
-      l('[CommentsExtractor] 📜 Auto-scroll enabled - scrolling to comments');
-      await this.scrollToComments();
-    } else l('[CommentsExtractor] ⏭️ Auto-scroll DISABLED - skipping scroll');
+    if (this.hasIntercepted && this.comments.length > 0) return this.comments;
+    if (cfg.scroll?.autoScrollToComments) await this.scrollToComments();
     return this.fetchCommentsFromDOM();
   }
-
   async getConfig() {
     try {
       const r = await sg('config');
       return r.config || {};
     } catch (x) {
-      w('[CommentsExtractor] Config load failed:', x);
+      w('[CE] Cfg fail:', x);
       return {};
     }
   }
-
   async checkCache(vid) {
     const k = `video_${vid}_comments`;
     const r = await lg(k);
     if (r[k]) {
       const c = r[k];
       const age = Date.now() - c.timestamp;
-      if (age < 86400000 && c.data?.length > 0) {
-        l(
-          `[CommentsExtractor] 📦 Cache hit: ${c.data.length} comments (age: ${Math.round(age / 60000)}min)`
-        );
-        return c.data;
-      }
-      l(`[CommentsExtractor] 📦 Cache expired or empty`);
+      if (age < 86400000 && c.data?.length > 0) return c.data;
     }
     return null;
   }
-
   async scrollToComments() {
     const { getScrollManager } = await import(
       chrome.runtime.getURL('content/utils/scroll-manager.js')
@@ -118,11 +88,9 @@ class CommentsExtractor {
     const sm = getScrollManager();
     await sm.scrollToComments();
   }
-
   getCurrentVideoId() {
     return new URLSearchParams(window.location.search).get('v');
   }
-
   async getInitialDataFromMainWorld() {
     return new Promise(r => {
       const lis = ev => {
@@ -132,7 +100,7 @@ class CommentsExtractor {
           r(ev.data.payload);
         }
       };
-      on(window, 'message', lis);
+      ae(window, 'message', lis);
       window.postMessage({ type: 'YT_GET_DATA' }, '*');
       setTimeout(() => {
         window.removeEventListener('message', lis);
@@ -140,65 +108,30 @@ class CommentsExtractor {
       }, 1e3);
     });
   }
-
   async fetchCommentsFromDOM() {
-    l('[CommentsExtractor] 🔍 Starting DOM scraping...');
     return new Promise(r =>
       setTimeout(() => {
         const c = [];
         const el = $('ytd-comment-thread-renderer');
-        l(`[CommentsExtractor] 📊 DOM Query Results:`, {
-          selector: 'ytd-comment-thread-renderer',
-          elementsFound: el.length,
-          documentReady: document.readyState,
-        });
         if (el.length === 0)
-          w('[CommentsExtractor] ⚠️ No comment elements found. Possible reasons:', {
-            commentsNotLoaded: "User hasn't scrolled to comments section",
-            commentsDisabled: 'Comments may be disabled for this video',
-            selectorChanged: 'YouTube may have changed their DOM structure',
-          });
+          w('[CE] No el');
         for (let i = 0; i < el.length; i++) {
-          if (c.length >= 20) {
-            l(`[CommentsExtractor] 🛑 Reached limit of 20 comments`);
-            break;
-          }
+          if (c.length >= 20) break;
           const elm = el[i];
           try {
             const a = elm.querySelector('#author-text')?.textContent?.trim();
             const t = elm.querySelector('#content-text')?.textContent?.trim();
             const lk = elm.querySelector('#vote-count-middle')?.textContent?.trim() || '0';
-            l(`[CommentsExtractor] 🔍 Comment ${i + 1}/${el.length}:`, {
-              hasAuthor: !!a,
-              hasText: !!t,
-              author: a,
-              textPreview: t?.substring(0, 50) + (t?.length > 50 ? '...' : ''),
-              likes: lk,
-            });
             if (a && t) c.push({ author: a, text: t, likes: lk });
-            else
-              w(`[CommentsExtractor] ⏭️ Skipping comment ${i + 1} - missing data:`, {
-                hasAuthor: !!a,
-                hasText: !!t,
-              });
+            else w(`[CE] Skip ${i + 1}`);
           } catch (x) {
-            e(`[CommentsExtractor] ❌ Error parsing comment ${i + 1}:`, {
-              errorType: x.constructor.name,
-              errorMessage: x.message,
-              element: elm,
-            });
+            e(`[CE] Err ${i + 1}:`, x);
           }
         }
-        l(`[CommentsExtractor] ✅ DOM scraping complete:`, {
-          totalElements: el.length,
-          successfullyParsed: c.length,
-          failed: el.length - c.length,
-        });
         r(c);
       }, 1e3)
     );
   }
-
   async fetchCommentsActive(k, t, c) {
     try {
       const r = await ft(`https://www.youtube.com/youtubei/v1/next?key=${k}`, {
@@ -208,11 +141,10 @@ class CommentsExtractor {
       const d = await r.json();
       return this.parseComments(d);
     } catch (x) {
-      e('[CommentsExtractor] Active fetch failed:', x);
+      e('[CE] Act fetch fail:', x);
       return { comments: [], nextToken: null };
     }
   }
-
   parseComments(d) {
     const i =
       d.onResponseReceivedEndpoints?.[1]?.reloadContinuationItemsCommand?.continuationItems ||
@@ -243,6 +175,5 @@ class CommentsExtractor {
     return { comments: c, nextToken: nt };
   }
 }
-
 const ex = new CommentsExtractor();
 export const getComments = ex.getComments.bind(ex);

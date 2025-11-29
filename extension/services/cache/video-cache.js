@@ -1,7 +1,6 @@
 import { sl } from '../../utils/shortcuts/storage.js';
-import { l } from '../../utils/../../utils/shortcuts/log.js';
+import { l } from '../../utils/shortcuts/log.js';
 import { nw as nt, ok as keys } from '../../utils/shortcuts/core.js';
-import { sl as sw } from '../../utils/shortcuts/storage.js';
 
 const V = 1,
   E = 86400000;
@@ -50,7 +49,7 @@ class VideoCache {
     } else {
       this.m.clear();
       const a = await sl(null),
-        vk = keys(a).filter(k => sw(k, 'video_'));
+        vk = keys(a).filter(k => k.startsWith('video_'));
       await sl(vk, null);
     }
   }

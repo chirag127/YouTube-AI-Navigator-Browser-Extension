@@ -1,19 +1,17 @@
 import { sendChatMessage } from './chat.js';
-import { on } from '../../utils/shortcuts/dom.js';
-import { l } from '../../utils/shortcuts/log.js';
-import { qs } from '../../utils/shortcuts/dom.js';
-
+import { ae, qs } from '../../utils/shortcuts/dom.js';
+import { l } from '../../utils/shortcuts/global.js';
 export function attachEventListeners(w) {
-  l('[Events] Attaching listeners to widget');
+  l('[Ev] Attaching');
   const c = qs('#yt-ai-chat-send', w);
   if (c)
-    on(c, 'click', () => {
-      l('[Events] Chat send clicked');
+    ae(c, 'click', () => {
+      l('[Ev] Send click');
       sendChatMessage();
     });
   const i = qs('#yt-ai-chat-input', w);
   if (i)
-    on(i, 'keypress', e => {
+    ae(i, 'keypress', e => {
       if (e.key === 'Enter') sendChatMessage();
     });
 }

@@ -9,3 +9,6 @@ export const err = console.error;
 export const warn = console.warn;
 export const to = setTimeout;
 export const ti = setInterval;
+export const ct = clearTimeout;
+export const ci = clearInterval;
+export const assign = Object.assign;

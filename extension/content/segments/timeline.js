@@ -1,6 +1,4 @@
-import { id as i, qs as $ } from '../../utils/shortcuts/dom.js';
-import { rt as cr } from '../../utils/shortcuts/runtime.js';
-
+import { qs as $, ce } from '../../utils/shortcuts/dom.js';
 const colors = {
   Sponsor: '#00d26a',
   'Self Promotion': '#ffff00',
@@ -14,18 +12,17 @@ const colors = {
   'Hook/Greetings': '#4169e1',
   'Tangents/Jokes': '#9400d3',
 };
-
 export const renderTimeline = (segs, dur) => {
   const bar = $('.ytp-progress-bar-container');
   if (!bar) return;
-  const ex = i('yt-ai-timeline-markers');
+  const ex = $('#yt-ai-timeline-markers');
   if (ex) ex.remove();
-  const c = cr('div');
+  const c = ce('div');
   c.id = 'yt-ai-timeline-markers';
   c.style.cssText =
     'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:40';
   segs.forEach(s => {
-    const m = cr('div');
+    const m = ce('div');
     const l = (s.start / dur) * 100,
       w = ((s.end - s.start) / dur) * 100;
     m.style.cssText = `position:absolute;left:${l}%;width:${w}%;height:100%;background:${colors[s.label] || '#fff'};opacity:0.6;pointer-events:auto;cursor:pointer`;
@@ -38,8 +35,7 @@ export const renderTimeline = (segs, dur) => {
   });
   bar.appendChild(c);
 };
-
 export const clearTimeline = () => {
-  const ex = i('yt-ai-timeline-markers');
+  const ex = $('#yt-ai-timeline-markers');
   if (ex) ex.remove();
 };

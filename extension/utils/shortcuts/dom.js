@@ -15,3 +15,4 @@ export const vs = (e, v) => (e.style.display = v ? '' : 'none');
 export const off = (e, t, h) => e.removeEventListener(t, h);
 export const txt = (e, t) => (e.textContent = t);
 export const html = (e, h) => (e.innerHTML = h);
+export const mo = (c) => new MutationObserver(c);

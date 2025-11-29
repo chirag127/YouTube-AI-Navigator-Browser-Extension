@@ -1,5 +1,5 @@
-import { sg } from '../../utils/shortcuts/storage.js';
-import { oa } from '../../utils/shortcuts/core.js';
+import { local } from '../../utils/shortcuts/runtime.js';
+import { assign } from '../../utils/shortcuts/core.js';
 
 export const state = {
   currentVideoId: null,
@@ -23,7 +23,7 @@ export function resetState() {
 }
 export async function loadSettings() {
   try {
-    const r = await sg([
+    const r = await local.get([
       'autoAnalyze',
       'autoSkipSponsors',
       'autoSkipIntros',
@@ -32,7 +32,7 @@ export async function loadSettings() {
       'autoLikeLive',
       'likeIfNotSubscribed',
     ]);
-    oa(state.settings, r);
+    assign(state.settings, r);
     return state.settings;
   } catch (e) {
     return state.settings;
