@@ -1,5 +1,5 @@
-import { id as i } from '../../utils/shortcuts/dom.js';
-
+import { qs as i } from '../../utils/shortcuts/dom.js';
+import { pi } from '../../utils/shortcuts/global.js';
 export class NotificationsSettings {
   constructor(s, a) {
     this.s = s;
@@ -19,7 +19,7 @@ export class NotificationsSettings {
     this.a.attachToAll({
       notificationsEnabled: { path: 'notifications.enabled' },
       notificationPosition: { path: 'notifications.position' },
-      notificationDuration: { path: 'notifications.duration', transform: v => parseInt(v) },
+      notificationDuration: { path: 'notifications.duration', transform: v => pi(v) },
       notificationSound: { path: 'notifications.sound' },
       notifyOnSave: { path: 'notifications.showOnSave' },
       notifyOnError: { path: 'notifications.showOnError' },
@@ -29,11 +29,11 @@ export class NotificationsSettings {
     });
   }
   set(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.value = v;
   }
   chk(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.checked = v;
   }
 }

@@ -1,5 +1,5 @@
-import { id as i } from '../../utils/shortcuts/dom.js';
-
+import { qs as i } from '../../utils/shortcuts/dom.js';
+import { pi } from '../../utils/shortcuts/global.js';
 export class ScrollSettings {
   constructor(s, a) {
     this.s = s;
@@ -26,7 +26,7 @@ export class ScrollSettings {
       showScrollNotification: { path: 'scroll.showScrollNotification' },
       smoothScroll: { path: 'scroll.smoothScroll' },
       scrollSpeed: { path: 'scroll.scrollSpeed' },
-      autoScrollDelay: { path: 'scroll.autoScrollDelay', transform: v => parseInt(v) },
+      autoScrollDelay: { path: 'scroll.autoScrollDelay', transform: v => pi(v) },
       uiTheme: { path: 'ui.theme' },
       uiFontSize: { path: 'ui.fontSize' },
       uiAnimationsEnabled: { path: 'ui.animationsEnabled' },
@@ -35,11 +35,11 @@ export class ScrollSettings {
     });
   }
   set(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.value = v;
   }
   chk(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.checked = v;
   }
 }

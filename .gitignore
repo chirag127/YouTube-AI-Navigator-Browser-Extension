@@ -7,3 +7,4 @@ dist/
 build/
 *.zip
 package-lock.json
+lint_output.txt

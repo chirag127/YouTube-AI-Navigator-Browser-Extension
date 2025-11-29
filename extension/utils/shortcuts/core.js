@@ -57,4 +57,4 @@ export const usp = URLSearchParams;
 // JSON aliases
 export const js = JSON.stringify;
 export const jp = JSON.parse;
-export const isS = (s) => typeof s === 'string';
+export const isS = s => typeof s === 'string';

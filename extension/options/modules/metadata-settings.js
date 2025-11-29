@@ -1,5 +1,4 @@
-import { id as i } from '../../utils/shortcuts/dom.js';
-
+import { qs as i } from '../../utils/shortcuts/dom.js';
 export class MetadataSettings {
   constructor(s, a) {
     this.s = s;
@@ -33,7 +32,7 @@ export class MetadataSettings {
     });
   }
   chk(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.checked = v;
   }
 }

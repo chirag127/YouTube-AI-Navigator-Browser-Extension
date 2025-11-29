@@ -3,7 +3,15 @@ import { nw, js, jp } from './shortcuts/core.js';
 export const DC = {
   ca: { en: 1, ttl: 864e5, tr: 1, co: 1, md: 1 },
   sc: { as: 0, sb: 1, sn: 1, sm: 1 },
-  tr: { ac: 1, ad: 1e3, ao: 0, lg: 'en', mt: 'auto', ts: 1, so: ['dom-automation', 'genius', 'speech-to-text'] },
+  tr: {
+    ac: 1,
+    ad: 1e3,
+    ao: 0,
+    lg: 'en',
+    mt: 'auto',
+    ts: 1,
+    so: ['dom-automation', 'genius', 'speech-to-text'],
+  },
   co: { en: 1, lm: 20, ir: 0, sb: 'top', as: 1 },
   md: { ti: 1, au: 1, vw: 1, du: 1, ds: 1, tg: 1, ud: 1 },
   ui: { th: 'dark', wp: 'secondary', ae: 0, st: 1, cm: 0 },

@@ -1,5 +1,5 @@
-import { sync as sg } from '../../utils/shortcuts/runtime.js';
-import { log as l, err as e, js, jp, now as nt } from '../../utils/shortcuts/core.js';
+import { sg, ss } from '../../utils/shortcuts/storage.js';
+import { log as l, err as e, js, jp, now as nt, keys as ok } from '../../utils/shortcuts/core.js';
 
 export const SEGMENT_CATEGORIES = [
   { id: 'sponsor', label: 'Sponsor', color: '#00d400' },
@@ -22,10 +22,9 @@ export class SettingsManager {
   }
   async load() {
     try {
-      const r = await sg.get('config');
+      const r = await sg('config');
       l('[SettingsManager] Loaded from storage:', r);
-      if (r.config && Object.keys(r.config).length > 0)
-        this.settings = this.mergeWithDefaults(r.config);
+      if (r.config && ok(r.config).length > 0) this.settings = this.mergeWithDefaults(r.config);
       else {
         l('[SettingsManager] No config found, using defaults');
         this.settings = this.getDefaults();
@@ -43,8 +42,8 @@ export class SettingsManager {
       this.settings._meta = this.settings._meta || {};
       this.settings._meta.lastUpdated = nt();
       l('[SettingsManager] Saving to storage:', this.settings);
-      await sg.set({ config: this.settings });
-      const v = await sg.get('config');
+      await ss({ config: this.settings });
+      const v = await sg('config');
       l('[SettingsManager] Verified save:', v);
       this.notify();
       return true;

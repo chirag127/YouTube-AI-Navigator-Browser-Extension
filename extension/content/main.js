@@ -11,7 +11,9 @@
   (document.head || document.documentElement).appendChild(s);
   l('YAM: Start');
   try {
-    const { initializeExtension: ie, waitForPageReady: wp } = await import(gu('content/core/init.js'));
+    const { initializeExtension: ie, waitForPageReady: wp } = await import(
+      gu('content/core/init.js')
+    );
     await wp();
     if (await ie()) l('YAM: Ready');
     else e('YAM: Init fail');
@@ -81,7 +83,9 @@
       const t = r2.data;
       if (!wc) {
         try {
-          const { collapseTranscriptWidget: cTW } = await import(gu('content/ui/renderers/transcript.js'));
+          const { collapseTranscriptWidget: cTW } = await import(
+            gu('content/ui/renderers/transcript.js')
+          );
           to(() => cTW(), 1e3);
           l('[Tr] Auto-close');
         } catch (x) {

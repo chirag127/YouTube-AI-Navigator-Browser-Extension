@@ -1,8 +1,6 @@
-import { id as i, on, ce } from '../../utils/shortcuts/dom.js';
+import { qs as i, on, ce } from '../../utils/shortcuts/dom.js';
 import { js, jp } from '../../utils/shortcuts/core.js';
-import { to as st } from '../../utils/shortcuts/global.js';
-import { cr } from '../../utils/shortcuts/chrome.js';
-
+import { st, e as err } from '../../utils/shortcuts/global.js';
 export class AdvancedSettings {
   constructor(s, a) {
     this.s = s;
@@ -12,17 +10,17 @@ export class AdvancedSettings {
     this.chk('debugMode', this.s.get().advanced?.debugMode ?? false);
     this.a.attachToAll({ debugMode: { path: 'advanced.debugMode' } });
     const els = {
-      ex: i('exportSettings'),
-      im: i('importSettings'),
-      if: i('importFile'),
-      rd: i('resetDefaults'),
+      ex: i('#exportSettings'),
+      im: i('#importSettings'),
+      if: i('#importFile'),
+      rd: i('#resetDefaults'),
     };
     if (els.ex)
       on(els.ex, 'click', () => {
         const d = js(this.s.get(), null, 2);
         const b = new Blob([d], { type: 'application/json' });
         const u = URL.createObjectURL(b);
-        const a = cr('a');
+        const a = ce('a');
         a.href = u;
         a.download = 'youtube-ai-master-settings.json';
         a.click();
@@ -41,7 +39,7 @@ export class AdvancedSettings {
               st(() => window.location.reload(), 1000);
             } else throw new Error('Import failed');
           } catch (x) {
-            ce('Import failed:', x);
+            err('Import failed:', x);
             this.a.notifications?.error('Invalid settings file');
           }
         };
@@ -57,7 +55,7 @@ export class AdvancedSettings {
       });
   }
   chk(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.checked = v;
   }
 }

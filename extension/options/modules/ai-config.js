@@ -1,7 +1,10 @@
 import { ModelManager } from '../../api/gemini.js';
-import { gebi as i, on, ap, tc, ih, rc, vl, el as cr } from '../../utils/shortcuts/dom.js';
-import { ft, js, jp, isS, inc, fe, mt, rp, tr, sw } from '../../utils/shortcuts/core.js';
-
+import { qs as i, on, ap, tc, ih, rc, vl, ce as cr } from '../../utils/shortcuts/dom.js';
+import { js, isS } from '../../utils/shortcuts/core.js';
+import { jp } from '../../utils/shortcuts/global.js';
+import { inc, rp, tr, sw } from '../../utils/shortcuts/string.js';
+import { fe } from '../../utils/shortcuts/array.js';
+import { ft } from '../../utils/shortcuts/network.js';
 export class AIConfig {
   constructor(s, a) {
     this.s = s;
@@ -16,12 +19,12 @@ export class AIConfig {
     this.set('customPrompt', c.customPrompt || '');
     if (c.model) this.set('modelSelect', c.model);
     const els = {
-      ak: i('apiKey'),
-      tak: i('toggleApiKey'),
-      ms: i('modelSelect'),
-      rm: i('refreshModels'),
-      tc: i('testConnection'),
-      cp: i('customPrompt'),
+      ak: i('#apiKey'),
+      tak: i('#toggleApiKey'),
+      ms: i('#modelSelect'),
+      rm: i('#refreshModels'),
+      tc: i('#testConnection'),
+      cp: i('#customPrompt'),
     };
     if (els.ak)
       on(els.ak, 'change', async e => {
@@ -84,9 +87,9 @@ export class AIConfig {
     }
   }
   async test() {
-    const btn = i('testConnection'),
-      st = i('apiStatus'),
-      ms = i('modelSelect'),
+    const btn = i('#testConnection'),
+      st = i('#apiStatus'),
+      ms = i('#modelSelect'),
       c = this.s.get().ai || {};
     btn.disabled = true;
     tc(btn, 'Testing...');
@@ -97,8 +100,8 @@ export class AIConfig {
       if (sw(m, 'models/')) m = rp(m, 'models/', '');
       if (
         !inc(m, '-latest') &&
-        !mt(m, /-\d{3}$/) &&
-        !mt(m, /-\d{2}-\d{4}$/) &&
+        !m.match(/-\d{3}$/) &&
+        !m.match(/-\d{2}-\d{4}$/) &&
         !inc(m, 'preview') &&
         !inc(m, 'exp')
       )
@@ -130,7 +133,7 @@ export class AIConfig {
     }
   }
   set(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.value = v;
   }
 }

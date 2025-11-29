@@ -113,8 +113,7 @@ class CommentsExtractor {
       setTimeout(() => {
         const c = [];
         const el = $('ytd-comment-thread-renderer');
-        if (el.length === 0)
-          w('[CE] No el');
+        if (el.length === 0) w('[CE] No el');
         for (let i = 0; i < el.length; i++) {
           if (c.length >= 20) break;
           const elm = el[i];

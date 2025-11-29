@@ -1,6 +1,6 @@
-import { to as st, raf } from '../../utils/shortcuts/global.js';
-import { cr } from '../../utils/shortcuts/chrome.js';
-
+import { st } from '../../utils/shortcuts/global.js';
+import { raf } from '../../utils/shortcuts/async.js';
+import { ce as cr, ap } from '../../utils/shortcuts/dom.js';
 export class NotificationManager {
   constructor() {
     this.container = null;
@@ -13,7 +13,7 @@ export class NotificationManager {
     this.container.id = 'notification-container';
     this.container.style.cssText =
       'position:fixed;top:20px;right:20px;z-index:10000;display:flex;flex-direction:column;gap:10px;pointer-events:none;';
-    document.body.appendChild(this.container);
+    ap(document.body, this.container);
   }
   show(m, t = 'success', d = 3000) {
     const n = cr('div');
@@ -21,7 +21,7 @@ export class NotificationManager {
     const i = this.getIcon(t);
     n.innerHTML = `<span class="notification-icon">${i}</span><span class="notification-message">${m}</span>`;
     n.style.cssText = `display:flex;align-items:center;gap:12px;padding:12px 20px;background:${this.getBackground(t)};color:${this.getColor(t)};border-radius:8px;font-size:14px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,0.3);transform:translateX(400px);transition:transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275);pointer-events:auto;border:1px solid ${this.getBorderColor(t)};`;
-    this.container.appendChild(n);
+    ap(this.container, n);
     raf(() => {
       n.style.transform = 'translateX(0)';
     });

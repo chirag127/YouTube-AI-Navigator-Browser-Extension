@@ -7,3 +7,6 @@ export const jp = JSON.parse;
 export const js = JSON.stringify;
 export const pi = parseInt;
 export const pf = parseFloat;
+export const cf = confirm;
+export const al = alert;
+export const pm = prompt;

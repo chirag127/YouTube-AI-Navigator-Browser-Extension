@@ -1,5 +1,5 @@
-import { id as i } from '../../utils/shortcuts/dom.js';
-
+import { qs as i } from '../../utils/shortcuts/dom.js';
+import { pi } from '../../utils/shortcuts/global.js';
 export class CommentsSettings {
   constructor(s, a) {
     this.s = s;
@@ -17,7 +17,7 @@ export class CommentsSettings {
     this.chk('highlightPinned', c.highlightPinned ?? true);
     this.a.attachToAll({
       commentsEnabled: { path: 'comments.enabled' },
-      commentsLimit: { path: 'comments.limit', transform: v => parseInt(v) },
+      commentsLimit: { path: 'comments.limit', transform: v => pi(v) },
       includeReplies: { path: 'comments.includeReplies' },
       commentsSortBy: { path: 'comments.sortBy' },
       analyzeSentiment: { path: 'comments.analyzeSentiment' },
@@ -27,11 +27,11 @@ export class CommentsSettings {
     });
   }
   set(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.value = v;
   }
   chk(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.checked = v;
   }
 }

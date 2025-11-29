@@ -1,6 +1,6 @@
 import { SEGMENT_CATEGORIES, DEFAULT_SEGMENT_CONFIG } from './settings-manager.js';
-import { id as i, on } from '../../utils/shortcuts/dom.js';
-
+import { qs as i, on } from '../../utils/shortcuts/dom.js';
+import { pf } from '../../utils/shortcuts/global.js';
 export class SegmentsConfig {
   constructor(s, a) {
     this.s = s;
@@ -8,20 +8,20 @@ export class SegmentsConfig {
   }
   init() {
     const c = this.s.get(),
-      en = i('enableSegments'),
-      g = i('segmentsGrid');
+      en = i('#enableSegments'),
+      g = i('#segmentsGrid');
     if (en) en.checked = c.segments?.enabled ?? true;
     if (g) this.render(g);
     if (en) on(en, 'change', e => this.a.save('segments.enabled', e.target.checked));
-    const sb = i('skipAllBtn'),
-      sp = i('speedAllBtn'),
-      rb = i('resetAllBtn');
+    const sb = i('#skipAllBtn'),
+      sp = i('#speedAllBtn'),
+      rb = i('#resetAllBtn');
     if (sb) on(sb, 'click', () => this.setAll('skip'));
     if (sp) on(sp, 'click', () => this.setAll('speed'));
     if (rb) on(rb, 'click', () => this.setAll('ignore'));
   }
   render(g) {
-    const t = i('segmentItemTemplate');
+    const t = i('#segmentItemTemplate');
     g.innerHTML = '';
     const c = this.s.get().segments?.categories || {};
     SEGMENT_CATEGORIES.forEach(cat => {
@@ -50,7 +50,7 @@ export class SegmentsConfig {
       on(ss, 'input', () => {
         const v = ss.value;
         sv.textContent = `${v}x`;
-        this.update(cat.id, { speed: parseFloat(v) });
+        this.update(cat.id, { speed: pf(v) });
       });
       g.appendChild(cl);
     });
@@ -70,7 +70,7 @@ export class SegmentsConfig {
       cats[cat.id] = { ...cats[cat.id], action: a };
     });
     await this.a.save('segments.categories', cats);
-    const g = i('segmentsGrid');
+    const g = i('#segmentsGrid');
     if (g) this.render(g);
   }
 }

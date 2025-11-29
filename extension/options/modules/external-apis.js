@@ -1,5 +1,4 @@
-import { id as i } from '../../utils/shortcuts/dom.js';
-
+import { qs as i } from '../../utils/shortcuts/dom.js';
 export class ExternalAPIs {
   constructor(s, a) {
     this.s = s;
@@ -21,7 +20,7 @@ export class ExternalAPIs {
     });
   }
   set(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.value = v;
   }
 }

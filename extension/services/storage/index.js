@@ -40,7 +40,7 @@ export class StorageService {
       videoCache.get(v, 'metadata'),
       videoCache.get(v, 'comments'),
       videoCache.get(v, 'summary'),
-      videoCache.get(v, 'segments')
+      videoCache.get(v, 'segments'),
     ]);
     return { transcript: t, metadata: m, comments: c, summary: s, segments: sg };
   }

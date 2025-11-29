@@ -1,8 +1,6 @@
-import { to as st, co as ct } from '../../utils/shortcuts/global.js';
-import { l } from '../../utils/../../utils/shortcuts/log.js';
-import { ce, on, id as i } from '../../utils/shortcuts/dom.js';
+import { st, ct, l, e } from '../../utils/shortcuts/global.js';
+import { on, qs as i } from '../../utils/shortcuts/dom.js';
 import { oe } from '../../utils/shortcuts/core.js';
-
 export class AutoSave {
   constructor(sm, d = 500, nm = null) {
     this.s = sm;
@@ -22,7 +20,7 @@ export class AutoSave {
         if (this.n) this.n.success(`Setting saved: ${p.split('.').pop()}`);
         l(`[AutoSave] ✓ Saved successfully (count: ${this.c})`);
       } catch (x) {
-        ce('[AutoSave] Failed:', x);
+        e('[AutoSave] Failed:', x);
         if (this.n) this.n.error(`Failed to save: ${x.message}`);
       }
     }, this.d);
@@ -38,7 +36,7 @@ export class AutoSave {
   }
   attachToAll(m) {
     oe(m).forEach(([id, c]) => {
-      const el = i(id);
+      const el = i(`#${id}`);
       if (el) this.attachToInput(el, c.path, c.transform);
     });
   }

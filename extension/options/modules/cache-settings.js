@@ -1,6 +1,5 @@
-import { id as i, on } from '../../utils/shortcuts/dom.js';
+import { qs as i, on } from '../../utils/shortcuts/dom.js';
 import { slc as lcl } from '../../utils/shortcuts/storage.js';
-
 export class CacheSettings {
   constructor(s, a) {
     this.s = s;
@@ -26,7 +25,7 @@ export class CacheSettings {
       cacheSegments: { path: 'cache.segments' },
       cacheSummaries: { path: 'cache.summaries' },
     });
-    const cc = i('clearCache');
+    const cc = i('#clearCache');
     if (cc)
       on(cc, 'click', async () => {
         if (confirm('Clear all cached data? This cannot be undone.')) {
@@ -34,11 +33,11 @@ export class CacheSettings {
           this.a.notifications?.success('Cache cleared');
         }
       });
-    const vs = i('viewCacheStats');
+    const vs = i('#viewCacheStats');
     if (vs)
       on(vs, 'click', async () => {
         const s = await chrome.storage.local.getBytesInUse();
-        const d = i('cacheStats');
+        const d = i('#cacheStats');
         if (d) {
           d.className = 'status-indicator success';
           d.textContent = `Cache: ${(s / 1024 / 1024).toFixed(2)} MB`;
@@ -46,11 +45,11 @@ export class CacheSettings {
       });
   }
   set(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.value = v;
   }
   chk(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.checked = v;
   }
 }

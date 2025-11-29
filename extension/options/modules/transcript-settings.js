@@ -1,5 +1,5 @@
-import { id as i } from '../../utils/shortcuts/dom.js';
-
+import { qs as i } from '../../utils/shortcuts/dom.js';
+import { pi } from '../../utils/shortcuts/global.js';
 export class TranscriptSettings {
   constructor(s, a) {
     this.s = s;
@@ -24,16 +24,16 @@ export class TranscriptSettings {
       transcriptShowOriginal: { path: 'transcript.showOriginal' },
       transcriptHighlightKeywords: { path: 'transcript.highlightKeywords' },
       transcriptAutoClose: { path: 'transcript.autoClose' },
-      transcriptAutoCloseDelay: { path: 'transcript.autoCloseDelay', transform: v => parseInt(v) },
+      transcriptAutoCloseDelay: { path: 'transcript.autoCloseDelay', transform: v => pi(v) },
       transcriptAutoCloseOnCached: { path: 'transcript.autoCloseOnCached' },
     });
   }
   set(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.value = v;
   }
   chk(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.checked = v;
   }
 }

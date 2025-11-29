@@ -18,9 +18,9 @@ export async function handleGenerateSummary(req, rsp) {
   };
   const ts = Array.isArray(transcript)
     ? jn(
-      mp(transcript, t => `[${ft(t.start)}] ${t.text}`),
-      '\n'
-    )
+        mp(transcript, t => `[${ft(t.start)}] ${t.text}`),
+        '\n'
+      )
     : transcript;
   const ctx = `Video Metadata:\nTitle: ${metadata?.title || 'Unknown'}\nChannel: ${metadata?.author || 'Unknown'}\n\nTranscript:\n${ts}\n`;
   const sum = await gemini.generateSummary(ctx, settings?.customPrompt, settings?.model, {

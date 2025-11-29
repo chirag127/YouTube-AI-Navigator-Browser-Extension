@@ -1,7 +1,6 @@
-import { id as i, on, ce, qsa as $$ } from '../../utils/shortcuts/dom.js';
-import { local as lr } from '../../utils/shortcuts/runtime.js';
-import { cf } from '../../utils/shortcuts/platform_api.js';
-
+import { qs as i, on, ce, qsa as $$, ac, rc } from '../../utils/shortcuts/dom.js';
+import { slr } from '../../utils/shortcuts/storage.js';
+import { cf } from '../../utils/shortcuts/global.js';
 export class GeneralSettings {
   constructor(s, a) {
     this.s = s;
@@ -17,9 +16,9 @@ export class GeneralSettings {
     this.chk('autoDetectLanguage', c.automation?.autoDetectLanguage ?? true);
     this.chk('autoLoadTranscript', c.automation?.autoLoadTranscript ?? true);
     this.chk('saveHistory', c.advanced?.saveHistory ?? true);
-
-    this.renderStrategies(c.transcript?.strategyOrder || ['dom-automation', 'genius', 'speech-to-text']);
-
+    this.renderStrategies(
+      c.transcript?.strategyOrder || ['dom-automation', 'genius', 'speech-to-text']
+    );
     this.a.attachToAll({
       outputLanguage: { path: 'ai.outputLanguage' },
       autoAnalyze: { path: 'automation.autoAnalyze' },
@@ -29,31 +28,31 @@ export class GeneralSettings {
       autoLoadTranscript: { path: 'automation.autoLoadTranscript' },
       saveHistory: { path: 'advanced.saveHistory' },
     });
-    const ch = i('clearHistory');
+    const ch = i('#clearHistory');
     if (ch)
       on(ch, 'click', async () => {
         if (cf('Clear all history? This cannot be undone.')) {
-          await lr.remove('comprehensive_history');
+          await slr('comprehensive_history');
           this.a.notifications?.success('History cleared');
         }
       });
   }
   set(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.value = v;
   }
   chk(id, v) {
-    const el = i(id);
+    const el = i(`#${id}`);
     if (el) el.checked = v;
   }
   renderStrategies(order) {
-    const list = i('strategyList');
+    const list = i('#strategyList');
     if (!list) return;
     list.innerHTML = '';
     const names = {
       'dom-automation': 'DOM Automation',
-      'genius': 'Genius Lyrics',
-      'speech-to-text': 'Speech to Text'
+      genius: 'Genius Lyrics',
+      'speech-to-text': 'Speech to Text',
     };
     order.forEach(key => {
       if (!names[key]) return;
@@ -69,12 +68,12 @@ export class GeneralSettings {
   addDnD(el) {
     on(el, 'dragstart', e => {
       this.dragSrc = el;
-      el.classList.add('dragging');
+      ac(el, 'dragging');
       e.dataTransfer.effectAllowed = 'move';
     });
     on(el, 'dragend', () => {
       this.dragSrc = null;
-      el.classList.remove('dragging');
+      rc(el, 'dragging');
       this.saveOrder();
     });
     on(el, 'dragover', e => {
@@ -83,15 +82,15 @@ export class GeneralSettings {
       return false;
     });
     on(el, 'dragenter', () => {
-      if (this.dragSrc !== el) el.classList.add('over');
+      if (this.dragSrc !== el) ac(el, 'over');
     });
     on(el, 'dragleave', () => {
-      el.classList.remove('over');
+      rc(el, 'over');
     });
     on(el, 'drop', e => {
       e.stopPropagation();
       if (this.dragSrc !== el) {
-        const list = i('strategyList');
+        const list = i('#strategyList');
         const items = [...$$('.sortable-item', list)];
         const srcIdx = items.indexOf(this.dragSrc);
         const tgtIdx = items.indexOf(el);
@@ -102,7 +101,7 @@ export class GeneralSettings {
     });
   }
   async saveOrder() {
-    const list = i('strategyList');
+    const list = i('#strategyList');
     const order = [...$$('.sortable-item', list)].map(el => el.dataset.key);
     await this.s.update('transcript.strategyOrder', order);
   }

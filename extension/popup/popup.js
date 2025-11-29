@@ -1,27 +1,24 @@
-import { id } from '../utils/shortcuts/dom.js';
-import { local as sl, sync as sg } from '../utils/shortcuts/runtime.js';
-import { warn as w } from '../utils/shortcuts/core.js';
-import { tq, tm, tc, url, oop } from '../utils/shortcuts/runtime.js';
-import { to } from '../utils/shortcuts/core.js';
-
-const a = id('api-status'),
-  p = id('page-status'),
-  b = id('analyze-btn'),
-  h = id('history-btn'),
-  o = id('options-btn'),
-  m = id('message'),
-  g = id('setup-guide-btn');
-
+import { qs as i, rc } from '../utils/shortcuts/dom.js';
+import { slg as sl, sg } from '../utils/shortcuts/storage.js';
+import { w, st as to } from '../utils/shortcuts/global.js';
+import { tq, tm, tc } from '../utils/shortcuts/tabs.js';
+import { ru as url, ro as oop } from '../utils/shortcuts/runtime.js';
+const a = i('#api-status'),
+  p = i('#page-status'),
+  b = i('#analyze-btn'),
+  h = i('#history-btn'),
+  o = i('#options-btn'),
+  m = i('#message'),
+  g = i('#setup-guide-btn');
 function showMsg(t, y = 'info') {
   m.textContent = t;
   m.className = `show ${y}`;
-  to(() => m.classList.remove('show'), 3000);
+  to(() => rc(m, 'show'), 3000);
 }
-
 async function checkApi() {
   try {
-    const s = await sg.get(['apiKey', 'onboardingCompleted']),
-      lc = await sl.get('geminiApiKey'),
+    const s = await sg(['apiKey', 'onboardingCompleted']),
+      lc = await sl('geminiApiKey'),
       k = s.apiKey || lc.geminiApiKey;
     if (k) {
       a.innerHTML = '<span>✅ Configured</span>';
@@ -40,7 +37,6 @@ async function checkApi() {
     return false;
   }
 }
-
 async function checkPage() {
   try {
     const [t] = await tq({ active: true, currentWindow: true });
@@ -59,7 +55,6 @@ async function checkPage() {
     return false;
   }
 }
-
 b.onclick = async () => {
   try {
     const [t] = await tq({ active: true, currentWindow: true });
@@ -70,10 +65,8 @@ b.onclick = async () => {
     showMsg('Failed to start analysis', 'error');
   }
 };
-
 h.onclick = () => tc({ url: url('history/history.html') });
 o.onclick = () => oop();
-
 (async () => {
   await checkApi();
   await checkPage();
