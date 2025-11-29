@@ -68,41 +68,31 @@ class CommentsExtractor {
             return this.comments;
         }
 
-        // Strategy 2: Active Fetching (Recursive)
+        // Strategy 2: InnerTube API (Primary - Most reliable)
         try {
-            // Get API key and context from Main World via YouTubeExtractor
-            // We assume YouTubeExtractor is available globally or via window
-            // Since we can't access window._ytExtractor directly from Isolated World easily without postMessage,
-            // we'll rely on what we have. But wait, we can't get ytcfg easily here without the extractor helper.
-            // Let's try to get it via the same mechanism as getInitialData in metadata extractor.
+            console.log("[CommentsExtractor] Trying InnerTube API...");
+            const response = await chrome.runtime.sendMessage({
+                action: 'INNERTUBE_GET_COMMENTS',
+                videoId: this.getCurrentVideoId(),
+                limit: 20
+            });
 
-            // For now, let's stick to DOM fallback as primary fallback if interception fails,
-            // unless we can easily get the API key.
-            // Actually, we can get it from the page source if we really wanted to, but let's keep it simple.
-            // If we want to strictly follow the guide, we need the API key.
-            // Let's assume we can't get it easily right now and fall back to DOM.
-            // BUT, the user said "Use all methods".
-            // So I should try to get the API key.
-
-            // Let's try to get initial data from Main World again
-            const initialData = await this.getInitialDataFromMainWorld();
-            if (
-                initialData?.cfg?.INNERTUBE_API_KEY &&
-                initialData?.cfg?.INNERTUBE_CONTEXT
-            ) {
-                console.log("[CommentsExtractor] Trying Active Fetching...");
-                // We need a continuation token. This is usually found in the initial data.
-                // But finding the initial continuation token is complex.
-                // For now, let's just log that we would do it.
-                // Implementing full active fetching requires finding the token.
+            if (response.success && response.comments?.length > 0) {
+                console.log(`[CommentsExtractor] ✅ InnerTube fetched ${response.comments.length} comments`);
+                return response.comments;
             }
         } catch (e) {
-            console.warn("[CommentsExtractor] Active fetch setup failed:", e);
+            console.warn("[CommentsExtractor] InnerTube fetch failed:", e);
         }
 
         // Strategy 3: DOM Scraping (Fallback)
         console.log("[CommentsExtractor] Falling back to DOM scraping");
         return this.fetchCommentsFromDOM();
+    }
+
+    getCurrentVideoId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('v');
     }
 
     async getInitialDataFromMainWorld() {

@@ -1,30 +1,17 @@
 // InnerTube Background Handler
 // Loads YouTube.js in background context and handles requests from content scripts
 
-let Innertube = null;
+import { Innertube } from '../../lib/youtubei.js';
+
 let innertubeInstance = null;
-
-async function loadInnerTube() {
-    if (Innertube) return Innertube;
-
-    try {
-        console.log('[InnerTube BG] Loading YouTube.js library...');
-        const libUrl = chrome.runtime.getURL('lib/youtubei.js');
-        const module = await import(libUrl);
-        Innertube = module.Innertube;
-        console.log('[InnerTube BG] ✅ YouTube.js loaded');
-        return Innertube;
-    } catch (e) {
-        console.error('[InnerTube BG] ❌ Failed to load YouTube.js:', e);
-        throw e;
-    }
-}
 
 async function getClient() {
     if (innertubeInstance) return innertubeInstance;
 
-    const InnertubeClass = await loadInnerTube();
-    innertubeInstance = await InnertubeClass.create();
+    console.log('[InnerTube BG] Initializing YouTube.js client...');
+    innertubeInstance = await Innertube.create({
+        fetch: (input, init) => fetch(input, init)
+    });
     console.log('[InnerTube BG] ✅ Client initialized');
     return innertubeInstance;
 }
@@ -73,7 +60,7 @@ export async function handleGetVideoInfo(request) {
 
         const client = await getClient();
         const info = await client.getInfo(videoId);
-        const { basic_info, primary_info, secondary_info } = info;
+        const { basic_info, primary_info } = info;
 
         const metadata = {
             videoId,
@@ -111,13 +98,19 @@ export async function handleGetComments(request) {
         for await (const comment of comments) {
             if (items.length >= limit) break;
 
+            // Debug: Log the first comment structure
+            if (items.length === 0) {
+                console.log('[InnerTube BG] Comment structure:', JSON.stringify(comment, null, 2));
+            }
+
+            // YouTube.js comment structure uses .text property directly
             items.push({
-                author: comment.author.name,
-                text: comment.content.text,
-                likes: comment.vote_count,
-                published: comment.published.text,
-                isCreator: comment.author.is_creator,
-                replyCount: comment.reply_count
+                author: comment.author?.name || 'Unknown',
+                text: comment.text || comment.content?.text || '',
+                likes: comment.vote_count || 0,
+                published: comment.published?.text || '',
+                isCreator: comment.author?.is_creator || false,
+                replyCount: comment.reply_count || 0
             });
         }
 

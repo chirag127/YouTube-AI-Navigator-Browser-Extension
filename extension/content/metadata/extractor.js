@@ -19,8 +19,8 @@ class MetadataExtractor {
             level === "error"
                 ? console.error
                 : level === "warn"
-                ? console.warn
-                : console.log;
+                    ? console.warn
+                    : console.log;
         logFn(`[MetadataExtractor] ${icons[level]} ${msg}`);
     }
 
@@ -38,6 +38,7 @@ class MetadataExtractor {
             usePiped = false,
             useDeArrow = true,
             usePrivateDeArrow = true,
+            useInnerTube = true,
         } = options;
 
         this.log("info", `Extracting metadata for: ${videoId}`);
@@ -48,10 +49,6 @@ class MetadataExtractor {
             this.log("success", "Cache hit");
             return cached;
         }
-
-        // Get data from Main World Extractor
-        const initialData = await this.getInitialData();
-        const playerResponse = initialData?.playerResponse;
 
         let metadata = null;
         let deArrowData = null;
@@ -74,6 +71,49 @@ class MetadataExtractor {
                 this.log("warn", `DeArrow fetch failed: ${e.message}`);
             }
         }
+
+        // Try InnerTube API (Priority 1 - Most reliable and complete)
+        if (useInnerTube) {
+            try {
+                this.log("info", "Fetching metadata via InnerTube API...");
+                const response = await chrome.runtime.sendMessage({
+                    action: 'INNERTUBE_GET_VIDEO_INFO',
+                    videoId
+                });
+
+                if (response.success && response.metadata) {
+                    const innertubeData = response.metadata;
+                    metadata = {
+                        videoId,
+                        title: deArrowData?.title || innertubeData.title,
+                        originalTitle: innertubeData.title,
+                        deArrowTitle: deArrowData?.title || null,
+                        hasDeArrowTitle: !!deArrowData?.title,
+                        description: innertubeData.description || "",
+                        author: innertubeData.channel || "Unknown Channel",
+                        channelId: innertubeData.channelId,
+                        viewCount: innertubeData.viewCount || "Unknown",
+                        publishDate: innertubeData.publishDate,
+                        duration: innertubeData.duration,
+                        keywords: innertubeData.keywords || [],
+                        category: innertubeData.category,
+                        likes: innertubeData.likes,
+                        captionsAvailable: innertubeData.captionsAvailable,
+                        deArrowThumbnail: deArrowData?.thumbnail || null,
+                    };
+
+                    this.log("success", `Metadata from InnerTube: ${metadata.title}`);
+                    this._setCache(videoId, metadata);
+                    return metadata;
+                }
+            } catch (e) {
+                this.log("warn", `InnerTube fetch failed: ${e.message}`);
+            }
+        }
+
+        // Get data from Main World Extractor for DOM fallback
+        const initialData = await this.getInitialData();
+        const playerResponse = initialData?.playerResponse;
 
         // Try DOM extraction (fastest and most reliable for other metadata)
         try {
