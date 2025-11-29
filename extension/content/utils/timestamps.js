@@ -1,11 +1,10 @@
 import { seekVideo } from './dom.js';
-import { on, fc, ap, tx } from '../../utils/shortcuts/dom.js';
-import { cr } from '../../utils/shortcuts/chrome.js';
-import { pI } from '../../utils/shortcuts/core.js';
-import { tc } from '../../utils/shortcuts/dom.js';
-import { sb as sbs } from '../../utils/shortcuts/dom.js';
-import { rp } from '../../utils/shortcuts/string.js';
-import { dc as doc } from '../../utils/shortcuts/global.js';
+import { seekVideo } from './dom.js';
+import { on, fc, ap, tx, tc } from '../../utils/shortcuts/doc.js';
+import { rt as cr } from '../../utils/shortcuts/runtime.js';
+import { pI } from '../../utils/shortcuts/platform_api.js';
+import { sb as sbs, rp } from '../../utils/shortcuts/string.js';
+import { dc as doc } from '../../utils/shortcuts/platform_api.js';
 
 export function makeTimestampsClickable(c) {
   const p = /(\[|[(])?(\d{1,2}):(\d{2})(\]|[)])?/g,

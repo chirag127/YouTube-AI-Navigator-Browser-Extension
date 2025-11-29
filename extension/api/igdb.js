@@ -1,4 +1,4 @@
-import { l, w } from '../utils/shortcuts/logging.js';
+import { l, w } from '../utils/shortcuts/log.js';
 import { ft } from '../utils/shortcuts/network.js';
 
 const BASE_URL = 'https://api.igdb.com/v4';

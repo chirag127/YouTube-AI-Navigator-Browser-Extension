@@ -1,5 +1,5 @@
 
-import { l, w } from '../utils/shortcuts/logging.js';
+import { l, w } from '../utils/shortcuts/log.js';
 import { en as enc } from '../utils/shortcuts/global.js';
 import { tf as ftx, jf as fj } from '../utils/shortcuts/network.js';
 import { rp, tr } from '../utils/shortcuts/string.js';

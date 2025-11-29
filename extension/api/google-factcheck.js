@@ -1,4 +1,4 @@
-import { l } from '../utils/shortcuts/logging.js';
+import { l } from '../utils/shortcuts/log.js';
 import { en as enc } from '../utils/shortcuts/global.js';
 import { sf as safeFetch } from '../utils/shortcuts/network.js';
 
