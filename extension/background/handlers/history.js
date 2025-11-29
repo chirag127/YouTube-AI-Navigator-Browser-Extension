@@ -1,4 +1,4 @@
-import { lg, ls } from '../../utils/shortcuts.js';
+import { lg, ls } from '../../utils/shortcuts-sw.js';
 
 export async function handleSaveToHistory(req, rsp) {
   const { videoId, title, summary, timestamp } = req.data || req;

@@ -1,66 +1,49 @@
-// Initialization sequence with proper error handling
-
 import { log, logError } from './debug.js';
+import { rt, on } from '../../utils/shortcuts.js';
 
-/**
- * Initialize extension with retry logic
- */
 export async function initializeExtension() {
   log('=== YouTube AI Master Initialization ===');
-
   try {
-    // Step 1: Load settings
     log('Step 1: Loading settings...');
-    const { loadSettings } = await import(chrome.runtime.getURL('content/core/state.js'));
+    const { loadSettings } = await import(rt.getURL('content/core/state.js'));
     await loadSettings();
     log('Settings loaded ✓');
 
-    // Step 2: Initialize observer
     log('Step 2: Initializing observer...');
-    const { initObserver } = await import(chrome.runtime.getURL('content/core/observer.js'));
+    const { initObserver } = await import(rt.getURL('content/core/observer.js'));
     initObserver();
     log('Observer initialized ✓');
 
-    // Step 3: Initialize transcript service
     log('Step 3: Initializing transcript service...');
     try {
-      const { initTranscriptLoader } = await import(
-        chrome.runtime.getURL('content/transcript-loader.js')
-      );
+      const { initTranscriptLoader } = await import(rt.getURL('content/transcript-loader.js'));
       initTranscriptLoader();
       log('Transcript service initialized ✓');
-    } catch (error) {
-      logError('Transcript service initialization failed (non-critical)', error);
+    } catch (e) {
+      logError('Transcript service initialization failed (non-critical)', e);
       log('Continuing without transcript loader...');
     }
 
-    // Step 4: Initialize Auto-Liker
     log('Step 4: Initializing Auto-Liker...');
     try {
-      const { autoLiker } = await import(chrome.runtime.getURL('content/features/auto-liker.js'));
+      const { autoLiker } = await import(rt.getURL('content/features/auto-liker.js'));
       autoLiker.init();
       log('Auto-Liker initialized ✓');
-    } catch (error) {
-      logError('Auto-Liker initialization failed (non-critical)', error);
+    } catch (e) {
+      logError('Auto-Liker initialization failed (non-critical)', e);
     }
 
     log('=== Initialization Complete ✓ ===');
     return true;
-  } catch (error) {
-    logError('Initialization failed', error);
+  } catch (e) {
+    logError('Initialization failed', e);
     return false;
   }
 }
 
-/**
- * Check if page is ready
- */
 export function waitForPageReady() {
-  return new Promise(resolve => {
-    if (document.readyState === 'complete') {
-      resolve();
-    } else {
-      window.addEventListener('load', resolve);
-    }
+  return new Promise(r => {
+    if (document.readyState === 'complete') r();
+    else on(window, 'load', r);
   });
 }

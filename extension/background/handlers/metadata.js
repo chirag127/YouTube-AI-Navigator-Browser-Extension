@@ -1,4 +1,4 @@
-import { w } from '../../utils/shortcuts.js';
+import { w } from '../../utils/shortcuts-sw.js';
 
 export async function handleGetMetadata(req, rsp) {
   const { videoId } = req;

@@ -1,5 +1,5 @@
 import { GeminiClient } from '../../api/gemini-client.js';
-import { l, w, e, js, jp, rp, tr, sg, ft } from '../../utils/shortcuts.js';
+import { l, w, e, js, jp, rp, tr, sg, ft } from '../../utils/shortcuts-sw.js';
 
 export async function handleTranscribeAudio(req, rsp) {
   try {

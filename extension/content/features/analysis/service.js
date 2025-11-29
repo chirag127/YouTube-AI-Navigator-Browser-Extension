@@ -1,23 +1,11 @@
-/**
- * Sends analysis request to background service
- */
-export async function analyzeVideo(
-  transcript,
-  metadata,
-  comments = [],
-  options = { length: 'Medium' }
-) {
-  console.log('[Service] Sending ANALYZE_VIDEO message', {
-    transcriptLength: transcript?.length,
-    commentsCount: comments?.length,
-    metadata,
-    options,
+import { l, msg } from '../../utils/shortcuts.js';
+
+export async function analyzeVideo(t, m, c = [], o = { length: 'Medium' }) {
+  l('[Service] Sending ANALYZE_VIDEO message', {
+    transcriptLength: t?.length,
+    commentsCount: c?.length,
+    metadata: m,
+    options: o,
   });
-  return chrome.runtime.sendMessage({
-    action: 'ANALYZE_VIDEO',
-    transcript,
-    metadata,
-    comments,
-    options,
-  });
+  return msg({ action: 'ANALYZE_VIDEO', transcript: t, metadata: m, comments: c, options: o });
 }

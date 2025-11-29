@@ -1,6 +1,6 @@
 import { handleGetTranscript, handleGetVideoInfo, handleGetComments } from './innertube.js';
 import { getHistory } from '../../services/storage/comprehensive-history.js';
-import { lg, ls, lr, l, e } from '../../utils/shortcuts.js';
+import { lg, ls, lr, l, e } from '../../utils/shortcuts-sw.js';
 
 const CV = 1;
 const CE = 24 * 60 * 60 * 1000;

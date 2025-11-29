@@ -1,4 +1,4 @@
-import { js, rp } from '../../utils/shortcuts.js';
+import { js, rp } from '../../utils/shortcuts-sw.js';
 
 // Input validation & sanitization for MV3 security
 const ALLOWED = new Set([

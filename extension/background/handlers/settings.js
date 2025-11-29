@@ -1,4 +1,4 @@
-import { sg } from '../../utils/shortcuts.js';
+import { sg } from '../../utils/shortcuts-sw.js';
 export async function handleGetSettings(rsp) {
   const s = await sg([
     'apiKey',

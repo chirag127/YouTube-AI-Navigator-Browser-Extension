@@ -1,3 +1,5 @@
+import { sg } from '../../utils/shortcuts.js';
+
 export const state = {
   currentVideoId: null,
   isAnalyzing: false,
@@ -20,7 +22,7 @@ export function resetState() {
 }
 export async function loadSettings() {
   try {
-    const r = await chrome.storage.sync.get([
+    const r = await sg([
       'autoAnalyze',
       'autoSkipSponsors',
       'autoSkipIntros',

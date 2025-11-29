@@ -1,4 +1,4 @@
-import { ft, ftx, fj, mp, fl, jn, tr, rp, mfl } from '../../utils/shortcuts.js';
+import { ft, ftx, fj, mp, fl, jn, tr, rp, mfl } from '../../utils/shortcuts-sw.js';
 
 async function getInvidiousInstances() {
   return [
@@ -94,7 +94,7 @@ export async function handleFetchInvidiousMetadata(req) {
           },
         };
       }
-    } catch (e) {}
+    } catch (e) { }
   }
   return { success: false, error: 'Failed to fetch metadata from Invidious' };
 }

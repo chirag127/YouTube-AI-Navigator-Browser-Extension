@@ -1,9 +1,9 @@
 (async () => {
   if (window.location.hostname !== 'www.youtube.com') return;
-  const { l, e, w, url, rt, _cr, ap, qs, on } = await import(
+  const { l, e, w, url, rt, cr, ap, $, on } = await import(
     chrome.runtime.getURL('utils/shortcuts.js')
   );
-  const s = _cr('script');
+  const s = cr('script');
   s.src = url('content/youtube-extractor.js');
   s.onload = function () {
     this.remove();
@@ -93,7 +93,7 @@ async function hGT(req, rsp) {
         );
         setTimeout(() => cTW(), 1e3);
         console.log('[Tr] Auto-close');
-      } catch (e) {}
+      } catch (e) { }
     }
     rsp({ success: true, transcript: t });
   } catch (x) {

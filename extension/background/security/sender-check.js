@@ -1,4 +1,4 @@
-import { rt } from '../../utils/shortcuts.js';
+import { rt } from '../../utils/shortcuts-sw.js';
 
 // Sender verification for MV3 security
 export const verifySender = s => {

@@ -1,5 +1,6 @@
 import { state } from '../core/state.js';
-import { log, logError, waitForElement } from '../core/debug.js';
+import { log, logError } from '../core/debug.js';
+import { $, $$, on, off, loc } from '../../utils/shortcuts.js';
 
 export class AutoLiker {
   constructor() {
@@ -16,183 +17,125 @@ export class AutoLiker {
 
   startObserving() {
     if (this.isObserving) return;
-
-    // Watch for video element changes (SPA navigation)
-    const observer = new MutationObserver(() => {
-      const video = document.querySelector('video');
-      if (video && video !== this.video) {
-        this.attachToVideo(video);
-      }
+    const o = new MutationObserver(() => {
+      const v = $('video');
+      if (v && v !== this.video) this.attachToVideo(v);
     });
-
-    observer.observe(document.body, { childList: true, subtree: true });
+    o.observe(document.body, { childList: true, subtree: true });
     this.isObserving = true;
-
-    // Initial check
-    const video = document.querySelector('video');
-    if (video) this.attachToVideo(video);
+    const v = $('video');
+    if (v) this.attachToVideo(v);
   }
 
-  attachToVideo(video) {
-    if (this.video) {
-      this.video.removeEventListener('timeupdate', this.handleTimeUpdate);
-    }
-
-    this.video = video;
-    this.video.addEventListener('timeupdate', this.handleTimeUpdate.bind(this));
+  attachToVideo(v) {
+    if (this.video) off(this.video, 'timeupdate', this.handleTimeUpdate);
+    this.video = v;
+    on(this.video, 'timeupdate', this.handleTimeUpdate.bind(this));
     log('AutoLiker: Attached to video element');
-
-    // Reset state for new video
-    // We use the video ID from state or URL as a key
-    const videoId = state.currentVideoId || new URLSearchParams(window.location.search).get('v');
-    if (videoId && !this.likedVideos.has(videoId)) {
-      log(`AutoLiker: New video detected (${videoId})`);
-    }
+    const vid = state.currentVideoId || new URLSearchParams(loc.search).get('v');
+    if (vid && !this.likedVideos.has(vid)) log(`AutoLiker: New video detected (${vid})`);
   }
 
   async handleTimeUpdate() {
     if (!state.settings.autoLike || !this.video) return;
-
-    const videoId = state.currentVideoId || new URLSearchParams(window.location.search).get('v');
-    if (!videoId || this.likedVideos.has(videoId)) return;
-
-    const duration = this.video.duration;
-    const currentTime = this.video.currentTime;
-
-    if (!duration || duration === 0) return;
-
-    const progress = (currentTime / duration) * 100;
-    const threshold = state.settings.autoLikeThreshold || 50;
-
-    if (progress >= threshold) {
-      await this.attemptLike(videoId);
-    }
+    const vid = state.currentVideoId || new URLSearchParams(loc.search).get('v');
+    if (!vid || this.likedVideos.has(vid)) return;
+    const d = this.video.duration;
+    const c = this.video.currentTime;
+    if (!d || d === 0) return;
+    const p = (c / d) * 100;
+    const t = state.settings.autoLikeThreshold || 50;
+    if (p >= t) await this.attemptLike(vid);
   }
 
-  async attemptLike(videoId) {
-    // Prevent multiple attempts
-    if (this.likedVideos.has(videoId)) return;
-
+  async attemptLike(vid) {
+    if (this.likedVideos.has(vid)) return;
     log(
       `AutoLiker: Threshold reached (${state.settings.autoLikeThreshold}%). Checking criteria...`
     );
-
     try {
-      // 1. Check Live Stream Status
-      const isLive = this.isLiveStream();
-      if (isLive && !state.settings.autoLikeLive) {
+      const live = this.isLiveStream();
+      if (live && !state.settings.autoLikeLive) {
         log('AutoLiker: Skipping - Live stream auto-like disabled');
-        this.likedVideos.add(videoId); // Mark as handled so we don't keep checking
+        this.likedVideos.add(vid);
         return;
       }
-
-      // 2. Check Subscription Status
       if (!state.settings.likeIfNotSubscribed) {
-        const isSubscribed = await this.checkSubscriptionStatus();
-        if (!isSubscribed) {
+        const sub = await this.checkSubscriptionStatus();
+        if (!sub) {
           log("AutoLiker: Skipping - Not subscribed and 'Like if not subscribed' is disabled");
-          this.likedVideos.add(videoId);
+          this.likedVideos.add(vid);
           return;
         }
       }
-
-      // 3. Perform Like
-      const success = await this.clickLikeButton();
-      if (success) {
+      const s = await this.clickLikeButton();
+      if (s) {
         log('AutoLiker: Video liked successfully! 👍');
-        this.likedVideos.add(videoId);
-      } else {
-        // If failed (e.g. button not found), we might retry later, so don't add to set immediately
-        // unless it was a "already liked" scenario
+        this.likedVideos.add(vid);
       }
-    } catch (error) {
-      logError('AutoLiker: Error during like attempt', error);
+    } catch (e) {
+      logError('AutoLiker: Error during like attempt', e);
     }
   }
 
   isLiveStream() {
-    // Check for live badge
-    const liveBadge = document.querySelector('.ytp-live-badge');
-    if (liveBadge && window.getComputedStyle(liveBadge).display !== 'none') {
-      return true;
-    }
-    // Fallback: check if duration is Infinity (common for live streams)
+    const b = $('.ytp-live-badge');
+    if (b && window.getComputedStyle(b).display !== 'none') return true;
     if (this.video && this.video.duration === Infinity) return true;
-
     return false;
   }
 
   async checkSubscriptionStatus() {
-    // Try multiple selectors for subscribe button
-    const selectors = [
+    const s = [
       '#subscribe-button > ytd-subscribe-button-renderer',
       'ytd-reel-player-overlay-renderer #subscribe-button',
       '#subscribe-button',
     ];
-
-    let button = null;
-    for (const selector of selectors) {
-      button = document.querySelector(selector);
-      if (button) break;
+    let b = null;
+    for (const sel of s) {
+      b = $(sel);
+      if (b) break;
     }
-
-    if (!button) {
+    if (!b) {
       log('AutoLiker: Subscribe button not found, assuming not subscribed');
       return false;
     }
-
-    // Check attributes that indicate subscription
-    // 'subscribed' attribute or specific class usually indicates status
-    const isSubscribed =
-      button.hasAttribute('subscribed') ||
-      button.querySelector("button[aria-label^='Unsubscribe']") !== null;
-
-    return isSubscribed;
+    return (
+      b.hasAttribute('subscribed') || b.querySelector("button[aria-label^='Unsubscribe']") !== null
+    );
   }
 
   async clickLikeButton() {
-    const selectors = [
+    const s = [
       'like-button-view-model button',
       '#menu .YtLikeButtonViewModelHost button',
       '#segmented-like-button button',
       '#like-button button',
-      'ytd-toggle-button-renderer#like-button button', // Old layout fallback
+      'ytd-toggle-button-renderer#like-button button',
     ];
-
-    let likeBtn = null;
-    for (const selector of selectors) {
-      const btns = document.querySelectorAll(selector);
-      // Usually the first one is the main like button, but sometimes there are others (comments etc)
-      // The main video like button is usually in the top menu
-      for (const btn of btns) {
-        if (btn.closest('#top-level-buttons-computed') || btn.closest('#actions')) {
-          likeBtn = btn;
+    let lb = null;
+    for (const sel of s) {
+      const btns = $$(sel);
+      for (const b of btns) {
+        if (b.closest('#top-level-buttons-computed') || b.closest('#actions')) {
+          lb = b;
           break;
         }
       }
-      if (likeBtn) break;
+      if (lb) break;
     }
-
-    if (!likeBtn) {
+    if (!lb) {
       log('AutoLiker: Like button not found');
       return false;
     }
-
-    // Check if already liked
-    const isLiked =
-      likeBtn.getAttribute('aria-pressed') === 'true' ||
-      likeBtn.classList.contains('style-default-active');
-
-    if (isLiked) {
+    const lkd =
+      lb.getAttribute('aria-pressed') === 'true' || lb.classList.contains('style-default-active');
+    if (lkd) {
       log('AutoLiker: Video already liked');
-      this.likedVideos.add(
-        state.currentVideoId || new URLSearchParams(window.location.search).get('v')
-      );
+      this.likedVideos.add(state.currentVideoId || new URLSearchParams(loc.search).get('v'));
       return true;
     }
-
-    // Click it
-    likeBtn.click();
+    lb.click();
     return true;
   }
 }
