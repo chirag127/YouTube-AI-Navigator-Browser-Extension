@@ -21,6 +21,7 @@ export class GeminiClient {
   }
 
   async generateContent(prompt, model) {
+    l('ENTRY:generateContent');
     await this.rateLimiter.acquire();
     const url = `${this.baseUrl}/models/${model}:generateContent?key=${this.apiKey}`;
     try {
@@ -34,13 +35,17 @@ export class GeminiClient {
       const data = await response.json();
       const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
       if (!text) throw new Error('No content');
+      l('EXIT:generateContent');
       return text;
     } catch (error) {
-      e(`[GC] Err ${model}:`, error.message);
+      e(`error:generateContent ${model}:`, error.message);
+      l('EXIT:generateContent');
       throw ErrorHandler.createUserError(error);
     }
   }
   getRateLimitStats() {
+    l('ENTRY:getRateLimitStats');
+    l('EXIT:getRateLimitStats');
     return this.rateLimiter.getStats();
   }
 }

@@ -15,26 +15,35 @@ export class GeminiService {
     this.models = new ModelManager(apiKey, 'https://generativelanguage.googleapis.com/v1beta');
   }
   async fetchAvailableModels() {
+    l('ENTRY:fetchAvailableModels');
+    l('EXIT:fetchAvailableModels');
     return this.models.fetch();
   }
   async chatWithVideo(q, c, m = null, md = null) {
+    l('ENTRY:chatWithVideo');
+    l('EXIT:chatWithVideo');
     return this.generateContent(prompts.chat(q, c, md), m);
   }
   async analyzeCommentSentiment(c, m = null) {
+    l('ENTRY:analyzeCommentSentiment');
     l('[GS] ACS:', c?.length);
     if (!c || !c.length) {
       w('[GS] No comms');
+      l('EXIT:analyzeCommentSentiment');
       return 'No comments available to analyze.';
     }
     l(`[GS] Gen anal for ${c.length}`);
+    l('EXIT:analyzeCommentSentiment');
     return this.generateContent(prompts.comments(c), m);
   }
   async generateComprehensiveAnalysis(ctx, opt = {}) {
+    l('ENTRY:generateComprehensiveAnalysis');
     try {
       const r = await this.generateContent(prompts.comprehensive(ctx, opt));
       const s = this._extractSection(r, 'Summary');
       const i = this._extractSection(r, 'Key Insights');
       const f = this._extractSection(r, 'FAQ');
+      l('EXIT:generateComprehensiveAnalysis');
       return {
         summary: s || r,
         insights: i || '',
@@ -42,11 +51,13 @@ export class GeminiService {
         timestamps: [],
       };
     } catch (x) {
-      e('[GS] Anal fail:', x);
+      e('error:generateComprehensiveAnalysis fail:', x);
+      l('EXIT:generateComprehensiveAnalysis');
       throw x;
     }
   }
   async extractSegments(ctx) {
+    l('ENTRY:extractSegments');
     try {
       l('[GS] Ext segs');
       const r = await this.generateContent(prompts.segments(ctx));
@@ -58,14 +69,16 @@ export class GeminiService {
       cr = trm(cr);
       let jm = cr.match(/\{[\s\S]*\}/);
       if (!jm) {
-        e('[GS] No JSON:', r);
+        e('error:extractSegments no JSON:', r);
+        l('EXIT:extractSegments');
         return { segments: [], fullVideoLabel: null };
       }
       const jsStr = jm[0];
       l('[GS] JSON len:', jsStr.length);
       const p = jp(jsStr);
       if (!p.segments || !isa(p.segments)) {
-        e('[GS] Inv struct:', p);
+        e('error:extractSegments inv struct:', p);
+        l('EXIT:extractSegments');
         return { segments: [], fullVideoLabel: null };
       }
       l('[GS] Parsed:', p.segments.length);
@@ -79,23 +92,31 @@ export class GeminiService {
         text: s.d,
       }));
       if (ts.length > 0) l('[GS] 1st seg:', js(ts[0]));
+      l('EXIT:extractSegments');
       return {
         segments: ts,
         fullVideoLabel: this._expandLabel(p.fullVideoLabel) || null,
       };
     } catch (x) {
-      e('[GS] Seg fail:', x.message);
+      e('error:extractSegments fail:', x.message);
       e('[GS] Stack:', x.stack);
+      l('EXIT:extractSegments');
       return { segments: [], fullVideoLabel: null };
     }
   }
   _extractSection(t, sn) {
+    l('ENTRY:_extractSection');
     const r = new RegExp(`## ${sn}\\s*([\\s\\S]*?)(?=##|$)`, 'i');
     const m = t.match(r);
+    l('EXIT:_extractSection');
     return m ? trm(m[1]) : null;
   }
   _expandLabel(sc) {
-    if (!sc) return null;
+    l('ENTRY:_expandLabel');
+    if (!sc) {
+      l('EXIT:_expandLabel');
+      return null;
+    }
     const lm = {
       S: 'Sponsor',
       SP: 'Self Promotion',
@@ -111,9 +132,11 @@ export class GeminiService {
       NM: 'Music: Non-Music Section',
       C: 'Content',
     };
+    l('EXIT:_expandLabel');
     return lm[sc] || sc;
   }
   async generateContent(p, m = null) {
+    l('ENTRY:generateContent');
     let ml = [];
     const fm = [
       'gemini-2.5-flash-lite-preview-09-2025',
@@ -144,19 +167,26 @@ export class GeminiService {
         l(`[GS] Try: ${mn} (${i + 1}/${ml.length})`);
         const res = await this.client.generateContent(p, mn);
         if (i > 0) l(`[GS] Fallback succ: ${mn}`);
+        l('EXIT:generateContent');
         return res;
       } catch (x) {
         errs.push({ model: mn, error: x.message });
         w(`[GS] ${mn} fail:`, x.message);
-        if (x.retryable === false) throw x;
+        if (x.retryable === false) {
+          l('EXIT:generateContent');
+          throw x;
+        }
         if (i < ml.length - 1) l('[GS] Next...');
       }
     }
     const em = `All ${ml.length} failed. ${errs[0]?.error || 'Unknown'}`;
-    e('[GS]', em);
+    e('error:generateContent all failed:', em);
+    l('EXIT:generateContent');
     throw new Error(em);
   }
   getRateLimitStats() {
+    l('ENTRY:getRateLimitStats');
+    l('EXIT:getRateLimitStats');
     return this.client.getRateLimitStats();
   }
 }

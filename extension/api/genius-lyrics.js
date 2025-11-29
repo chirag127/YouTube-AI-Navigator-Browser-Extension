@@ -1,4 +1,4 @@
-import { l, w } from '../utils/shortcuts/log.js';
+import { l, e, w } from '../utils/shortcuts/log.js';
 import { en as enc } from '../utils/shortcuts/global.js';
 import { tf as ftx, jf as fj } from '../utils/shortcuts/network.js';
 import { rp, trm } from '../utils/shortcuts/string.js';
@@ -11,15 +11,18 @@ export class GeniusLyricsAPI {
   }
 
   async getLyrics(title, artist) {
+    l('ENTRY:getLyrics');
     try {
       l(`[Genius] Search: ${title} by ${artist}`);
       const hit = await this.search(title, artist);
       if (!hit) {
         l('[Genius] No song');
+        l('EXIT:getLyrics');
         return null;
       }
       l(`[Genius] Hit: ${hit.result.full_title}`);
       const lyrics = await this.fetchLyrics(hit.result.url);
+      l('EXIT:getLyrics');
       return {
         lyrics,
         source: 'Genius',
@@ -28,29 +31,40 @@ export class GeniusLyricsAPI {
         artist: hit.result.primary_artist.name,
       };
     } catch (e) {
-      w(`[Genius] Fail: ${e.message}`);
+      e('error:getLyrics fail:', e.message);
+      l('EXIT:getLyrics');
       return null;
     }
   }
 
   async search(title, artist) {
+    l('ENTRY:search');
     const cleanTitle = this.cleanTitle(title);
     const query = cleanTitle.includes(artist) ? cleanTitle : `${cleanTitle} ${artist}`;
     const url = `${this.searchUrl}?per_page=1&q=${enc(query)}`;
     const data = await fj(url);
     if (data?.response?.sections) {
       for (const section of data.response.sections) {
-        if (section.type === 'song' && section.hits?.length > 0) return section.hits[0];
+        if (section.type === 'song' && section.hits?.length > 0) {
+          l('EXIT:search');
+          return section.hits[0];
+        }
       }
     }
+    l('EXIT:search');
     return null;
   }
 
   async fetchLyrics(url) {
+    l('ENTRY:fetchLyrics');
     const html = await ftx(url);
-    if (!html) return null;
+    if (!html) {
+      l('EXIT:fetchLyrics');
+      return null;
+    }
     const lyricsMatch = html.match(/<div[^>]*data-lyrics-container="true"[^>]*>(.*?)<\/div>/gs);
     if (lyricsMatch) {
+      l('EXIT:fetchLyrics');
       return trm(
         ajn(
           am(lyricsMatch, div => {
@@ -62,10 +76,13 @@ export class GeniusLyricsAPI {
         )
       );
     }
+    l('EXIT:fetchLyrics');
     return null;
   }
 
   cleanTitle(title) {
+    l('ENTRY:cleanTitle');
+    l('EXIT:cleanTitle');
     return trm(
       rp(
         rp(
