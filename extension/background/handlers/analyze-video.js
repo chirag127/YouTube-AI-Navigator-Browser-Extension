@@ -3,7 +3,7 @@ import { getApiKey as gk } from '../utils/api-key.js';
 import { geniusLyricsAPI as gl } from '../../api/genius-lyrics.js';
 import { sponsorBlockAPI as sb } from '../../api/sponsorblock.js';
 import { ContextManager as CM } from '../../services/context-manager.js';
-import { l, w, e } from '../../utils/shortcuts/log.js';
+import { l, w, e } from '../../utils/shortcuts/logging.js';
 import { si, ci, to as to } from '../../utils/shortcuts/global.js';
 import { r as cr } from '../../utils/shortcuts/runtime.js';
 import { sg, ss } from '../../utils/shortcuts/storage.js';
@@ -12,7 +12,7 @@ import { inc as ic, lwc } from '../../utils/shortcuts/string.js';
 import { np, pc } from '../../utils/shortcuts/async.js';
 let ka = null;
 const ska = () => {
-  if (!ka) ka = si(() => cr.getPlatformInfo(() => {}), 2e4);
+  if (!ka) ka = si(() => cr.getPlatformInfo(() => { }), 2e4);
 };
 const stka = () => {
   if (ka) {
@@ -24,6 +24,7 @@ export async function handleAnalyzeVideo(q, r) {
   const { transcript: t, metadata: m, comments: c = [], options: o = {}, useCache: uc = true } = q;
   const v = m?.videoId;
   ska();
+  l('AV:Start');
   try {
     const k = await gk();
     if (!k) {
@@ -142,8 +143,10 @@ export async function handleAnalyzeVideo(q, r) {
       },
     });
   } catch (x) {
+    e('Err:AV', x);
     r({ success: false, error: x.message });
   } finally {
+    l('AV:Done');
     stka();
   }
 }

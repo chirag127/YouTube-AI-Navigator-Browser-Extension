@@ -1,21 +1,24 @@
-import { l } from '../../utils/shortcuts/log.js';
+import { l, e } from '../../utils/shortcuts/log.js';
 
 export const comments = comments => {
-  if (!comments || comments.length === 0) {
-    return `No comments available to analyze.`;
-  }
+  l('Comments:Start');
+  try {
+    if (!comments || comments.length === 0) {
+      l('Comments:Done');
+      return `No comments available to analyze.`;
+    }
 
-  const text = comments
-    .map(c => {
-      const author = c.author || c.authorText?.simpleText || 'Unknown';
-      const content = c.text || c.contentText || 'No text';
-      return `- ${author}: ${content}`;
-    })
-    .join('\n');
+    const text = comments
+      .map(c => {
+        const author = c.author || c.authorText?.simpleText || 'Unknown';
+        const content = c.text || c.contentText || 'No text';
+        return `- ${author}: ${content}`;
+      })
+      .join('\n');
 
-  l('[Comments Prompt] Formatted text:', text);
+    l('[Comments Prompt] Formatted text:', text);
 
-  return `
+    const result = `
     Task: Analyze the sentiment and key themes of these YouTube comments.
 
     Comments:
@@ -31,4 +34,9 @@ export const comments = comments => {
 
     ### Controversial Topics (if any)
     `;
+    l('Comments:Done');
+    return result;
+  } catch (err) {
+    e('Err:Comments', err);
+  }
 };

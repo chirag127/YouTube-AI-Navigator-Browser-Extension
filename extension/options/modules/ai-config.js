@@ -13,54 +13,66 @@ import { isS, jp, js, sw } from '../../utils/shortcuts/core.js';
 import { inc, rp, trm } from '../../utils/shortcuts/string.js';
 import { afe } from '../../utils/shortcuts/array.js';
 import { ft } from '../../utils/shortcuts/network.js';
-import { e } from '../../utils/shortcuts/log.js';
+import { l, e } from '../../utils/shortcuts/log.js';
 import { sls } from '../../utils/shortcuts/storage.js';
 export class AIConfig {
   constructor(s, a) {
+    l('AIConfig:Constructor');
     this.s = s;
     this.a = a;
     this.mm = null;
+    l('AIConfig:Constructor:Done');
   }
   async init() {
-    const c = this.s.get().ai || {};
-    if (ModelManager && c.GAK)
-      this.mm = new ModelManager(c.GAK, 'https://generativelanguage.googleapis.com/v1beta');
-    this.set('apiKey', c.GAK || '');
-    this.set('customPrompt', c.customPrompt || '');
-    if (c.model) this.set('modelSelect', c.model);
-    const els = {
-      ak: i('#apiKey'),
-      tak: i('#toggleApiKey'),
-      ms: i('#modelSelect'),
-      rm: i('#refreshModels'),
-      tc: i('#testConnection'),
-      cp: i('#customPrompt'),
-    };
-    if (els.ak)
-      on(els.ak, 'change', async e => {
-        const k = trm(vl(e.target));
-        await sls('GAK', k);
-        await this.a.save('ai.GAK', k);
-        this.mm = new ModelManager(k, 'https://generativelanguage.googleapis.com/v1beta');
-        if (k) await this.loadModels(els.ms);
-      });
-    if (els.tak)
-      on(els.tak, 'click', () => {
-        els.ak.type = els.ak.type === 'password' ? 'text' : 'password';
-      });
-    if (els.cp) this.a.attachToInput(els.cp, 'ai.customPrompt');
-    if (els.ms)
-      on(els.ms, 'change', e => {
-        let m = vl(e.target);
-        if (sw(m, 'models/')) m = rp(m, 'models/', '');
-        this.a.save('ai.model', m);
-      });
-    if (els.rm) on(els.rm, 'click', () => this.loadModels(els.ms));
-    if (els.tc) on(els.tc, 'click', () => this.test());
-    if (c.apiKey) await this.loadModels(els.ms);
+    l('AIConfig:Init');
+    try {
+      const c = this.s.get().ai || {};
+      if (ModelManager && c.GAK)
+        this.mm = new ModelManager(c.GAK, 'https://generativelanguage.googleapis.com/v1beta');
+      this.set('apiKey', c.GAK || '');
+      this.set('customPrompt', c.customPrompt || '');
+      if (c.model) this.set('modelSelect', c.model);
+      const els = {
+        ak: i('#apiKey'),
+        tak: i('#toggleApiKey'),
+        ms: i('#modelSelect'),
+        rm: i('#refreshModels'),
+        tc: i('#testConnection'),
+        cp: i('#customPrompt'),
+      };
+      if (els.ak)
+        on(els.ak, 'change', async e => {
+          const k = trm(vl(e.target));
+          await sls('GAK', k);
+          await this.a.save('ai.GAK', k);
+          this.mm = new ModelManager(k, 'https://generativelanguage.googleapis.com/v1beta');
+          if (k) await this.loadModels(els.ms);
+        });
+      if (els.tak)
+        on(els.tak, 'click', () => {
+          els.ak.type = els.ak.type === 'password' ? 'text' : 'password';
+        });
+      if (els.cp) this.a.attachToInput(els.cp, 'ai.customPrompt');
+      if (els.ms)
+        on(els.ms, 'change', e => {
+          let m = vl(e.target);
+          if (sw(m, 'models/')) m = rp(m, 'models/', '');
+          this.a.save('ai.model', m);
+        });
+      if (els.rm) on(els.rm, 'click', () => this.loadModels(els.ms));
+      if (els.tc) on(els.tc, 'click', () => this.test());
+      if (c.apiKey) await this.loadModels(els.ms);
+      l('AIConfig:Init:Done');
+    } catch (err) {
+      e('Err:AIConfig:Init', err);
+    }
   }
   async loadModels(sel) {
-    if (!sel) return;
+    l('AIConfig:LoadModels');
+    if (!sel) {
+      l('AIConfig:LoadModels:Done');
+      return;
+    }
     ih(sel, '<option value="" disabled>Loading...</option>');
     sel.disabled = true;
     try {
@@ -69,6 +81,7 @@ export class AIConfig {
       ih(sel, '');
       if (m.length === 0) {
         ih(sel, '<option value="" disabled>No models found</option>');
+        l('AIConfig:LoadModels:Done');
         return;
       }
       afe(m, x => {
@@ -89,8 +102,9 @@ export class AIConfig {
         sel.value = m[0];
         await this.a.save('ai.model', m[0]);
       }
+      l('AIConfig:LoadModels:Done');
     } catch (x) {
-      e('Failed to fetch models:', x);
+      e('Err:LoadModels', x);
       ih(sel, '<option value="" disabled>Failed to load</option>');
       this.a.notifications?.error(`Failed: ${x.message}`);
     } finally {
@@ -98,6 +112,7 @@ export class AIConfig {
     }
   }
   async test() {
+    l('AIConfig:Test');
     const btn = i('#testConnection'),
       st = i('#apiStatus'),
       ms = i('#modelSelect'),
@@ -133,7 +148,9 @@ export class AIConfig {
       st.className = 'status-indicator success';
       rc(st, 'hidden');
       this.a.notifications?.success('API verified');
+      l('AIConfig:Test:Done');
     } catch (x) {
+      e('Err:Test', x);
       tc(st, `✗ Failed: ${x.message}`);
       st.className = 'status-indicator error';
       rc(st, 'hidden');
@@ -144,7 +161,9 @@ export class AIConfig {
     }
   }
   set(id, v) {
+    l('AIConfig:Set');
     const el = i(`#${id}`);
     if (el) el.value = v;
+    l('AIConfig:Set:Done');
   }
 }

@@ -110,11 +110,21 @@ class CommentsExtractor {
     });
   }
   async fetchCommentsFromDOM() {
-    return new Promise(r =>
-      setTimeout(() => {
+    l('[CE] Start DOM fetch');
+    const maxRetries = 3;
+    const baseDelay = 2000;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      l(`[CE] Attempt ${attempt}/${maxRetries}`);
+      const delay = baseDelay * attempt;
+      await new Promise(r => setTimeout(r, delay));
+      try {
         const c = [];
         const el = $$('ytd-comment-thread-renderer');
-        if (el.length === 0) w('[CE] No comment elements found');
+        l(`[CE] Found ${el.length} comment elements`);
+        if (el.length === 0) {
+          w('[CE] No comment elements found');
+          continue;
+        }
         for (let i = 0; i < el.length; i++) {
           if (c.length >= 20) break;
           const elm = el[i];
@@ -122,15 +132,27 @@ class CommentsExtractor {
             const a = elm.querySelector('#author-text')?.textContent?.trim();
             const t = elm.querySelector('#content-text')?.textContent?.trim();
             const lk = elm.querySelector('#vote-count-middle')?.textContent?.trim() || '0';
-            if (a && t) c.push({ author: a, text: t, likes: lk });
-            else w(`[CE] Skip ${i + 1}: missing author or text`);
+            if (a && t) {
+              c.push({ author: a, text: t, likes: lk });
+              l(`[CE] Added comment ${c.length}: ${a}`);
+            } else {
+              w(`[CE] Skip ${i + 1}: missing author or text`);
+            }
           } catch (x) {
             e(`[CE] Err ${i + 1}:`, x);
           }
         }
-        r(c);
-      }, 1e3)
-    );
+        if (c.length > 0) {
+          l(`[CE] Success: ${c.length} comments`);
+          return c;
+        }
+        w(`[CE] No valid comments on attempt ${attempt}`);
+      } catch (x) {
+        e(`[CE] Attempt ${attempt} failed:`, x);
+      }
+    }
+    l('[CE] All attempts failed, returning empty');
+    return [];
   }
   async fetchCommentsActive(k, t, c) {
     try {

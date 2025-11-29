@@ -1,6 +1,14 @@
 import { slg } from '../../utils/shortcuts/storage.js';
+import { l, e, w } from '../../utils/shortcuts/logging.js';
 
 export async function getApiKey() {
-  const l = await slg('GAK');
-  return l.GAK || null;
+  l('GetApiKey');
+  try {
+    const result = await slg('GAK');
+    l('GetApiKey:Done');
+    return result.GAK || null;
+  } catch (err) {
+    e('Err:GetApiKey', err);
+    return null;
+  }
 }

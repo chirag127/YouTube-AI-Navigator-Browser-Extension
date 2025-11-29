@@ -192,6 +192,7 @@ class OnboardingFlow {
     l('Onboarding:UpdateUI:Done');
   }
   async loadStepData() {
+    l('Onboarding:LoadStepData');
     if (this.currentStep === 1) {
       const i = ge('apiKeyInput');
       if (this.settings.ai?.GAK) i.value = this.settings.ai.GAK;
@@ -200,10 +201,17 @@ class OnboardingFlow {
       ge('autoAnalyze').checked = this.settings.automation?.autoAnalyze || false;
       ge('enableSegments').checked = this.settings.segments?.enabled !== false;
     }
+    l('Onboarding:LoadStepData:Done');
   }
   async completeOnboarding() {
-    await this.saveSettings('_meta.onboardingCompleted', true);
-    win.close();
+    l('Onboarding:CompleteOnboarding');
+    try {
+      await this.saveSettings('_meta.onboardingCompleted', true);
+      win.close();
+      l('Onboarding:CompleteOnboarding:Done');
+    } catch (err) {
+      e('Err:CompleteOnboarding', err);
+    }
   }
 }
 on(document, 'DOMContentLoaded', () => new OnboardingFlow());
