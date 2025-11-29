@@ -2,7 +2,7 @@ import { l } from '../utils/shortcuts/log.js';
 import { cw } from '../utils/shortcuts/chrome.js';
 import { ok as ks } from '../utils/shortcuts/core.js';
 import { js } from '../utils/shortcuts/global.js';
-import { am, ajn } from '../utils/shortcuts/array.js';
+import { am, ajn, af } from '../utils/shortcuts/array.js';
 import { ce } from '../utils/shortcuts/dom.js';
 
 const API_BASE = 'https://sponsor.ajay.app/api';
@@ -24,7 +24,7 @@ async function _gh(vid) {
   const e = new TextEncoder();
   const d = e.encode(vid);
   const hb = await crypto.subtle.digest('SHA-256', d);
-  const ha = Array.from(new Uint8Array(hb));
+  const ha = af(new Uint8Array(hb));
   const hh = am(ha, b => b.toString(16).padStart(2, '0')).join('');
   return hh.substring(0, 4);
 }

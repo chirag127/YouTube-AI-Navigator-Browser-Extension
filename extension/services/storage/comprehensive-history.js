@@ -1,5 +1,5 @@
 import { l, e } from '../../utils/shortcuts/log.js';
-import { afl, afn, aus, aic as inc } from '../../utils/shortcuts/array.js';
+import { afl, afn, aus, aic as inc, isa } from '../../utils/shortcuts/array.js';
 import { nw as nt } from '../../utils/shortcuts/core.js';
 import { js, jp } from '../../utils/shortcuts/global.js';
 import { lc } from '../../utils/shortcuts/string.js';
@@ -84,7 +84,7 @@ export class ComprehensiveHistory {
   async import(j) {
     try {
       const i = jp(j);
-      if (!Array.isArray(i)) throw new Error('Invalid format');
+      if (!isa(i)) throw new Error('Invalid format');
       await sl({ [this.k]: i });
       return true;
     } catch (x) {

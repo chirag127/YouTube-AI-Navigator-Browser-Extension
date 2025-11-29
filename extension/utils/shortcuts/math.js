@@ -1,14 +1,14 @@
 export const mx = Math.max;
 export const mn = Math.min;
-export const fl = Math.floor;
+export const flr = Math.floor;
 export const cl = Math.ceil;
-export const rd = Math.round;
+export const rnd = Math.round;
 export const ab = Math.abs;
 export const rn = Math.random;
-export const pi = Math.PI;
+export const mpi = Math.PI;
 export const sq = Math.sqrt;
 export const pw = Math.pow;
-export const tr = Math.trunc;
+export const trc = Math.trunc;
 export const sg = Math.sign;
 export const im = Math.imul;
 export const clz = Math.clz32;
@@ -34,6 +34,6 @@ export const th = Math.tanh;
 export const ash = Math.asinh;
 export const ach = Math.acosh;
 export const ath = Math.atanh;
-export const mf = fl;
+export const mf = flr;
 
 export const mc = Math.ceil;

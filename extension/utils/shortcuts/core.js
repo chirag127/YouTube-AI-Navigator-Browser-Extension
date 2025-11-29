@@ -11,7 +11,6 @@ export const warn = console.warn;
 export const dbg = console.debug;
 export const ti = setInterval;
 export const ct = clearTimeout;
-export const ci = clearInterval;
 
 // Array
 export const isA = Array.isArray;
@@ -45,13 +44,6 @@ export const sb = (s, a, b) => s?.substring(a, b);
 export const rp = (s, a, b, f) => s?.replace(a, b, f);
 export const mt = (s, r) => s?.match(r);
 
-// Network
-export const ft = fetch;
-export const Rq = Request;
-export const Rs = Response;
-export const Hd = Headers;
-export const fd = FormData;
-export const usp = URLSearchParams;
 
 // JSON aliases
 export const isS = s => typeof s === 'string';
@@ -63,5 +55,3 @@ export const oe = Object.entries;
 
 export const E = Error;
 export const vals = vl;
-
-export const pI = parseInt;

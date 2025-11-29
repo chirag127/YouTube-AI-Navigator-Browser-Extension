@@ -1,4 +1,5 @@
-const gu = p => chrome.runtime.getURL(p);
+import { gu } from '../../../utils/shortcuts/runtime.js';
+import { af } from '../../../utils/shortcuts/array.js';
 
 const { findSecondaryColumn, isWidgetProperlyVisible } = await import(gu('content/utils/dom.js'));
 const { initTabs } = await import(gu('content/ui/tabs.js'));
@@ -167,14 +168,14 @@ function setupObservers(c) {
   containerObserver = mo(m => {
     for (const mu of m) {
       if (mu.type === 'childList') {
-        if (Array.from(mu.removedNodes).includes(widgetContainer)) {
+        if (af(mu.removedNodes).includes(widgetContainer)) {
           log('Widget was removed, reattaching...');
           st(() => reattachWidget(), 100);
           return;
         }
         if (
           c.firstChild !== widgetContainer &&
-          !Array.from(mu.addedNodes).includes(widgetContainer)
+          !af(mu.addedNodes).includes(widgetContainer)
         )
           ensureWidgetAtTop(c);
       }

@@ -8,7 +8,7 @@ import { pI } from '../utils/shortcuts/global.js';
 import { pd } from '../utils/shortcuts/string.js';
 import { lc } from '../utils/shortcuts/string.js';
 import { ic as inc } from '../utils/shortcuts/string.js';
-import { afl } from '../utils/shortcuts/array.js';
+import { afl, isa } from '../utils/shortcuts/array.js';
 
 const s = new StorageService(),
   vl = ge('video-list'),
@@ -145,7 +145,7 @@ async function handleImport(e) {
   try {
     const t = await f.text(),
       d = jp(t);
-    if (!Array.isArray(d)) throw new Error('Invalid format: expected an array');
+    if (!isa(d)) throw new Error('Invalid format: expected an array');
     let c = 0;
     for (const i of d) {
       if (i.videoId && i.metadata) {

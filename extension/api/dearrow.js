@@ -1,7 +1,7 @@
 import { w } from '../utils/shortcuts/log.js';
 import { to as st, co as cst } from '../utils/shortcuts/global.js';
 import { sb as sbs } from '../utils/shortcuts/core.js';
-import { am, ajn } from '../utils/shortcuts/array.js';
+import { am, ajn, af } from '../utils/shortcuts/array.js';
 import { tr, rp } from '../utils/shortcuts/string.js';
 
 const DAB = 'https://sponsor.ajay.app';
@@ -121,7 +121,7 @@ async function gsp(vid) {
   const e = new TextEncoder();
   const d = e.encode(vid);
   const hb = await crypto.subtle.digest('SHA-256', d);
-  const ha = Array.from(new Uint8Array(hb));
+  const ha = af(new Uint8Array(hb));
   const hh = ajn(
     am(ha, b => b.toString(16).padStart(2, '0')),
     ''

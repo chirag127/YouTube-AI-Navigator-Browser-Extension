@@ -4,7 +4,7 @@ import { prompts } from './prompts/index.js';
 import { l, w, e } from '../utils/shortcuts/log.js';
 import { jp, js } from '../utils/shortcuts/global.js';
 import { sb as sub, tr, rp as rep } from '../utils/shortcuts/string.js';
-import { am } from '../utils/shortcuts/array.js';
+import { am, isa } from '../utils/shortcuts/array.js';
 
 export { ModelManager };
 
@@ -63,7 +63,7 @@ export class GeminiService {
       const jsStr = jm[0];
       l('[GS] JSON len:', jsStr.length);
       const p = jp(jsStr);
-      if (!p.segments || !Array.isArray(p.segments)) {
+      if (!p.segments || !isa(p.segments)) {
         e('[GS] Inv struct:', p);
         return { segments: [], fullVideoLabel: null };
       }

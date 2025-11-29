@@ -1,6 +1,7 @@
 import { sg, ss } from './shortcuts/storage.js';
 import { nw } from './shortcuts/core.js';
 import { js, jp } from './shortcuts/global.js';
+import { isa } from './shortcuts/array.js';
 export const DC = {
   ca: { en: 1, ttl: 864e5, tr: 1, co: 1, md: 1 },
   sc: { as: 0, sb: 1, sn: 1, sm: 1 },
@@ -80,7 +81,7 @@ export class ConfigManager {
   mg(d, s) {
     const r = { ...d };
     for (const k in s) {
-      if (typeof s[k] === 'object' && !Array.isArray(s[k])) r[k] = this.mg(d[k] || {}, s[k]);
+      if (typeof s[k] === 'object' && !isa(s[k])) r[k] = this.mg(d[k] || {}, s[k]);
       else r[k] = s[k];
     }
     return r;

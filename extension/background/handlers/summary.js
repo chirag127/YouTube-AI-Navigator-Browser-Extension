@@ -1,7 +1,7 @@
 import { initializeServices, getServices } from '../services.js';
 import { getApiKey } from '../utils/api-key.js';
-import { fl as mf } from '../../utils/shortcuts/math.js';
-import { am, ajn } from '../../utils/shortcuts/array.js';
+import { flr as mf } from '../../utils/shortcuts/math.js';
+import { am, ajn, isa } from '../../utils/shortcuts/array.js';
 export async function handleGenerateSummary(req, rsp) {
   const { transcript, settings, metadata } = req;
   const k = settings?.apiKey || (await getApiKey());
@@ -16,7 +16,7 @@ export async function handleGenerateSummary(req, rsp) {
     const sec = mf(s % 60);
     return `${m}:${sec.toString().padStart(2, '0')}`;
   };
-  const ts = Array.isArray(transcript)
+  const ts = isa(transcript)
     ? ajn(
       am(transcript, t => `[${ft(t.start)}] ${t.text}`),
       '\n'

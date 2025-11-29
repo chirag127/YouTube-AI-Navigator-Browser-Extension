@@ -1,4 +1,5 @@
 import { annotateTranscript } from './rule-engine.js';
+import { isa } from '../../utils/shortcuts/array.js';
 
 export async function classifyTranscript(context, g) {
   const { transcript, metadata } = context;
@@ -14,7 +15,7 @@ export async function classifyTranscript(context, g) {
   try {
     const result = await g.extractSegments(annotatedContext);
 
-    if (Array.isArray(result)) {
+    if (isa(result)) {
       return { segments: result, fullVideoLabel: null };
     }
 

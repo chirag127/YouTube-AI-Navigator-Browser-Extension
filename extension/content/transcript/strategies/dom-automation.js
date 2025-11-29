@@ -1,7 +1,9 @@
-const gu = p => chrome.runtime.getURL(p);
+import { gu } from '../../../../utils/shortcuts/runtime.js';
+import { af } from '../../../../utils/shortcuts/array.js';
 
 const { qs: $, qsa: $$ } = await import(gu('utils/shortcuts/dom.js'));
-const { log: l, err: e, dbg: d, to, nw, tr } = await import(gu('utils/shortcuts/core.js'));
+const { log: l, err: e, dbg: d, nw, tr } = await import(gu('utils/shortcuts/core.js'));
+const { st: to } = await import(gu('utils/shortcuts/time.js'));
 export const name = 'DOM Automation';
 export const priority = 10;
 
@@ -45,7 +47,7 @@ const openPanel = async () => {
     if (stb) break;
   }
   if (!stb) {
-    const btns = Array.from($$('button, ytd-button-renderer'));
+    const btns = af($$('button, ytd-button-renderer'));
     stb = btns.find(b => b.textContent.includes('Show transcript'));
   }
   if (stb) {

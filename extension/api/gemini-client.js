@@ -3,6 +3,7 @@ import { ErrorHandler } from './core/error-handler.js';
 import { RateLimiter } from './core/rate-limiter.js';
 import { l, e } from '../utils/shortcuts/log.js';
 import { js } from '../utils/shortcuts/global.js';
+import { isa } from '../utils/shortcuts/array.js';
 
 export class GeminiClient {
   constructor(apiKey, config = {}) {
@@ -24,7 +25,7 @@ export class GeminiClient {
     const url = `${this.baseUrl}/models/${model}:generateContent?key=${this.apiKey}`;
     try {
       l(`[GC] Call: ${model}`);
-      const contents = Array.isArray(prompt)
+      const contents = isa(prompt)
         ? [{ parts: prompt }]
         : [{ parts: [{ text: prompt }] }];
       const response = await this.httpClient.fetch(url, {

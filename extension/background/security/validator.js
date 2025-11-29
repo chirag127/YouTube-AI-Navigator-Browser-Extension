@@ -1,5 +1,6 @@
 import { js } from '../../utils/shortcuts/global.js';
 import { rp as rep } from '../../utils/shortcuts/string.js';
+import { isa } from '../../utils/shortcuts/array.js';
 
 const ALLOWED = new Set([
   'TEST',
@@ -43,7 +44,7 @@ export const sanitizeString = (s, max = MAX_SL) => {
 };
 
 export const validateTranscript = t => {
-  if (!Array.isArray(t)) return false;
+  if (!isa(t)) return false;
   if (js(t).length > MAX_TS) return false;
   return t.every(
     s => typeof s === 'object' && typeof s.start === 'number' && typeof s.text === 'string'

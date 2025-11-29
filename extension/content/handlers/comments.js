@@ -1,8 +1,8 @@
-const gu = p => chrome.runtime.getURL(p);
+import { gu } from '../../../utils/shortcuts/runtime.js';
 
 const { l, w, e } = await import(gu('utils/shortcuts/log.js'));
 const { js } = await import(gu('utils/shortcuts/global.js'));
-const { ae, qs: $ } = await import(gu('utils/shortcuts/dom.js'));
+const { ae, qs: $, qsa: $$ } = await import(gu('utils/shortcuts/dom.js'));
 const { sg, slg: lg } = await import(gu('utils/shortcuts/storage.js'));
 const { ft } = await import(gu('utils/shortcuts/network.js'));
 const { mp, jn } = await import(gu('utils/shortcuts/array.js'));
@@ -86,7 +86,7 @@ class CommentsExtractor {
   }
   async scrollToComments() {
     const { getScrollManager } = await import(
-      chrome.runtime.getURL('content/utils/scroll-manager.js')
+      gu('content/utils/scroll-manager.js')
     );
     const sm = getScrollManager();
     await sm.scrollToComments();
@@ -115,8 +115,8 @@ class CommentsExtractor {
     return new Promise(r =>
       setTimeout(() => {
         const c = [];
-        const el = $('ytd-comment-thread-renderer');
-        if (el.length === 0) w('[CE] No el');
+        const el = $$('ytd-comment-thread-renderer');
+        if (el.length === 0) w('[CE] No comment elements found');
         for (let i = 0; i < el.length; i++) {
           if (c.length >= 20) break;
           const elm = el[i];
@@ -125,7 +125,7 @@ class CommentsExtractor {
             const t = elm.querySelector('#content-text')?.textContent?.trim();
             const lk = elm.querySelector('#vote-count-middle')?.textContent?.trim() || '0';
             if (a && t) c.push({ author: a, text: t, likes: lk });
-            else w(`[CE] Skip ${i + 1}`);
+            else w(`[CE] Skip ${i + 1}: missing author or text`);
           } catch (x) {
             e(`[CE] Err ${i + 1}:`, x);
           }

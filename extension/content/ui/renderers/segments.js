@@ -1,4 +1,5 @@
-const gu = p => chrome.runtime.getURL(p);
+import { gu } from '../../../utils/shortcuts/runtime.js';
+import { isa } from '../../../utils/shortcuts/array.js';
 
 const { showPlaceholder } = await import(gu('content/ui/components/loading.js'));
 
@@ -19,8 +20,8 @@ const colors = {
   'Tangents/Jokes': '#9400d3',
 };
 export function renderSegments(c, data) {
-  const s = Array.isArray(data) ? data : data?.segments || [];
-  const fl = !Array.isArray(data) ? data?.fullVideoLabel : null;
+  const s = isa(data) ? data : data?.segments || [];
+  const fl = !isa(data) ? data?.fullVideoLabel : null;
   const b = qs('#yt-ai-full-video-label');
   if (b) {
     if (fl) {

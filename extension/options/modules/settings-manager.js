@@ -1,6 +1,7 @@
 import { sg, ss } from '../../utils/shortcuts/storage.js';
 import { log as l, err as e, now as nt, keys as ok } from '../../utils/shortcuts/core.js';
 import { js, jp } from '../../utils/shortcuts/global.js';
+import { isa } from '../../../utils/shortcuts/array.js';
 
 export const SEGMENT_CATEGORIES = [
   { id: 'sponsor', label: 'Sponsor', color: '#00d400' },
@@ -58,7 +59,7 @@ export class SettingsManager {
       m = jp(js(d));
     const dm = (t, s) => {
       for (const k in s) {
-        if (s[k] && typeof s[k] === 'object' && !Array.isArray(s[k])) {
+        if (s[k] && typeof s[k] === 'object' && !isa(s[k])) {
           t[k] = t[k] || {};
           dm(t[k], s[k]);
         } else t[k] = s[k];
@@ -111,7 +112,7 @@ export class SettingsManager {
         maxSize: 50,
       },
       scroll: {
-        autoScrollToComments: false,
+        autoScrollToComments: true,
         scrollBackAfterComments: true,
         showScrollNotification: true,
         smoothScroll: true,

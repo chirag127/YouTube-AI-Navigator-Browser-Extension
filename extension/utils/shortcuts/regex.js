@@ -1,6 +1,5 @@
 export const rx = (p, f) => new RegExp(p, f);
 export const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-export const mt = (s, r) => s.match(r);
 export const ma = (s, r) => [...s.matchAll(r)];
 export const tst = (r, s) => r.test(s);
 export const ex = (r, s) => r.exec(s);

@@ -1,6 +1,21 @@
 import { l, e, w } from '../utils/shortcuts/log.js';
 import { rt as cr, url, rgm as rg, oop } from '../utils/shortcuts/runtime.js';
 import { tc } from '../utils/shortcuts/tabs.js';
+import { verifySender as vs } from './security/sender-check.js';
+import { validateMessage as vm, sanitizeRequest as sr } from './security/validator.js';
+import { handleGetSettings } from './handlers/settings.js';
+import { handleFetchTranscript } from './handlers/fetch-transcript.js';
+import { handleAnalyzeVideo } from './handlers/analyze-video.js';
+import { handleAnalyzeComments } from './handlers/comments.js';
+import { handleChatWithVideo } from './handlers/chat.js';
+import { handleSaveToHistory } from './handlers/history.js';
+import { handleSaveHistory, handleGetVideoData } from './handlers/video-data.js';
+import { handleGetMetadata } from './handlers/metadata.js';
+import { handleGetCachedData } from './handlers/cache.js';
+import { handleSaveChatMessage } from './handlers/chat-history.js';
+import { handleSaveComments } from './handlers/comments-storage.js';
+import { handleTranscribeAudio } from './handlers/transcribe-audio.js';
+import { handleGetLyrics } from './handlers/get-lyrics.js';
 
 cr.onInstalled.addListener(async d => {
   if (d.reason === 'install') {
@@ -17,12 +32,10 @@ cr.onMessage.addListener((q, s, r) => {
   l('BG:', a);
   (async () => {
     try {
-      const { verifySender: vs } = await import('./security/sender-check.js');
       if (!vs(s)) {
         r({ success: false, error: 'Unauthorized' });
         return;
       }
-      const { validateMessage: vm, sanitizeRequest: sr } = await import('./security/validator.js');
       const v = vm(q);
       if (!v.valid) {
         r({ success: false, error: v.error });
@@ -33,76 +46,48 @@ cr.onMessage.addListener((q, s, r) => {
         case 'TEST':
           r({ success: true, message: 'BG running' });
           break;
-        case 'GET_SETTINGS': {
-          const { handleGetSettings: h } = await import('./handlers/settings.js');
-          await h(r);
+        case 'GET_SETTINGS':
+          await handleGetSettings(r);
           break;
-        }
-        case 'FETCH_TRANSCRIPT': {
-          const { handleFetchTranscript: h } = await import('./handlers/fetch-transcript.js');
-          await h(n, r);
+        case 'FETCH_TRANSCRIPT':
+          await handleFetchTranscript(n, r);
           break;
-        }
-        case 'ANALYZE_VIDEO': {
-          const { handleAnalyzeVideo: h } = await import('./handlers/analyze-video.js');
-          await h(n, r);
+        case 'ANALYZE_VIDEO':
+          await handleAnalyzeVideo(n, r);
           break;
-        }
-        case 'ANALYZE_COMMENTS': {
-          const { handleAnalyzeComments: h } = await import('./handlers/comments.js');
-          await h(n, r);
+        case 'ANALYZE_COMMENTS':
+          await handleAnalyzeComments(n, r);
           break;
-        }
-        case 'CHAT_WITH_VIDEO': {
-          const { handleChatWithVideo: h } = await import('./handlers/chat.js');
-          await h(n, r);
+        case 'CHAT_WITH_VIDEO':
+          await handleChatWithVideo(n, r);
           break;
-        }
-        case 'SAVE_TO_HISTORY': {
-          const { handleSaveToHistory: h } = await import('./handlers/history.js');
-          await h(n, r);
+        case 'SAVE_TO_HISTORY':
+          await handleSaveToHistory(n, r);
           break;
-        }
-        case 'SAVE_HISTORY': {
-          const { handleSaveHistory: h } = await import('./handlers/video-data.js');
-          r(await h(n));
+        case 'SAVE_HISTORY':
+          r(await handleSaveHistory(n));
           break;
-        }
-        case 'GET_METADATA': {
-          const { handleGetMetadata: h } = await import('./handlers/metadata.js');
-          await h(n, r);
+        case 'GET_METADATA':
+          await handleGetMetadata(n, r);
           break;
-        }
-        case 'GET_CACHED_DATA': {
-          const { handleGetCachedData: h } = await import('./handlers/cache.js');
-          await h(n, r);
+        case 'GET_CACHED_DATA':
+          await handleGetCachedData(n, r);
           break;
-        }
-        case 'SAVE_CHAT_MESSAGE': {
-          const { handleSaveChatMessage: h } = await import('./handlers/chat-history.js');
-          await h(n, r);
+        case 'SAVE_CHAT_MESSAGE':
+          await handleSaveChatMessage(n, r);
           break;
-        }
-        case 'SAVE_COMMENTS': {
-          const { handleSaveComments: h } = await import('./handlers/comments-storage.js');
-          await h(n, r);
+        case 'SAVE_COMMENTS':
+          await handleSaveComments(n, r);
           break;
-        }
-        case 'TRANSCRIBE_AUDIO': {
-          const { handleTranscribeAudio: h } = await import('./handlers/transcribe-audio.js');
-          await h(n, r);
+        case 'TRANSCRIBE_AUDIO':
+          await handleTranscribeAudio(n, r);
           break;
-        }
-        case 'GET_LYRICS': {
-          const { handleGetLyrics: h } = await import('./handlers/get-lyrics.js');
-          await h(n, r);
+        case 'GET_LYRICS':
+          await handleGetLyrics(n, r);
           break;
-        }
-        case 'GET_VIDEO_DATA': {
-          const { handleGetVideoData: h } = await import('./handlers/video-data.js');
-          r(await h(n));
+        case 'GET_VIDEO_DATA':
+          r(await handleGetVideoData(n));
           break;
-        }
         case 'OPEN_OPTIONS':
           oop();
           r({ success: true });

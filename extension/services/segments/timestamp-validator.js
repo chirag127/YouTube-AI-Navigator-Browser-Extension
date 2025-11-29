@@ -1,8 +1,9 @@
-import { mf as mfl } from '../../utils/shortcuts/math.js';
-import { pI as pS } from '../../utils/shortcuts/core.js';
+import { flr as mfl } from '../../utils/shortcuts/math.js';
+import { pI as pS } from '../../utils/shortcuts/global.js';
+import { isa } from '../../utils/shortcuts/array.js';
 
 export const validateSegments = s => {
-  if (!Array.isArray(s)) return [];
+  if (!isa(s)) return [];
   return s
     .map(g => {
       let st = parseFloat(g.start);

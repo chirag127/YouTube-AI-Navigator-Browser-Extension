@@ -12,4 +12,5 @@ export const rrl = () => r.reload();
 export const pI = parseInt;
 
 export const getUrl = url;
+export const gu = url;
 export const ro = oop;

@@ -1,4 +1,4 @@
-export const wn = window;
+export const wn = chrome.windows;
 export const loc = location;
 export const to = setTimeout;
 export const co = clearTimeout;
