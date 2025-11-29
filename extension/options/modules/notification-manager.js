@@ -25,9 +25,9 @@ export class NotificationManager {
     raf(() => {
       n.style.transform = 'translateX(0)';
     });
-    st(() => {
+    to(() => {
       n.style.transform = 'translateX(400px)';
-      st(() => {
+      to(() => {
         n.remove();
       }, 300);
     }, d);

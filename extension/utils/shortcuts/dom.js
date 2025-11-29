@@ -43,3 +43,7 @@ export const $ = qs;
 export const $$ = qsa;
 export const ae = on;
 export const re = off;
+
+export const ael = on;
+export const rel = off;
+export const rm = (e) => e?.remove();

@@ -14,3 +14,9 @@ export const jn = (a, s) => a?.join(s);
 export const slc = (s, a, b) => s?.slice(a, b);
 export const en = encodeURIComponent;
 export const de = decodeURIComponent;
+
+export const ic = inc;
+export const us = uc;
+export const li = lc;
+export const ia = (a, v) => a?.indexOf(v);
+export const pI = parseInt;

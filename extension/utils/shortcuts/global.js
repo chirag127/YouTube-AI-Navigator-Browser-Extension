@@ -10,3 +10,13 @@ export const pf = parseFloat;
 export const cf = confirm;
 export const al = alert;
 export const pm = prompt;
+
+export const al = alert;
+export const pm = prompt;
+export const en = encodeURIComponent;
+export const de = decodeURIComponent;
+export const si = setInterval;
+export const ci = clearInterval;
+export const ct = clearTimeout;
+
+export const pI = parseInt;

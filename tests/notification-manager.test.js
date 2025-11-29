@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { NotificationManager } from '../extension/options/modules/notification-manager.js';
 
 vi.mock('../extension/utils/shortcuts/global.js', () => ({
-    st: vi.fn((fn, delay) => setTimeout(fn, delay)),
+    to: vi.fn((fn, delay) => setTimeout(fn, delay)),
 }));
 
 vi.mock('../extension/utils/shortcuts/async.js', () => ({

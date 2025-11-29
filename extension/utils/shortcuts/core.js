@@ -64,3 +64,8 @@ export const nw = Date.now;
 export const np = Promise;
 export const ok = Object.keys;
 export const oe = Object.entries;
+
+export const E = Error;
+export const vals = vl;
+
+export const pI = parseInt;

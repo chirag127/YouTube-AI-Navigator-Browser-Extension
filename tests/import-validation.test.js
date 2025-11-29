@@ -34,10 +34,18 @@ const parseImports = content => {
 
 const parseExports = content => {
     const exports = [];
-    const exportRegex = /export\s+const\s+(\w+)\s*=/g;
-    let match;
-    while ((match = exportRegex.exec(content)) !== null) {
-        exports.push(match[1]);
+    const patterns = [
+        /export\s+const\s+(\w+)\s*=/g,
+        /export\s+class\s+(\w+)/g,
+        /export\s+async\s+function\s+(\w+)/g,
+        /export\s+function\s+(\w+)/g,
+    ];
+
+    for (const pattern of patterns) {
+        let match;
+        while ((match = pattern.exec(content)) !== null) {
+            exports.push(match[1]);
+        }
     }
     return exports;
 };

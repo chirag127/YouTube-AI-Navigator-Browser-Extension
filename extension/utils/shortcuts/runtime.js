@@ -10,3 +10,7 @@ export const rgm = () => r.getManifest();
 export const oop = () => r.openOptionsPage();
 export const rrl = () => r.reload();
 export const pI = parseInt;
+
+export const getUrl = url;
+export const local = chrome.runtime.getURL;
+export const ro = oop;
