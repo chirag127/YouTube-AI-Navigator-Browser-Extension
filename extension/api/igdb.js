@@ -1,4 +1,4 @@
-import { safeFetch, cl, cw } from "../utils/shortcuts.js";
+import { safeFetch, cl, cw, ft } from "../utils/shortcuts.js";
 
 // IGDB requires a proxy or server-side component usually because of CORS and Client Secret security.
 // However, since we are in a browser extension, we might be able to use the Twitch API directly if we have a token.
@@ -23,7 +23,7 @@ export class IgdbAPI {
         const body = `search "${query}"; fields name, summary, rating, first_release_date, platforms.name; limit 1;`;
 
         try {
-            const res = await fetch(`${BASE_URL}/games`, {
+            const data = await ft(`${BASE_URL}/games`, {
                 method: "POST",
                 headers: {
                     "Client-ID": this.clientId,
@@ -32,8 +32,6 @@ export class IgdbAPI {
                 },
                 body: body,
             });
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            const data = await res.json();
             return data?.[0] || null;
         } catch (e) {
             cw("[IGDB] Request failed (likely CORS or Auth):", e.message);

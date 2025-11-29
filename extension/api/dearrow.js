@@ -2,8 +2,10 @@
 // Fetches community-submitted titles and thumbnails for YouTube videos
 // API Docs: https://wiki.sponsor.ajay.app/w/API_Docs/DeArrow
 
-const DEARROW_API_BASE = 'https://sponsor.ajay.app';
-const DEARROW_THUMB_BASE = 'https://dearrow-thumb.ajay.app';
+import { cw, st, cst, sbs } from "../utils/shortcuts.js";
+
+const DEARROW_API_BASE = "https://sponsor.ajay.app";
+const DEARROW_THUMB_BASE = "https://dearrow-thumb.ajay.app";
 
 /**
  * Fetch DeArrow branding data for a video
@@ -12,34 +14,30 @@ const DEARROW_THUMB_BASE = 'https://dearrow-thumb.ajay.app';
  * @returns {Promise<Object>} Branding data with titles and thumbnails
  */
 export async function fetchBranding(videoId, options = {}) {
-    const {
-        returnUserID = false,
-        fetchAll = false,
-        timeout = 5000
-    } = options;
+    const { returnUserID = false, fetchAll = false, timeout = 5000 } = options;
 
     const params = new URLSearchParams({
         videoID: videoId,
-        service: 'YouTube'
+        service: "YouTube",
     });
 
-    if (returnUserID) params.append('returnUserID', 'true');
-    if (fetchAll) params.append('fetchAll', 'true');
+    if (returnUserID) params.append("returnUserID", "true");
+    if (fetchAll) params.append("fetchAll", "true");
 
     const url = `${DEARROW_API_BASE}/api/branding?${params.toString()}`;
 
     try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        const timeoutId = st(() => controller.abort(), timeout);
 
         const response = await fetch(url, {
             signal: controller.signal,
             headers: {
-                'Accept': 'application/json'
-            }
+                Accept: "application/json",
+            },
         });
 
-        clearTimeout(timeoutId);
+        cst(timeoutId);
 
         if (!response.ok) {
             if (response.status === 404) {
@@ -51,10 +49,10 @@ export async function fetchBranding(videoId, options = {}) {
         const data = await response.json();
         return parseBrandingResponse(data);
     } catch (error) {
-        if (error.name === 'AbortError') {
-            console.warn('[DeArrow] Request timeout');
+        if (error.name === "AbortError") {
+            cw("[DeArrow] Request timeout");
         } else {
-            console.warn('[DeArrow] Fetch failed:', error.message);
+            cw("[DeArrow] Fetch failed:", error.message);
         }
         return null;
     }
@@ -69,33 +67,29 @@ export async function fetchBranding(videoId, options = {}) {
 export async function fetchBrandingPrivate(videoId, options = {}) {
     const hashPrefix = await generateSHA256Prefix(videoId);
 
-    const {
-        returnUserID = false,
-        fetchAll = false,
-        timeout = 5000
-    } = options;
+    const { returnUserID = false, fetchAll = false, timeout = 5000 } = options;
 
     const params = new URLSearchParams({
-        service: 'YouTube'
+        service: "YouTube",
     });
 
-    if (returnUserID) params.append('returnUserID', 'true');
-    if (fetchAll) params.append('fetchAll', 'true');
+    if (returnUserID) params.append("returnUserID", "true");
+    if (fetchAll) params.append("fetchAll", "true");
 
     const url = `${DEARROW_API_BASE}/api/branding/${hashPrefix}?${params.toString()}`;
 
     try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        const timeoutId = st(() => controller.abort(), timeout);
 
         const response = await fetch(url, {
             signal: controller.signal,
             headers: {
-                'Accept': 'application/json'
-            }
+                Accept: "application/json",
+            },
         });
 
-        clearTimeout(timeoutId);
+        cst(timeoutId);
 
         if (!response.ok) {
             if (response.status === 404) {
@@ -113,10 +107,10 @@ export async function fetchBrandingPrivate(videoId, options = {}) {
 
         return null;
     } catch (error) {
-        if (error.name === 'AbortError') {
-            console.warn('[DeArrow] Request timeout');
+        if (error.name === "AbortError") {
+            cw("[DeArrow] Request timeout");
         } else {
-            console.warn('[DeArrow] Fetch failed:', error.message);
+            cw("[DeArrow] Fetch failed:", error.message);
         }
         return null;
     }
@@ -134,7 +128,7 @@ export function getBestTitle(brandingData) {
 
     // Find first trusted title (locked or votes >= 0)
     const trustedTitle = brandingData.titles.find(
-        t => t.locked || t.votes >= 0
+        (t) => t.locked || t.votes >= 0
     );
 
     if (trustedTitle) {
@@ -161,7 +155,7 @@ export function getBestThumbnail(brandingData) {
 
     // Find first trusted thumbnail (locked or votes >= 0)
     const trustedThumb = brandingData.thumbnails.find(
-        t => t.locked || t.votes >= 0
+        (t) => t.locked || t.votes >= 0
     );
 
     if (trustedThumb && !trustedThumb.original) {
@@ -169,7 +163,7 @@ export function getBestThumbnail(brandingData) {
     }
 
     // Fallback to first non-original thumbnail
-    const firstCustom = brandingData.thumbnails.find(t => !t.original);
+    const firstCustom = brandingData.thumbnails.find((t) => !t.original);
     if (firstCustom) {
         return firstCustom.timestamp;
     }
@@ -186,7 +180,7 @@ export function getBestThumbnail(brandingData) {
 export function getThumbnailUrl(videoId, timestamp) {
     const params = new URLSearchParams({
         videoID: videoId,
-        time: timestamp
+        time: timestamp,
     });
 
     return `${DEARROW_THUMB_BASE}/api/v1/getThumbnail?${params.toString()}`;
@@ -203,18 +197,18 @@ export async function fetchThumbnail(videoId, timestamp, timeout = 5000) {
 
     try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        const timeoutId = st(() => controller.abort(), timeout);
 
         const response = await fetch(url, {
-            signal: controller.signal
+            signal: controller.signal,
         });
 
-        clearTimeout(timeoutId);
+        cst(timeoutId);
 
         if (response.status === 204) {
             // No content - failed to generate
-            const reason = response.headers.get('X-Failure-Reason');
-            console.warn('[DeArrow] Thumbnail generation failed:', reason);
+            const reason = response.headers.get("X-Failure-Reason");
+            cw("[DeArrow] Thumbnail generation failed:", reason);
             return null;
         }
 
@@ -224,10 +218,10 @@ export async function fetchThumbnail(videoId, timestamp, timeout = 5000) {
 
         return await response.blob();
     } catch (error) {
-        if (error.name === 'AbortError') {
-            console.warn('[DeArrow] Thumbnail request timeout');
+        if (error.name === "AbortError") {
+            cw("[DeArrow] Thumbnail request timeout");
         } else {
-            console.warn('[DeArrow] Thumbnail fetch failed:', error.message);
+            cw("[DeArrow] Thumbnail fetch failed:", error.message);
         }
         return null;
     }
@@ -242,7 +236,7 @@ function parseBrandingResponse(data) {
         titles: data.titles || [],
         thumbnails: data.thumbnails || [],
         randomTime: data.randomTime || null,
-        videoDuration: data.videoDuration || null
+        videoDuration: data.videoDuration || null,
     };
 }
 
@@ -251,10 +245,10 @@ function parseBrandingResponse(data) {
  * @private
  */
 function cleanTitle(title) {
-    if (!title) return '';
+    if (!title) return "";
 
     // Remove > formatting markers used by auto-formatter
-    return title.replace(/>\s*/g, '').trim();
+    return title.replace(/>\s*/g, "").trim();
 }
 
 /**
@@ -264,12 +258,14 @@ function cleanTitle(title) {
 async function generateSHA256Prefix(videoId) {
     const encoder = new TextEncoder();
     const data = encoder.encode(videoId);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    const hashHex = hashArray
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
 
     // Return first 4 characters
-    return hashHex.substring(0, 4);
+    return sbs(hashHex, 0, 4);
 }
 
 /**
@@ -291,7 +287,7 @@ export async function getVideoMetadata(videoId, options = {}) {
             videoId,
             hasDeArrowData: false,
             title: null,
-            thumbnail: null
+            thumbnail: null,
         };
     }
 
@@ -302,11 +298,13 @@ export async function getVideoMetadata(videoId, options = {}) {
         videoId,
         hasDeArrowData: true,
         title,
-        thumbnail: thumbnailTimestamp ? {
-            timestamp: thumbnailTimestamp,
-            url: getThumbnailUrl(videoId, thumbnailTimestamp)
-        } : null,
-        rawData: brandingData
+        thumbnail: thumbnailTimestamp
+            ? {
+                  timestamp: thumbnailTimestamp,
+                  url: getThumbnailUrl(videoId, thumbnailTimestamp),
+              }
+            : null,
+        rawData: brandingData,
     };
 }
 
@@ -317,5 +315,5 @@ export default {
     getBestThumbnail,
     getThumbnailUrl,
     fetchThumbnail,
-    getVideoMetadata
+    getVideoMetadata,
 };

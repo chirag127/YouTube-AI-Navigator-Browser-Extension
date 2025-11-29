@@ -2,6 +2,8 @@
  * Genius Lyrics API / Scraper
  * Fetches lyrics from Genius.com for music videos
  */
+import { cl, cw, enc, ftx, fj, rpa } from "../utils/shortcuts.js";
+
 export class GeniusLyricsAPI {
     constructor() {
         this.baseUrl = "https://genius.com";
@@ -16,14 +18,14 @@ export class GeniusLyricsAPI {
      */
     async getLyrics(title, artist) {
         try {
-            console.log(`[Genius] Searching for: ${title} by ${artist}`);
+            cl(`[Genius] Searching for: ${title} by ${artist}`);
             const hit = await this.search(title, artist);
             if (!hit) {
-                console.log("[Genius] No song found");
+                cl("[Genius] No song found");
                 return null;
             }
 
-            console.log(`[Genius] Found hit: ${hit.result.full_title}`);
+            cl(`[Genius] Found hit: ${hit.result.full_title}`);
             const lyrics = await this.fetchLyrics(hit.result.url);
             return {
                 lyrics,
@@ -33,7 +35,7 @@ export class GeniusLyricsAPI {
                 artist: hit.result.primary_artist.name,
             };
         } catch (e) {
-            console.warn(`[Genius] Failed to get lyrics: ${e.message}`);
+            cw(`[Genius] Failed to get lyrics: ${e.message}`);
             return null;
         }
     }
@@ -43,13 +45,10 @@ export class GeniusLyricsAPI {
         const cleanTitle = this.cleanTitle(title);
         const query = `${artist} ${cleanTitle}`;
 
-        const url = `${this.searchUrl}?per_page=1&q=${encodeURIComponent(
-            query
-        )}`;
-        const response = await fetch(url);
-        const data = await response.json();
+        const url = `${this.searchUrl}?per_page=1&q=${enc(query)}`;
+        const data = await fj(url);
 
-        if (data.response?.sections) {
+        if (data?.response?.sections) {
             for (const section of data.response.sections) {
                 if (section.type === "song" && section.hits?.length > 0) {
                     return section.hits[0];
@@ -60,9 +59,8 @@ export class GeniusLyricsAPI {
     }
 
     async fetchLyrics(url) {
-        const response = await fetch(url);
-        const html = await response.text();
-
+        const html = await ftx(url);
+        if (!html) return null;
 
         const lyricsMatch = html.match(
             /<div[^>]*data-lyrics-container="true"[^>]*>(.*?)<\/div>/gs

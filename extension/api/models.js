@@ -1,3 +1,5 @@
+import { cw, fj } from "../utils/shortcuts.js";
+
 export class ModelManager {
     constructor(apiKey, baseUrl) {
         this.apiKey = apiKey;
@@ -8,15 +10,18 @@ export class ModelManager {
     async fetch() {
         if (!this.apiKey) return;
         try {
-            const response = await fetch(`${this.baseUrl}/models?key=${this.apiKey}`);
-            const data = await response.json();
-            if (data.models) {
+            const data = await fj(`${this.baseUrl}/models?key=${this.apiKey}`);
+            if (data?.models) {
                 this.models = data.models
-                    .filter(m => m.supportedGenerationMethods?.includes('generateContent'))
-                    .map(m => m.name.replace('models/', ''));
+                    .filter((m) =>
+                        m.supportedGenerationMethods?.includes(
+                            "generateContent"
+                        )
+                    )
+                    .map((m) => m.name.replace("models/", ""));
             }
         } catch (e) {
-            console.warn('Failed to fetch Gemini models:', e);
+            cw("Failed to fetch Gemini models:", e);
             this.models = [];
         }
         return this.models;
@@ -25,14 +30,14 @@ export class ModelManager {
     getList() {
         // Prioritize specific models if available
         const priority = [
-            'gemini-2.5-flash-lite-preview-09-2025',
-            'gemini-2.0-flash-exp',
-            'gemini-2.5-flash-preview-09-2025',
-            'gemini-1.5-flash-002',
-            'gemini-1.5-flash-001',
-            'gemini-1.5-pro-latest',
-            'gemini-1.5-pro-002',
-            'gemini-1.5-pro-001'
+            "gemini-2.5-flash-lite-preview-09-2025",
+            "gemini-2.0-flash-exp",
+            "gemini-2.5-flash-preview-09-2025",
+            "gemini-1.5-flash-002",
+            "gemini-1.5-flash-001",
+            "gemini-1.5-pro-latest",
+            "gemini-1.5-pro-002",
+            "gemini-1.5-pro-001",
         ];
 
         const sorted = [...this.models].sort((a, b) => {

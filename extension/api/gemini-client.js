@@ -5,7 +5,7 @@
 import { HttpClient } from "./core/http-client.js";
 import { ErrorHandler } from "./core/error-handler.js";
 import { RateLimiter } from "./core/rate-limiter.js";
-import { cl, ce } from "../utils/shortcuts.js";
+import { cl, ce, js, st, cst } from "../utils/shortcuts.js";
 
 export class GeminiClient {
     constructor(apiKey, config = {}) {
@@ -41,7 +41,7 @@ export class GeminiClient {
             const response = await this.httpClient.fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ contents }),
+                body: js({ contents }),
             });
 
             const data = await response.json();

@@ -3,7 +3,7 @@
  * Implements exponential backoff for transient failures
  */
 
-import { cl, cw, ce } from "../../utils/shortcuts.js";
+import { cl, cw, ce, st, cst, mn, prom } from "../../utils/shortcuts.js";
 
 const RETRYABLE_STATUS = new Set([408, 429, 500, 502, 503, 504]);
 const RETRYABLE_ERRORS = new Set(["ECONNRESET", "ETIMEDOUT", "ENOTFOUND"]);
@@ -23,17 +23,14 @@ export class HttpClient {
         for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
             try {
                 const controller = new AbortController();
-                const timeoutId = setTimeout(
-                    () => controller.abort(),
-                    this.timeout
-                );
+                const timeoutId = st(() => controller.abort(), this.timeout);
 
                 const response = await fetch(url, {
                     ...options,
                     signal: controller.signal,
                 });
 
-                clearTimeout(timeoutId);
+                cst(timeoutId);
 
                 if (response.ok) {
                     return response;
@@ -46,7 +43,8 @@ export class HttpClient {
 
                 lastError = await this._createError(response);
                 cl(
-                    `[HttpClient] Attempt ${attempt + 1}/${this.maxRetries + 1
+                    `[HttpClient] Attempt ${attempt + 1}/${
+                        this.maxRetries + 1
                     } failed: ${response.status}`
                 );
             } catch (error) {
@@ -62,7 +60,8 @@ export class HttpClient {
                 }
 
                 cl(
-                    `[HttpClient] Attempt ${attempt + 1}/${this.maxRetries + 1
+                    `[HttpClient] Attempt ${attempt + 1}/${
+                        this.maxRetries + 1
                     } failed: ${error.message}`
                 );
             }
@@ -70,7 +69,7 @@ export class HttpClient {
             // Don't delay after last attempt
             if (attempt < this.maxRetries) {
                 await this._sleep(delay);
-                delay = Math.min(delay * 2, this.maxDelay);
+                delay = mn(delay * 2, this.maxDelay);
             }
         }
 
@@ -82,7 +81,7 @@ export class HttpClient {
         try {
             const data = await response.json();
             message = data.error?.message || data.message || message;
-        } catch { }
+        } catch {}
 
         const error = new Error(message);
         error.status = response.status;
@@ -91,6 +90,6 @@ export class HttpClient {
     }
 
     _sleep(ms) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
+        return prom((resolve) => st(resolve, ms));
     }
 }

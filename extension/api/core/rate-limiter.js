@@ -3,7 +3,7 @@
  * Prevents exceeding API rate limits
  */
 
-import { cl, cw } from "../../utils/shortcuts.js";
+import { cl, cw, st, nt, mcl, prom } from "../../utils/shortcuts.js";
 
 export class RateLimiter {
     constructor(config = {}) {
@@ -14,7 +14,7 @@ export class RateLimiter {
     }
 
     async acquire() {
-        return new Promise((resolve) => {
+        return prom((resolve) => {
             this.queue.push(resolve);
             this._processQueue();
         });
@@ -23,7 +23,7 @@ export class RateLimiter {
     _processQueue() {
         if (this.queue.length === 0) return;
 
-        const now = Date.now();
+        const now = nt();
 
         // Remove timestamps outside the window
         this.timestamps = this.timestamps.filter(
@@ -37,7 +37,7 @@ export class RateLimiter {
 
             // Process next in queue
             if (this.queue.length > 0) {
-                setTimeout(() => this._processQueue(), 0);
+                st(() => this._processQueue(), 0);
             }
         } else {
             // Calculate wait time
@@ -45,17 +45,17 @@ export class RateLimiter {
             const waitTime = this.windowMs - (now - oldestTimestamp) + 100;
 
             cl(
-                `[RateLimiter] Rate limit reached, waiting ${Math.ceil(
+                `[RateLimiter] Rate limit reached, waiting ${mcl(
                     waitTime / 1000
                 )}s`
             );
 
-            setTimeout(() => this._processQueue(), waitTime);
+            st(() => this._processQueue(), waitTime);
         }
     }
 
     getStats() {
-        const now = Date.now();
+        const now = nt();
         const activeRequests = this.timestamps.filter(
             (ts) => now - ts < this.windowMs
         ).length;
