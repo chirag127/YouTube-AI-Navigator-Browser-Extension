@@ -2,7 +2,7 @@ import { w } from '../utils/shortcuts/log.js';
 import { to as st, co as cst } from '../utils/shortcuts/global.js';
 import { sb as sbs } from '../utils/shortcuts/core.js';
 import { am, ajn, af } from '../utils/shortcuts/array.js';
-import { tr, rp } from '../utils/shortcuts/string.js';
+import { trm, rp } from '../utils/shortcuts/string.js';
 
 const DAB = 'https://sponsor.ajay.app';
 const DTB = 'https://dearrow-thumb.ajay.app';

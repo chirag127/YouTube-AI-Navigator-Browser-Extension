@@ -1,6 +1,7 @@
-import { rp as rep, tr } from '../../utils/shortcuts/string.js';
+import { rp as rep, trm } from '../../utils/shortcuts/string.js';
 import { l } from '../../utils/shortcuts/log.js';
-import { pf as pF, jp } from '../../utils/shortcuts/global.js';
+import { pf as pF } from '../../utils/shortcuts/global.js';
+import { jp } from '../../utils/shortcuts/core.js';
 import { afl, am, ajn } from '../../utils/shortcuts/array.js';
 import { ft as tf } from '../../utils/shortcuts/network.js';
 function dec(t) {

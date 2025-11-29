@@ -16,7 +16,7 @@ vi.mock('../extension/utils/shortcuts/network.js', () => ({
 }));
 
 vi.mock('../extension/utils/shortcuts/array.js', () => ({
-  fl: vi.fn((arr, fn) => arr.filter(fn)),
+  fltr: vi.fn((arr, fn) => arr.filter(fn)),
   mp: vi.fn((arr, fn) => arr.map(fn)),
 }));
 

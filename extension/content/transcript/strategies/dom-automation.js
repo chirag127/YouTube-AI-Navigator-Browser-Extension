@@ -1,5 +1,5 @@
-import { gu } from '../../../../utils/shortcuts/runtime.js';
-import { af } from '../../../../utils/shortcuts/array.js';
+import { gu } from '../../../utils/shortcuts/runtime.js';
+import { af } from '../../../utils/shortcuts/array.js';
 
 const { qs: $, qsa: $$ } = await import(gu('utils/shortcuts/dom.js'));
 const { log: l, err: e, dbg: d, nw, tr } = await import(gu('utils/shortcuts/core.js'));

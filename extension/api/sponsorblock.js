@@ -1,7 +1,7 @@
 import { l } from '../utils/shortcuts/log.js';
 import { cw } from '../utils/shortcuts/chrome.js';
 import { ok as ks } from '../utils/shortcuts/core.js';
-import { js } from '../utils/shortcuts/global.js';
+import { js } from '../utils/shortcuts/core.js';
 import { am, ajn, af } from '../utils/shortcuts/array.js';
 import { ce } from '../utils/shortcuts/dom.js';
 

@@ -1,8 +1,7 @@
 import { l, e } from '../../utils/shortcuts/log.js';
 import { afl, afn, aus, aic as inc, isa } from '../../utils/shortcuts/array.js';
-import { nw as nt } from '../../utils/shortcuts/core.js';
-import { js, jp } from '../../utils/shortcuts/global.js';
-import { lc } from '../../utils/shortcuts/string.js';
+import { nw as nt, jp, js } from '../../utils/shortcuts/core.js';
+import { lwc } from '../../utils/shortcuts/string.js';
 import { sl, slc } from '../../utils/shortcuts/storage.js';
 export class ComprehensiveHistory {
   constructor() {

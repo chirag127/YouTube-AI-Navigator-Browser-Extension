@@ -8,5 +8,8 @@ export const np = f => new Promise(f);
 export const pt = (p, t) =>
   Promise.race([p, new Promise((_, j) => setTimeout(() => j(new Error('TO')), t))]);
 export const dly = t => new Promise(r => setTimeout(r, t));
-export const raf = () => new Promise(r => requestAnimationFrame(r));
+export const raf = () =>
+  new Promise(r =>
+    typeof requestAnimationFrame === 'function' ? requestAnimationFrame(r) : setTimeout(r, 16)
+  );
 export const nxt = () => new Promise(r => setTimeout(r, 0));

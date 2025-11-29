@@ -1,8 +1,8 @@
-import { gu } from '../../../utils/shortcuts/runtime.js';
+import { gu } from '../../utils/shortcuts/runtime.js';
 
 const { l, w, e } = await import(gu('utils/shortcuts/log.js'));
 const { js } = await import(gu('utils/shortcuts/global.js'));
-const { ae, qs: $, qsa: $$ } = await import(gu('utils/shortcuts/dom.js'));
+const { ae, qsa: $$ } = await import(gu('utils/shortcuts/dom.js'));
 const { sg, slg: lg } = await import(gu('utils/shortcuts/storage.js'));
 const { ft } = await import(gu('utils/shortcuts/network.js'));
 const { mp, jn } = await import(gu('utils/shortcuts/array.js'));
@@ -85,9 +85,7 @@ class CommentsExtractor {
     return null;
   }
   async scrollToComments() {
-    const { getScrollManager } = await import(
-      gu('content/utils/scroll-manager.js')
-    );
+    const { getScrollManager } = await import(gu('content/utils/scroll-manager.js'));
     const sm = getScrollManager();
     await sm.scrollToComments();
   }

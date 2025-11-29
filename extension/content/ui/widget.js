@@ -1,5 +1,5 @@
-import { gu } from '../../../utils/shortcuts/runtime.js';
-import { af } from '../../../utils/shortcuts/array.js';
+import { gu } from '../../utils/shortcuts/runtime.js';
+import { af } from '../../utils/shortcuts/array.js';
 
 const { findSecondaryColumn, isWidgetProperlyVisible } = await import(gu('content/utils/dom.js'));
 const { initTabs } = await import(gu('content/ui/tabs.js'));
@@ -173,10 +173,7 @@ function setupObservers(c) {
           st(() => reattachWidget(), 100);
           return;
         }
-        if (
-          c.firstChild !== widgetContainer &&
-          !af(mu.addedNodes).includes(widgetContainer)
-        )
+        if (c.firstChild !== widgetContainer && !af(mu.addedNodes).includes(widgetContainer))
           ensureWidgetAtTop(c);
       }
     }

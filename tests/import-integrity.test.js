@@ -37,7 +37,8 @@ const extractImports = c => {
 
 const extractExports = c => {
   const r = [];
-  const namedRe = /export\s+(?:const|let|var|async\s+function|function|class)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
+  const namedRe =
+    /export\s+(?:const|let|var|async\s+function|function|class)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
   const destructRe = /export\s+{([^}]+)}/g;
   let m;
   while ((m = namedRe.exec(c))) r.push(m[1]);

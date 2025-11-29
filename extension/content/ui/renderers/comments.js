@@ -63,15 +63,27 @@ function scrollBackToTop(sn = true) {
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
   void document.body.offsetHeight;
-  requestAnimationFrame(() => {
-    if (window.scrollY > 0) {
-      w('[CR] Scroll fail, retry');
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }
-    l('[CR] Final scroll:', window.scrollY);
-  });
+  if (typeof requestAnimationFrame === 'function') {
+    requestAnimationFrame(() => {
+      if (window.scrollY > 0) {
+        w('[CR] Scroll fail, retry');
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }
+      l('[CR] Final scroll:', window.scrollY);
+    });
+  } else {
+    setTimeout(() => {
+      if (window.scrollY > 0) {
+        w('[CR] Scroll fail, retry');
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }
+      l('[CR] Final scroll:', window.scrollY);
+    }, 16);
+  }
   if (sn) showScrollNotification();
 }
 function showScrollNotification() {

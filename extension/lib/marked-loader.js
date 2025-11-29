@@ -1,4 +1,4 @@
-import { rp, sw } from '../utils/shortcuts/string.js';
+import { rp, sws } from '../utils/shortcuts/string.js';
 
 export async function parseMarkdown(m) {
   if (!m) return '';
@@ -29,7 +29,7 @@ export async function parseMarkdown(m) {
   h = rp(h, /^\d+\. (.+)$/gim, '<li>$1</li>');
   h = rp(h, /\n\n/g, '</p><p>');
   h = rp(h, /\n/g, '<br>');
-  if (!sw(h, '<')) h = `<p>${h}</p>`;
+  if (!sws(h, '<')) h = `<p>${h}</p>`;
   return h;
 }
 export async function loadMarked() {

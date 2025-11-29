@@ -1,4 +1,4 @@
-import { js } from '../../utils/shortcuts/global.js';
+import { js } from '../../utils/shortcuts/core.js';
 import { rp as rep } from '../../utils/shortcuts/string.js';
 import { isa } from '../../utils/shortcuts/array.js';
 

@@ -1,15 +1,14 @@
 export const wn = chrome.windows;
-export const loc = location;
+export const loc = typeof location !== 'undefined' ? location : null;
 export const to = setTimeout;
 export const co = clearTimeout;
-export const rAF = requestAnimationFrame;
-export const jp = JSON.parse;
-export const js = JSON.stringify;
+export const rAF =
+  typeof requestAnimationFrame === 'function' ? requestAnimationFrame : cb => setTimeout(cb, 16);
 export const pi = parseInt;
 export const pf = parseFloat;
-export const cf = confirm;
-export const al = alert;
-export const pm = prompt;
+export const cf = typeof confirm === 'function' ? confirm : () => false;
+export const al = typeof alert === 'function' ? alert : () => { };
+export const pm = typeof prompt === 'function' ? prompt : () => null;
 export const en = encodeURIComponent;
 export const de = decodeURIComponent;
 export const si = setInterval;

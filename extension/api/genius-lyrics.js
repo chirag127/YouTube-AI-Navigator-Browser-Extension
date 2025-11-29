@@ -1,7 +1,7 @@
 import { l, w } from '../utils/shortcuts/log.js';
 import { en as enc } from '../utils/shortcuts/global.js';
 import { tf as ftx, jf as fj } from '../utils/shortcuts/network.js';
-import { rp, tr } from '../utils/shortcuts/string.js';
+import { rp, trm } from '../utils/shortcuts/string.js';
 import { am, ajn } from '../utils/shortcuts/array.js';
 
 export class GeniusLyricsAPI {

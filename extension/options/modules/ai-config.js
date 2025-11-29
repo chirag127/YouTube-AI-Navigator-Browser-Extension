@@ -1,8 +1,7 @@
 import { ModelManager } from '../../api/gemini.js';
 import { qs as i, on, ap, tc, ih, rc, v as vl, ce as cr } from '../../utils/shortcuts/dom.js';
-import { isS } from '../../utils/shortcuts/core.js';
-import { jp, js } from '../../utils/shortcuts/global.js';
-import { inc, rp, tr, sw } from '../../utils/shortcuts/string.js';
+import { isS, jp, js } from '../../utils/shortcuts/core.js';
+import { inc, rp, trm, sws } from '../../utils/shortcuts/string.js';
 import { afe } from '../../utils/shortcuts/array.js';
 import { ft } from '../../utils/shortcuts/network.js';
 export class AIConfig {

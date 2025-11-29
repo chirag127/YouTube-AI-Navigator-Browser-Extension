@@ -1,6 +1,7 @@
 export const mx = Math.max;
 export const mn = Math.min;
 export const flr = Math.floor;
+export const fl = Math.floor;
 export const cl = Math.ceil;
 export const rnd = Math.round;
 export const ab = Math.abs;
@@ -9,7 +10,7 @@ export const mpi = Math.PI;
 export const sq = Math.sqrt;
 export const pw = Math.pow;
 export const trc = Math.trunc;
-export const sg = Math.sign;
+export const sgn = Math.sign;
 export const im = Math.imul;
 export const clz = Math.clz32;
 export const f32 = Math.fround;

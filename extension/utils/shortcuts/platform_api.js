@@ -1,6 +1,6 @@
 export const n = navigator;
-export const ls = localStorage;
-export const ss = sessionStorage;
+export const lcs = localStorage;
+export const ses = sessionStorage;
 export const hs = history;
 export const caf = cancelAnimationFrame;
 export const ric = requestIdleCallback;
@@ -16,6 +16,6 @@ export const op = open;
 export const cls = close;
 export const prt = print;
 export const stp = stop;
-export const sc = scroll;
+export const scr = scroll;
 export const scb = scrollBy;
 export const st2 = scrollTo;

@@ -1,4 +1,4 @@
-export const d = document;
+export const d = typeof document !== 'undefined' ? document : null;
 export const qs = (s, p = d) => p.querySelector(s);
 export const qsa = (s, p = d) => p.querySelectorAll(s);
 export const qa = (s, p = d) => [...p.querySelectorAll(s)];
@@ -33,8 +33,8 @@ export const ih = html;
 export const v = e => e.value;
 export const rc = (e, c) => e.classList.remove(c);
 export const ac = (e, c) => e.classList.add(c);
-export const dc = document;
-export const tx = t => document.createTextNode(t);
+export const dc = typeof document !== 'undefined' ? document : null;
+export const tx = t => d?.createTextNode(t);
 export const fc = (n, f) => n.forEach(f);
 
 export const ge = id;

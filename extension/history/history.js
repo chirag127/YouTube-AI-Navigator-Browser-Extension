@@ -2,11 +2,11 @@ import { StorageService } from '../services/storage/index.js';
 import { parseMarkdown } from '../lib/marked-loader.js';
 import { ge, on, ce, $ } from '../utils/shortcuts/dom.js';
 import { cht as tab } from '../utils/shortcuts/chrome.js';
-import { jp, js } from '../utils/shortcuts/global.js';
+import { jp, js } from '../utils/shortcuts/core.js';
 import { mf as mfl } from '../utils/shortcuts/math.js';
 import { pI } from '../utils/shortcuts/global.js';
 import { pd } from '../utils/shortcuts/string.js';
-import { lc } from '../utils/shortcuts/string.js';
+import { lwc } from '../utils/shortcuts/string.js';
 import { ic as inc } from '../utils/shortcuts/string.js';
 import { afl, isa } from '../utils/shortcuts/array.js';
 

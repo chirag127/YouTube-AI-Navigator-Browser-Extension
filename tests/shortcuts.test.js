@@ -69,10 +69,6 @@ describe('Shortcuts - Global', () => {
     expect(co).toBe(clearTimeout);
   });
 
-  it('should export jp', async () => {
-    const { jp } = await import('../extension/utils/shortcuts/global.js');
-    expect(jp).toBe(JSON.parse);
-  });
 });
 
 describe('Shortcuts - String', () => {
