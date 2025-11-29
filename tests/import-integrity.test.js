@@ -19,10 +19,13 @@ const extractImports = c => {
   const dynamicRe = /const\s+{([^}]+)}\s+=\s+await\s+import\([^)]+\)/g;
   let m;
   while ((m = staticRe.exec(c))) {
-    const imports = m[1].split(',').map(i => {
-      const parts = i.trim().split(/\s+as\s+/);
-      return parts[0].trim();
-    });
+    const imports = m[1]
+      .split(',')
+      .map(i => {
+        const parts = i.trim().split(/\s+as\s+/);
+        return parts[0].trim();
+      })
+      .filter(Boolean);
     r.push({ imports, path: m[2] });
   }
   while ((m = dynamicRe.exec(c))) {

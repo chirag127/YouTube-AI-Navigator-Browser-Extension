@@ -1,3 +1,5 @@
+import { l } from '../../utils/shortcuts/log.js';
+
 export const comments = comments => {
   if (!comments || comments.length === 0) {
     return `No comments available to analyze.`;
@@ -11,7 +13,7 @@ export const comments = comments => {
     })
     .join('\n');
 
-  console.log('[Comments Prompt] Formatted text:', text);
+  l('[Comments Prompt] Formatted text:', text);
 
   return `
     Task: Analyze the sentiment and key themes of these YouTube comments.

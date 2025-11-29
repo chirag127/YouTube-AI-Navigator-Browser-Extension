@@ -13,6 +13,8 @@ import { isS, jp, js, sw } from '../../utils/shortcuts/core.js';
 import { inc, rp, trm } from '../../utils/shortcuts/string.js';
 import { afe } from '../../utils/shortcuts/array.js';
 import { ft } from '../../utils/shortcuts/network.js';
+import { e } from '../../utils/shortcuts/log.js';
+import { sls } from '../../utils/shortcuts/storage.js';
 export class AIConfig {
   constructor(s, a) {
     this.s = s;
@@ -37,7 +39,7 @@ export class AIConfig {
     if (els.ak)
       on(els.ak, 'change', async e => {
         const k = trm(vl(e.target));
-        await chrome.storage.local.set({ GAK: k });
+        await sls('GAK', k);
         await this.a.save('ai.GAK', k);
         this.mm = new ModelManager(k, 'https://generativelanguage.googleapis.com/v1beta');
         if (k) await this.loadModels(els.ms);
@@ -88,7 +90,7 @@ export class AIConfig {
         await this.a.save('ai.model', m[0]);
       }
     } catch (x) {
-      console.error('Failed to fetch models:', x);
+      e('Failed to fetch models:', x);
       ih(sel, '<option value="" disabled>Failed to load</option>');
       this.a.notifications?.error(`Failed: ${x.message}`);
     } finally {

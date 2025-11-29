@@ -1,5 +1,5 @@
 import { ge, on, $$ } from '../utils/shortcuts/dom.js';
-import { sg, ss } from '../utils/shortcuts/storage.js';
+import { sg, ss, sls } from '../utils/shortcuts/storage.js';
 import { nw as nt, js } from '../utils/shortcuts/core.js';
 import { ft } from '../utils/shortcuts/network.js';
 import { cht as ctab } from '../utils/shortcuts/chrome.js';
@@ -110,7 +110,7 @@ class OnboardingFlow {
         throw new Error(em);
       }
       await this.saveSettings('ai.GAK', k);
-      await chrome.storage.local.set({ GAK: k });
+      await sls('GAK', k);
       s.className = 'status-message success';
       s.textContent = '✓ Connection successful! API key saved.';
       st(() => this.nextStep(), 1500);
