@@ -1,6 +1,5 @@
 import { sl } from '../../utils/shortcuts/storage.js';
-import { nw as nt } from '../../utils/shortcuts/core.js';
-import { lwc } from '../../utils/shortcuts/string.js';
+import { nw as nt, lc } from '../../utils/shortcuts/core.js';
 import { aic as inc } from '../../utils/shortcuts/array.js';
 
 export async function getHistory() {

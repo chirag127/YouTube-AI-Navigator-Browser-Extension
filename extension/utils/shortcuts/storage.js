@@ -5,7 +5,7 @@ export const sc = () => chrome.storage.sync.clear();
 export const slg = k => chrome.storage.local.get(k);
 export const sls = (k, v) => chrome.storage.local.set(typeof k === 'string' ? { [k]: v } : k);
 export const slr = k => chrome.storage.local.remove(k);
-export const slc = () => chrome.storage.local.clear();
+export const slcc = () => chrome.storage.local.clear();
 
 export const sy = (k, v) => {
   if (v === null) return sr(k);

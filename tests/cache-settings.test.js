@@ -7,11 +7,11 @@ vi.mock('../extension/utils/shortcuts/dom.js', () => ({
 }));
 
 vi.mock('../extension/utils/shortcuts/storage.js', () => ({
-  slc: vi.fn(),
+  slcc: vi.fn(),
 }));
 
 import { qs, on } from '../extension/utils/shortcuts/dom.js';
-import { slc } from '../extension/utils/shortcuts/storage.js';
+import { slcc as slc } from '../extension/utils/shortcuts/storage.js';
 
 describe('CacheSettings', () => {
   let cacheSettings;

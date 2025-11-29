@@ -51,7 +51,7 @@ export class GeniusLyricsAPI {
     if (!html) return null;
     const lyricsMatch = html.match(/<div[^>]*data-lyrics-container="true"[^>]*>(.*?)<\/div>/gs);
     if (lyricsMatch) {
-      return tr(
+      return trm(
         ajn(
           am(lyricsMatch, div => {
             let text = rp(div, /<br\s*\/?>/gi, '\n');
@@ -66,7 +66,7 @@ export class GeniusLyricsAPI {
   }
 
   cleanTitle(title) {
-    return tr(
+    return trm(
       rp(
         rp(
           rp(title, /[([](?:official|video|audio|lyric|lyrics|hq|hd|4k|mv|music video)[)\]]/gi, ''),

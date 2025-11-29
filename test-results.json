@@ -1,1 +1,237 @@
-{"numTotalTestSuites":23,"numPassedTestSuites":0,"numFailedTestSuites":23,"numPendingTestSuites":0,"numTotalTests":3,"numPassedTests":2,"numFailedTests":1,"numPendingTests":0,"numTodoTests":0,"snapshot":{"added":0,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0,"didUpdate":false},"startTime":1764441700599,"success":false,"testResults":[{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/ai-config.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/ai-config.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/cache-settings.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/cache-settings.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/chunking-service.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/chunking-service.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/content-main.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/content-main.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/error-handler.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/error-handler.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/gemini-client.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/gemini-client.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/http-client.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/http-client.test.js"},{"assertionResults":[{"ancestorTitles":["Import Integrity"],"fullName":"Import Integrity validates all imports have matching exports","status":"passed","title":"validates all imports have matching exports","duration":418.63949999999977,"failureMessages":[],"meta":{}},{"ancestorTitles":["Import Integrity"],"fullName":"Import Integrity validates no default exports","status":"passed","title":"validates no default exports","duration":59.54289999999992,"failureMessages":[],"meta":{}},{"ancestorTitles":["Import Integrity"],"fullName":"Import Integrity validates no duplicate shortcut names","status":"failed","title":"validates no duplicate shortcut names","duration":19.63130000000001,"failureMessages":["Error: Duplicate shortcut 'slc' in extension\\utils\\shortcuts\\string.js and extension\\utils\\shortcuts\\storage.js\n    at C:/AM/GitHub/YouTube-AI-Navigator/tests/import-integrity.test.js:100:17\n    at Array.forEach (<anonymous>)\n    at C:/AM/GitHub/YouTube-AI-Navigator/tests/import-integrity.test.js:98:15\n    at Array.forEach (<anonymous>)\n    at C:/AM/GitHub/YouTube-AI-Navigator/tests/import-integrity.test.js:95:15\n    at file:///c:/AM/GitHub/YouTube-AI-Navigator/node_modules/@vitest/runner/dist/index.js:145:11\n    at file:///c:/AM/GitHub/YouTube-AI-Navigator/node_modules/@vitest/runner/dist/index.js:919:26\n    at file:///c:/AM/GitHub/YouTube-AI-Navigator/node_modules/@vitest/runner/dist/index.js:1244:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///c:/AM/GitHub/YouTube-AI-Navigator/node_modules/@vitest/runner/dist/index.js:1210:10)"],"meta":{}}],"startTime":1764441703553,"endTime":1764441704051.6313,"status":"failed","message":"","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/import-integrity.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/import-validation.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/import-validation.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/integrity.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/integrity.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/model-manager.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/model-manager.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/notification-manager.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/notification-manager.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/options.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/options.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/popup.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/popup.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/rate-limiter.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/rate-limiter.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/segments.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/segments.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/settings-manager.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/settings-manager.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/shortcuts.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/shortcuts.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/sidepanel.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/sidepanel.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/storage-service.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/storage-service.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/timestamp-validator.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/timestamp-validator.test.js"},{"assertionResults":[],"startTime":1764441700599,"endTime":1764441700599,"status":"failed","message":"No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/video-detector.test.js","name":"c:/AM/GitHub/YouTube-AI-Navigator/tests/video-detector.test.js"}]}
+{
+  "numTotalTestSuites": 23,
+  "numPassedTestSuites": 0,
+  "numFailedTestSuites": 23,
+  "numPendingTestSuites": 0,
+  "numTotalTests": 3,
+  "numPassedTests": 2,
+  "numFailedTests": 1,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "snapshot": {
+    "added": 0,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0,
+    "didUpdate": false
+  },
+  "startTime": 1764442024410,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/ai-config.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/ai-config.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/cache-settings.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/cache-settings.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/chunking-service.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/chunking-service.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/content-main.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/content-main.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/error-handler.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/error-handler.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/gemini-client.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/gemini-client.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/http-client.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/http-client.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Import Integrity"],
+          "fullName": "Import Integrity validates all imports have matching exports",
+          "status": "passed",
+          "title": "validates all imports have matching exports",
+          "duration": 149.1153999999999,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Import Integrity"],
+          "fullName": "Import Integrity validates no default exports",
+          "status": "passed",
+          "title": "validates no default exports",
+          "duration": 42.951500000000124,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Import Integrity"],
+          "fullName": "Import Integrity validates no duplicate shortcut names",
+          "status": "failed",
+          "title": "validates no duplicate shortcut names",
+          "duration": 12.637199999999893,
+          "failureMessages": [
+            "Error: Duplicate shortcut 'now' in extension\\utils\\shortcuts\\time.js and extension\\utils\\shortcuts\\core.js\n    at C:/AM/GitHub/YouTube-AI-Navigator/tests/import-integrity.test.js:100:17\n    at Array.forEach (<anonymous>)\n    at C:/AM/GitHub/YouTube-AI-Navigator/tests/import-integrity.test.js:98:15\n    at Array.forEach (<anonymous>)\n    at C:/AM/GitHub/YouTube-AI-Navigator/tests/import-integrity.test.js:95:15\n    at file:///c:/AM/GitHub/YouTube-AI-Navigator/node_modules/@vitest/runner/dist/index.js:145:11\n    at file:///c:/AM/GitHub/YouTube-AI-Navigator/node_modules/@vitest/runner/dist/index.js:919:26\n    at file:///c:/AM/GitHub/YouTube-AI-Navigator/node_modules/@vitest/runner/dist/index.js:1244:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///c:/AM/GitHub/YouTube-AI-Navigator/node_modules/@vitest/runner/dist/index.js:1210:10)"
+          ],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764442026317,
+      "endTime": 1764442026522.6372,
+      "status": "failed",
+      "message": "",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/import-integrity.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/import-validation.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/import-validation.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/integrity.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/integrity.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/model-manager.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/model-manager.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/notification-manager.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/notification-manager.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/options.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/options.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/popup.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/popup.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/rate-limiter.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/rate-limiter.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/segments.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/segments.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/settings-manager.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/settings-manager.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/shortcuts.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/shortcuts.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/sidepanel.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/sidepanel.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/storage-service.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/storage-service.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/timestamp-validator.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/timestamp-validator.test.js"
+    },
+    {
+      "assertionResults": [],
+      "startTime": 1764442024410,
+      "endTime": 1764442024410,
+      "status": "failed",
+      "message": "No test suite found in file c:/AM/GitHub/YouTube-AI-Navigator/tests/video-detector.test.js",
+      "name": "c:/AM/GitHub/YouTube-AI-Navigator/tests/video-detector.test.js"
+    }
+  ]
+}

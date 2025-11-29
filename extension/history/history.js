@@ -5,8 +5,7 @@ import { cht as tab } from '../utils/shortcuts/chrome.js';
 import { jp, js } from '../utils/shortcuts/core.js';
 import { mf as mfl } from '../utils/shortcuts/math.js';
 import { pI } from '../utils/shortcuts/global.js';
-import { pd } from '../utils/shortcuts/string.js';
-import { lwc } from '../utils/shortcuts/string.js';
+import { pd, lwc } from '../utils/shortcuts/string.js';
 import { ic as inc } from '../utils/shortcuts/string.js';
 import { afl, isa } from '../utils/shortcuts/array.js';
 
@@ -42,12 +41,12 @@ async function loadHistory() {
   renderList(hd);
 }
 async function handleSearch(e) {
-  const q = lc(e.target.value);
+  const q = lwc(e.target.value);
   if (!q) {
     renderList(hd);
     return;
   }
-  const f = afl(hd, x => inc(lc(x.title || ''), q) || inc(lc(x.author || ''), q));
+  const f = afl(hd, x => inc(lwc(x.title || ''), q) || inc(lwc(x.author || ''), q));
   renderList(f);
 }
 function renderList(items) {

@@ -1,7 +1,16 @@
 import { ModelManager } from '../../api/gemini.js';
-import { qs as i, on, ap, tc, ih, rc, v as vl, ce as cr } from '../../utils/shortcuts/dom.js';
-import { isS, jp, js } from '../../utils/shortcuts/core.js';
-import { inc, rp, trm, sws } from '../../utils/shortcuts/string.js';
+import {
+  qs as i,
+  on,
+  ap,
+  txc as tc,
+  ih,
+  rc,
+  v as vl,
+  ce as cr,
+} from '../../utils/shortcuts/dom.js';
+import { isS, jp, js, sw } from '../../utils/shortcuts/core.js';
+import { inc, rp, trm } from '../../utils/shortcuts/string.js';
 import { afe } from '../../utils/shortcuts/array.js';
 import { ft } from '../../utils/shortcuts/network.js';
 export class AIConfig {
@@ -27,7 +36,8 @@ export class AIConfig {
     };
     if (els.ak)
       on(els.ak, 'change', async e => {
-        const k = tr(vl(e.target));
+        const k = trm(vl(e.target));
+        await chrome.storage.local.set({ geminiApiKey: k });
         await this.a.save('ai.apiKey', k);
         this.mm = new ModelManager(k, 'https://generativelanguage.googleapis.com/v1beta');
         if (k) await this.loadModels(els.ms);

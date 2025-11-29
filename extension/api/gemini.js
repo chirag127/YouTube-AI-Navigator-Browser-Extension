@@ -52,10 +52,10 @@ export class GeminiService {
       const r = await this.generateContent(prompts.segments(ctx));
       l('[GS] Raw len:', r.length);
       l('[GS] 1st 1k:', sub(r, 0, 1000));
-      let cr = tr(r);
+      let cr = trm(r);
       cr = rep(cr, /```json\s*/g, '');
       cr = rep(cr, /```\s*/g, '');
-      cr = tr(cr);
+      cr = trm(cr);
       let jm = cr.match(/\{[\s\S]*\}/);
       if (!jm) {
         e('[GS] No JSON:', r);
@@ -92,7 +92,7 @@ export class GeminiService {
   _extractSection(t, sn) {
     const r = new RegExp(`## ${sn}\\s*([\\s\\S]*?)(?=##|$)`, 'i');
     const m = t.match(r);
-    return m ? tr(m[1]) : null;
+    return m ? trm(m[1]) : null;
   }
   _expandLabel(sc) {
     if (!sc) return null;

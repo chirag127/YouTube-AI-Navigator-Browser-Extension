@@ -28,7 +28,7 @@ export const wfe = (s, t = 500) =>
   });
 export const gebi = id;
 export const ap = (p, c) => p?.appendChild(c);
-export const tc = txt;
+export const txc = txt;
 export const ih = html;
 export const v = e => e.value;
 export const rc = (e, c) => e.classList.remove(c);

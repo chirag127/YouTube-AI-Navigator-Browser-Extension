@@ -1,5 +1,5 @@
 import { qs as i, on } from '../../utils/shortcuts/dom.js';
-import { slc as lcl } from '../../utils/shortcuts/storage.js';
+import { slcc as lcl } from '../../utils/shortcuts/storage.js';
 export class CacheSettings {
   constructor(s, a) {
     this.s = s;

@@ -68,7 +68,6 @@ describe('Shortcuts - Global', () => {
     const { co } = await import('../extension/utils/shortcuts/global.js');
     expect(co).toBe(clearTimeout);
   });
-
 });
 
 describe('Shortcuts - String', () => {
@@ -99,8 +98,8 @@ describe('Shortcuts - Math', () => {
     expect(mn).toBe(Math.min);
   });
 
-  it('should export fl', async () => {
-    const { fl } = await import('../extension/utils/shortcuts/math.js');
-    expect(fl).toBe(Math.floor);
+  it('should export flr', async () => {
+    const { flr } = await import('../extension/utils/shortcuts/math.js');
+    expect(flr).toBe(Math.floor);
   });
 });

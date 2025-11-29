@@ -114,7 +114,7 @@ function pbr(d) {
 }
 function ct(t) {
   if (!t) return '';
-  return tr(rp(t, />\s*/g, ''));
+  return trm(rp(t, />\s*/g, ''));
 }
 async function gsp(vid) {
   const e = new TextEncoder();

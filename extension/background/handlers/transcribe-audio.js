@@ -25,7 +25,7 @@ export async function handleTranscribeAudio(req, rsp) {
     const txt = await c.generateContent(parts, m);
     let seg = [];
     try {
-      const cln = tr(rep(rep(txt, /```json/g, ''), /```/g, ''));
+      const cln = trm(rep(rep(txt, /```json/g, ''), /```/g, ''));
       seg = jp(cln);
     } catch (x) {
       w('[TranscribeAudio] JSON parse failed, trying to extract array', x);

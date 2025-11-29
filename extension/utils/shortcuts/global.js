@@ -7,7 +7,7 @@ export const rAF =
 export const pi = parseInt;
 export const pf = parseFloat;
 export const cf = typeof confirm === 'function' ? confirm : () => false;
-export const al = typeof alert === 'function' ? alert : () => { };
+export const al = typeof alert === 'function' ? alert : () => {};
 export const pm = typeof prompt === 'function' ? prompt : () => null;
 export const en = encodeURIComponent;
 export const de = decodeURIComponent;

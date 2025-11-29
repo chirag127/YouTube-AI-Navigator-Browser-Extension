@@ -1,6 +1,6 @@
 const gu = p => chrome.runtime.getURL(p);
 
-const { fl: mf } = await import(gu('utils/shortcuts/math.js'));
+const { flr: mf } = await import(gu('utils/shortcuts/math.js'));
 export function formatTime(s) {
   const h = mf(s / 3600),
     m = mf((s % 3600) / 60),

@@ -1,7 +1,6 @@
 export const mx = Math.max;
 export const mn = Math.min;
 export const flr = Math.floor;
-export const fl = Math.floor;
 export const cl = Math.ceil;
 export const rnd = Math.round;
 export const ab = Math.abs;

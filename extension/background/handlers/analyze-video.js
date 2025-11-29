@@ -12,7 +12,7 @@ import { inc as ic, lwc } from '../../utils/shortcuts/string.js';
 import { np, pc } from '../../utils/shortcuts/async.js';
 let ka = null;
 const ska = () => {
-  if (!ka) ka = si(() => cr.getPlatformInfo(() => { }), 2e4);
+  if (!ka) ka = si(() => cr.getPlatformInfo(() => {}), 2e4);
 };
 const stka = () => {
   if (ka) {
@@ -53,8 +53,8 @@ export async function handleAnalyzeVideo(q, r) {
     let ly = null;
     const im =
       m?.category === 'Music' ||
-      ic(lc(m?.title || ''), 'official video') ||
-      ic(lc(m?.title || ''), 'lyrics');
+      ic(lwc(m?.title || ''), 'official video') ||
+      ic(lwc(m?.title || ''), 'lyrics');
     if (im || !t?.length) {
       try {
         ly = await gl.getLyrics(m.title, m.author);

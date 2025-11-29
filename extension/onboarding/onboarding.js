@@ -110,6 +110,7 @@ class OnboardingFlow {
         throw new Error(em);
       }
       await this.saveSettings('ai.apiKey', k);
+      await chrome.storage.local.set({ geminiApiKey: k });
       s.className = 'status-message success';
       s.textContent = '✓ Connection successful! API key saved.';
       st(() => this.nextStep(), 1500);

@@ -21,7 +21,7 @@ function pXML(x) {
   let m;
   while ((m = r.exec(x)) !== null) {
     const t = dec(m[3]);
-    if (tr(t)) s.push({ start: pF(m[1]), duration: m[2] ? pF(m[2]) : 0, text: t });
+    if (trm(t)) s.push({ start: pF(m[1]), duration: m[2] ? pF(m[2]) : 0, text: t });
   }
   return s;
 }

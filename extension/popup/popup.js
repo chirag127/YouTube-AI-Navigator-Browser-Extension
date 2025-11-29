@@ -24,14 +24,12 @@ async function checkApi() {
     if (k) {
       a.innerHTML = '<span>✅ Configured</span>';
       a.className = 'value success';
+      g.style.display = 'none';
       return true;
     }
     a.innerHTML = '<span>⚠️ Not configured</span>';
     a.className = 'value warning';
-    if (!s.onboardingCompleted) {
-      g.style.display = 'block';
-      g.onclick = () => oop();
-    }
+    g.style.display = 'block';
     return false;
   } catch (x) {
     w('API check failed:', x);
@@ -68,6 +66,7 @@ b.onclick = async () => {
 };
 h.onclick = () => tc({ url: url('history/history.html') });
 o.onclick = () => oop();
+g.onclick = () => oop();
 (async () => {
   await checkApi();
   await checkPage();
