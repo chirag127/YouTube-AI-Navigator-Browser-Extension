@@ -1,6 +1,6 @@
 import { rep, tr, pF, jp, fl, mp, jn } from '../../utils/shortcuts/core.js';
-import { tf } from '../../utils/shortcuts/network.js';
-import { l } from '../../utils/../../utils/shortcuts/log.js';
+import { ft as tf } from '../../utils/shortcuts/network.js';
+import { l } from '../../utils/shortcuts/log.js';
 
 function dec(t) {
   const e = {

@@ -9,7 +9,9 @@
     "lint:fix": "eslint \"extension/**/*.js\" --fix"
   },
   "devDependencies": {
+    "eslint": "^8.55.0",
+    "jsdom": "^27.2.0",
     "prettier": "^3.1.0",
-    "eslint": "^8.55.0"
+    "vitest": "^4.0.14"
   }
 }

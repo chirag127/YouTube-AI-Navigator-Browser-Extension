@@ -1,5 +1,5 @@
 import { GeminiClient } from '../../api/gemini-client.js';
-import { lg as l, wn as w, er as e } from '../../utils/shortcuts/log.js';
+import { l, w, e } from '../../utils/shortcuts/log.js';
 import { jp, E } from '../../utils/shortcuts/core.js';
 import { rep, tr } from '../../utils/shortcuts/string.js';
 import { sg } from '../../utils/shortcuts/storage.js';

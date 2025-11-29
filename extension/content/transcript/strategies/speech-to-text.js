@@ -1,18 +1,18 @@
-import { lg, wn } from '../../../utils/shortcuts/log.js';
+import { l, w } from '../../../utils/shortcuts/log.js';
 import { msg } from '../../../utils/shortcuts/runtime.js';
 
 export const name = 'Speech to Text';
 export const priority = 30;
 
 export const extract = async (vid, lang = 'en') => {
-  lg(`[STT] Starting for ${vid}...`);
+  l(`[STT] Starting for ${vid}...`);
   const u = getAudioUrl();
   if (!u) throw new Error('No audio URL found');
 
-  lg('[STT] Requesting transcription...');
+  l('[STT] Requesting transcription...');
   const r = await msg({ action: 'TRANSCRIBE_AUDIO', audioUrl: u, lang });
   if (r?.success && r.segments) {
-    lg(`[STT] ✅ Success: ${r.segments.length} segments`);
+    l(`[STT] ✅ Success: ${r.segments.length} segments`);
     return r.segments;
   }
   throw new Error(r?.error || 'STT failed');
@@ -26,7 +26,7 @@ const getAudioUrl = () => {
     const af = f.find(x => x.mimeType.includes('audio/mp4') || x.mimeType.includes('audio/webm'));
     return af?.url || null;
   } catch (e) {
-    wn('[STT] Failed to extract audio URL:', e);
+    w('[STT] Failed to extract audio URL:', e);
     return null;
   }
 };

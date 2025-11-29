@@ -1,11 +1,11 @@
 import { l, e, w } from '../utils/shortcuts/log.js';
-import { rt as cr, url, rgm as rg } from '../utils/shortcuts/runtime.js';
-import { tab } from '../utils/shortcuts/tabs.js';
+import { rt as cr, url, rgm as rg, oop } from '../utils/shortcuts/runtime.js';
+import { tc } from '../utils/shortcuts/tabs.js';
 cr.onInstalled.addListener(async d => {
   if (d.reason === 'install') {
     l('YAM installed');
     try {
-      await tab({ url: url('onboarding/onboarding.html') });
+      await tc({ url: url('onboarding/onboarding.html') });
     } catch (x) {
       e('Onboard:', x);
     }
@@ -104,7 +104,7 @@ cr.onMessage.addListener((q, s, r) => {
           break;
         }
         case 'OPEN_OPTIONS':
-          cr.openOptionsPage();
+          oop();
           r({ success: true });
           break;
         default:

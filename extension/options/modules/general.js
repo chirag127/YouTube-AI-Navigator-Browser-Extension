@@ -1,5 +1,6 @@
-import { id as i, on } from '../../utils/shortcuts/dom.js';
+import { id as i, on, ce, $$ } from '../../utils/shortcuts/dom.js';
 import { slr as lr } from '../../utils/shortcuts/storage.js';
+import { cf } from '../../utils/shortcuts/platform_api.js';
 
 export class GeneralSettings {
   constructor(s, a) {
@@ -31,7 +32,7 @@ export class GeneralSettings {
     const ch = i('clearHistory');
     if (ch)
       on(ch, 'click', async () => {
-        if (confirm('Clear all history? This cannot be undone.')) {
+        if (cf('Clear all history? This cannot be undone.')) {
           await lr('comprehensive_history');
           this.a.notifications?.success('History cleared');
         }
@@ -56,7 +57,7 @@ export class GeneralSettings {
     };
     order.forEach(key => {
       if (!names[key]) return;
-      const li = document.createElement('li');
+      const li = ce('li');
       li.className = 'sortable-item';
       li.draggable = true;
       li.dataset.key = key;
@@ -91,7 +92,7 @@ export class GeneralSettings {
       e.stopPropagation();
       if (this.dragSrc !== el) {
         const list = i('strategyList');
-        const items = [...list.querySelectorAll('.sortable-item')];
+        const items = [...$$('.sortable-item', list)];
         const srcIdx = items.indexOf(this.dragSrc);
         const tgtIdx = items.indexOf(el);
         if (srcIdx < tgtIdx) el.after(this.dragSrc);
@@ -102,7 +103,7 @@ export class GeneralSettings {
   }
   async saveOrder() {
     const list = i('strategyList');
-    const order = [...list.querySelectorAll('.sortable-item')].map(el => el.dataset.key);
+    const order = [...$$('.sortable-item', list)].map(el => el.dataset.key);
     await this.s.update('transcript.strategyOrder', order);
   }
 }

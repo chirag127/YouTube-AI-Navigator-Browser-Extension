@@ -18,7 +18,7 @@ import { ScrollSettings } from './modules/scroll-settings.js';
 import { on, id as i, ce, vs } from '../utils/shortcuts/dom.js';
 import { l } from '../utils/../../utils/shortcuts/log.js';
 import { url } from '../utils/shortcuts/runtime.js';
-import { tab } from '../utils/shortcuts/tabs.js';
+import { tc } from '../utils/shortcuts/tabs.js';
 
 on(document, 'DOMContentLoaded', async () => {
   l('[Options] Initializing...');
@@ -42,7 +42,7 @@ on(document, 'DOMContentLoaded', async () => {
   }
   startSetupBtn &&
     on(startSetupBtn, 'click', () => {
-      tab({ url: url('onboarding/onboarding.html') });
+      tc({ url: url('onboarding/onboarding.html') });
     });
   dismissBannerBtn &&
     on(dismissBannerBtn, 'click', () => {

@@ -55,4 +55,4 @@ class VideoCache {
     }
   }
 }
-export default new VideoCache();
+export const videoCache = new VideoCache();

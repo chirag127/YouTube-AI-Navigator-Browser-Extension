@@ -92,4 +92,4 @@ export class GeniusLyricsAPI {
   }
 }
 
-export default new GeniusLyricsAPI();
+export const geniusLyricsAPI = new GeniusLyricsAPI();

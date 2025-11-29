@@ -1,7 +1,10 @@
-export const msg = (m, c) => chrome.runtime.sendMessage(m, c);
-export const lis = l => chrome.runtime.onMessage.addListener(l);
-export const url = p => chrome.runtime.getURL(p);
-export const rt = chrome.runtime;
-export const rrl = () => chrome.runtime.reload();
-export const rgm = () => chrome.runtime.getManifest();
-export const oop = () => chrome.runtime.openOptionsPage();
+export const r = chrome.runtime;
+export const rt = r;
+export const rm = r.onMessage;
+export const lis = (l) => r.onMessage.addListener(l);
+export const rs = r.sendMessage;
+export const msg = (m, c) => r.sendMessage(m, c);
+export const ru = r.getURL;
+export const url = (p) => r.getURL(p);
+export const rgm = () => r.getManifest();
+export const oop = () => r.openOptionsPage();

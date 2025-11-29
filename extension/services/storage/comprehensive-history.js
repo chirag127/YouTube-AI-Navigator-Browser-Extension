@@ -1,4 +1,4 @@
-import { l, e } from '../../utils/../../utils/shortcuts/log.js';
+import { l, e } from '../../utils/shortcuts/log.js';
 import { fl, fn, us, ic as inc } from '../../utils/shortcuts/array.js';
 import { js, jp, nw as nt } from '../../utils/shortcuts/core.js';
 import { lc } from '../../utils/shortcuts/string.js';

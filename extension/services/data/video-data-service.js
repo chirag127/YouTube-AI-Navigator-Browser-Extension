@@ -1,4 +1,4 @@
-import vc from '../cache/video-cache.js';
+import { videoCache as vc } from '../cache/video-cache.js';
 import { msg } from '../../utils/shortcuts/runtime.js';
 import { l } from '../../utils/../../utils/shortcuts/log.js';
 
@@ -67,4 +67,4 @@ class VideoDataService {
     return vc.clear(id);
   }
 }
-export default new VideoDataService();
+export const videoDataService = new VideoDataService();

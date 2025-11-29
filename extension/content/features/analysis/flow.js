@@ -1,6 +1,6 @@
 import { state } from '../../core/state.js';
 import TranscriptExtractor from '../../transcript/extractor.js';
-import metadataExtractor from '../../metadata/extractor.js';
+import { metadataExtractor } from '../../metadata/extractor.js';
 import { getComments } from '../../handlers/comments.js';
 import { showLoading, showError } from '../../ui/components/loading.js';
 import { switchTab } from '../../ui/tabs.js';

@@ -1,6 +1,6 @@
 import { sg, ss } from './shortcuts/storage.js';
 import { url } from './shortcuts/runtime.js';
-import { tab } from './shortcuts/tabs.js';
+import { tc } from './shortcuts/tabs.js';
 import { w } from './shortcuts/log.js';
 
 export class OnboardingChecker {
@@ -16,7 +16,7 @@ export class OnboardingChecker {
     return !(await this.isCompleted());
   }
   static async openOnboarding() {
-    await tab({ url: url('onboarding/onboarding.html') });
+    await tc({ url: url('onboarding/onboarding.html') });
   }
   static async checkAndPrompt() {
     if (await this.shouldShowOnboarding()) {

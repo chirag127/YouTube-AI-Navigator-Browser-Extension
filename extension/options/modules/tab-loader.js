@@ -1,8 +1,9 @@
 import { url } from '../../utils/shortcuts/runtime.js';
 import { $ } from '../../utils/shortcuts/dom.js';
-import { l, e as ce2 } from '../../utils/../../utils/shortcuts/log.js';
+import { l, e as ce2 } from '../../utils/shortcuts/log.js';
 import { pa } from '../../utils/shortcuts/async.js';
 import { ok } from '../../utils/shortcuts/core.js';
+import { ft } from '../../utils/shortcuts/network.js';
 
 export class TabLoader {
   constructor() {
@@ -23,7 +24,7 @@ export class TabLoader {
     const p = this.tabs[id];
     if (!p) return false;
     try {
-      const h = await fetch(url(`options/${p}`)).then(r => r.text());
+      const h = await ft(url(`options/${p}`)).then(r => r.text());
       const c = $('.content-area');
       c.insertAdjacentHTML('beforeend', h);
       this.loaded.add(id);

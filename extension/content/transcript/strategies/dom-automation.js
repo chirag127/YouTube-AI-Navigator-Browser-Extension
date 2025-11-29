@@ -1,6 +1,6 @@
-import { $ } from '../../../utils/shortcuts/dom.js';
-import { lg, er, db } from '../../../utils/shortcuts/log.js';
-import { st } from '../../../utils/shortcuts/time.js';
+import { $, $$ } from '../../../utils/shortcuts/dom.js';
+import { l, e, d } from '../../../utils/shortcuts/log.js';
+import { to } from '../../../utils/shortcuts/global.js';
 import { nw } from '../../../utils/shortcuts/core.js';
 import { tr } from '../../../utils/shortcuts/string.js';
 
@@ -8,22 +8,22 @@ export const name = 'DOM Automation';
 export const priority = 10;
 
 export const extract = async vid => {
-  lg(`[DOM Automation] Starting for ${vid}...`);
+  l(`[DOM Automation] Starting for ${vid}...`);
   try {
     let tc = $(
       'ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"]'
     );
     if (!isVis(tc)) {
-      db('[DOM Automation] Panel hidden, opening...');
+      d('[DOM Automation] Panel hidden, opening...');
       await openPanel();
-    } else db('[DOM Automation] Panel visible');
+    } else d('[DOM Automation] Panel visible');
     await waitSeg();
     const s = scrape();
     if (!s || s.length === 0) throw new Error('No segments found');
-    lg(`[DOM Automation] Scraped ${s.length} segments`);
+    l(`[DOM Automation] Scraped ${s.length} segments`);
     return s;
   } catch (x) {
-    er('[DOM Automation] Failed:', x.message);
+    e('[DOM Automation] Failed:', x.message);
     throw x;
   }
 };
@@ -47,7 +47,7 @@ const openPanel = async () => {
     if (stb) break;
   }
   if (!stb) {
-    const btns = Array.from(document.querySelectorAll('button, ytd-button-renderer'));
+    const btns = Array.from($$('button, ytd-button-renderer'));
     stb = btns.find(b => b.textContent.includes('Show transcript'));
   }
   if (stb) {
@@ -56,9 +56,9 @@ const openPanel = async () => {
   } else throw new Error('Show transcript button not found');
 };
 
-const waitSeg = async (to = 5000) => {
+const waitSeg = async (t = 5000) => {
   const s = nw();
-  while (nw() - s < to) {
+  while (nw() - s < t) {
     const el = $('ytd-transcript-segment-renderer');
     if (el) return;
     await wait(500);
@@ -67,7 +67,7 @@ const waitSeg = async (to = 5000) => {
 };
 
 const scrape = () => {
-  const ses = document.querySelectorAll('ytd-transcript-segment-renderer');
+  const ses = $$('ytd-transcript-segment-renderer');
   const s = [];
   ses.forEach(el => {
     const tse = el.querySelector('.segment-timestamp');
@@ -93,4 +93,4 @@ const parseTs = s => {
   return 0;
 };
 
-const wait = ms => new Promise(r => st(r, ms));
+const wait = ms => new Promise(r => to(r, ms));

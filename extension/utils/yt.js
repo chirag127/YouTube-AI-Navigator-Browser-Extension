@@ -1,7 +1,7 @@
-import { l, e as er } from './../../utils/shortcuts/log.js';
+import { l, e } from './shortcuts/log.js';
 import { nw } from './shortcuts/core.js';
 export const log = (m, ...a) => l(`[YT]${m}`, ...a);
-export const err = (m, e) => er(`[YT]${m}`, e?.message || e);
+export const err = (m, x) => e(`[YT]${m}`, x?.message || x);
 export const ok = (m, ...a) => l(`[YT]✅${m}`, ...a);
 const c = new Map();
 export const cached = (k, ttl = 3e5) => ({

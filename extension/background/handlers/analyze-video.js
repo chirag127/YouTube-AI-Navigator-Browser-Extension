@@ -1,7 +1,7 @@
 import { initializeServices as is, getServices as gs } from '../services.js';
 import { getApiKey as gk } from '../utils/api-key.js';
-import gl from '../../api/genius-lyrics.js';
-import sb from '../../api/sponsorblock.js';
+import { geniusLyricsAPI as gl } from '../../api/genius-lyrics.js';
+import { sponsorBlockAPI as sb } from '../../api/sponsorblock.js';
 import { ContextManager as CM } from '../../services/context-manager.js';
 import { l, w, e } from '../../utils/shortcuts/log.js';
 import { interval as si, clearInterval as ci, delay as to } from '../../utils/shortcuts/time.js';

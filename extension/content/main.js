@@ -1,17 +1,15 @@
 (async () => {
   if (window.location.hostname !== 'www.youtube.com') return;
-  const { l, e } = await import(chrome.runtime.getURL('utils/shortcuts/log.js'));
-  const { url } = await import(chrome.runtime.getURL('utils/shortcuts/runtime.js'));
-  const { rt: cr } = await import(chrome.runtime.getURL('utils/shortcuts/runtime.js'));
-  const { ce, ap, qs: $ } = await import(chrome.runtime.getURL('utils/shortcuts/dom.js'));
+  const { l, e, st: to } = await import(chrome.runtime.getURL('utils/shortcuts/global.js'));
+  const { ru, r: cr } = await import(chrome.runtime.getURL('utils/shortcuts/runtime.js'));
+  const { ce, ap, qs } = await import(chrome.runtime.getURL('utils/shortcuts/dom.js'));
   const { sg: cl } = await import(chrome.runtime.getURL('utils/shortcuts/storage.js'));
-  const { st: to } = await import(chrome.runtime.getURL('utils/shortcuts/time.js'));
   const { nw } = await import(chrome.runtime.getURL('utils/shortcuts/core.js'));
-  const { d: doc } = await import(chrome.runtime.getURL('utils/shortcuts/dom.js'));
+  const doc = document;
 
   const s = ce('script');
   s.type = 'module';
-  s.src = url('content/youtube-extractor.js');
+  s.src = ru('content/youtube-extractor.js');
   s.onload = () => s.remove();
   ap(doc.head || doc.documentElement, s);
   l('YAM: Start');
@@ -29,7 +27,7 @@
     const a = r.action || r.type;
     switch (a) {
       case 'START_ANALYSIS':
-        import(url('content/core/analyzer.js'))
+        import(ru('content/core/analyzer.js'))
           .then(({ startAnalysis: sa }) => {
             sa();
             p({ success: true });
@@ -63,7 +61,7 @@
   });
   const hGM = async (r, p) => {
     try {
-      const { MetadataExtractor: ME } = await import(url('content/metadata/extractor.js'));
+      const { MetadataExtractor: ME } = await import(ru('content/metadata/extractor.js'));
       p({ success: true, metadata: await ME.extract(r.videoId) });
     } catch (x) {
       e('[Meta] Err:', x);
@@ -82,14 +80,14 @@
     try {
       const { videoId: v } = r;
       const wc = await cTC(v);
-      const { extractTranscript: gT } = await import(url('content/transcript/strategy-manager.js'));
-      const r = await gT(v);
-      if (!r.success || !r.data || !r.data.length) throw new Error(r.error || 'No caps');
-      const t = r.data;
+      const { extractTranscript: gT } = await import(ru('content/transcript/strategy-manager.js'));
+      const r2 = await gT(v);
+      if (!r2.success || !r2.data || !r2.data.length) throw new Error(r2.error || 'No caps');
+      const t = r2.data;
       if (!wc) {
         try {
           const { collapseTranscriptWidget: cTW } = await import(
-            url('content/ui/renderers/transcript.js')
+            ru('content/ui/renderers/transcript.js')
           );
           to(() => cTW(), 1e3);
           l('[Tr] Auto-close');
@@ -108,7 +106,7 @@
   };
   const hGC = async (_, p) => {
     try {
-      const { getComments: gC } = await import(url('content/handlers/comments.js'));
+      const { getComments: gC } = await import(ru('content/handlers/comments.js'));
       p({ success: true, comments: await gC() });
     } catch (x) {
       e('Comm err:', x);
@@ -134,7 +132,7 @@
   };
   const hST = (r, p) => {
     try {
-      const v = $('video')[0];
+      const v = qs('video');
       if (v) {
         v.currentTime = r.timestamp;
         p({ success: true });
@@ -154,7 +152,7 @@
   };
   const hGVD = async (r, p) => {
     try {
-      const { VideoDataExtractor: VDE } = await import(url('content/metadata/video-data.js'));
+      const { VideoDataExtractor: VDE } = await import(ru('content/metadata/video-data.js'));
       p({ success: true, data: await VDE.extract(r.videoId) });
     } catch (x) {
       e('GVD err:', x);

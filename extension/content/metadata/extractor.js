@@ -1,4 +1,4 @@
-import deArrowAPI from '../../api/dearrow.js';
+import { deArrowAPI } from '../../api/dearrow.js';
 import { l, e } from '../../utils/shortcuts/log.js';
 import { cw } from '../../utils/shortcuts/windows.js';
 import { jp } from '../../utils/shortcuts/core.js';
@@ -304,5 +304,5 @@ class MetadataExtractor {
   }
 }
 
-export default new MetadataExtractor();
+export const metadataExtractor = new MetadataExtractor();
 export { MetadataExtractor };

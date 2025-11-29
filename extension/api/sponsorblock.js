@@ -82,4 +82,4 @@ export async function fetchSegments(vid) {
     return [];
   }
 }
-export default { fetchSegments };
+export const sponsorBlockAPI = { fetchSegments };

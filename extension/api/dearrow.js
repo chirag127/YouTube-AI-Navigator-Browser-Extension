@@ -150,7 +150,7 @@ export async function getVideoMetadata(vid, opt = {}) {
   };
 }
 
-export default {
+export const deArrowAPI = {
   fetchBranding,
   fetchBrandingPrivate,
   getBestTitle,
