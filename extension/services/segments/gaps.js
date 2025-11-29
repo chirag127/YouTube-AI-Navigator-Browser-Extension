@@ -1,18 +1,20 @@
-import { cwr as cw } from '../../utils/shortcuts/chrome.js';
-import { ce } from '../../utils/shortcuts/dom.js';
+import { l, e } from '../../utils/shortcuts/logging.js';
 
 export function fillContentGaps(c, o) {
+  l('ENTRY:fillContentGaps');
   if (!o || !o.length) {
-    cw('[Gaps] No transcript provided to fillContentGaps');
+    l('[Gaps] No transcript provided to fillContentGaps');
+    l('EXIT:fillContentGaps');
     return [];
   }
   try {
-    const l = o[o.length - 1];
-    if (!l || typeof l.start === 'undefined') {
-      cw('[Gaps] Invalid transcript format');
+    const last = o[o.length - 1];
+    if (!last || typeof last.start === 'undefined') {
+      l('[Gaps] Invalid transcript format');
+      l('EXIT:fillContentGaps');
       return [];
     }
-    const end = l.start + (l.duration || 0),
+    const end = last.start + (last.duration || 0),
       s = (c || []).sort((a, b) => a.start - b.start),
       f = [];
     let t = 0;
@@ -23,9 +25,11 @@ export function fillContentGaps(c, o) {
       t = Math.max(t, seg.end);
     }
     if (t < end - 1) f.push({ label: 'Content', start: t, end, text: 'Main Content' });
+    l('EXIT:fillContentGaps');
     return f;
   } catch (x) {
-    ce('[Gaps] Error in fillContentGaps:', x);
+    e('error:fillContentGaps', x);
+    l('EXIT:fillContentGaps');
     return [];
   }
 }

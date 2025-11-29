@@ -12,6 +12,7 @@ export const ce = el;
 export const on = (e, t, h, o) => e?.addEventListener(t, h, o);
 export const off = (e, t, h) => e?.removeEventListener(t, h);
 export const txt = (e, t) => (e.textContent = t);
+export const tc = e => e?.textContent;
 export const html = (e, h) => (e.innerHTML = h);
 export const mo = c => new MutationObserver(c);
 export const id = i => d.getElementById(i);

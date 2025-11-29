@@ -7,6 +7,8 @@ const { attachEventListeners } = await import(gu('content/handlers/events.js'));
 const { createWidgetHTML } = await import(gu('content/ui/components/widget/structure.js'));
 const { qs: $, id: ge, on, el: ce, wfe, mo } = await import(gu('utils/shortcuts/dom.js'));
 const { l, e } = await import(gu('utils/shortcuts/logging.js'));
+const { si, ci, to } = await import(gu('utils/shortcuts/global.js'));
+const { log } = await import(gu('utils/shortcuts/core.js'));
 
 let widgetContainer = null,
   resizeObserver = null,
@@ -76,10 +78,10 @@ function reattachWidget() {
 function startPositionMonitoring() {
   l('startPositionMonitoring:Start');
   try {
-    if (positionCheckInterval) csi(positionCheckInterval);
+    if (positionCheckInterval) ci(positionCheckInterval);
     positionCheckInterval = si(() => {
       if (!widgetContainer) {
-        csi(positionCheckInterval);
+        ci(positionCheckInterval);
         return;
       }
       if (!document.contains(widgetContainer)) {
@@ -137,12 +139,12 @@ export async function injectWidget() {
         void err;
       }
       att++;
-      await new Promise(r => st(r, 200));
+      await new Promise(r => to(r, 200));
     }
     if (!sc) {
       sc = $('#columns');
       if (!sc) {
-        logError('Target container not found. Widget injection aborted.');
+        e('Target container not found. Widget injection aborted.');
         return;
       }
       log('Using fallback #columns container');
@@ -209,7 +211,7 @@ function setupObservers(c) {
         if (mu.type === 'childList') {
           if (af(mu.removedNodes).includes(widgetContainer)) {
             l('Widget was removed, reattaching...');
-            st(() => reattachWidget(), 100);
+            to(() => reattachWidget(), 100);
             return;
           }
           if (c.firstChild !== widgetContainer && !af(mu.addedNodes).includes(widgetContainer))

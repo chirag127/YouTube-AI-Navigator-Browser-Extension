@@ -1,4 +1,4 @@
-import { w } from '../utils/shortcuts/log.js';
+import { l, e, w } from '../utils/shortcuts/log.js';
 import { to as st, co as cst } from '../utils/shortcuts/global.js';
 import { am, ajn, af } from '../utils/shortcuts/array.js';
 import { trm, rp, sb as sbs } from '../utils/shortcuts/string.js';

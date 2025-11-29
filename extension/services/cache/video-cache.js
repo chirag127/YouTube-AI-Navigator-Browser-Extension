@@ -40,6 +40,7 @@ class VideoCache {
     l(`[VideoCache] Cached: ${sk}`);
   }
   async clear(id) {
+    l('ENTRY:VideoCache.clear');
     if (id) {
       const ks = ['metadata', 'transcript', 'comments'];
       for (const t of ks) {
@@ -52,6 +53,7 @@ class VideoCache {
         vk = keys(a).filter(k => k.startsWith('video_'));
       await sl(vk, null);
     }
+    l('EXIT:VideoCache.clear');
   }
 }
 export const videoCache = new VideoCache();
