@@ -12,7 +12,7 @@ import { inc as ic, lwc } from '../../utils/shortcuts/string.js';
 import { np, pc } from '../../utils/shortcuts/async.js';
 let ka = null;
 const ska = () => {
-  if (!ka) ka = si(() => cr.getPlatformInfo(() => {}), 2e4);
+  if (!ka) ka = si(() => cr.getPlatformInfo(() => { }), 2e4);
 };
 const stka = () => {
   if (ka) {
@@ -86,7 +86,7 @@ export async function handleAnalyzeVideo(q, r) {
     } catch (x) {
       e('[AV]Ctx:', x.message);
     }
-    if ((!t || !t.length) && !ly) throw new Error('No content');
+    if ((!t || !t.length) && !ly && (!c || !c.length)) throw new Error('No content');
     const ac = {
       transcript: t || [],
       lyrics: ly,

@@ -7,7 +7,7 @@ export const priority = 30;
 
 export const extract = async (vid, lang = 'en') => {
   l(`[STT] Starting for ${vid}...`);
-  const u = getAudioUrl();
+  const u = await getAudioUrl();
   if (!u) throw new Error('No audio URL found');
 
   l('[STT] Requesting transcription...');
@@ -19,15 +19,26 @@ export const extract = async (vid, lang = 'en') => {
   throw new Error(r?.error || 'STT failed');
 };
 
-const getAudioUrl = () => {
-  try {
-    const pr = window.ytInitialPlayerResponse;
-    if (!pr?.streamingData?.adaptiveFormats) return null;
-    const f = pr.streamingData.adaptiveFormats;
-    const af = f.find(x => x.mimeType.includes('audio/mp4') || x.mimeType.includes('audio/webm'));
-    return af?.url || null;
-  } catch (e) {
-    w('[STT] Failed to extract audio URL:', e);
-    return null;
+const getAudioUrl = async (retries = 3, delay = 1000) => {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const pr = window.ytInitialPlayerResponse;
+      if (!pr?.streamingData?.adaptiveFormats) {
+        if (i < retries - 1) {
+          await new Promise(r => setTimeout(r, delay));
+          continue;
+        }
+        return null;
+      }
+      const f = pr.streamingData.adaptiveFormats;
+      let af = f.find(x => x.mimeType.includes('audio/mp4'));
+      if (!af) af = f.find(x => x.mimeType.includes('audio/webm'));
+      if (!af) af = f.find(x => x.mimeType.includes('audio'));
+      return af?.url || null;
+    } catch (e) {
+      w('[STT] Failed to extract audio URL:', e);
+      if (i < retries - 1) await new Promise(r => setTimeout(r, delay));
+    }
   }
+  return null;
 };

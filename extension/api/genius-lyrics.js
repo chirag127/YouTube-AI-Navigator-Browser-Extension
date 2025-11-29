@@ -35,7 +35,7 @@ export class GeniusLyricsAPI {
 
   async search(title, artist) {
     const cleanTitle = this.cleanTitle(title);
-    const query = `${artist} ${cleanTitle}`;
+    const query = cleanTitle.includes(artist) ? cleanTitle : `${cleanTitle} ${artist}`;
     const url = `${this.searchUrl}?per_page=1&q=${enc(query)}`;
     const data = await fj(url);
     if (data?.response?.sections) {

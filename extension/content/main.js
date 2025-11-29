@@ -1,4 +1,5 @@
 (async () => {
+  if (window.top !== window) return;
   if (window.location.hostname !== 'www.youtube.com') return;
   const { r, ru: gu } = await import(chrome.runtime.getURL('utils/shortcuts/runtime.js'));
   const { ce: el, qs } = await import(gu('utils/shortcuts/dom.js'));

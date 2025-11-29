@@ -1,6 +1,7 @@
 import { sg, ss } from '../../utils/shortcuts/storage.js';
 import { log as l, err as e, now as nt, keys as ok, jp, js } from '../../utils/shortcuts/core.js';
 import { isa } from '../../utils/shortcuts/array.js';
+import { msg } from '../../utils/shortcuts/runtime.js';
 
 export const SEGMENT_CATEGORIES = [
   { id: 'sponsor', label: 'Sponsor', color: '#00d400' },

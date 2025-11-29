@@ -103,3 +103,19 @@ cr.onMessage.addListener((q, s, r) => {
   })();
   return true;
 });
+
+self.addEventListener('fetch', event => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      (async () => {
+        try {
+          const preloadResponse = await event.preloadResponse;
+          if (preloadResponse) return preloadResponse;
+          return fetch(event.request);
+        } catch (error) {
+          return fetch(event.request);
+        }
+      })()
+    );
+  }
+});

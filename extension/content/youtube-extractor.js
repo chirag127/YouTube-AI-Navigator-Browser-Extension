@@ -1,6 +1,7 @@
 const w = window,
   d = document;
 (async () => {
+  if (window.top !== window) return;
   const extId = document.currentScript?.src.split('://')[1]?.split('/')[0];
   const baseUrl = extId ? `chrome-extension://${extId}/` : '../';
   const { log: l, err: e, jp, to: st } = await import(baseUrl + 'utils/shortcuts/core.js');

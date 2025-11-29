@@ -1,9 +1,8 @@
 import { gu } from '../../../utils/shortcuts/runtime.js';
-import { af } from '../../../utils/shortcuts/array.js';
 
 const { qs: $, qsa: $$ } = await import(gu('utils/shortcuts/dom.js'));
 const { log: l, err: e, dbg: d, nw, tr } = await import(gu('utils/shortcuts/core.js'));
-const { st: to } = await import(gu('utils/shortcuts/time.js'));
+const { stt: to } = await import(gu('utils/shortcuts/time.js'));
 export const name = 'DOM Automation';
 export const priority = 10;
 
@@ -47,8 +46,8 @@ const openPanel = async () => {
     if (stb) break;
   }
   if (!stb) {
-    const btns = af($$('button, ytd-button-renderer'));
-    stb = btns.find(b => b.textContent.includes('Show transcript'));
+    const btns = $$('button, ytd-button-renderer');
+    stb = Array.from(btns).find(b => b.textContent.includes('Show transcript'));
   }
   if (stb) {
     stb.click();
@@ -69,7 +68,7 @@ const waitSeg = async (t = 5000) => {
 const scrape = () => {
   const ses = $$('ytd-transcript-segment-renderer');
   const s = [];
-  ses.forEach(el => {
+  Array.from(ses).forEach(el => {
     const tse = el.querySelector('.segment-timestamp');
     const te = el.querySelector('.segment-text');
     if (tse && te) {
