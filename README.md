@@ -6,7 +6,7 @@ AI-powered YouTube analysis extension. Transcripts, insights, segments, comments
 
 - **AI Analysis**: Gemini-powered summaries, insights, FAQ (configurable length, insights count, FAQ count)
 - **Smart Transcripts**: Multi-strategy fetching (DOM Automation, Genius, Speech-to-Text) - auto-closes YouTube panel, scrolls to top
-- **Segment Classification**: Auto-detect sponsors, intros, content sections with skip/speed actions
+- **Segment Classification**: Auto-detect sponsors, intros, content sections with skip/speed actions (auto-applied on analysis)
 - **Comment Analysis**: Sentiment analysis, key themes
 - **Configurable Output**: Control summary length (short/medium/long), max insights (3-20), max FAQ (3-15), timestamps on/off
 - **DeArrow Integration**: Community-sourced clickbait-free titles

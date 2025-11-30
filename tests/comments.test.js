@@ -6,11 +6,11 @@ vi.mock('../extension/utils/shortcuts/log.js', () => ({
   w: vi.fn(),
 }));
 vi.mock('../extension/utils/shortcuts/runtime.js', () => ({
-  gu: (p) => p,
+  gu: p => p,
 }));
 vi.mock('../extension/utils/shortcuts/global.js', () => ({
   js: JSON.stringify,
-  to: (cb) => cb(),
+  to: cb => cb(),
 }));
 vi.mock('../extension/utils/shortcuts/dom.js', () => ({
   ae: vi.fn(),

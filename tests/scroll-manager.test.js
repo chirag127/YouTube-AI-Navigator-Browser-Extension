@@ -7,7 +7,7 @@ vi.mock('../extension/utils/shortcuts/log.js', () => ({
   w: vi.fn(),
 }));
 vi.mock('../extension/utils/shortcuts/runtime.js', () => ({
-  gu: (p) => {
+  gu: p => {
     // Resolve paths relative to extension/content/utils/
     if (p.startsWith('utils/')) return `../../${p}`;
     if (p.startsWith('content/')) return `../../${p}`; // e.g. content/utils/scroll-manager.js -> ../../content/utils/scroll-manager.js (which is same dir?)
@@ -50,7 +50,7 @@ global.document = {
 };
 global.chrome = {
   runtime: {
-    getURL: (p) => {
+    getURL: p => {
       if (p.startsWith('utils/')) return `../../${p}`;
       if (p.startsWith('content/')) return `../../${p}`;
       return p;
@@ -84,42 +84,19 @@ describe('ScrollManager', () => {
   it('should scroll to comments using smart scroll', async () => {
     const sm = getScrollManager();
 
-    // Mock comments section existence
-    const mockCommentsSection = {
-      scrollIntoView: vi.fn(),
-    };
-    mockQs.mockReturnValue(mockCommentsSection);
-
-    // Mock comments loading (waitForCommentsToLoad)
-    // We need qsa to return something eventually
     mockQsa.mockReturnValue([
-        {
-            querySelector: (sel) => {
-                if (sel === '#author-text') return { textContent: 'Author' };
-                if (sel === '#content-text') return { textContent: 'Comment' };
-                return null;
-            }
-        }
+      {
+        querySelector: sel => {
+          if (sel === '#author-text') return { textContent: 'Author' };
+          if (sel === '#content-text') return { textContent: 'Comment' };
+          return null;
+        },
+      },
     ]);
 
     const result = await sm.scrollToComments();
 
     expect(result).toBe(true);
-    // Verify it saved position (we can't easily check internal state without exposing it, but we can check behavior)
-    // Verify it scrolled to bottom (or comments section)
-    expect(mockCommentsSection.scrollIntoView).toHaveBeenCalled();
-
-    // Verify it scrolled back up (restorePosition or similar logic)
-    // In the new implementation, we expect it to scroll to bottom then back.
-    // The current implementation in the file (before my edit) does:
-    // cs.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    // window.scrollBy({ top: -100, behavior: 'smooth' });
-
-    // Wait, I am writing the test for the NEW implementation.
-    // The new implementation should:
-    // 1. Save position.
-    // 2. Scroll to bottom (document.documentElement.scrollHeight).
-    // 3. Wait.
-    // 4. Restore position.
+    expect(global.window.scrollTo).toHaveBeenCalled();
   });
 });

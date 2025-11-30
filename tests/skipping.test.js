@@ -1,18 +1,17 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-
 // Mock chrome global
 global.chrome = {
   runtime: {
-    getURL: (p) => {
+    getURL: p => {
       // Calculate relative path from the source file (autoskip.js) to the target
       // autoskip.js is in extension/content/segments/
       // target is in extension/
       // p is like 'utils/shortcuts/log.js'
       // We want '../../utils/shortcuts/log.js'
       return '../../' + p;
-    }
-  }
+    },
+  },
 };
 
 // Mock dependencies
@@ -29,7 +28,7 @@ vi.mock('../extension/utils/shortcuts/storage.js', () => ({
   sg: vi.fn(),
 }));
 vi.mock('../extension/utils/shortcuts/global.js', () => ({
-  to: vi.fn((cb) => cb()),
+  to: vi.fn(cb => cb()),
 }));
 
 const qsMock = vi.fn();
@@ -63,7 +62,7 @@ describe('AutoSkip', () => {
     };
 
     // Configure qs to return videoMock when asked for 'video'
-    qsMock.mockImplementation((sel) => {
+    qsMock.mockImplementation(sel => {
       if (sel === 'video') return videoMock;
       return null;
     });

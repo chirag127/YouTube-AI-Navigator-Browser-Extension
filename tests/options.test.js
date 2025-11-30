@@ -6,7 +6,7 @@ vi.mock('../extension/utils/shortcuts/log.js', () => ({
 }));
 vi.mock('../extension/utils/shortcuts/global.js', () => ({
   to: vi.fn((cb, d) => setTimeout(cb, d)),
-  clt: (id) => clearTimeout(id),
+  clt: id => clearTimeout(id),
 }));
 vi.mock('../extension/utils/shortcuts/dom.js', () => ({
   on: vi.fn(),

@@ -255,7 +255,7 @@ async function seekVideo(s) {
   }
 }
 
-function fmtTime(s) {
+export function fmtTime(s) {
   const m = mf(s / 60),
     sc = mf(s % 60);
   return `${m}:${pd(sc.toString(), 2, '0')}`;
