@@ -29,7 +29,7 @@ vi.mock('../../../../extension/content/utils/timestamps.js', () => ({
 }));
 
 vi.mock('../../../../extension/lib/marked-loader.js', () => ({
-  parseMarkdown: (text) => Promise.resolve(`<p>${text}</p>`)),
+  parseMarkdown: (text) => Promise.resolve(`<p>${text}</p>`),
 }));
 
 // Import module under test

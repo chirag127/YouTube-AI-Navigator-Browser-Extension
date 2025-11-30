@@ -42,7 +42,7 @@ vi.mock('../../../../extension/content/handlers/comments.js', () => ({
 }));
 
 vi.mock('../../../../extension/lib/marked-loader.js', () => ({
-  parseMarkdown: (text) => Promise.resolve(`<p>${text}</p>`)),
+  parseMarkdown: (text) => Promise.resolve(`<p>${text}</p>`),
 }));
 
 vi.mock('../../../../extension/utils/shortcuts/storage.js', () => ({
