@@ -26,16 +26,16 @@ export class AIConfig {
       const c = this.s.get().ai || {};
       if (ModelManager && c.GAK)
         this.mm = new ModelManager(c.GAK, 'https://generativelanguage.googleapis.com/v1beta');
-      this.set('apiKey', c.GAK || '');
-      this.set('customPrompt', c.customPrompt || '');
+      this.set('section-apiKey', c.GAK || '');
+      this.set('section-customPrompt', c.customPrompt || '');
       if (c.model) this.set('modelSelect', c.model);
       const els = {
-        ak: i('#apiKey'),
+        ak: i('#section-apiKey'),
         tak: i('#toggleApiKey'),
         ms: i('#modelSelect'),
         rm: i('#refreshModels'),
         tc: i('#testConnection'),
-        cp: i('#customPrompt'),
+        cp: i('#section-customPrompt'),
         sl: i('#summaryLength'),
         mi: i('#maxInsights'),
         mf: i('#maxFAQ'),
