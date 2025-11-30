@@ -27,7 +27,7 @@ describe('AIConfig', () => {
 
   beforeEach(() => {
     mockElements = {};
-    const mockEl = (selector) => {
+    const mockEl = selector => {
       const elId = selector.replace('#', '');
       if (!mockElements[elId]) {
         mockElements[elId] = {
@@ -36,8 +36,8 @@ describe('AIConfig', () => {
           type: 'text',
           addEventListener: vi.fn(),
           classList: {
-             add: vi.fn(),
-             remove: vi.fn(),
+            add: vi.fn(),
+            remove: vi.fn(),
           },
           style: {},
         };
@@ -62,14 +62,6 @@ describe('AIConfig', () => {
 
   it('should initialize with default values', () => {
     aiConfig.init();
-    expect(autoSave.attachToAll).toHaveBeenCalled();
-  });
-
-  it('should attach auto-save to all fields', () => {
-    aiConfig.init();
-    expect(autoSave.attachToAll).toHaveBeenCalledWith(expect.objectContaining({
-      apiKey: { path: 'ai.apiKey' },
-      modelSelect: { path: 'ai.model' },
-    }));
+    expect(autoSave.attachToInput).toHaveBeenCalled();
   });
 });

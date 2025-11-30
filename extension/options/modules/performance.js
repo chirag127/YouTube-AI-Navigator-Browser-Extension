@@ -30,17 +30,17 @@ export class PerformanceSettings {
       rateLimitDelay: {
         path: 'performance.rateLimitDelay',
         selector: '#section-rateLimitDelay',
-        transform: v => pi(v)
+        transform: v => pi(v),
       },
       retryAttempts: {
         path: 'performance.retryAttempts',
         selector: '#section-retryAttempts',
-        transform: v => pi(v)
+        transform: v => pi(v),
       },
       retryDelay: {
         path: 'performance.retryDelay',
         selector: '#section-retryDelay',
-        transform: v => pi(v)
+        transform: v => pi(v),
       },
       enableCompression: { path: 'performance.enableCompression' },
       lazyLoad: { path: 'performance.lazyLoad' },

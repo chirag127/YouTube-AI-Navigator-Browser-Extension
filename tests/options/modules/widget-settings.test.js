@@ -20,7 +20,7 @@ describe('WidgetSettings', () => {
 
   beforeEach(() => {
     mockElements = {};
-    const mockEl = (selector) => {
+    const mockEl = selector => {
       const elId = selector.replace('#', '');
       if (!mockElements[elId]) {
         mockElements[elId] = {
@@ -37,10 +37,10 @@ describe('WidgetSettings', () => {
     qs.mockImplementation(mockEl);
     id.mockImplementation(mockEl);
     ce.mockImplementation(() => ({
-        className: '',
-        innerHTML: '',
-        appendChild: vi.fn(),
-        addEventListener: vi.fn(),
+      className: '',
+      innerHTML: '',
+      appendChild: vi.fn(),
+      addEventListener: vi.fn(),
     }));
 
     settingsManager = {

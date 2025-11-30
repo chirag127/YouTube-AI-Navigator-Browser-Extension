@@ -25,7 +25,10 @@ export class TranscriptSettings {
       transcriptShowOriginal: { path: 'transcript.showOriginal' },
       transcriptHighlightKeywords: { path: 'transcript.highlightKeywords' },
       transcriptAutoClose: { path: 'transcript.autoClose' },
-      'section-transcriptAutoCloseDelay': { path: 'transcript.autoCloseDelay', transform: v => pi(v) },
+      'section-transcriptAutoCloseDelay': {
+        path: 'transcript.autoCloseDelay',
+        transform: v => pi(v),
+      },
       transcriptAutoCloseOnCached: { path: 'transcript.autoCloseOnCached' },
       transcriptAutoScroll: { path: 'transcript.autoScroll' },
     });

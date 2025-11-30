@@ -20,7 +20,7 @@ describe('IntegrationsSettings', () => {
 
   beforeEach(() => {
     mockElements = {};
-    const mockEl = (selector) => {
+    const mockEl = selector => {
       const elId = selector.replace('#', '');
       if (!mockElements[elId]) {
         mockElements[elId] = {
@@ -30,9 +30,9 @@ describe('IntegrationsSettings', () => {
           addEventListener: vi.fn(),
           appendChild: vi.fn(),
           classList: {
-              add: vi.fn(),
-              remove: vi.fn(),
-          }
+            add: vi.fn(),
+            remove: vi.fn(),
+          },
         };
       }
       return mockElements[elId];
@@ -41,10 +41,10 @@ describe('IntegrationsSettings', () => {
     qs.mockImplementation(mockEl);
     id.mockImplementation(mockEl);
     ce.mockImplementation(() => ({
-        className: '',
-        innerHTML: '',
-        appendChild: vi.fn(),
-        addEventListener: vi.fn(),
+      className: '',
+      innerHTML: '',
+      appendChild: vi.fn(),
+      addEventListener: vi.fn(),
     }));
 
     settingsManager = {

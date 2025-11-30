@@ -5,11 +5,11 @@ import { GeneralSettings } from '../../../extension/options/modules/general.js';
 vi.mock('../../../extension/utils/shortcuts/dom.js', () => ({
   qs: vi.fn(),
   ce: vi.fn().mockReturnValue({
-      className: '',
-      dataset: {},
-      innerHTML: '',
-      appendChild: vi.fn(),
-      addEventListener: vi.fn(),
+    className: '',
+    dataset: {},
+    innerHTML: '',
+    appendChild: vi.fn(),
+    addEventListener: vi.fn(),
   }),
   on: vi.fn(),
   $$: vi.fn().mockReturnValue([]),
@@ -59,9 +59,11 @@ describe('GeneralSettings', () => {
 
   it('should attach auto-save to all fields', () => {
     generalSettings.init();
-    expect(autoSave.attachToAll).toHaveBeenCalledWith(expect.objectContaining({
-      theme: { path: 'ui.theme' },
-      outputLanguage: { path: 'ai.outputLanguage' },
-    }));
+    expect(autoSave.attachToAll).toHaveBeenCalledWith(
+      expect.objectContaining({
+        theme: { path: 'ui.theme' },
+        outputLanguage: { path: 'ai.outputLanguage' },
+      })
+    );
   });
 });

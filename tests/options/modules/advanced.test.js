@@ -18,7 +18,7 @@ describe('AdvancedSettings', () => {
 
   beforeEach(() => {
     mockElements = {};
-    const mockEl = (selector) => {
+    const mockEl = selector => {
       const elId = selector.replace('#', '');
       if (!mockElements[elId]) {
         mockElements[elId] = {

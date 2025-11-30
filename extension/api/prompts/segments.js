@@ -30,13 +30,14 @@ Task: Generate PRECISE video segments with WORD-LEVEL timing predictions. Return
 
 ${buildContextString(context)}
 
-${hintsEnabled
-      ? `PATTERN DETECTION HINTS (Pre-Analyzed via Regex):
+${
+  hintsEnabled
+    ? `PATTERN DETECTION HINTS (Pre-Analyzed via Regex):
 ${hints || 'No patterns detected - analyze transcript semantically'}
 
 `
-      : ''
-    }TIMING: Transcript = sentence-level. Predict word-level by estimating speaking rate, detecting mid-block transitions ("But first", "Now back to"), proportional allocation. Align with speech pauses. Target: ±${timingTarget}s accuracy.
+    : ''
+}TIMING: Transcript = sentence-level. Predict word-level by estimating speaking rate, detecting mid-block transitions ("But first", "Now back to"), proportional allocation. Align with speech pauses. Target: ±${timingTarget}s accuracy.
 
 SPONSORBLOCK CATEGORIES:
 

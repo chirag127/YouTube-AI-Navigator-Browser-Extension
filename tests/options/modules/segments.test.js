@@ -21,22 +21,22 @@ describe('SegmentsConfig', () => {
     qs.mockImplementation(selector => {
       const id = selector.replace('#', '');
       if (id === 'segmentItemTemplate') {
-          return {
-              content: {
-                  cloneNode: vi.fn().mockReturnValue({
-                      querySelector: vi.fn().mockReturnValue({
-                          addEventListener: vi.fn(),
-                          appendChild: vi.fn(),
-                          value: '',
-                          style: {},
-                          dataset: {},
-                          classList: { add: vi.fn(), remove: vi.fn() },
-                          textContent: '',
-                          disabled: false,
-                      })
-                  })
-              }
-          };
+        return {
+          content: {
+            cloneNode: vi.fn().mockReturnValue({
+              querySelector: vi.fn().mockReturnValue({
+                addEventListener: vi.fn(),
+                appendChild: vi.fn(),
+                value: '',
+                style: {},
+                dataset: {},
+                classList: { add: vi.fn(), remove: vi.fn() },
+                textContent: '',
+                disabled: false,
+              }),
+            }),
+          },
+        };
       }
       if (!mockElements[id]) {
         mockElements[id] = {
@@ -52,18 +52,18 @@ describe('SegmentsConfig', () => {
     });
 
     ce.mockImplementation(() => ({
-        className: '',
-        innerHTML: '',
-        appendChild: vi.fn(),
-        addEventListener: vi.fn(),
-        value: '',
+      className: '',
+      innerHTML: '',
+      appendChild: vi.fn(),
+      addEventListener: vi.fn(),
+      value: '',
     }));
 
     settingsManager = {
       get: vi.fn().mockReturnValue({
-          segments: {
-              categories: {}
-          }
+        segments: {
+          categories: {},
+        },
       }),
     };
 
