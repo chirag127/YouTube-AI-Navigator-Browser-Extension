@@ -1,372 +1,342 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>YouTube AI Master - Settings</title>
-    <link rel="stylesheet" href="options.css" />
-    <link rel="stylesheet" href="banner-styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
 
-  <body>
-    <div class="app-container">
-      <aside class="sidebar">
-        <div class="brand">
-          <div class="logo-icon">⚡</div>
-          <h1>AI Master</h1>
-        </div>
-        <nav class="nav-menu">
-          <button class="nav-item active" data-tab="general">
-            <span class="icon">⚙️</span> General
-          </button>
-          <button class="nav-item" data-tab="cache"><span class="icon">💾</span> Cache</button>
-          <button class="nav-item" data-tab="transcript">
-            <span class="icon">📝</span> Transcript
-          </button>
-          <button class="nav-item" data-tab="comments">
-            <span class="icon">💬</span> Comments
-          </button>
-          <button class="nav-item" data-tab="metadata">
-            <span class="icon">📊</span> Metadata
-          </button>
-          <button class="nav-item" data-tab="scroll">
-            <span class="icon">📜</span> Scroll & UI
-          </button>
-          <button class="nav-item" data-tab="ai-config">
-            <span class="icon">🤖</span> AI Configuration
-          </button>
-          <button class="nav-item" data-tab="segments">
-            <span class="icon">🎯</span> Segments
-          </button>
-          <button class="nav-item" data-tab="performance">
-            <span class="icon">⚡</span> Performance
-          </button>
-          <button class="nav-item" data-tab="external-apis">
-            <span class="icon">🌐</span> External APIs
-          </button>
-          <button class="nav-item" data-tab="notifications">
-            <span class="icon">🔔</span> Notifications
-          </button>
-          <button class="nav-item" data-tab="advanced">
-            <span class="icon">🔧</span> Advanced
-          </button>
-        </nav>
-        <div class="sidebar-footer">
-          <p>v1.0.0</p>
-          <a href="https://github.com/chirag127/youtube-ai-master" target="_blank">GitHub</a>
-        </div>
-      </aside>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube AI Master - Settings</title>
+  <link rel="stylesheet" href="options.css" />
+  <link rel="stylesheet" href="banner-styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
 
-      <main class="content-area">
-        <!-- Welcome Banner (shown for new users) -->
-        <div id="welcome-banner" class="welcome-banner" style="display: none">
-          <div class="banner-content">
-            <span class="banner-icon">👋</span>
-            <div class="banner-text">
-              <strong>Welcome to YouTube AI Master!</strong>
-              <p>Complete the setup guide to get started with AI-powered video analysis.</p>
-            </div>
-            <button id="start-setup-btn" class="btn btn-primary">Start Setup</button>
-            <button id="dismiss-banner-btn" class="btn-icon">✕</button>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon">⚡</div>
+        <h1>AI Master</h1>
+      </div>
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="general">
+          <span class="icon">⚙️</span> General
+        </button>
+        <button class="nav-item" data-tab="cache"><span class="icon">💾</span> Cache</button>
+        <button class="nav-item" data-tab="transcript">
+          <span class="icon">📝</span> Transcript
+        </button>
+        <button class="nav-item" data-tab="comments">
+          <span class="icon">💬</span> Comments
+        </button>
+        <button class="nav-item" data-tab="metadata">
+          <span class="icon">📊</span> Metadata
+        </button>
+        <button class="nav-item" data-tab="scroll">
+          <span class="icon">📜</span> Scroll & UI
+        </button>
+        <button class="nav-item" data-tab="ai-config">
+          <span class="icon">🤖</span> AI Configuration
+        </button>
+        <button class="nav-item" data-tab="segments">
+          <span class="icon">🎯</span> Segments
+        </button>
+        <button class="nav-item" data-tab="performance">
+          <span class="icon">⚡</span> Performance
+        </button>
+        <button class="nav-item" data-tab="external-apis">
+          <span class="icon">🌐</span> External APIs
+        </button>
+        <button class="nav-item" data-tab="notifications">
+          <span class="icon">🔔</span> Notifications
+        </button>
+        <button class="nav-item" data-tab="advanced">
+          <span class="icon">🔧</span> Advanced
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <p>v1.0.0</p>
+        <a href="https://github.com/chirag127/youtube-ai-master" target="_blank">GitHub</a>
+      </div>
+    </aside>
+
+    <main class="content-area">
+      <!-- Welcome Banner (shown for new users) -->
+      <div id="welcome-banner" class="welcome-banner" style="display: none">
+        <div class="banner-content">
+          <span class="banner-icon">👋</span>
+          <div class="banner-text">
+            <strong>Welcome to YouTube AI Master!</strong>
+            <p>Complete the setup guide to get started with AI-powered video analysis.</p>
           </div>
-        </div>
-
-        <!-- Tabs will be loaded dynamically here -->
-
-        <!-- AI Configuration -->
-        <section id="ai-config" class="tab-content">
-          <header class="section-header">
-            <h2>AI Configuration</h2>
-            <p>Manage your Gemini API connection and model settings</p>
-          </header>
-
-          <div class="card">
-            <h3>API Connection</h3>
-            <div class="form-group">
-              <label for="apiKey">Gemini API Key</label>
-              <div class="input-with-button">
-                <input
-                  type="password"
-                  id="apiKey"
-                  class="form-input"
-                  placeholder="Enter your API key"
-                />
-                <button id="toggleApiKey" class="btn-icon" title="Show/Hide">👁️</button>
-              </div>
-              <p class="help-text">
-                Get your free key from
-                <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a
-                >.
-              </p>
-            </div>
-            <div class="form-actions">
-              <button id="testConnection" class="btn btn-secondary">Test Connection</button>
-            </div>
-            <div id="apiStatus" class="status-indicator hidden"></div>
-          </div>
-
-          <div class="card">
-            <h3>Model Selection</h3>
-            <div class="form-group">
-              <label for="modelSelect">Gemini Model</label>
-              <div class="select-wrapper">
-                <select id="modelSelect" class="form-select">
-                  <option value="" disabled selected>Loading models...</option>
-                </select>
-                <button id="refreshModels" class="btn-icon" title="Refresh Models">🔄</button>
-              </div>
-              <p class="help-text">
-                Select the AI model to use. Newer models may be faster or smarter.
-              </p>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>System Prompt</h3>
-            <div class="form-group">
-              <label for="customPrompt">Custom Instructions</label>
-              <textarea
-                id="customPrompt"
-                class="form-textarea"
-                rows="4"
-                placeholder="e.g., Focus on technical details, use bullet points..."
-              ></textarea>
-              <p class="help-text">Optional instructions to guide the AI's behavior.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Segments & Actions -->
-        <section id="segments" class="tab-content">
-          <header class="section-header">
-            <h2>Segments & Actions</h2>
-            <p>Control how different video segments are handled</p>
-          </header>
-
-          <div class="card highlight-card">
-            <div class="form-group checkbox-row">
-              <div class="checkbox-label">
-                <label for="enableSegments">Enable Segment Detection</label>
-                <p class="help-text">Analyze video to identify sponsors, intros, and more.</p>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="enableSegments" />
-                <span class="slider round"></span>
-              </label>
-            </div>
-          </div>
-
-          <div class="card" id="segmentSettingsContainer">
-            <div class="card-header-row">
-              <h3>Category Actions</h3>
-              <div class="global-actions">
-                <button id="skipAllBtn" class="btn btn-sm btn-secondary">Set All to Skip</button>
-                <button id="speedAllBtn" class="btn btn-sm btn-secondary">
-                  Set All to Speed Up
-                </button>
-                <button id="resetAllBtn" class="btn btn-sm btn-outline">Reset</button>
-              </div>
-            </div>
-
-            <div class="segments-grid" id="segmentsGrid">
-              <!-- Generated dynamically by JS -->
-            </div>
-          </div>
-        </section>
-
-        <!-- External APIs -->
-        <section id="external-apis" class="tab-content">
-          <header class="section-header">
-            <h2>External APIs</h2>
-            <p>Enhance AI accuracy with free external data sources (Optional)</p>
-          </header>
-
-          <div class="card">
-            <h3>Entertainment & Media</h3>
-            <div class="form-group">
-              <label for="tmdbApiKey">TMDB API Key (Movies/TV)</label>
-              <input
-                type="password"
-                id="tmdbApiKey"
-                class="form-input"
-                placeholder="Enter TMDB API Key"
-              />
-              <p class="help-text">
-                Free key from
-                <a href="https://www.themoviedb.org/settings/api" target="_blank">TheMovieDB</a>.
-              </p>
-            </div>
-            <div class="form-group">
-              <label for="twitchClientId">Twitch Client ID (Gaming)</label>
-              <input
-                type="text"
-                id="twitchClientId"
-                class="form-input"
-                placeholder="Enter Twitch Client ID"
-              />
-            </div>
-            <div class="form-group">
-              <label for="twitchAccessToken">Twitch Access Token (Gaming)</label>
-              <input
-                type="password"
-                id="twitchAccessToken"
-                class="form-input"
-                placeholder="Enter Twitch Access Token"
-              />
-              <p class="help-text">
-                Required for IGDB. Get from
-                <a href="https://dev.twitch.tv/console" target="_blank">Twitch Dev Console</a>.
-              </p>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>News & Facts</h3>
-            <div class="form-group">
-              <label for="newsDataApiKey">NewsData.io API Key</label>
-              <input
-                type="password"
-                id="newsDataApiKey"
-                class="form-input"
-                placeholder="Enter NewsData API Key"
-              />
-              <p class="help-text">
-                Free tier available at
-                <a href="https://newsdata.io/" target="_blank">NewsData.io</a>.
-              </p>
-            </div>
-            <div class="form-group">
-              <label for="googleFactCheckApiKey">Google Fact Check API Key</label>
-              <input
-                type="password"
-                id="googleFactCheckApiKey"
-                class="form-input"
-                placeholder="Enter Google Cloud API Key"
-              />
-              <p class="help-text">Requires GCP project with Fact Check Tools API enabled.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Advanced -->
-        <section id="advanced" class="tab-content">
-          <header class="section-header">
-            <h2>Advanced</h2>
-            <p>Performance, backup, restore, and debug</p>
-          </header>
-
-          <div class="card">
-            <h3>Performance</h3>
-            <div class="form-group">
-              <label for="maxConcurrentRequests">Max Concurrent Requests</label>
-              <input
-                type="number"
-                id="maxConcurrentRequests"
-                class="form-input"
-                min="1"
-                max="10"
-                value="3"
-              />
-              <p class="help-text">Maximum parallel API requests (1-10)</p>
-            </div>
-            <div class="form-group">
-              <label for="rateLimitDelay">Rate Limit Delay (ms)</label>
-              <input
-                type="number"
-                id="rateLimitDelay"
-                class="form-input"
-                min="0"
-                max="5000"
-                step="100"
-                value="1000"
-              />
-              <p class="help-text">Delay between API requests (0-5000ms)</p>
-            </div>
-            <div class="form-group">
-              <label for="retryAttempts">Retry Attempts</label>
-              <input
-                type="number"
-                id="retryAttempts"
-                class="form-input"
-                min="0"
-                max="10"
-                value="3"
-              />
-              <p class="help-text">Number of retry attempts on failure (0-10)</p>
-            </div>
-            <div class="form-group">
-              <label for="retryDelay">Retry Delay (ms)</label>
-              <input
-                type="number"
-                id="retryDelay"
-                class="form-input"
-                min="0"
-                max="10000"
-                step="100"
-                value="2000"
-              />
-              <p class="help-text">Delay before retry (0-10000ms)</p>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Backup & Restore</h3>
-            <div class="form-actions">
-              <button id="exportSettings" class="btn btn-secondary">Export Settings JSON</button>
-              <button id="importSettings" class="btn btn-secondary">Import Settings JSON</button>
-              <input type="file" id="importFile" accept=".json" style="display: none" />
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Troubleshooting</h3>
-            <div class="form-group checkbox-row">
-              <div class="checkbox-label">
-                <label for="debugMode">Debug Mode</label>
-                <p class="help-text">Enable detailed logging to the console.</p>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="debugMode" />
-                <span class="slider round"></span>
-              </label>
-            </div>
-            <div class="form-actions mt-4">
-              <button id="resetDefaults" class="btn btn-danger">
-                Reset All Settings to Default
-              </button>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <div id="toast" class="toast">Settings saved</div>
-    </div>
-
-    <!-- Template for Segment Item -->
-    <template id="segmentItemTemplate">
-      <div class="segment-item" data-category="">
-        <div class="segment-info">
-          <span class="segment-color"></span>
-          <span class="segment-name">Category Name</span>
-        </div>
-        <div class="segment-controls">
-          <select class="segment-action form-select-sm">
-            <option value="ignore">Ignore</option>
-            <option value="skip">Skip</option>
-            <option value="speed">Speed Up</option>
-          </select>
-          <div class="speed-control hidden">
-            <input type="range" class="speed-slider" min="1" max="16" step="0.5" value="2" />
-            <span class="speed-value">2x</span>
-          </div>
+          <button id="start-setup-btn" class="btn btn-primary">Start Setup</button>
+          <button id="dismiss-banner-btn" class="btn-icon">✕</button>
         </div>
       </div>
-    </template>
 
-    <script src="options.js" type="module"></script>
-  </body>
+      <!-- Tabs will be loaded dynamically here -->
+
+      <!-- AI Configuration -->
+      <section id="ai-config" class="tab-content">
+        <header class="section-header">
+          <h2>AI Configuration</h2>
+          <p>Manage your Gemini API connection and model settings</p>
+        </header>
+
+        <div class="card">
+          <h3>API Connection</h3>
+          <div class="form-group">
+            <label for="apiKey">Gemini API Key</label>
+            <div class="input-with-button">
+              <input type="password" id="apiKey" class="form-input" placeholder="Enter your API key" />
+              <button id="toggleApiKey" class="btn-icon" title="Show/Hide">👁️</button>
+            </div>
+            <p class="help-text">
+              Get your free key from
+              <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>.
+            </p>
+          </div>
+          <div class="form-actions">
+            <button id="testConnection" class="btn btn-secondary">Test Connection</button>
+          </div>
+          <div id="apiStatus" class="status-indicator hidden"></div>
+        </div>
+
+        <div class="card">
+          <h3>Model Selection</h3>
+          <div class="form-group">
+            <label for="modelSelect">Gemini Model</label>
+            <div class="select-wrapper">
+              <select id="modelSelect" class="form-select">
+                <option value="" disabled selected>Loading models...</option>
+              </select>
+              <button id="refreshModels" class="btn-icon" title="Refresh Models">🔄</button>
+            </div>
+            <p class="help-text">
+              Select the AI model to use. Newer models may be faster or smarter.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>System Prompt</h3>
+          <div class="form-group">
+            <label for="customPrompt">Custom Instructions</label>
+            <textarea id="customPrompt" class="form-textarea" rows="4"
+              placeholder="e.g., Focus on technical details, use bullet points..."></textarea>
+            <p class="help-text">Optional instructions to guide the AI's behavior.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Comprehensive Analysis Settings</h3>
+          <div class="form-group">
+            <label for="summaryLength">Summary Length</label>
+            <div class="select-wrapper">
+              <select id="summaryLength" class="form-select">
+                <option value="short">Short (2-3 paragraphs)</option>
+                <option value="medium" selected>Medium (4-6 paragraphs)</option>
+                <option value="long">Long (8-12 paragraphs)</option>
+              </select>
+            </div>
+            <p class="help-text">Control the detail level of video summaries.</p>
+          </div>
+          <div class="form-group">
+            <label for="maxInsights">Max Key Insights</label>
+            <input type="number" id="maxInsights" class="form-input" min="3" max="20" value="8" />
+            <p class="help-text">Number of key takeaways to extract (3-20).</p>
+          </div>
+          <div class="form-group">
+            <label for="maxFAQ">Max FAQ Items</label>
+            <input type="number" id="maxFAQ" class="form-input" min="3" max="15" value="5" />
+            <p class="help-text">Number of FAQ questions to generate (3-15).</p>
+          </div>
+          <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+              <label for="includeTimestamps">Include Timestamps</label>
+              <p class="help-text">Add [MM:SS] timestamps to summaries and insights.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="includeTimestamps" checked />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Segments & Actions -->
+      <section id="segments" class="tab-content">
+        <header class="section-header">
+          <h2>Segments & Actions</h2>
+          <p>Control how different video segments are handled</p>
+        </header>
+
+        <div class="card highlight-card">
+          <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+              <label for="enableSegments">Enable Segment Detection</label>
+              <p class="help-text">Analyze video to identify sponsors, intros, and more.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="enableSegments" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card" id="segmentSettingsContainer">
+          <div class="card-header-row">
+            <h3>Category Actions</h3>
+            <div class="global-actions">
+              <button id="skipAllBtn" class="btn btn-sm btn-secondary">Set All to Skip</button>
+              <button id="speedAllBtn" class="btn btn-sm btn-secondary">
+                Set All to Speed Up
+              </button>
+              <button id="resetAllBtn" class="btn btn-sm btn-outline">Reset</button>
+            </div>
+          </div>
+
+          <div class="segments-grid" id="segmentsGrid">
+            <!-- Generated dynamically by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- External APIs -->
+      <section id="external-apis" class="tab-content">
+        <header class="section-header">
+          <h2>External APIs</h2>
+          <p>Enhance AI accuracy with free external data sources (Optional)</p>
+        </header>
+
+        <div class="card">
+          <h3>Entertainment & Media</h3>
+          <div class="form-group">
+            <label for="tmdbApiKey">TMDB API Key (Movies/TV)</label>
+            <input type="password" id="tmdbApiKey" class="form-input" placeholder="Enter TMDB API Key" />
+            <p class="help-text">
+              Free key from
+              <a href="https://www.themoviedb.org/settings/api" target="_blank">TheMovieDB</a>.
+            </p>
+          </div>
+          <div class="form-group">
+            <label for="twitchClientId">Twitch Client ID (Gaming)</label>
+            <input type="text" id="twitchClientId" class="form-input" placeholder="Enter Twitch Client ID" />
+          </div>
+          <div class="form-group">
+            <label for="twitchAccessToken">Twitch Access Token (Gaming)</label>
+            <input type="password" id="twitchAccessToken" class="form-input" placeholder="Enter Twitch Access Token" />
+            <p class="help-text">
+              Required for IGDB. Get from
+              <a href="https://dev.twitch.tv/console" target="_blank">Twitch Dev Console</a>.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>News & Facts</h3>
+          <div class="form-group">
+            <label for="newsDataApiKey">NewsData.io API Key</label>
+            <input type="password" id="newsDataApiKey" class="form-input" placeholder="Enter NewsData API Key" />
+            <p class="help-text">
+              Free tier available at
+              <a href="https://newsdata.io/" target="_blank">NewsData.io</a>.
+            </p>
+          </div>
+          <div class="form-group">
+            <label for="googleFactCheckApiKey">Google Fact Check API Key</label>
+            <input type="password" id="googleFactCheckApiKey" class="form-input"
+              placeholder="Enter Google Cloud API Key" />
+            <p class="help-text">Requires GCP project with Fact Check Tools API enabled.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Advanced -->
+      <section id="advanced" class="tab-content">
+        <header class="section-header">
+          <h2>Advanced</h2>
+          <p>Performance, backup, restore, and debug</p>
+        </header>
+
+        <div class="card">
+          <h3>Performance</h3>
+          <div class="form-group">
+            <label for="maxConcurrentRequests">Max Concurrent Requests</label>
+            <input type="number" id="maxConcurrentRequests" class="form-input" min="1" max="10" value="3" />
+            <p class="help-text">Maximum parallel API requests (1-10)</p>
+          </div>
+          <div class="form-group">
+            <label for="rateLimitDelay">Rate Limit Delay (ms)</label>
+            <input type="number" id="rateLimitDelay" class="form-input" min="0" max="5000" step="100" value="1000" />
+            <p class="help-text">Delay between API requests (0-5000ms)</p>
+          </div>
+          <div class="form-group">
+            <label for="retryAttempts">Retry Attempts</label>
+            <input type="number" id="retryAttempts" class="form-input" min="0" max="10" value="3" />
+            <p class="help-text">Number of retry attempts on failure (0-10)</p>
+          </div>
+          <div class="form-group">
+            <label for="retryDelay">Retry Delay (ms)</label>
+            <input type="number" id="retryDelay" class="form-input" min="0" max="10000" step="100" value="2000" />
+            <p class="help-text">Delay before retry (0-10000ms)</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Backup & Restore</h3>
+          <div class="form-actions">
+            <button id="exportSettings" class="btn btn-secondary">Export Settings JSON</button>
+            <button id="importSettings" class="btn btn-secondary">Import Settings JSON</button>
+            <input type="file" id="importFile" accept=".json" style="display: none" />
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Troubleshooting</h3>
+          <div class="form-group checkbox-row">
+            <div class="checkbox-label">
+              <label for="debugMode">Debug Mode</label>
+              <p class="help-text">Enable detailed logging to the console.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="debugMode" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="form-actions mt-4">
+            <button id="resetDefaults" class="btn btn-danger">
+              Reset All Settings to Default
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast">Settings saved</div>
+  </div>
+
+  <!-- Template for Segment Item -->
+  <template id="segmentItemTemplate">
+    <div class="segment-item" data-category="">
+      <div class="segment-info">
+        <span class="segment-color"></span>
+        <span class="segment-name">Category Name</span>
+      </div>
+      <div class="segment-controls">
+        <select class="segment-action form-select-sm">
+          <option value="ignore">Ignore</option>
+          <option value="skip">Skip</option>
+          <option value="speed">Speed Up</option>
+        </select>
+        <div class="speed-control hidden">
+          <input type="range" class="speed-slider" min="1" max="16" step="0.5" value="2" />
+          <span class="speed-value">2x</span>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script src="options.js" type="module"></script>
+</body>
+
 </html>

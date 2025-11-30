@@ -36,6 +36,10 @@ export class AIConfig {
         rm: i('#refreshModels'),
         tc: i('#testConnection'),
         cp: i('#customPrompt'),
+        sl: i('#summaryLength'),
+        mi: i('#maxInsights'),
+        mf: i('#maxFAQ'),
+        it: i('#includeTimestamps'),
       };
       if (els.ak)
         on(els.ak, 'change', async e => {
@@ -50,6 +54,22 @@ export class AIConfig {
           els.ak.type = els.ak.type === 'password' ? 'text' : 'password';
         });
       if (els.cp) this.a.attachToInput(els.cp, 'ai.customPrompt');
+      if (els.sl) {
+        if (c.summaryLength) els.sl.value = c.summaryLength;
+        on(els.sl, 'change', e => this.a.save('ai.summaryLength', vl(e.target)));
+      }
+      if (els.mi) {
+        if (c.maxInsights) els.mi.value = c.maxInsights;
+        this.a.attachToInput(els.mi, 'ai.maxInsights');
+      }
+      if (els.mf) {
+        if (c.maxFAQ) els.mf.value = c.maxFAQ;
+        this.a.attachToInput(els.mf, 'ai.maxFAQ');
+      }
+      if (els.it) {
+        els.it.checked = c.includeTimestamps !== false;
+        on(els.it, 'change', e => this.a.save('ai.includeTimestamps', e.target.checked));
+      }
       if (els.ms)
         on(els.ms, 'change', e => {
           let m = vl(e.target);

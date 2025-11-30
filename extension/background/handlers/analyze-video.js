@@ -12,7 +12,7 @@ import { inc as ic, lwc } from '../../utils/shortcuts/string.js';
 import { np, pc } from '../../utils/shortcuts/async.js';
 let ka = null;
 const ska = () => {
-  if (!ka) ka = si(() => cr.getPlatformInfo(() => {}), 2e4);
+  if (!ka) ka = si(() => cr.getPlatformInfo(() => { }), 2e4);
 };
 const stka = () => {
   if (ka) {
@@ -91,10 +91,13 @@ export async function handleAnalyzeVideo(q, r) {
       sponsorBlockSegments: sb2,
       externalContext: ec,
     };
+    const st2 = await sg(['summaryLength', 'maxInsights', 'maxFAQ', 'includeTimestamps']);
     const an = await g.generateComprehensiveAnalysis(ac, {
-      model: 'gemini-2.5-flash-lite-preview-09-2025',
-      language: o.language || 'English',
-      length: o.length || 'Medium',
+      summaryLength: o.summaryLength || st2.summaryLength || 'medium',
+      language: o.language || 'en',
+      maxInsights: o.maxInsights || st2.maxInsights || 8,
+      maxFAQ: o.maxFAQ || st2.maxFAQ || 5,
+      includeTimestamps: o.includeTimestamps !== false && st2.includeTimestamps !== false,
     });
     let sg2 = [],
       fv = null;
