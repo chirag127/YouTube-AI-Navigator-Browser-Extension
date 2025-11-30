@@ -33,7 +33,11 @@ global.document = {
 };
 
 // Import after mocks
+// Import after mocks
 import { NotificationManager } from '../../../extension/options/modules/notification-manager.js';
+import { to } from '../../../extension/utils/shortcuts/global.js';
+import { raf } from '../../../extension/utils/shortcuts/async.js';
+import { ce, ap } from '../../../extension/utils/shortcuts/dom.js';
 
 describe('NotificationManager', () => {
   let manager;
@@ -41,10 +45,10 @@ describe('NotificationManager', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    mockTo = vi.mocked(require('../../../extension/utils/shortcuts/global.js').to);
-    mockRaf = vi.mocked(require('../../../extension/utils/shortcuts/async.js').raf);
-    mockCe = vi.mocked(require('../../../extension/utils/shortcuts/dom.js').ce);
-    mockAp = vi.mocked(require('../../../extension/utils/shortcuts/dom.js').ap);
+    mockTo = to;
+    mockRaf = raf;
+    mockCe = ce;
+    mockAp = ap;
 
     mockCe.mockImplementation(tag => {
       if (tag === 'div') {

@@ -1,9 +1,9 @@
-import { APIDetector } from '../extension/api/core/api-detector.js';
+import { APIDetector } from '/extension/api/core/api-detector.js';
 
 global.fetch = vi.fn();
 global.AbortSignal = { timeout: vi.fn(() => ({})) };
 
-vi.mock('../extension/utils/shortcuts/log.js', () => ({
+vi.mock('/extension/utils/shortcuts/log.js', () => ({
   e: vi.fn(),
   l: vi.fn(),
 }));

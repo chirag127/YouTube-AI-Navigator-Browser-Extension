@@ -29,6 +29,12 @@ vi.mock('../../../extension/utils/shortcuts/network.js', () => ({
   ft: vi.fn(),
 }));
 
+import { GeminiClient } from '../../../extension/api/gemini-client.js';
+import { w, e } from '../../../extension/utils/shortcuts/log.js';
+import { jp } from '../../../extension/utils/shortcuts/core.js';
+import { rp, trm } from '../../../extension/utils/shortcuts/string.js';
+import { sg } from '../../../extension/utils/shortcuts/storage.js';
+import { ft } from '../../../extension/utils/shortcuts/network.js';
 import { handleTranscribeAudio } from '../../../extension/background/handlers/transcribe-audio.js';
 
 describe('handleTranscribeAudio', () => {
@@ -36,14 +42,14 @@ describe('handleTranscribeAudio', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    mockGeminiClient = vi.mocked(require('../../../extension/api/gemini-client.js').GeminiClient);
-    mockW = vi.mocked(require('../../../extension/utils/shortcuts/log.js').w);
-    mockE = vi.mocked(require('../../../extension/utils/shortcuts/log.js').e);
-    mockJp = vi.mocked(require('../../../extension/utils/shortcuts/core.js').jp);
-    mockRp = vi.mocked(require('../../../extension/utils/shortcuts/string.js').rp);
-    mockTrm = vi.mocked(require('../../../extension/utils/shortcuts/string.js').trm);
-    mockSg = vi.mocked(require('../../../extension/utils/shortcuts/storage.js').sg);
-    mockFt = vi.mocked(require('../../../extension/utils/shortcuts/network.js').ft);
+    mockGeminiClient = GeminiClient;
+    mockW = w;
+    mockE = e;
+    mockJp = jp;
+    mockRp = rp;
+    mockTrm = trm;
+    mockSg = sg;
+    mockFt = ft;
     mockRsp = vi.fn();
 
     // Setup mocks

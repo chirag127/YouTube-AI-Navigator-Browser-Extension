@@ -2,6 +2,7 @@ import { HttpClient } from '../../../extension/api/core/http-client.js';
 
 vi.mock('../../../extension/utils/shortcuts/global.js', () => ({
   to: vi.fn(),
+  co: vi.fn(),
 }));
 
 vi.mock('../../../extension/utils/shortcuts/math.js', () => ({
@@ -117,7 +118,8 @@ describe('HttpClient', () => {
 
   describe('_sleep', () => {
     it('should sleep for specified ms', async () => {
-      const { to, np } = await import('../../../extension/utils/shortcuts/global.js');
+      const { to } = await import('../../../extension/utils/shortcuts/global.js');
+      const { np } = await import('../../../extension/utils/shortcuts/async.js');
       to.mockImplementation((fn, ms) => setTimeout(fn, ms));
       np.mockImplementation(fn => {
         const promise = new Promise(fn);

@@ -8,6 +8,8 @@ vi.mock('../../../extension/background/utils/api-key.js', () => ({
   getApiKey: vi.fn(),
 }));
 
+import { initializeServices, getServices } from '../../../extension/background/services.js';
+import { getApiKey } from '../../../extension/background/utils/api-key.js';
 import { handleChatWithVideo } from '../../../extension/background/handlers/chat.js';
 
 describe('handleChatWithVideo', () => {
@@ -15,11 +17,9 @@ describe('handleChatWithVideo', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    mockInitializeServices = vi.mocked(
-      require('../../../extension/background/services.js').initializeServices
-    );
-    mockGetServices = vi.mocked(require('../../../extension/background/services.js').getServices);
-    mockGetApiKey = vi.mocked(require('../../../extension/background/utils/api-key.js').getApiKey);
+    mockInitializeServices = initializeServices;
+    mockGetServices = getServices;
+    mockGetApiKey = getApiKey;
     mockGemini = { chatWithVideo: vi.fn() };
     mockGetServices.mockReturnValue({ gemini: mockGemini });
     mockRsp = vi.fn();

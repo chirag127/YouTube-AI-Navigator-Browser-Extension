@@ -12,6 +12,9 @@ vi.mock('../../../extension/utils/shortcuts/log.js', () => ({
   e: vi.fn(),
 }));
 
+import { initializeServices, getServices } from '../../../extension/background/services.js';
+import { getApiKey } from '../../../extension/background/utils/api-key.js';
+import { e } from '../../../extension/utils/shortcuts/log.js';
 import { handleGetCachedData } from '../../../extension/background/handlers/cache.js';
 
 describe('handleGetCachedData', () => {
@@ -19,12 +22,10 @@ describe('handleGetCachedData', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    mockInitializeServices = vi.mocked(
-      require('../../../extension/background/services.js').initializeServices
-    );
-    mockGetServices = vi.mocked(require('../../../extension/background/services.js').getServices);
-    mockGetApiKey = vi.mocked(require('../../../extension/background/utils/api-key.js').getApiKey);
-    mockE = vi.mocked(require('../../../extension/utils/shortcuts/log.js').e);
+    mockInitializeServices = initializeServices;
+    mockGetServices = getServices;
+    mockGetApiKey = getApiKey;
+    mockE = e;
     mockStorage = { getVideoData: vi.fn() };
     mockGetServices.mockReturnValue({ storage: mockStorage });
     mockRsp = vi.fn();
