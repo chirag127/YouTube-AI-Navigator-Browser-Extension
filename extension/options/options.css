@@ -774,3 +774,56 @@ input:checked + .slider:before {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
+
+/* Sortable List */
+.sortable-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sortable-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: grab;
+  transition: all var(--transition-speed) var(--ease-out);
+  user-select: none;
+}
+
+.sortable-item:hover {
+  background-color: var(--bg-input-focus);
+  border-color: var(--border-hover);
+  transform: translateX(4px);
+}
+
+.sortable-item.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+  background-color: rgba(0, 243, 255, 0.1);
+  border-color: var(--accent-color);
+}
+
+.sortable-item.over {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px var(--accent-glow);
+  transform: scale(1.02);
+}
+
+.drag-handle {
+  color: var(--text-tertiary);
+  font-size: 18px;
+  cursor: grab;
+  transition: color var(--transition-speed);
+}
+
+.sortable-item:hover .drag-handle {
+  color: var(--accent-color);
+}

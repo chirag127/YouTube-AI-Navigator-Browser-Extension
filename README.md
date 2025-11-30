@@ -57,15 +57,18 @@ The extension implements **maximum user configurability** - every feature, rule,
 - **Neo-Brutalism:** High-contrast borders, raw typography (JetBrains Mono + Outfit), and hard shadows for interactive elements.
 - **Scrollytelling:** Data elements (segments, insights, comments) animate in sequentially with staggered delays to guide the user's eye.
 - **Micro-interactions:** Every hover, click, and focus state triggers fluid feedback animations (`cubic-bezier` easing).
-- **Hyper-Configurability:**
-    - **Theme:** Toggle between Dark, Light, and System themes.
-    - **Opacity & Blur:** Fine-tune the glass effect intensity.
-    - **Accent Color:** Choose from a neon palette (Cyber Blue, Neon Pink, Acid Green).
-    - **Scale:** Adjust the UI size from 75% to 125%.
+- **Hyper-Configurability (Options → UI Appearance):**
+  - **Colors:** Primary, accent, background, text, border (full color pickers)
+  - **Typography:** Font family (Inter/Roboto/Open Sans/Lato/System), icon style
+  - **Glass Effects:** Backdrop blur intensity (0-64px), card opacity (0-100%)
+  - **Motion:** Animation speed (0.05-0.5s), easing curves (ease-out/elastic/linear), micro-interactions toggle
+  - **Structure:** Border width (1-4px), radius scale (0.5-2x), spacing scale (0.75-1.5x)
+  - **Effects:** Shadow intensity (0-100%), glow intensity (0-100%), gradient accents toggle
+  - **Modes:** Wallpaper mode, compact mode
 - **Responsive Layout:**
-    - **Dynamic Height:** Automatically adapts to viewport height to prevent clipping.
-    - **Resizability:** Drag handles for both width and height.
-    - **Positioning:** Dock to Left or Right side.
+  - **Dynamic Height:** Automatically adapts to viewport height to prevent clipping.
+  - **Resizability:** Drag handles for both width and height.
+  - **Positioning:** Dock to Left or Right side.
 
 ### Widget Behavior
 

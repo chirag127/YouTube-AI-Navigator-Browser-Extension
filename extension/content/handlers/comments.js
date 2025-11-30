@@ -178,8 +178,26 @@ class CommentsExtractor {
   }
   async fetchCommentsFromDOM(retries = 1) {
     for (let attempt = 1; attempt <= retries; attempt++) {
-      if (attempt > 1) await new Promise(r => to(r, 500));
+      if (attempt > 1) await new Promise(r => to(r, 1000)); // Wait 1s between retries
       try {
+        // 1. Check for "Comments are turned off" or restricted message
+        const messageEl = $(
+          'ytd-comments-header-renderer #message, ytd-message-renderer #message, #message > span'
+        );
+        if (messageEl && messageEl.length > 0) {
+          for (const msg of messageEl) {
+            const text = msg.textContent?.toLowerCase() || '';
+            if (
+              text.includes('turned off') ||
+              text.includes('restricted') ||
+              text.includes('disabled')
+            ) {
+              e('[CE] Comments are disabled/restricted');
+              return []; // Exit early if disabled
+            }
+          }
+        }
+
         const c = [];
         const selectors = [
           'ytd-comment-thread-renderer',
@@ -191,10 +209,20 @@ class CommentsExtractor {
           el = $(sel);
           if (el.length > 0) break;
         }
+
+        // If no comments found yet
         if (el.length === 0) {
+          // If we have a spinner, we should definitely keep retrying
+          const spinner = $('ytd-item-section-renderer #spinner');
+          if (spinner && spinner.length > 0 && attempt < retries) {
+            // Spinner exists, comments are loading. Continue retrying.
+            continue;
+          }
+
           if (retries > 1) e(`[CE] No comments in DOM (${attempt}/${retries})`);
           continue;
         }
+
         const getText = (elm, sels) => {
           for (const sel of sels) {
             const e = elm.querySelector(sel);

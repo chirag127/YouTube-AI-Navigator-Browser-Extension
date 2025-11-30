@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 // Mock runtime first
 vi.mock('../../../extension/utils/shortcuts/runtime.js', () => ({
-  gu: (path) => {
+  gu: path => {
     const mapping = {
       'content/utils/dom.js': '../utils/dom.js',
       'content/ui/tabs.js': './tabs.js',
@@ -14,7 +14,7 @@ vi.mock('../../../extension/utils/shortcuts/runtime.js', () => ({
       'utils/shortcuts/core.js': '../../../utils/shortcuts/core.js',
       'utils/shortcuts/storage.js': '../../../utils/shortcuts/storage.js',
       'utils/shortcuts.js': '../../../utils/shortcuts.js',
-      '../../utils/shortcuts/array.js': '../../../utils/shortcuts/array.js'
+      '../../utils/shortcuts/array.js': '../../../utils/shortcuts/array.js',
     };
     return mapping[path] || path;
   },
@@ -22,7 +22,7 @@ vi.mock('../../../extension/utils/shortcuts/runtime.js', () => ({
 
 // Mock dependencies
 vi.mock('../../../extension/utils/shortcuts/array.js', () => ({
-  af: (arr) => Array.from(arr),
+  af: arr => Array.from(arr),
 }));
 
 vi.mock('../../../extension/content/utils/dom.js', () => ({
@@ -44,9 +44,9 @@ vi.mock('../../../extension/content/ui/components/widget/structure.js', () => ({
 
 vi.mock('../../../extension/utils/shortcuts/dom.js', () => ({
   qs: (sel, ctx) => (ctx || document).querySelector(sel),
-  id: (id) => document.getElementById(id),
+  id: id => document.getElementById(id),
   on: vi.fn(),
-  el: (tag) => document.createElement(tag),
+  el: tag => document.createElement(tag),
   wfe: vi.fn(),
   mo: vi.fn().mockReturnValue({ observe: vi.fn(), disconnect: vi.fn() }),
 }));
@@ -58,7 +58,7 @@ vi.mock('../../../extension/utils/shortcuts/log.js', () => ({
 vi.mock('../../../extension/utils/shortcuts/global.js', () => ({
   si: vi.fn(),
   ci: vi.fn(),
-  to: (cb) => cb(),
+  to: cb => cb(),
 }));
 
 vi.mock('../../../extension/utils/shortcuts/core.js', () => ({
@@ -72,13 +72,20 @@ vi.mock('../../../extension/utils/shortcuts/storage.js', () => ({
 
 vi.mock('../../../extension/utils/shortcuts.js', () => ({
   ael: vi.fn(),
-  stc: (el, txt) => { if(el) el.textContent = txt; },
-  ih: (el, html) => { if(el) el.innerHTML = html; },
+  stc: (el, txt) => {
+    if (el) el.textContent = txt;
+  },
+  ih: (el, html) => {
+    if (el) el.innerHTML = html;
+  },
 }));
 
 // Import module under test
 import { injectWidget, getWidget } from '../../../extension/content/ui/widget.js';
-import { findSecondaryColumn, isWidgetProperlyVisible } from '../../../extension/content/utils/dom.js';
+import {
+  findSecondaryColumn,
+  isWidgetProperlyVisible,
+} from '../../../extension/content/utils/dom.js';
 import { sg } from '../../../extension/utils/shortcuts/storage.js';
 import { wfe } from '../../../extension/utils/shortcuts/dom.js';
 
@@ -138,9 +145,9 @@ describe('Widget Logic', () => {
         widget: {
           height: 600,
           opacity: 90,
-          accentColor: '#ff0000'
-        }
-      }
+          accentColor: '#ff0000',
+        },
+      },
     });
 
     await injectWidget();

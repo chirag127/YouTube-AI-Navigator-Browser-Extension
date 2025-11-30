@@ -78,4 +78,186 @@
       </select>
     </div>
   </div>
+
+  <div class="glass-card">
+    <h3>Glass Effects</h3>
+    <div class="form-group">
+      <label for="uiGlassBlur">Backdrop Blur Intensity</label>
+      <div class="range-with-value">
+        <input
+          type="range"
+          id="uiGlassBlur"
+          name="uiGlassBlur"
+          class="form-range"
+          min="0"
+          max="64"
+          step="4"
+          value="32"
+        />
+        <span class="range-value" id="uiGlassBlurValue">32px</span>
+      </div>
+      <p class="help-text">Glassmorphism blur strength (0-64px)</p>
+    </div>
+    <div class="form-group">
+      <label for="uiCardOpacity">Card Background Opacity</label>
+      <div class="range-with-value">
+        <input
+          type="range"
+          id="uiCardOpacity"
+          name="uiCardOpacity"
+          class="form-range"
+          min="0"
+          max="100"
+          step="5"
+          value="60"
+        />
+        <span class="range-value" id="uiCardOpacityValue">60%</span>
+      </div>
+      <p class="help-text">Glass card transparency (0-100%)</p>
+    </div>
+  </div>
+
+  <div class="glass-card">
+    <h3>Motion & Animations</h3>
+    <div class="form-group">
+      <label for="uiAnimationSpeed">Animation Speed</label>
+      <div class="range-with-value">
+        <input
+          type="range"
+          id="uiAnimationSpeed"
+          name="uiAnimationSpeed"
+          class="form-range"
+          min="0.05"
+          max="0.5"
+          step="0.05"
+          value="0.2"
+        />
+        <span class="range-value" id="uiAnimationSpeedValue">0.2s</span>
+      </div>
+      <p class="help-text">Transition duration (0.05-0.5s)</p>
+    </div>
+    <div class="form-group">
+      <label for="uiEasingCurve">Easing Curve</label>
+      <select id="uiEasingCurve" name="uiEasingCurve" class="form-select">
+        <option value="cubic-bezier(0.4, 0, 0.2, 1)">Ease Out (Default)</option>
+        <option value="cubic-bezier(0.175, 0.885, 0.32, 1.275)">Elastic</option>
+        <option value="cubic-bezier(0.25, 0.46, 0.45, 0.94)">Ease In Out</option>
+        <option value="linear">Linear</option>
+      </select>
+      <p class="help-text">Animation timing function</p>
+    </div>
+    <div class="checkbox-row">
+      <div class="checkbox-label">
+        <strong>Enable Micro-interactions</strong>
+        <p class="help-text">Hover/focus animations on buttons and inputs</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="uiMicroInteractions" name="uiMicroInteractions" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="glass-card">
+    <h3>Structure & Borders</h3>
+    <div class="form-group">
+      <label for="uiBorderWidth">Border Width</label>
+      <div class="range-with-value">
+        <input
+          type="range"
+          id="uiBorderWidth"
+          name="uiBorderWidth"
+          class="form-range"
+          min="1"
+          max="4"
+          step="1"
+          value="2"
+        />
+        <span class="range-value" id="uiBorderWidthValue">2px</span>
+      </div>
+      <p class="help-text">Neo-brutalist border thickness (1-4px)</p>
+    </div>
+    <div class="form-group">
+      <label for="uiRadiusScale">Border Radius Scale</label>
+      <div class="range-with-value">
+        <input
+          type="range"
+          id="uiRadiusScale"
+          name="uiRadiusScale"
+          class="form-range"
+          min="0.5"
+          max="2"
+          step="0.1"
+          value="1"
+        />
+        <span class="range-value" id="uiRadiusScaleValue">1x</span>
+      </div>
+      <p class="help-text">Multiplier for all border radii (0.5-2x)</p>
+    </div>
+    <div class="form-group">
+      <label for="uiSpacingScale">Spacing Scale</label>
+      <div class="range-with-value">
+        <input
+          type="range"
+          id="uiSpacingScale"
+          name="uiSpacingScale"
+          class="form-range"
+          min="0.75"
+          max="1.5"
+          step="0.05"
+          value="1"
+        />
+        <span class="range-value" id="uiSpacingScaleValue">1x</span>
+      </div>
+      <p class="help-text">Multiplier for padding/margins (0.75-1.5x)</p>
+    </div>
+  </div>
+
+  <div class="glass-card">
+    <h3>Effects & Shadows</h3>
+    <div class="form-group">
+      <label for="uiShadowIntensity">Shadow Intensity</label>
+      <div class="range-with-value">
+        <input
+          type="range"
+          id="uiShadowIntensity"
+          name="uiShadowIntensity"
+          class="form-range"
+          min="0"
+          max="100"
+          step="10"
+          value="60"
+        />
+        <span class="range-value" id="uiShadowIntensityValue">60%</span>
+      </div>
+      <p class="help-text">Card shadow opacity (0-100%)</p>
+    </div>
+    <div class="form-group">
+      <label for="uiGlowIntensity">Accent Glow Intensity</label>
+      <div class="range-with-value">
+        <input
+          type="range"
+          id="uiGlowIntensity"
+          name="uiGlowIntensity"
+          class="form-range"
+          min="0"
+          max="100"
+          step="10"
+          value="40"
+        />
+        <span class="range-value" id="uiGlowIntensityValue">40%</span>
+      </div>
+      <p class="help-text">Neon glow effect strength (0-100%)</p>
+    </div>
+    <div class="checkbox-row">
+      <div class="checkbox-label">
+        <strong>Enable Gradient Accents</strong>
+        <p class="help-text">Use gradient overlays on buttons and highlights</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="uiGradientAccents" name="uiGradientAccents" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
 </section>

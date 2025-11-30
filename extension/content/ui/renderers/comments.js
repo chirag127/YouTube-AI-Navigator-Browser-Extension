@@ -32,10 +32,10 @@ export async function renderComments(c) {
     showLoading(c, 'Loading comments section...');
     const cfg = await getConfig();
     const origPos = window.scrollY;
-    const retries = cfg.comments?.retries ?? 5;
+    const retries = cfg.comments?.retries ?? 10;
 
     await forceLoadComments();
-    showLoading(c, 'Extracting comments...');
+    showLoading(c, 'Waiting for comments...');
     await to(() => {}, 800);
 
     try {
@@ -116,14 +116,46 @@ async function forceLoadComments() {
     const cs = doc.querySelector('ytd-comments#comments');
     if (cs) {
       cs.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // Wait for 1 second as requested to allow lazy loading
-      await to(() => {}, 1000);
-      window.scrollBy(0, 200);
-      await to(() => {}, 500);
+
+      // Poll for comments to appear
+      let attempts = 0;
+      const maxAttempts = 20; // 20 * 500ms = 10 seconds
+
+      while (attempts < maxAttempts) {
+        await to(() => {}, 500);
+
+        // Check if comments have loaded
+        const comments = doc.querySelectorAll('ytd-comment-thread-renderer, ytd-comment-renderer');
+        if (comments && comments.length > 0) {
+          // Comments appeared! Give a tiny bit more time for text to render
+          await to(() => {}, 500);
+          return;
+        }
+
+        // Check for spinner (still loading)
+        // const spinner = doc.querySelector('ytd-item-section-renderer #spinner');
+
+        // Check for "disabled" message to exit early
+        const msg = doc.querySelector('ytd-comments-header-renderer #message');
+        if (msg && msg.textContent.toLowerCase().includes('turned off')) {
+          return; // Comments disabled, stop waiting
+        }
+
+        // If we are at the bottom, maybe scroll up a bit to trigger lazy load
+        if (attempts % 5 === 0) {
+          window.scrollBy(0, -50);
+          await to(() => {}, 100);
+          window.scrollBy(0, 50);
+        }
+
+        attempts++;
+      }
       return;
     }
+
+    // Fallback if no comments section found (e.g. mobile/other layout)
     window.scrollTo({ top: doc.documentElement.scrollHeight, behavior: 'smooth' });
-    await to(() => {}, 1000);
+    await to(() => {}, 2000);
   } catch (err) {
     e('Err:forceLoadComments', err);
   }

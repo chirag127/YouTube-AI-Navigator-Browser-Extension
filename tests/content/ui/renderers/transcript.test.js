@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mock runtime first to control gu output
 vi.mock('../../../../extension/utils/shortcuts/runtime.js', () => ({
-  gu: (path) => {
+  gu: path => {
     const mapping = {
       'utils/shortcuts/log.js': '../../../utils/shortcuts/log.js',
       'content/ui/components/loading.js': '../components/loading.js',
@@ -21,7 +21,9 @@ vi.mock('../../../../extension/utils/shortcuts/log.js', () => ({
 }));
 
 vi.mock('../../../../extension/content/ui/components/loading.js', () => ({
-  showPlaceholder: (c, msg) => { c.innerHTML = `<div class="placeholder">${msg}</div>`; },
+  showPlaceholder: (c, msg) => {
+    c.innerHTML = `<div class="placeholder">${msg}</div>`;
+  },
 }));
 
 vi.mock('../../../../extension/content/utils/dom.js', () => ({
@@ -29,11 +31,11 @@ vi.mock('../../../../extension/content/utils/dom.js', () => ({
 }));
 
 vi.mock('../../../../extension/content/utils/time.js', () => ({
-  formatTime: (t) => `${t}s`,
+  formatTime: t => `${t}s`,
 }));
 
 vi.mock('../../../../extension/utils/shortcuts/dom.js', () => ({
-  id: (id) => document.getElementById(id),
+  id: id => document.getElementById(id),
   qs: (sel, ctx) => (ctx || document).querySelector(sel),
   qsa: (sel, ctx) => (ctx || document).querySelectorAll(sel),
   on: (el, evt, cb) => el.addEventListener(evt, cb),
@@ -45,7 +47,10 @@ vi.mock('../../../../extension/utils/shortcuts/storage.js', () => ({
 }));
 
 // Import module under test
-import { renderTranscript, shouldAutoClose } from '../../../../extension/content/ui/renderers/transcript.js';
+import {
+  renderTranscript,
+  shouldAutoClose,
+} from '../../../../extension/content/ui/renderers/transcript.js';
 
 describe('Transcript Renderer', () => {
   let container;
