@@ -35,7 +35,7 @@ describe('RateLimiter', () => {
 
   describe('acquire', () => {
     it('should resolve immediately when under limit', async () => {
-      vi.mocked(nw).mockReturnValue(1000);
+      nw.mockReturnValue(1000);
 
       await limiter.acquire();
 
@@ -44,12 +44,12 @@ describe('RateLimiter', () => {
     });
 
     it('should queue when at limit', async () => {
-      vi.mocked(nw).mockReturnValue(1000);
-      vi.mocked(np).mockImplementation(fn => {
+      nw.mockReturnValue(1000);
+      np.mockImplementation(fn => {
         const promise = new Promise(fn);
         return promise;
       });
-      vi.mocked(to).mockImplementation(fn => fn());
+      to.mockImplementation(fn => fn());
 
       // Fill the limit
       await limiter.acquire();
@@ -61,7 +61,7 @@ describe('RateLimiter', () => {
       expect(limiter.queue).toHaveLength(1);
 
       // Simulate time passing
-      vi.mocked(nw).mockReturnValue(2000);
+      nw.mockReturnValue(2000);
 
       await acquirePromise;
 
@@ -71,7 +71,7 @@ describe('RateLimiter', () => {
 
   describe('getStats', () => {
     it('should return current stats', () => {
-      vi.mocked(nw).mockReturnValue(1000);
+      nw.mockReturnValue(1000);
 
       limiter.acquire();
 
@@ -84,9 +84,9 @@ describe('RateLimiter', () => {
     });
 
     it('should filter old timestamps', () => {
-      vi.mocked(nw).mockReturnValue(1000);
+      nw.mockReturnValue(1000);
       limiter.acquire();
-      vi.mocked(nw).mockReturnValue(2000); // After window
+      nw.mockReturnValue(2000); // After window
 
       const stats = limiter.getStats();
 

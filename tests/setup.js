@@ -2,90 +2,46 @@ import { vi } from 'vitest';
 
 global.chrome = {
   runtime: {
-    getURL: vi.fn(path => `chrome-extension://mock-id/${path}`),
-    getManifest: vi.fn(() => ({ version: '1.0.0' })),
-    onMessage: { addListener: vi.fn(), removeListener: vi.fn() },
+    getURL: vi.fn((path) => `chrome-extension://mock-id/${path}`),
+    onMessage: {
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+    },
     sendMessage: vi.fn(),
-    onInstalled: { addListener: vi.fn() },
-  },
-  tabs: {
-    query: vi.fn(),
-    sendMessage: vi.fn(),
-    create: vi.fn(),
-    update: vi.fn(),
-    get: vi.fn(),
-    onUpdated: { addListener: vi.fn() },
-    onActivated: { addListener: vi.fn() },
   },
   storage: {
     local: {
       get: vi.fn(),
       set: vi.fn(),
-      remove: vi.fn(),
-      clear: vi.fn(),
     },
     sync: {
       get: vi.fn(),
       set: vi.fn(),
-      remove: vi.fn(),
-      clear: vi.fn(),
     },
-    onChanged: { addListener: vi.fn() },
   },
-  windows: {
+  tabs: {
+    query: vi.fn(),
     create: vi.fn(),
-    get: vi.fn(),
-    getAll: vi.fn(),
-    remove: vi.fn(),
-    update: vi.fn(),
-  },
-  scripting: {
-    executeScript: vi.fn(),
-    insertCSS: vi.fn(),
-  },
-  action: {
-    onClicked: { addListener: vi.fn() },
-    setBadgeText: vi.fn(),
-    setBadgeBackgroundColor: vi.fn(),
-  },
-  commands: {
-    onCommand: { addListener: vi.fn() },
-  },
-  contextMenus: {
-    create: vi.fn(),
-    onClicked: { addListener: vi.fn() },
-    removeAll: vi.fn(),
   },
 };
 
-global.fetch = vi.fn();
-global.Request = vi.fn();
-global.Response = vi.fn();
-global.Headers = vi.fn();
-global.FormData = vi.fn();
-global.URLSearchParams = URLSearchParams;
+global.window = {
+  ...global.window,
+  top: global.window,
+  location: {
+    hostname: 'www.youtube.com',
+    search: '?v=test123',
+  },
+  scrollTo: vi.fn(),
+};
 
-// Mock shortcuts that reference chrome at top level
-vi.mock('../extension/utils/shortcuts/global.js', () => ({
-  wn: global.chrome.windows,
-  loc: null,
-  to: setTimeout,
-  co: clearTimeout,
-  rAF: vi.fn(),
-  pi: parseInt,
-  pf: parseFloat,
-  cf: vi.fn(() => false),
-  al: vi.fn(),
-  pm: vi.fn(() => null),
-  en: encodeURIComponent,
-  de: decodeURIComponent,
-  si: setInterval,
-  ci: clearInterval,
-  clt: clearTimeout,
-  pI: parseInt,
-}));
-
-// Mock DOM globals if needed (jsdom handles most)
-if (typeof window !== 'undefined') {
-  window.chrome = global.chrome;
-}
+global.document = {
+  ...global.document,
+  head: global.document.createElement('head'),
+  documentElement: global.document.createElement('html'),
+  createElement: global.document.createElement.bind(global.document),
+  querySelector: vi.fn(),
+  querySelectorAll: vi.fn(),
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+};

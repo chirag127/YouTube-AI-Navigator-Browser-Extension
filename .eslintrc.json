@@ -2,7 +2,8 @@
   "env": {
     "browser": true,
     "es2022": true,
-    "webextensions": true
+    "webextensions": true,
+    "node": true
   },
   "extends": "eslint:recommended",
   "parserOptions": {
@@ -19,5 +20,22 @@
   "globals": {
     "chrome": "readonly"
   },
-  "ignorePatterns": ["extension/dist/**", "node_modules/**"]
+  "ignorePatterns": ["extension/dist/**", "node_modules/**"],
+  "overrides": [
+    {
+      "files": ["tests/**/*.js", "**/*.test.js"],
+      "globals": {
+        "describe": "readonly",
+        "it": "readonly",
+        "test": "readonly",
+        "expect": "readonly",
+        "beforeEach": "readonly",
+        "afterEach": "readonly",
+        "beforeAll": "readonly",
+        "afterAll": "readonly",
+        "vi": "readonly",
+        "global": "readonly"
+      }
+    }
+  ]
 }

@@ -18,7 +18,7 @@ vi.mock('../../../../extension/utils/shortcuts/log.js', () => ({
 }));
 
 vi.mock('../../../../extension/lib/marked-loader.js', () => ({
-  parseMarkdown: vi.fn().mockImplementation(text => Promise.resolve(`<p>${text}</p>`)),
+  parseMarkdown: (text) => Promise.resolve(`<p>${text}</p>`)),
 }));
 
 vi.mock('../../../../extension/utils/shortcuts/dom.js', () => ({

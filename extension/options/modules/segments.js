@@ -155,6 +155,10 @@ export class SegmentsConfig {
     await this.s.save();
   }
 
+  async update(id, u) {
+    return this.updateCategory(id, u);
+  }
+
   async setAll(a) {
     const c = this.s.get(),
       cats = { ...(c.segments?.categories || {}) };

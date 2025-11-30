@@ -87,7 +87,7 @@ describe('HttpClient', () => {
     });
 
     it('should handle timeout', async () => {
-      global.fetch = vi.fn().mockImplementation(() => {
+      global.fetch = function(() => {
         const controller = new AbortController();
         controller.abort();
         return Promise.reject(new Error('Aborted'));

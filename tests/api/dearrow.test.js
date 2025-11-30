@@ -222,7 +222,7 @@ describe('DeArrow API', () => {
   describe('getVideoMetadata', () => {
     it('should return metadata with DeArrow data', async () => {
       const mockBd = { titles: [{ title: 'Title', votes: 1 }], thumbnails: [] };
-      vi.mocked(fetchBrandingPrivate).mockResolvedValue(mockBd);
+      fetchBrandingPrivate.mockResolvedValue(mockBd);
 
       const result = await getVideoMetadata('vid');
 
@@ -236,7 +236,7 @@ describe('DeArrow API', () => {
     });
 
     it('should return metadata without DeArrow data', async () => {
-      vi.mocked(fetchBrandingPrivate).mockResolvedValue(null);
+      fetchBrandingPrivate.mockResolvedValue(null);
 
       const result = await getVideoMetadata('vid');
 

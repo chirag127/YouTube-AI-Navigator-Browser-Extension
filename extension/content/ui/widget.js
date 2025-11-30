@@ -25,61 +25,25 @@ let widgetContainer = null,
 function updateWidgetHeight() {
   try {
     if (!widgetContainer) return;
-
-    // Dynamic viewport constraint
     const viewportHeight = window.innerHeight;
     const rect = widgetContainer.getBoundingClientRect();
-
-    // Calculate available height from the top of the widget to the bottom of the viewport
-    // We use a safety margin (default 20px) to ensure it doesn't touch the very edge
     const safetyMargin = widgetConfig.viewportMargin || 20;
-
-    // If rect.top is negative (scrolled past), we still want to constrain max-height relative to viewport
-    // but usually we care about the bottom not being clipped.
-    // If widget is fixed/sticky, rect.top is constant. If relative, it changes.
-    // We want: height + rect.top <= viewportHeight - margin
-    // So: height <= viewportHeight - rect.top - margin
-
-    // However, if rect.top is very small (or negative), we don't want the widget to disappear.
-    // Let's clamp rect.top to a minimum of 0 for this calculation if we want to ensure full visibility
-    // when top is visible.
-    // But if user scrolls down, rect.top < 0. The widget moves up.
-    // The issue is usually when rect.top > 0.
-
     let availableHeight = viewportHeight - Math.max(0, rect.top) - safetyMargin;
-
-    // Enforce a reasonable minimum so it doesn't collapse completely
     availableHeight = Math.max(availableHeight, 200);
-
-    // Apply constraint if Dynamic Height is enabled (default true)
     if (widgetConfig.dynamicHeight !== false) {
       widgetContainer.style.maxHeight = `${availableHeight}px`;
     } else {
-      // Fallback to configured max height if dynamic is disabled
       widgetContainer.style.maxHeight = `${widgetConfig.maxHeight || 1200}px`;
     }
-
     const p = $('#movie_player') || $('.html5-video-player');
     if (p) {
-      // Also respect player height if needed, but viewport is king for preventing clip
-      // We don't strictly bind to player height anymore to allow independent sizing
-      // but we ensure we don't overflow the window
     }
-
-    // Ensure content area fits
     const header = $('.yt-ai-header', widgetContainer);
     const tabs = $('.yt-ai-tabs', widgetContainer);
     const chatInput = $('.yt-ai-chat-input', widgetContainer);
-
     if (header && tabs && chatInput) {
       const contentArea = $('#yt-ai-content-area', widgetContainer);
       if (contentArea) {
-        // The container's max-height is now set.
-        // We just need to ensure the content area takes up the remaining space properly
-        // Flexbox on the container (display: flex; flex-direction: column) handles this naturally
-        // provided the content area has flex: 1 and overflow-y: auto (which it does in CSS).
-
-        // However, if we want to force a specific height:
         const currentHeight = widgetContainer.offsetHeight;
         if (widgetConfig.dynamicHeight !== false && currentHeight > availableHeight) {
           widgetContainer.style.height = `${availableHeight}px`;
@@ -203,10 +167,7 @@ export async function injectWidget() {
     ih(widgetContainer, createWidgetHTML(cfg));
     sc.insertBefore(widgetContainer, sc.firstChild);
     lastKnownContainer = sc;
-
-    // Apply default collapsed state if configured
     await applyDefaultWidgetState();
-
     applyWidgetConfig();
     setupWidgetLogic(widgetContainer);
     setupObservers(sc);
@@ -246,8 +207,6 @@ async function loadWidgetConfig() {
     };
 
     if (!r.config?.widget) return defaults;
-
-    // Merge with defaults to ensure all properties exist
     return {
       ...defaults,
       ...r.config.widget,
@@ -295,7 +254,6 @@ async function applyWidgetConfig() {
       widgetContainer.style.minWidth = `${widgetConfig.minWidth}px`;
     }
 
-    // Apply Appearance Settings
     if (widgetConfig.opacity !== undefined) {
       const opacity = widgetConfig.opacity / 100;
       widgetContainer.style.setProperty('--yt-ai-bg-glass', `rgba(15, 15, 15, ${opacity})`);
@@ -309,7 +267,6 @@ async function applyWidgetConfig() {
       widgetContainer.style.setProperty('--yt-ai-accent', widgetConfig.accentColor);
     }
 
-    // Load UI settings for font
     const r = await sg('config');
     const ui = r.config?.ui || {};
     if (ui.fontFamily) {
@@ -326,7 +283,6 @@ async function applyWidgetConfig() {
       widgetContainer.style.webkitBackdropFilter = `blur(${widgetConfig.blur}px)`;
     }
 
-    // Apply Theme
     const r2 = await sg('config');
     const theme = r2.config?.ui?.theme || 'liquid-glass';
     widgetContainer.setAttribute('data-theme', theme);
@@ -334,7 +290,6 @@ async function applyWidgetConfig() {
     if (widgetConfig.scale !== undefined) {
       const scale = widgetConfig.scale / 100;
       widgetContainer.style.fontSize = `${14 * scale}px`;
-      // Scale other elements if needed, but font-size usually cascades
     }
 
     const rh = $('#yt-ai-resize-handle', widgetContainer);
@@ -519,7 +474,7 @@ function setupWidgetLogic(c) {
     }
     setupResizeHandle(c);
     setupWidthResizeHandle(c);
-    setupDragHandler(c); // Add drag handler
+    setupDragHandler(c);
     initTabs(c);
     attachEventListeners(c);
   } catch (err) {
@@ -530,15 +485,11 @@ function setupWidgetLogic(c) {
 async function applyDefaultWidgetState() {
   try {
     if (!widgetContainer || !widgetConfig) return;
-
     const cb = $('#yt-ai-close-btn', widgetContainer);
     if (!cb) return;
-
-    // Check if we should remember state
     if (widgetConfig.rememberState) {
       const savedState = await getSavedWidgetState();
       if (savedState !== null) {
-        // Apply saved state
         if (savedState) {
           widgetContainer.classList.add('yt-ai-collapsed');
           stc(cb, '⬇️');
@@ -547,8 +498,6 @@ async function applyDefaultWidgetState() {
         return;
       }
     }
-
-    // Apply default collapsed state if no saved state
     if (widgetConfig.defaultCollapsed) {
       widgetContainer.classList.add('yt-ai-collapsed');
       stc(cb, '⬇️');
@@ -586,7 +535,6 @@ function setupObservers(c) {
       resizeObserver = new ResizeObserver(() => updateWidgetHeight());
       resizeObserver.observe(p);
     }
-    // Also observe window resize for DevTools open/close
     ael(window, 'resize', updateWidgetHeight);
 
     if (containerObserver) containerObserver.disconnect();
