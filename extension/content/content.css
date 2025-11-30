@@ -372,40 +372,6 @@
   box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
   transform: scale(1.05);
 }
-
-/*
- * SEGMENTS
- * Glass Cards
- */
-.yt-ai-segment {
-  display: flex;
-  gap: 16px;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  margin-bottom: 8px;
-  transition: all 0.2s var(--ease-smooth);
-  cursor: pointer;
-}
-
-.yt-ai-segment:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: var(--primary);
-  transform: translateX(4px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-/*
- * COMMENTS
- * Threaded Glass
- */
-.yt-ai-comments-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
 .yt-ai-comment-item {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border);

@@ -1,6 +1,7 @@
 import { SEGMENT_CATEGORIES, DEFAULT_SEGMENT_CONFIG } from './settings-manager.js';
 import { qs as i, on } from '../../utils/shortcuts/dom.js';
 import { pf } from '../../utils/shortcuts/global.js';
+import { stc, ih, ac } from '../../utils/shortcuts.js';
 export class SegmentsConfig {
   constructor(s, a) {
     this.s = s;
@@ -24,11 +25,11 @@ export class SegmentsConfig {
     if (sm) sm.checked = c.segments?.showMarkers ?? true;
     if (st) {
       st.value = c.segments?.skipTolerance ?? 0.5;
-      if (stv) stv.textContent = `${st.value}s`;
+      if (stv) stc(stv, `${st.value}s`);
     }
     if (msd) {
       msd.value = c.segments?.minSegmentDuration ?? 1;
-      if (msdv) msdv.textContent = `${msd.value}s`;
+      if (msdv) stc(msdv, `${msd.value}s`);
     }
 
     if (g) this.render(g);
@@ -42,13 +43,13 @@ export class SegmentsConfig {
 
     if (st)
       on(st, 'input', () => {
-        if (stv) stv.textContent = `${st.value}s`;
+        if (stv) stc(stv, `${st.value}s`);
         // Use AutoSave for sliders to avoid spamming storage
         this.a.save('segments.skipTolerance', pf(st.value));
       });
     if (msd)
       on(msd, 'input', () => {
-        if (msdv) msdv.textContent = `${msd.value}s`;
+        if (msdv) stc(msdv, `${msd.value}s`);
         this.a.save('segments.minSegmentDuration', pf(msd.value));
       });
 
@@ -72,7 +73,7 @@ export class SegmentsConfig {
     const t = i('#segmentItemTemplate');
     if (!t) return;
 
-    g.innerHTML = '';
+    ih(g, '');
     const c = this.s.get().segments?.categories || {};
 
     SEGMENT_CATEGORIES.forEach(cat => {
@@ -89,7 +90,7 @@ export class SegmentsConfig {
 
       item.dataset.category = cat.id;
       if (co) co.style.backgroundColor = cat.color;
-      if (n) n.textContent = cat.label;
+      if (n) stc(n, cat.label);
 
       const cfg = c[cat.id] || { ...DEFAULT_SEGMENT_CONFIG };
 
@@ -107,10 +108,10 @@ export class SegmentsConfig {
 
       if (ss && sv) {
         ss.value = cfg.speed;
-        sv.textContent = `${cfg.speed}x`;
+        stc(sv, `${cfg.speed}x`);
         on(ss, 'input', () => {
           const v = ss.value;
-          sv.textContent = `${v}x`;
+          stc(sv, `${v}x`);
           // Debounce speed updates if possible, or just save
           this.updateCategory(cat.id, { speed: pf(v) });
         });
@@ -122,12 +123,12 @@ export class SegmentsConfig {
         // For now, keeping existing logic but ensuring class is added
         item.classList.add('content-segment');
         const desc = cl.querySelector('.segment-description');
-        if (desc) desc.textContent = 'Main video content - can adjust speed but NEVER skipped';
+        if (desc) stc(desc, 'Main video content - can adjust speed but NEVER skipped');
       }
 
       if (cfg.action === 'speed' && sc) sc.classList.remove('hidden');
 
-      g.appendChild(cl);
+      ac(g, cl);
     });
   }
 

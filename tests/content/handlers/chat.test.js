@@ -42,7 +42,6 @@ describe('Chat Handler', () => {
     document.body.appendChild(chatContainer);
 
     // Dynamically import the module under test
-    // This will load real dependencies using the real file paths from getURL
     vi.resetModules();
     const module = await import('../../../extension/content/handlers/chat.js');
     sendChatMessage = module.sendChatMessage;
@@ -53,14 +52,6 @@ describe('Chat Handler', () => {
   });
 
   it('should send chat message successfully using real dependencies', async () => {
-    // We need to mock state.currentTranscript because chat.js uses it
-    // But state.js is a real module. We can import it and modify it?
-    // state.js exports 'state' as a const object (but properties are mutable).
-    // Let's import it and set it.
-
-    // We need to import the SAME instance that chat.js imported.
-    // Since we use absolute paths in getURL, we must import using the same absolute path
-    // to get the same module instance.
     const statePath = path.join(projectRoot, 'extension/content/core/state.js');
     const stateUrl = `file://${statePath.replace(/\\/g, '/')}`;
     const { state } = await import(stateUrl);
@@ -69,16 +60,44 @@ describe('Chat Handler', () => {
 
     await sendChatMessage();
 
-    // Verify the message was added to DOM
     const messages = document.querySelectorAll('.yt-ai-chat-msg');
-    // Expect:
-    // 1. User message "Hello"
-    // 2. AI message "Thinking..." -> then "Test answer"
-
-    // Since sendChatMessage is async and awaits response, by the time it returns,
-    // the answer should be rendered.
-
     expect(messages.length).toBeGreaterThanOrEqual(2);
     expect(messages[messages.length - 1].innerHTML).toContain('Test answer');
+  });
+
+  it('should seek video when timestamp is clicked', async () => {
+    // Setup video element
+    const video = document.createElement('video');
+    document.body.appendChild(video);
+
+    // Setup chat container
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    // Import renderChat
+    const { renderChat } = await import('../../../extension/content/ui/renderers/chat.js');
+    renderChat(container);
+
+    // Simulate adding a message with timestamp
+    // renderChat creates .yt-ai-chat-messages inside container if not present
+    // But in our beforeEach we already added #yt-ai-chat-messages to body?
+    // Wait, renderChat takes a container `c` and looks for `.yt-ai-chat-messages` inside it.
+    // In the test, we passed a new div `container`.
+    // So it should create `.yt-ai-chat-messages` inside `container`.
+
+    const messagesContainer = container.querySelector('.yt-ai-chat-messages');
+    expect(messagesContainer).not.toBeNull();
+
+    const msg = document.createElement('div');
+    msg.innerHTML = '<button class="timestamp-btn" data-time="1:30">1:30</button>';
+    messagesContainer.appendChild(msg);
+
+    // Click the timestamp
+    const btn = msg.querySelector('.timestamp-btn');
+    btn.click();
+
+    // Verify video time
+    // 1:30 = 90 seconds
+    expect(video.currentTime).toBe(90);
   });
 });

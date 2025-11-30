@@ -1,6 +1,7 @@
 import { l, e, w } from '../utils/shortcuts/log.js';
 import { rt as cr, url, rgm as rg, oop } from '../utils/shortcuts/runtime.js';
 import { tbc as tc } from '../utils/shortcuts/tabs.js';
+import { ael } from '../utils/shortcuts.js';
 import { verifySender as vs } from './security/sender-check.js';
 import { validateMessage as vm, sanitizeRequest as sr } from './security/validator.js';
 import { handleGetSettings } from './handlers/settings.js';
@@ -102,7 +103,7 @@ cr.onMessage.addListener((q, s, r) => {
   return true;
 });
 
-self.addEventListener('fetch', event => {
+ael(self, 'fetch', event => {
   if (event.request.mode === 'navigate') {
     event.respondWith(
       (async () => {

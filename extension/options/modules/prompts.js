@@ -1,4 +1,5 @@
 import { id as i } from '../../utils/shortcuts/dom.js';
+import { ael } from '../../utils/shortcuts.js';
 export class PromptsSettings {
   constructor(sm, as) {
     this.sm = sm;
@@ -81,11 +82,11 @@ export class PromptsSettings {
       'prompts-comments-themes',
       'prompts-comments-questions',
       'prompts-comments-opportunities',
-    ].forEach(id => i(id)?.addEventListener('change', () => this.as.trigger(() => this.save())));
+    ].forEach(id => ael(i(id), 'change', () => this.as.trigger(() => this.save())));
 
     const saveBtn = i('save-prompts');
     if (saveBtn) {
-      saveBtn.addEventListener('click', async () => {
+      ael(saveBtn, 'click', async () => {
         await this.save();
         if (this.as.n) this.as.n.success('Settings saved');
       });

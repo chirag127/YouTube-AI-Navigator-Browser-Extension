@@ -5,15 +5,16 @@
   --glass: rgba(0, 0, 0, 0.85);
   --glow: rgba(0, 243, 255, 0.4);
   --bg-base: #000000;
-  --bg-glass: rgba(0, 0, 0, 0.85);
+  --bg-glass: rgba(5, 5, 5, 0.85);
   --text: #ffffff;
   --text-secondary: #a0a0a0;
-  --border: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.15);
+  --border-active: #00f3ff;
   --radius: 16px;
   --radius-sm: 8px;
-  --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
-  --shadow-neo: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(255, 255, 255, 0.1);
-  --backdrop: blur(20px);
+  --shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.8);
+  --shadow-neo: 0 0 20px rgba(0, 243, 255, 0.15);
+  --backdrop: blur(24px);
   --font: 'Inter', system-ui, sans-serif;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -21,37 +22,37 @@
 .ytai-transcript-display {
   max-height: 400px;
   overflow-y: auto;
-  padding: 20px;
+  padding: 24px;
   background: var(--bg-glass);
   backdrop-filter: var(--backdrop);
   -webkit-backdrop-filter: var(--backdrop);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   border-radius: var(--radius);
   font-family: var(--font);
   color: var(--text);
-  box-shadow: var(--shadow), var(--shadow-neo);
+  box-shadow: var(--shadow);
   transition: all 0.2s var(--ease);
 }
 
 .ytai-transcript-display:hover {
-  border-color: var(--border-hover);
-  box-shadow:
-    0 12px 48px rgba(0, 243, 255, 0.15),
-    var(--shadow-neo);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow), var(--shadow-neo);
 }
 
 .ytai-transcript-line {
   display: flex;
-  gap: 12px;
-  padding: 12px 0;
+  gap: 16px;
+  padding: 12px 16px;
   cursor: pointer;
   transition: all 0.2s var(--ease);
   border-radius: var(--radius-sm);
   margin-bottom: 4px;
+  border: 1px solid transparent;
 }
 
 .ytai-transcript-line:hover {
   background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
   transform: translateX(4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -59,11 +60,11 @@
 .ytai-transcript-timestamp {
   flex-shrink: 0;
   color: var(--primary);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 12px;
   min-width: 50px;
-  text-shadow: 0 0 8px var(--glow);
   font-family: 'JetBrains Mono', monospace;
+  padding-top: 2px;
 }
 
 .ytai-transcript-text {
@@ -74,35 +75,35 @@
 }
 
 .ytai-transcript-line:hover .ytai-transcript-text {
-  color: var(--text-secondary);
+  color: #fff;
 }
 
 .ytai-transcript-line.active {
   background: rgba(0, 243, 255, 0.1);
-  border-left: 3px solid var(--primary);
+  border: 1px solid var(--border-active);
   box-shadow: 0 0 15px var(--glow);
   transform: translateX(8px);
 }
 
 .ytai-transcript-line.active .ytai-transcript-timestamp {
-  color: var(--text);
-  text-shadow: 0 0 12px var(--glow);
+  color: #fff;
+  text-shadow: 0 0 10px var(--glow);
 }
 
 /* Scrollbar */
 .ytai-transcript-display::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 .ytai-transcript-display::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .ytai-transcript-display::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .ytai-transcript-display::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--primary);
 }

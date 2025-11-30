@@ -108,7 +108,17 @@ export async function renderSegments(c, data) {
               `<span class="yt-ai-timestamp" data-time="${t.time}" title="Click to seek to ${formatTime(t.time)}">${formatTime(t.time)}</span>`
           )
           .join(' - ');
-        return `<div class="yt-ai-segment-item" style="border-left:4px solid ${cl}"><div class="yt-ai-segment-label">${LM[x.label] || x.label}</div><div class="yt-ai-segment-time">${th}</div>${x.title ? `<div class="yt-ai-segment-title">${x.title}</div>` : ''}<div class="yt-ai-segment-desc">${x.description || x.text || ''}</div></div>`;
+
+        return `
+          <div class="yt-ai-segment-item" style="border-left: 4px solid ${cl}">
+            <div class="yt-ai-segment-header">
+              <div class="yt-ai-segment-label">${LM[x.label] || x.label}</div>
+              <div class="yt-ai-segment-time">${th}</div>
+            </div>
+            ${x.title ? `<div class="yt-ai-segment-title">${x.title}</div>` : ''}
+            <div class="yt-ai-segment-desc">${x.description || x.text || ''}</div>
+          </div>
+        `;
       })
       .join('');
     c.innerHTML = `<div class="yt-ai-segments-list">${h}</div>`;

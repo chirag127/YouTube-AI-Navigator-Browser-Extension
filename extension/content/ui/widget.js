@@ -10,6 +10,7 @@ const { e } = await import(gu('utils/shortcuts/log.js'));
 const { si, ci, to } = await import(gu('utils/shortcuts/global.js'));
 const { log } = await import(gu('utils/shortcuts/core.js'));
 const { sg, ss } = await import(gu('utils/shortcuts/storage.js'));
+const { ael, stc, ih } = await import(gu('utils/shortcuts.js'));
 
 let widgetContainer = null,
   resizeObserver = null,
@@ -199,7 +200,7 @@ export async function injectWidget() {
     widgetContainer = ce('div');
     widgetContainer.id = 'yt-ai-master-widget';
     widgetContainer.style.order = '-9999';
-    widgetContainer.innerHTML = createWidgetHTML(cfg);
+    ih(widgetContainer, createWidgetHTML(cfg));
     sc.insertBefore(widgetContainer, sc.firstChild);
     lastKnownContainer = sc;
 
@@ -435,6 +436,54 @@ async function saveWidgetWidth(w) {
   }
 }
 
+function setupDragHandler(c) {
+  try {
+    const header = $('.yt-ai-header', c);
+    if (!header) return;
+
+    header.style.cursor = 'grab';
+
+    let isDragging = false;
+    let startX, startY, initialTransformX = 0, initialTransformY = 0;
+
+    on(header, 'mousedown', e => {
+      // Ignore if clicking buttons/inputs
+      if (e.target.closest('button') || e.target.closest('input') || e.target.closest('.yt-ai-icon-btn')) return;
+
+      e.preventDefault();
+      isDragging = true;
+      header.style.cursor = 'grabbing';
+      startX = e.clientX;
+      startY = e.clientY;
+
+      // Parse current transform
+      const style = window.getComputedStyle(c);
+      const matrix = new WebKitCSSMatrix(style.transform);
+      initialTransformX = matrix.m41;
+      initialTransformY = matrix.m42;
+
+      document.body.style.userSelect = 'none';
+    });
+
+    on(document, 'mousemove', e => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      c.style.transform = `translate(${initialTransformX + dx}px, ${initialTransformY + dy}px)`;
+    });
+
+    on(document, 'mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      header.style.cursor = 'grab';
+      document.body.style.userSelect = '';
+    });
+  } catch (err) {
+    e('Err:setupDragHandler', err);
+  }
+}
+
 function setupWidgetLogic(c) {
   try {
     const cb = $('#yt-ai-close-btn', c);
@@ -443,12 +492,12 @@ function setupWidgetLogic(c) {
         const ic = c.classList.contains('yt-ai-collapsed');
         if (ic) {
           c.classList.remove('yt-ai-collapsed');
-          cb.textContent = '❌';
+          stc(cb, '❌');
           cb.title = 'Collapse';
           saveWidgetState(false);
         } else {
           c.classList.add('yt-ai-collapsed');
-          cb.textContent = '⬇️';
+          stc(cb, '⬇️');
           cb.title = 'Expand';
           saveWidgetState(true);
         }
@@ -456,6 +505,7 @@ function setupWidgetLogic(c) {
     }
     setupResizeHandle(c);
     setupWidthResizeHandle(c);
+    setupDragHandler(c); // Add drag handler
     initTabs(c);
     attachEventListeners(c);
   } catch (err) {
@@ -477,7 +527,7 @@ async function applyDefaultWidgetState() {
         // Apply saved state
         if (savedState) {
           widgetContainer.classList.add('yt-ai-collapsed');
-          cb.textContent = '⬇️';
+          stc(cb, '⬇️');
           cb.title = 'Expand';
         }
         return;
@@ -487,7 +537,7 @@ async function applyDefaultWidgetState() {
     // Apply default collapsed state if no saved state
     if (widgetConfig.defaultCollapsed) {
       widgetContainer.classList.add('yt-ai-collapsed');
-      cb.textContent = '⬇️';
+      stc(cb, '⬇️');
       cb.title = 'Expand';
     }
   } catch (err) {
@@ -523,7 +573,7 @@ function setupObservers(c) {
       resizeObserver.observe(p);
     }
     // Also observe window resize for DevTools open/close
-    window.addEventListener('resize', updateWidgetHeight);
+    ael(window, 'resize', updateWidgetHeight);
 
     if (containerObserver) containerObserver.disconnect();
     containerObserver = mo(m => {
