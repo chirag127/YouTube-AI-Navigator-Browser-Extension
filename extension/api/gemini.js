@@ -1,11 +1,14 @@
 import { GeminiClient } from './gemini-client.js';
 import { ModelManager } from './models.js';
 import { prompts } from './prompts/index.js';
+import {
+  extractSection,
+  extractTimestamps,
+  parseSegmentsJSON,
+  expandLabel,
+  transformSegments,
+} from './utils/response-parser.js';
 import { w, e } from '../utils/shortcuts/log.js';
-import { jp } from '../utils/shortcuts/core.js';
-import { trm, rp as rep } from '../utils/shortcuts/string.js';
-import { isa } from '../utils/shortcuts/array.js';
-import { mp } from '../utils/shortcuts/core.js';
 
 export { ModelManager };
 
@@ -14,9 +17,11 @@ export class GeminiService {
     this.client = new GeminiClient(apiKey);
     this.models = new ModelManager(apiKey, 'https://generativelanguage.googleapis.com/v1beta');
   }
+
   async fetchAvailableModels() {
     return this.models.fetch();
   }
+
   async chatWithVideo(q, c, m = null, md = null) {
     const ctx = {
       transcript: c,
@@ -28,23 +33,24 @@ export class GeminiService {
     const prompt = await prompts.chat(q, ctx);
     return this.generateContent(prompt, m);
   }
+
   async analyzeCommentSentiment(c, m = null) {
     if (!c || !c.length) {
       w('[GS] No comms');
       return 'No comments available to analyze.';
     }
-
     const prompt = await prompts.comments(c);
     return this.generateContent(prompt, m);
   }
+
   async generateComprehensiveAnalysis(ctx, opt = {}) {
     try {
       const prompt = await prompts.comprehensive(ctx, opt);
       const r = await this.generateContent(prompt);
-      const s = this._extractSection(r, 'Summary');
-      const i = this._extractSection(r, 'Key Insights');
-      const f = this._extractSection(r, 'FAQ');
-      const ts = this._extractTimestamps(s);
+      const s = extractSection(r, 'Summary');
+      const i = extractSection(r, 'Key Insights');
+      const f = extractSection(r, 'FAQ');
+      const ts = extractTimestamps(s);
       return {
         summary: s || r,
         insights: i || '',
@@ -56,52 +62,19 @@ export class GeminiService {
       throw x;
     }
   }
-  _extractTimestamps(t) {
-    if (!t) return [];
-    const r = /\[(\d{1,2}):(\d{2})\]/g;
-    const ts = [];
-    let m;
-    while ((m = r.exec(t)) !== null) {
-      const min = parseInt(m[1], 10);
-      const sec = parseInt(m[2], 10);
-      ts.push(min * 60 + sec);
-    }
-    return [...new Set(ts)].sort((a, b) => a - b);
-  }
+
   async extractSegments(ctx) {
     try {
       const prompt = await prompts.segments(ctx);
       const r = await this.generateContent(prompt);
-
-      let cr = trm(r);
-      cr = rep(cr, /```json\s*/g, '');
-      cr = rep(cr, /```\s*/g, '');
-      cr = trm(cr);
-      let jm = cr.match(/\{[\s\S]*\}/);
-      if (!jm) {
-        e('error:extractSegments no JSON:', r);
+      const parsed = parseSegmentsJSON(r);
+      if (!parsed) {
         return { segments: [], fullVideoLabel: null };
       }
-      const jsStr = jm[0];
-
-      const p = jp(jsStr);
-      if (!p.segments || !isa(p.segments)) {
-        e('error:extractSegments inv struct:', p);
-        return { segments: [], fullVideoLabel: null };
-      }
-
-      const ts = mp(p.segments, s => ({
-        start: s.s,
-        end: s.e,
-        label: s.l,
-        labelFull: this._expandLabel(s.l),
-        title: s.t,
-        description: s.d,
-        text: s.d,
-      }));
+      const ts = transformSegments(parsed, expandLabel);
       return {
         segments: ts,
-        fullVideoLabel: this._expandLabel(p.fullVideoLabel) || null,
+        fullVideoLabel: expandLabel(parsed.fullVideoLabel) || null,
       };
     } catch (x) {
       e('error:extractSegments fail:', x.message);
@@ -109,32 +82,7 @@ export class GeminiService {
       return { segments: [], fullVideoLabel: null };
     }
   }
-  _extractSection(t, sn) {
-    const r = new RegExp(`## ${sn}\\s*([\\s\\S]*?)(?=##|$)`, 'i');
-    const m = t.match(r);
-    return m ? trm(m[1]) : null;
-  }
-  _expandLabel(sc) {
-    if (!sc) {
-      return null;
-    }
-    const lm = {
-      sponsor: 'Sponsor',
-      selfpromo: 'Self Promotion',
-      interaction: 'Interaction Reminder',
-      intro: 'Intro',
-      outro: 'Outro',
-      preview: 'Preview',
-      music_offtopic: 'Music: Off-Topic',
-      poi_highlight: 'Highlight',
-      filler: 'Filler',
-      exclusive_access: 'Exclusive Access',
-      hook: 'Hook',
-      chapter: 'Chapter',
-      content: 'Content',
-    };
-    return lm[sc] || sc;
-  }
+
   async generateContent(p, m = null) {
     let ml = [];
     const fm = [
@@ -177,6 +125,7 @@ export class GeminiService {
     e('error:generateContent all failed:', em);
     throw new Error(em);
   }
+
   getRateLimitStats() {
     return this.client.getRateLimitStats();
   }
