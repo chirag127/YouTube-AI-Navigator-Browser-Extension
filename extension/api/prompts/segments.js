@@ -210,12 +210,6 @@ FULL VIDEO LABEL RULE:
 - IF NO category >50%: Set fullVideoLabel to null
 - Many videos are fully sponsored - use fullVideoLabel: "sponsor"
 
-TRANSITION DETECTION SIGNALS:
-- Sponsor: "This video is sponsored", "Thanks to [brand]", "Now back to", "But first"
-- Selfpromo: "Check out my", "Link in description", "My course/merch"
-- Interaction: "Don't forget to like", "Subscribe for", "Hit the bell"
-- Topic changes: "Now let's", "Moving on to", "Speaking of", "Next up"
-
 TIMING CALIBRATION:
 - Sponsor mentions: ${sponsorRange[0]}-${sponsorRange[1]}s typical
 - Intros: ${introRange[0]}-${introRange[1]}s typical
