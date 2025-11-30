@@ -10,7 +10,7 @@ const { injectSegmentMarkers } = await import(gu('content/segments/markers.js'))
 const { setupAutoSkip } = await import(gu('content/segments/autoskip.js'));
 const { renderTimeline } = await import(gu('content/segments/timeline.js'));
 const { analyzeVideo } = await import(gu('content/features/analysis/service.js'));
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { id: i, $ } = await import(gu('utils/shortcuts/dom.js'));
 const { msg } = await import(gu('utils/shortcuts/runtime.js'));
 const { E: Er } = await import(gu('utils/shortcuts/core.js'));
@@ -38,12 +38,9 @@ export async function startAnalysis() {
       // Comments extraction failed
     }
     showLoading(ca, `Analyzing content with AI...`);
-    l('[Flow] Starting AI analysis...', {
-      transcriptLength: ts?.length,
-      commentsCount: cm?.length,
-    });
+
     const r = await analyzeVideo(ts, md, cm);
-    l('[Flow] AI analysis result received', r);
+
     if (!r.success) throw new Er(r.error || 'Analysis failed');
     state.analysisData = r.data;
     if (state.analysisData.segments) {

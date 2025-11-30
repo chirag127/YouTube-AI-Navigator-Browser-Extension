@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { ErrorHandler } from '../extension/api/core/error-handler.js';
 
 describe('ErrorHandler', () => {

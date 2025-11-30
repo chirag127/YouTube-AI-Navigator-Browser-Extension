@@ -1,4 +1,4 @@
-import { l, e } from '../../utils/shortcuts/log.js';
+import { e } from '../../utils/shortcuts/log.js';
 import { afl, afn, aus, aic as inc, isa } from '../../utils/shortcuts/array.js';
 import { nw as nt, jp, js, lc } from '../../utils/shortcuts/core.js';
 import { sl, slcc as slc } from '../../utils/shortcuts/storage.js';
@@ -34,7 +34,7 @@ export class ComprehensiveHistory {
     aus(f, n);
     const t = slc(f, 0, this.m);
     await sl({ [this.k]: t });
-    l(`[History] Saved comprehensive data for ${v}`);
+
     return n;
   }
   async get(v) {

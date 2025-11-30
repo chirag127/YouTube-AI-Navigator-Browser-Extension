@@ -1,4 +1,4 @@
-import { l, e } from '../utils/shortcuts/log.js';
+import { e } from '../utils/shortcuts/log.js';
 import { en as enc } from '../utils/shortcuts/global.js';
 import { tf as ftx, jf as fj } from '../utils/shortcuts/network.js';
 import { rp, trm } from '../utils/shortcuts/string.js';
@@ -12,13 +12,11 @@ export class GeniusLyricsAPI {
 
   async getLyrics(title, artist) {
     try {
-      l(`[Genius] Search: ${title} by ${artist}`);
       const hit = await this.search(title, artist);
       if (!hit) {
-        l('[Genius] No song');
         return null;
       }
-      l(`[Genius] Hit: ${hit.result.full_title}`);
+
       const lyrics = await this.fetchLyrics(hit.result.url);
       return {
         lyrics,

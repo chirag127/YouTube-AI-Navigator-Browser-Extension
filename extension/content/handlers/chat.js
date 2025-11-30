@@ -1,6 +1,6 @@
 const gu = p => chrome.runtime.getURL(p);
 
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { state } = await import(gu('content/core/state.js'));
 const { addChatMessage } = await import(gu('content/ui/renderers/chat.js'));
 const { parseMarkdown } = await import(gu('lib/marked-loader.js'));
@@ -8,7 +8,6 @@ const { qs } = await import(gu('utils/shortcuts/dom.js'));
 const { rs } = await import(gu('utils/shortcuts/runtime.js'));
 const { mp, jn } = await import(gu('utils/shortcuts/array.js'));
 export async function sendChatMessage() {
-  l('sendChatMessage:Start');
   try {
     const i = qs('#yt-ai-chat-input'),
       q = i?.value?.trim();
@@ -30,7 +29,6 @@ export async function sendChatMessage() {
       el.textContent = `Error: ${x.message}`;
       e('Err:sendChatMessage', x);
     }
-    l('sendChatMessage:End');
   } catch (err) {
     e('Err:sendChatMessage', err);
   }

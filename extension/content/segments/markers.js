@@ -1,10 +1,9 @@
 const gu = p => chrome.runtime.getURL(p);
 
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { getVideoElement } = await import(gu('content/utils/dom.js'));
 const { qs: $, ce } = await import(gu('utils/shortcuts/dom.js'));
 export function injectSegmentMarkers(s) {
-  l('injectSegmentMarkers:Start');
   try {
     if (!s?.length) return;
     const p = $('.ytp-progress-bar');
@@ -28,13 +27,11 @@ export function injectSegmentMarkers(s) {
       c.appendChild(m);
     });
     p.appendChild(c);
-    l('injectSegmentMarkers:End');
   } catch (err) {
     e('Err:injectSegmentMarkers', err);
   }
 }
 function getSegmentColor(lb) {
-  l('getSegmentColor:Start');
   try {
     const c = {
       Sponsor: '#00d26a',
@@ -50,7 +47,7 @@ function getSegmentColor(lb) {
       'Tangents/Jokes': '#9400d3',
     };
     const result = c[lb] || '#999999';
-    l('getSegmentColor:End');
+
     return result;
   } catch (err) {
     e('Err:getSegmentColor', err);

@@ -1,4 +1,4 @@
-import { l, w } from '../utils/shortcuts/log.js';
+import { w } from '../utils/shortcuts/log.js';
 import { ft } from '../utils/shortcuts/network.js';
 
 const BASE_URL = 'https://api.igdb.com/v4';
@@ -10,7 +10,7 @@ export class IgdbAPI {
   }
   async searchGame(query) {
     if (!this.clientId || !this.accessToken) return null;
-    l(`[IGDB] Searching: ${query}`);
+
     const body = `search "${query}"; fields name, summary, rating, first_release_date, platforms.name; limit 1;`;
     try {
       const data = await ft(`${BASE_URL}/games`, {

@@ -3,7 +3,7 @@ const gu = p => chrome.runtime.getURL(p);
 const { state, resetState } = await import(gu('content/core/state.js'));
 const { injectWidget } = await import(gu('content/ui/widget.js'));
 const { isWidgetProperlyVisible } = await import(gu('content/utils/dom.js'));
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { ct } = await import(gu('utils/shortcuts/core.js'));
 const { to: st } = await import(gu('utils/shortcuts/global.js'));
 const { on: ae, qs, mo } = await import(gu('utils/shortcuts/dom.js'));
@@ -12,7 +12,6 @@ let lastUrl = location.href;
 let dt = null;
 
 export function initObserver() {
-  l('initObserver:Start');
   try {
     const uo = mo(() => {
       if (location.href !== lastUrl) {
@@ -38,14 +37,12 @@ export function initObserver() {
     uo.observe(document.body, { childList: true, subtree: true });
     o.observe(document.body, { childList: true, subtree: true });
     checkCurrentPage();
-    l('initObserver:End');
   } catch (err) {
     e('Err:initObserver', err);
   }
 }
 
 async function handleNewVideo(v) {
-  l('handleNewVideo:Start');
   try {
     if (v !== state.currentVideoId) {
       state.currentVideoId = v;
@@ -71,14 +68,12 @@ async function handleNewVideo(v) {
         }
       }, 1500);
     }
-    l('handleNewVideo:End');
   } catch (x) {
     e('Err:handleNewVideo', x);
   }
 }
 
 function checkCurrentPage() {
-  l('checkCurrentPage:Start');
   try {
     if (location.pathname === '/watch') {
       const u = new URLSearchParams(location.search),
@@ -86,13 +81,11 @@ function checkCurrentPage() {
       if (v) {
         const w = qs('#yt-ai-master-widget');
         if (v === state.currentVideoId && isWidgetProperlyVisible(w)) {
-          l('checkCurrentPage:End');
           return;
         }
         handleNewVideo(v);
       }
     }
-    l('checkCurrentPage:End');
   } catch (err) {
     e('Err:checkCurrentPage', err);
   }

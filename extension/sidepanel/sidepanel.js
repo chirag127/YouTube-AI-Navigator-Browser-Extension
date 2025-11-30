@@ -5,7 +5,7 @@ import { StorageService } from '../services/storage/index.js';
 import { parseMarkdown } from '../lib/marked-loader.js';
 import { id, $$, on, ce } from '../utils/shortcuts/dom.js';
 import { sl } from '../utils/shortcuts/storage.js';
-import { l, e, w } from '../utils/shortcuts/log.js';
+import { e, w } from '../utils/shortcuts/log.js';
 import { tbc as ct } from '../utils/shortcuts/tabs.js';
 import { to as st } from '../utils/shortcuts/global.js';
 import { mf } from '../utils/shortcuts/math.js';
@@ -195,7 +195,6 @@ async function analyzeVideo(rc = 0) {
   } catch (x) {
     e('Analysis error:', x);
     if (rc < mr && (x.message.includes('fetch') || x.message.includes('network'))) {
-      l(`Retrying... (${rc + 1}/${mr})`);
       await new Promise(r => st(r, 1000 * (rc + 1)));
       return analyzeVideo(rc + 1);
     }

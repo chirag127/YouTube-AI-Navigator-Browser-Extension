@@ -19,7 +19,6 @@ import { handleGetLyrics } from './handlers/get-lyrics.js';
 
 cr.onInstalled.addListener(async d => {
   if (d.reason === 'install') {
-    l('YAM installed');
     try {
       await tc({ url: url('onboarding/onboarding.html') });
     } catch (x) {

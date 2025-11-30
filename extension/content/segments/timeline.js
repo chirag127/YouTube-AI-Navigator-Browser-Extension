@@ -1,6 +1,6 @@
 const gu = p => chrome.runtime.getURL(p);
 
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { qs: $, ce } = await import(gu('utils/shortcuts/dom.js'));
 const colors = {
   Sponsor: '#00d26a',
@@ -16,7 +16,6 @@ const colors = {
   'Tangents/Jokes': '#9400d3',
 };
 export const renderTimeline = (segs, dur) => {
-  l('renderTimeline:Start');
   try {
     const bar = $('.ytp-progress-bar-container');
     if (!bar) return;
@@ -39,17 +38,14 @@ export const renderTimeline = (segs, dur) => {
       c.appendChild(m);
     });
     bar.appendChild(c);
-    l('renderTimeline:End');
   } catch (err) {
     e('Err:renderTimeline', err);
   }
 };
 export const clearTimeline = () => {
-  l('clearTimeline:Start');
   try {
     const ex = $('#yt-ai-timeline-markers');
     if (ex) ex.remove();
-    l('clearTimeline:End');
   } catch (err) {
     e('Err:clearTimeline', err);
   }

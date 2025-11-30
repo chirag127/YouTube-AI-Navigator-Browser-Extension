@@ -1,4 +1,3 @@
-import { l } from '../utils/shortcuts/log.js';
 import { en as enc } from '../utils/shortcuts/global.js';
 import { sf as safeFetch } from '../utils/shortcuts/network.js';
 
@@ -6,7 +5,6 @@ const BASE_URL = 'https://api.semanticscholar.org/graph/v1';
 
 export class SemanticScholarAPI {
   async searchPaper(query) {
-    l(`[SemanticScholar] Searching: ${query}`);
     const data = await safeFetch(
       `${BASE_URL}/paper/search?query=${enc(
         query

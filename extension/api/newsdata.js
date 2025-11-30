@@ -1,4 +1,3 @@
-import { l } from '../utils/shortcuts/log.js';
 import { en as enc } from '../utils/shortcuts/global.js';
 import { sf as safeFetch } from '../utils/shortcuts/network.js';
 
@@ -10,7 +9,7 @@ export class NewsDataAPI {
   }
   async searchNews(query, language = 'en') {
     if (!this.apiKey) return null;
-    l(`[NewsData] Searching: ${query}`);
+
     const data = await safeFetch(
       `${BASE_URL}/news?apikey=${this.apiKey}&q=${enc(query)}&language=${language}`
     );

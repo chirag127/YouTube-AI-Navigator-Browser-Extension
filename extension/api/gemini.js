@@ -1,9 +1,9 @@
 import { GeminiClient } from './gemini-client.js';
 import { ModelManager } from './models.js';
 import { prompts } from './prompts/index.js';
-import { l, w, e } from '../utils/shortcuts/log.js';
-import { jp, js } from '../utils/shortcuts/core.js';
-import { sb as sub, trm, rp as rep } from '../utils/shortcuts/string.js';
+import { w, e } from '../utils/shortcuts/log.js';
+import { jp } from '../utils/shortcuts/core.js';
+import { trm, rp as rep } from '../utils/shortcuts/string.js';
 import { isa } from '../utils/shortcuts/array.js';
 import { mp } from '../utils/shortcuts/core.js';
 
@@ -21,12 +21,11 @@ export class GeminiService {
     return this.generateContent(prompts.chat(q, c, md), m);
   }
   async analyzeCommentSentiment(c, m = null) {
-    l('[GS] ACS:', c?.length);
     if (!c || !c.length) {
       w('[GS] No comms');
       return 'No comments available to analyze.';
     }
-    l(`[GS] Gen anal for ${c.length}`);
+
     return this.generateContent(prompts.comments(c), m);
   }
   async generateComprehensiveAnalysis(ctx, opt = {}) {
@@ -48,10 +47,8 @@ export class GeminiService {
   }
   async extractSegments(ctx) {
     try {
-      l('[GS] Ext segs');
       const r = await this.generateContent(prompts.segments(ctx));
-      l('[GS] Raw len:', r.length);
-      l('[GS] 1st 1k:', sub(r, 0, 1000));
+
       let cr = trm(r);
       cr = rep(cr, /```json\s*/g, '');
       cr = rep(cr, /```\s*/g, '');
@@ -62,14 +59,13 @@ export class GeminiService {
         return { segments: [], fullVideoLabel: null };
       }
       const jsStr = jm[0];
-      l('[GS] JSON len:', jsStr.length);
+
       const p = jp(jsStr);
       if (!p.segments || !isa(p.segments)) {
         e('error:extractSegments inv struct:', p);
         return { segments: [], fullVideoLabel: null };
       }
-      l('[GS] Parsed:', p.segments.length);
-      l('[GS] FVL:', p.fullVideoLabel);
+
       const ts = mp(p.segments, s => ({
         start: s.s,
         end: s.e,
@@ -78,7 +74,6 @@ export class GeminiService {
         description: s.d,
         text: s.d,
       }));
-      if (ts.length > 0) l('[GS] 1st seg:', js(ts[0]));
       return {
         segments: ts,
         fullVideoLabel: this._expandLabel(p.fullVideoLabel) || null,
@@ -143,9 +138,7 @@ export class GeminiService {
     for (let i = 0; i < ml.length; i++) {
       const mn = ml[i];
       try {
-        l(`[GS] Try: ${mn} (${i + 1}/${ml.length})`);
         const res = await this.client.generateContent(p, mn);
-        if (i > 0) l(`[GS] Fallback succ: ${mn}`);
         return res;
       } catch (x) {
         errs.push({ model: mn, error: x.message });
@@ -153,7 +146,6 @@ export class GeminiService {
         if (x.retryable === false) {
           throw x;
         }
-        if (i < ml.length - 1) l('[GS] Next...');
       }
     }
     const em = `All ${ml.length} failed. ${errs[0]?.error || 'Unknown'}`;

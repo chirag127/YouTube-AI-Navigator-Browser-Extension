@@ -1,10 +1,8 @@
 const gu = p => chrome.runtime.getURL(p);
 
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 export async function initializeExtension() {
-  l('initializeExtension:Start');
   try {
-    l('YAM: Init');
     const { loadSettings } = await import(gu('content/core/state.js'));
     await loadSettings();
     const { initObserver } = await import(gu('content/core/observer.js'));
@@ -15,7 +13,7 @@ export async function initializeExtension() {
     } catch (err) {
       e('Err:initializeExtension:autoLiker', err);
     }
-    l('initializeExtension:End');
+
     return true;
   } catch (err) {
     e('Err:initializeExtension', err);
@@ -24,7 +22,6 @@ export async function initializeExtension() {
 }
 
 export async function waitForPageReady() {
-  l('waitForPageReady:Start');
   try {
     const { on: ae } = await import(gu('utils/shortcuts/dom.js'));
     const p = new Promise(r => {
@@ -32,7 +29,7 @@ export async function waitForPageReady() {
       else ae(window, 'load', r);
     });
     await p;
-    l('waitForPageReady:End');
+
     return p;
   } catch (err) {
     e('Err:waitForPageReady', err);

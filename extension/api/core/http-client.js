@@ -1,4 +1,3 @@
-import { l } from '../../utils/shortcuts/log.js';
 import { to, co } from '../../utils/shortcuts/global.js';
 import { mn } from '../../utils/shortcuts/math.js';
 import { np } from '../../utils/shortcuts/async.js';
@@ -39,7 +38,6 @@ export class HttpClient {
         }
 
         lastError = await this._createError(response);
-        l(`[HttpClient] Attempt ${attempt + 1}/${this.maxRetries + 1} failed: ${response.status}`);
       } catch (error) {
         if (error.name === 'AbortError') {
           lastError = new Error(`Request timeout after ${this.timeout}ms`);
@@ -49,8 +47,6 @@ export class HttpClient {
         } else {
           throw error;
         }
-
-        l(`[HttpClient] Attempt ${attempt + 1}/${this.maxRetries + 1} failed: ${error.message}`);
       }
 
       if (attempt < this.maxRetries) {

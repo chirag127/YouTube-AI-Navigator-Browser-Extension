@@ -1,10 +1,8 @@
-import { l, e } from '../../utils/shortcuts/log.js';
+import { e } from '../../utils/shortcuts/log.js';
 
 export const comments = comments => {
-  l('Comments:Start');
   try {
     if (!comments || comments.length === 0) {
-      l('Comments:Done');
       return `No comments available to analyze.`;
     }
 
@@ -15,8 +13,6 @@ export const comments = comments => {
         return `- ${author}: ${content}`;
       })
       .join('\n');
-
-    l('[Comments Prompt] Formatted text:', text);
 
     const result = `
     Task: Analyze the sentiment and key themes of these YouTube comments.
@@ -34,7 +30,7 @@ export const comments = comments => {
 
     ### Controversial Topics (if any)
     `;
-    l('Comments:Done');
+
     return result;
   } catch (err) {
     e('Err:Comments', err);

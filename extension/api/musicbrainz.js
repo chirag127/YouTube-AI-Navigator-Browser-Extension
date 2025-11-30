@@ -1,4 +1,3 @@
-import { l } from '../utils/shortcuts/log.js';
 import { en as enc } from '../utils/shortcuts/global.js';
 import { sf as safeFetch } from '../utils/shortcuts/network.js';
 
@@ -7,7 +6,6 @@ const UA = 'YouTubeAIMaster/1.0.0 ( contact@example.com )';
 
 export class MusicBrainzAPI {
   async searchArtist(query) {
-    l(`[MB] Search Artist: ${query}`);
     const data = await safeFetch(`${BASE_URL}/artist?query=${enc(query)}&fmt=json`, {
       headers: { 'User-Agent': UA },
     });
@@ -15,7 +13,7 @@ export class MusicBrainzAPI {
   }
   async searchRelease(query, artist) {
     const q = artist ? `${query} AND artist:${artist}` : query;
-    l(`[MB] Search Release: ${q}`);
+
     const data = await safeFetch(`${BASE_URL}/release?query=${enc(q)}&fmt=json`, {
       headers: { 'User-Agent': UA },
     });

@@ -1,7 +1,7 @@
 import { gu } from '../../../utils/shortcuts/runtime.js';
 
 const { $, $$ } = await import(gu('utils/shortcuts/dom.js'));
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { stt: to } = await import(gu('utils/shortcuts/time.js'));
 const { now: nw } = await import(gu('utils/shortcuts/core.js'));
 const { trm } = await import(gu('utils/shortcuts/string.js'));
@@ -19,7 +19,7 @@ export const extract = async () => {
     await waitSeg();
     const s = scrape();
     if (!s || s.length === 0) throw new Error('No segments found');
-    l(`[DOM Automation] Scraped ${s.length} segments`);
+
     return s;
   } catch (x) {
     e('Err:extract', x);

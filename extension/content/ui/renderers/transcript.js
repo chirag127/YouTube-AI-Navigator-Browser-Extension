@@ -4,7 +4,7 @@ const { showPlaceholder } = await import(gu('content/ui/components/loading.js'))
 const { seekVideo } = await import(gu('content/utils/dom.js'));
 const { formatTime } = await import(gu('content/utils/time.js'));
 const { id: ge, on, qs: $, qsa: $$ } = await import(gu('utils/shortcuts/dom.js'));
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 let autoCloseEnabled = true;
 export function renderTranscript(c, s) {
   try {
@@ -29,7 +29,6 @@ export function renderTranscript(c, s) {
         autoCloseEnabled = !autoCloseEnabled;
         tb.classList.toggle('active', autoCloseEnabled);
         tb.textContent = `${autoCloseEnabled ? '✓' : '✗'} Auto-close after extraction`;
-        l(`[Transcript] Auto-close ${autoCloseEnabled ? 'enabled' : 'disabled'}`);
       });
     }
   } catch (err) {
@@ -48,7 +47,6 @@ export function collapseTranscriptWidget() {
   try {
     const w = ge('yt-ai-master-widget');
     if (w && autoCloseEnabled) {
-      l('[Transcript] Auto-closing widget after extraction');
       w.classList.add('yt-ai-collapsed');
       const cb = $('#yt-ai-close-btn', w);
       if (cb) {

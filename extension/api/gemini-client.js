@@ -1,7 +1,7 @@
 import { HttpClient } from './core/http-client.js';
 import { ErrorHandler } from './core/error-handler.js';
 import { RateLimiter } from './core/rate-limiter.js';
-import { l, e } from '../utils/shortcuts/log.js';
+import { e } from '../utils/shortcuts/log.js';
 import { js } from '../utils/shortcuts/core.js';
 import { isa } from '../utils/shortcuts/array.js';
 
@@ -24,7 +24,6 @@ export class GeminiClient {
     await this.rateLimiter.acquire();
     const url = `${this.baseUrl}/models/${model}:generateContent?key=${this.apiKey}`;
     try {
-      l(`[GC] Call: ${model}`);
       const contents = isa(prompt) ? [{ parts: prompt }] : [{ parts: [{ text: prompt }] }];
       const response = await this.httpClient.fetch(url, {
         method: 'POST',

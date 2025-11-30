@@ -1,4 +1,3 @@
-import { l } from '../utils/shortcuts/log.js';
 import { en as enc } from '../utils/shortcuts/global.js';
 import { sf as safeFetch } from '../utils/shortcuts/network.js';
 
@@ -10,7 +9,7 @@ export class TmdbAPI {
   }
   async searchMovie(query) {
     if (!this.apiKey) return null;
-    l(`[TMDB] Searching: ${query}`);
+
     const data = await safeFetch(
       `${BASE_URL}/search/movie?api_key=${this.apiKey}&query=${enc(query)}`
     );
@@ -18,7 +17,7 @@ export class TmdbAPI {
   }
   async searchTV(query) {
     if (!this.apiKey) return null;
-    l(`[TMDB] Searching TV: ${query}`);
+
     const data = await safeFetch(
       `${BASE_URL}/search/tv?api_key=${this.apiKey}&query=${enc(query)}`
     );

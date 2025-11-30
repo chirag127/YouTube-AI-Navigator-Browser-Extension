@@ -1,6 +1,6 @@
 const gu = p => chrome.runtime.getURL(p);
 
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { getVideoElement } = await import(gu('content/utils/dom.js'));
 const { sg } = await import(gu('utils/shortcuts/storage.js'));
 const { to } = await import(gu('utils/shortcuts/global.js'));
@@ -10,7 +10,6 @@ let en = false;
 let opr = 1;
 let isu = false;
 export async function setupAutoSkip(s) {
-  l('setupAutoSkip:Start');
   try {
     if (!s?.length) return;
     const st = await sg(null);
@@ -18,7 +17,7 @@ export async function setupAutoSkip(s) {
     const me = st.enableSegments !== false;
     if (!me) {
       disableAutoSkip();
-      l('setupAutoSkip:End');
+
       return;
     }
     as = s
@@ -36,13 +35,11 @@ export async function setupAutoSkip(s) {
         opr = v.playbackRate;
       }
     } else disableAutoSkip();
-    l('setupAutoSkip:End');
   } catch (err) {
     e('Err:setupAutoSkip', err);
   }
 }
 function disableAutoSkip() {
-  l('disableAutoSkip:Start');
   try {
     en = false;
     const v = getVideoElement();
@@ -53,13 +50,11 @@ function disableAutoSkip() {
         isu = false;
       }
     }
-    l('disableAutoSkip:End');
   } catch (err) {
     e('Err:disableAutoSkip', err);
   }
 }
 export function handleAutoSkip() {
-  l('handleAutoSkip:Start');
   try {
     if (!en || !as.length) return;
     const v = getVideoElement();
@@ -71,7 +66,7 @@ export function handleAutoSkip() {
         if (s.config.action === 'skip') {
           v.currentTime = s.end + 0.1;
           showNotification(`⏭️ Skipped: ${s.label}`);
-          l('handleAutoSkip:End');
+
           return;
         } else if (s.config.action === 'speed') {
           ins = true;
@@ -89,13 +84,11 @@ export function handleAutoSkip() {
       v.playbackRate = opr;
       isu = false;
     }
-    l('handleAutoSkip:End');
   } catch (err) {
     e('Err:handleAutoSkip', err);
   }
 }
 function showNotification(tx) {
-  l('showNotification:Start');
   try {
     const id = 'yt-ai-skip-notif';
     let n = qs('#' + id);
@@ -118,7 +111,6 @@ function showNotification(tx) {
     to(() => {
       if (n.parentNode) n.remove();
     }, 2000);
-    l('showNotification:End');
   } catch (err) {
     e('Err:showNotification', err);
   }

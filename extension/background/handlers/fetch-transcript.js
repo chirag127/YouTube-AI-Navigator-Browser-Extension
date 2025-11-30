@@ -1,5 +1,4 @@
 import { rp as rep, trm } from '../../utils/shortcuts/string.js';
-import { l } from '../../utils/shortcuts/log.js';
 import { pf as pF } from '../../utils/shortcuts/global.js';
 import { jp } from '../../utils/shortcuts/core.js';
 import { afl, am, ajn } from '../../utils/shortcuts/array.js';
@@ -53,9 +52,7 @@ async function fYT(vid, lNg = 'en') {
         const s = pXML(x);
         if (s.length) return { success: true, data: s };
       }
-    } catch (e) {
-      l(`[FetchTranscript] Error with format ${f}:`, e);
-    }
+    } catch (e) {}
   }
   return { success: false, error: 'YouTube Direct API failed' };
 }
@@ -69,9 +66,7 @@ export async function handleFetchTranscript(req, rsp) {
         rsp(r);
         return;
       }
-    } catch (e) {
-      l(`[FetchTranscript] Method ${m.name} failed:`, e);
-    }
+    } catch (e) {}
   }
   rsp({ success: false, error: 'All transcript fetch methods failed' });
 }

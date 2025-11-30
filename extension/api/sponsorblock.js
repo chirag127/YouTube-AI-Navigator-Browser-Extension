@@ -1,7 +1,5 @@
-import { l } from '../utils/shortcuts/log.js';
 import { cwr as cw } from '../utils/shortcuts/chrome.js';
 import { ok as ks } from '../utils/shortcuts/core.js';
-import { js } from '../utils/shortcuts/core.js';
 import { am, ajn, af } from '../utils/shortcuts/array.js';
 import { ce } from '../utils/shortcuts/dom.js';
 
@@ -39,7 +37,6 @@ export async function fetchSegments(vid) {
     return [];
   }
   try {
-    l(`[SB] Fetch: ${vid}`);
     const hp = await _gh(vid);
     const c = ks(CM);
     const cp = ajn(
@@ -47,10 +44,9 @@ export async function fetchSegments(vid) {
       '&'
     );
     const u = `${API_BASE}/skipSegments/${hp}?service=YouTube&${cp}`;
-    l(`[SB] URL: ${u}`);
+
     const r = await fetch(u);
     if (r.status === 404) {
-      l('[SB] 404');
       return [];
     }
     if (r.status === 429) {
@@ -59,10 +55,9 @@ export async function fetchSegments(vid) {
     }
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     const d = await r.json();
-    l(`[SB] Resp:`, js(d));
+
     const vd = d.find(v => v.videoID === vid);
     if (!vd || !vd.segments) {
-      l('[SB] No segs');
       return [];
     }
     const s = am(vd.segments, sg => ({
@@ -76,7 +71,7 @@ export async function fetchSegments(vid) {
       actionType: sg.actionType || 'skip',
       description: sg.description || '',
     }));
-    l(`[SB] Mapped ${s.length}`);
+
     return s;
   } catch (x) {
     ce('[SB] Fail:', x.message);

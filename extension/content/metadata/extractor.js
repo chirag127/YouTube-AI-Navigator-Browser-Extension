@@ -16,13 +16,11 @@ class MetadataExtractor {
     f(`[ME] ${i[lvl]} ${msg}`);
   }
   async extract(vid, opt = {}) {
-    l('extract:Start');
     try {
       const { useDeArrow = true, usePrivateDeArrow = true } = opt;
       this.log('info', `Extr: ${vid}`);
       const c = this._getCache(vid);
       if (c) {
-        l('extract:End');
         return c;
       }
       let md = null,
@@ -55,7 +53,7 @@ class MetadataExtractor {
         };
         if (md.title && md.title !== 'Unknown Title') {
           this._setCache(vid, md);
-          l('extract:End');
+
           return md;
         }
       } catch (x) {
@@ -81,7 +79,7 @@ class MetadataExtractor {
               deArrowThumbnail: da?.thumbnail || null,
             };
             this._setCache(vid, md);
-            l('extract:End');
+
             return md;
           }
         } catch (x) {
@@ -106,7 +104,7 @@ class MetadataExtractor {
         };
       }
       this._setCache(vid, md);
-      l('extract:End');
+
       return md;
     } catch (err) {
       e('Err:extract', err);
@@ -114,7 +112,6 @@ class MetadataExtractor {
     }
   }
   _extractTitle(pr) {
-    l('_extractTitle:Start');
     try {
       const m = [
         () => $('h1.ytd-watch-metadata yt-formatted-string')?.textContent,
@@ -128,14 +125,13 @@ class MetadataExtractor {
         try {
           const t = f();
           if (t?.trim()) {
-            l('_extractTitle:End');
             return t.trim();
           }
         } catch (e) {
           continue;
         }
       }
-      l('_extractTitle:End');
+
       return 'Unknown Title';
     } catch (err) {
       e('Err:_extractTitle', err);
@@ -143,7 +139,6 @@ class MetadataExtractor {
     }
   }
   _extractDescription(pr) {
-    l('_extractDescription:Start');
     try {
       const m = [
         () => {
@@ -161,14 +156,13 @@ class MetadataExtractor {
         try {
           const d = f();
           if (d?.trim()) {
-            l('_extractDescription:End');
             return d.trim();
           }
         } catch (e) {
           continue;
         }
       }
-      l('_extractDescription:End');
+
       return '';
     } catch (err) {
       e('Err:_extractDescription', err);
@@ -176,7 +170,6 @@ class MetadataExtractor {
     }
   }
   _extractAuthor(pr) {
-    l('_extractAuthor:Start');
     try {
       const m = [
         () => $('ytd-channel-name#channel-name yt-formatted-string a')?.textContent,
@@ -188,14 +181,13 @@ class MetadataExtractor {
         try {
           const a = f();
           if (a?.trim()) {
-            l('_extractAuthor:End');
             return a.trim();
           }
         } catch (e) {
           continue;
         }
       }
-      l('_extractAuthor:End');
+
       return 'Unknown Channel';
     } catch (err) {
       e('Err:_extractAuthor', err);
@@ -203,7 +195,6 @@ class MetadataExtractor {
     }
   }
   _extractViewCount(pr) {
-    l('_extractViewCount:Start');
     try {
       const m = [
         () => this._parseViewCount($('ytd-video-view-count-renderer span.view-count')?.textContent),
@@ -214,14 +205,13 @@ class MetadataExtractor {
         try {
           const v = f();
           if (v) {
-            l('_extractViewCount:End');
             return v;
           }
         } catch (e) {
           continue;
         }
       }
-      l('_extractViewCount:End');
+
       return 'Unknown';
     } catch (err) {
       e('Err:_extractViewCount', err);
@@ -229,15 +219,13 @@ class MetadataExtractor {
     }
   }
   _parseViewCount(t) {
-    l('_parseViewCount:Start');
     try {
       if (!t) {
-        l('_parseViewCount:End');
         return null;
       }
       const m = t.match(/[\d,]+/);
       const result = m ? m[0].replace(/,/g, '') : null;
-      l('_parseViewCount:End');
+
       return result;
     } catch (err) {
       e('Err:_parseViewCount', err);
@@ -245,7 +233,6 @@ class MetadataExtractor {
     }
   }
   _extractPublishDate(pr) {
-    l('_extractPublishDate:Start');
     try {
       const m = [
         () => $('meta[itemprop="uploadDate"]')?.content,
@@ -256,14 +243,13 @@ class MetadataExtractor {
         try {
           const d = f();
           if (d) {
-            l('_extractPublishDate:End');
             return d;
           }
         } catch (e) {
           continue;
         }
       }
-      l('_extractPublishDate:End');
+
       return null;
     } catch (err) {
       e('Err:_extractPublishDate', err);
@@ -271,7 +257,6 @@ class MetadataExtractor {
     }
   }
   _extractDuration(pr) {
-    l('_extractDuration:Start');
     try {
       const m = [
         () => $('meta[itemprop="duration"]')?.content,
@@ -285,14 +270,13 @@ class MetadataExtractor {
         try {
           const d = f();
           if (d) {
-            l('_extractDuration:End');
             return d;
           }
         } catch (e) {
           continue;
         }
       }
-      l('_extractDuration:End');
+
       return null;
     } catch (err) {
       e('Err:_extractDuration', err);
@@ -300,7 +284,6 @@ class MetadataExtractor {
     }
   }
   _extractKeywords(pr) {
-    l('_extractKeywords:Start');
     try {
       const m = [
         () =>
@@ -313,14 +296,13 @@ class MetadataExtractor {
         try {
           const k = f();
           if (k?.length) {
-            l('_extractKeywords:End');
             return k;
           }
         } catch (e) {
           continue;
         }
       }
-      l('_extractKeywords:End');
+
       return [];
     } catch (err) {
       e('Err:_extractKeywords', err);
@@ -328,10 +310,9 @@ class MetadataExtractor {
     }
   }
   _extractCategory(pr) {
-    l('_extractCategory:Start');
     try {
       const result = pr?.microformat?.playerMicroformatRenderer?.category;
-      l('_extractCategory:End');
+
       return result;
     } catch (err) {
       e('Err:_extractCategory', err);
@@ -339,15 +320,14 @@ class MetadataExtractor {
     }
   }
   _extractJsonLd() {
-    l('_extractJsonLd:Start');
     try {
       const s = $('script[type="application/ld+json"]');
       if (s && s.textContent) {
         const result = jp(s.textContent);
-        l('_extractJsonLd:End');
+
         return result;
       }
-      l('_extractJsonLd:End');
+
       return null;
     } catch (err) {
       e('Err:_extractJsonLd', err);
@@ -355,7 +335,6 @@ class MetadataExtractor {
     }
   }
   async getInitialData() {
-    l('getInitialData:Start');
     try {
       const result = await new Promise(r => {
         const lis = ev => {
@@ -372,7 +351,7 @@ class MetadataExtractor {
           r(null);
         }, 1000);
       });
-      l('getInitialData:End');
+
       return result;
     } catch (err) {
       e('Err:getInitialData', err);
@@ -380,11 +359,10 @@ class MetadataExtractor {
     }
   }
   _getCache(vid) {
-    l('_getCache:Start');
     try {
       const c = this.cache.get(vid);
       const result = c && Date.now() - c.ts < this.cacheTimeout ? c.data : null;
-      l('_getCache:End');
+
       return result;
     } catch (err) {
       e('Err:_getCache', err);
@@ -392,20 +370,16 @@ class MetadataExtractor {
     }
   }
   _setCache(vid, d) {
-    l('_setCache:Start');
     try {
       this.cache.set(vid, { data: d, ts: Date.now() });
-      l('_setCache:End');
     } catch (err) {
       e('Err:_setCache', err);
     }
   }
   clearCache() {
-    l('clearCache:Start');
     try {
       this.cache.clear();
       this.log('info', 'Cache cleared');
-      l('clearCache:End');
     } catch (err) {
       e('Err:clearCache', err);
     }

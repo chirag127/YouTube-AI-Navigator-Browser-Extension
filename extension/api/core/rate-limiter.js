@@ -1,8 +1,6 @@
-import { l } from '../../utils/shortcuts/log.js';
 import { to } from '../../utils/shortcuts/global.js';
 import { nw } from '../../utils/shortcuts/core.js';
 import { np } from '../../utils/shortcuts/async.js';
-import { mc } from '../../utils/shortcuts/math.js';
 
 export class RateLimiter {
   constructor(config = {}) {
@@ -37,8 +35,6 @@ export class RateLimiter {
     } else {
       const oldestTimestamp = this.timestamps[0];
       const waitTime = this.windowMs - (now - oldestTimestamp) + 100;
-
-      l(`[RateLimiter] Rate limit reached, waiting ${mc(waitTime / 1000)}s`);
 
       to(() => this._processQueue(), waitTime);
     }

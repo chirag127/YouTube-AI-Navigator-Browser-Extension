@@ -1,6 +1,6 @@
 const gu = p => chrome.runtime.getURL(p);
 let slg, assign;
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 
 export const state = {
   currentVideoId: null,
@@ -18,18 +18,15 @@ export const state = {
   },
 };
 export function resetState() {
-  l('resetState:Start');
   try {
     state.isAnalyzing = false;
     state.analysisData = null;
     state.currentTranscript = [];
-    l('resetState:End');
   } catch (err) {
     e('Err:resetState', err);
   }
 }
 export async function loadSettings() {
-  l('loadSettings:Start');
   try {
     if (!slg) {
       const storage = await import(gu('utils/shortcuts/storage.js'));
@@ -47,7 +44,7 @@ export async function loadSettings() {
       'likeIfNotSubscribed',
     ]);
     assign(state.settings, r);
-    l('loadSettings:End');
+
     return state.settings;
   } catch (err) {
     e('Err:loadSettings', err);

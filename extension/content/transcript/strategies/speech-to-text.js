@@ -1,6 +1,6 @@
 const gu = p => chrome.runtime.getURL(p);
 
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { msg } = await import(gu('utils/shortcuts/runtime.js'));
 const { to } = await import(gu('utils/shortcuts/global.js'));
 export const name = 'Speech to Text';
@@ -12,7 +12,6 @@ export const extract = async (vid, lang = 'en') => {
     if (!u) throw new Error('No audio URL found');
     const r = await msg({ action: 'TRANSCRIBE_AUDIO', audioUrl: u, lang });
     if (r?.success && r.segments) {
-      l(`[STT] ✅ Success: ${r.segments.length} segments`);
       return r.segments;
     }
     throw new Error(r?.error || 'STT failed');
