@@ -1,5 +1,6 @@
 import { sg, ss } from '../../utils/shortcuts/storage.js';
-import { err as e, now as nt, keys as ok, jp, js } from '../../utils/shortcuts/core.js';
+import { e } from '../../utils/shortcuts/log.js';
+import { now as nt, keys as ok, jp, js } from '../../utils/shortcuts/core.js';
 import { isa } from '../../utils/shortcuts/array.js';
 
 export const SEGMENT_CATEGORIES = [

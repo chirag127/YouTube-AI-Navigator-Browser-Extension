@@ -16,7 +16,8 @@ import { CommentsSettings } from './modules/comments-settings.js';
 import { MetadataSettings } from './modules/metadata-settings.js';
 import { ScrollSettings } from './modules/scroll-settings.js';
 import { on, id as i } from '../utils/shortcuts/dom.js';
-import { err as e, vl as vs } from '../utils/shortcuts/core.js';
+import { e } from '../utils/shortcuts/log.js';
+import { vl as vs } from '../utils/shortcuts/core.js';
 import { url } from '../utils/shortcuts/runtime.js';
 import { tbc as tc } from '../utils/shortcuts/tabs.js';
 on(document, 'DOMContentLoaded', async () => {
