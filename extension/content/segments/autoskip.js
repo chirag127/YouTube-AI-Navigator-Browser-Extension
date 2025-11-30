@@ -99,7 +99,9 @@ export function handleAutoSkip() {
           if (Math.abs(v.currentTime - nt) > 0.5) {
             v.currentTime = nt;
             showNotification(`⏭️ Skipped: ${s.displayLabel || s.label}`);
-            e(`[AutoSkip] Skipped ${s.displayLabel || s.label} (${s.start.toFixed(1)}s-${s.end.toFixed(1)}s)`);
+            e(
+              `[AutoSkip] Skipped ${s.displayLabel || s.label} (${s.start.toFixed(1)}s-${s.end.toFixed(1)}s)`
+            );
           }
           return;
         } else if (s.config.action === 'speed') {

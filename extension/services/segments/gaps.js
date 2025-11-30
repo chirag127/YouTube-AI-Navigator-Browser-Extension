@@ -17,11 +17,18 @@ export function fillContentGaps(c, o) {
     let t = 0;
     for (const seg of s) {
       if (seg.start > t + 1)
-        f.push({ label: 'C', labelFull: 'Content', start: t, end: seg.start, text: 'Main Content' });
+        f.push({
+          label: 'C',
+          labelFull: 'Content',
+          start: t,
+          end: seg.start,
+          text: 'Main Content',
+        });
       f.push({ ...seg, text: seg.description || seg.title || seg.label });
       t = Math.max(t, seg.end);
     }
-    if (t < end - 1) f.push({ label: 'C', labelFull: 'Content', start: t, end, text: 'Main Content' });
+    if (t < end - 1)
+      f.push({ label: 'C', labelFull: 'Content', start: t, end, text: 'Main Content' });
     return f;
   } catch (x) {
     e('error:fillContentGaps', x);

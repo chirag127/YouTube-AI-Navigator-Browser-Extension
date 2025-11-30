@@ -1,1 +1,847 @@
-{"numTotalTestSuites":38,"numPassedTestSuites":38,"numFailedTestSuites":0,"numPendingTestSuites":0,"numTotalTests":76,"numPassedTests":76,"numFailedTests":0,"numPendingTests":0,"numTodoTests":0,"snapshot":{"added":0,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0,"didUpdate":false},"startTime":1764490699899,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["AutoSkip Segment Action Filtering","Configuration Loading"],"fullName":"AutoSkip Segment Action Filtering Configuration Loading should properly load segment configuration from storage","status":"passed","title":"should properly load segment configuration from storage","duration":32.8886,"failureMessages":[],"meta":{}},{"ancestorTitles":["AutoSkip Segment Action Filtering","Configuration Loading"],"fullName":"AutoSkip Segment Action Filtering Configuration Loading should skip segments with action=skip","status":"passed","title":"should skip segments with action=skip","duration":0.46420000000011896,"failureMessages":[],"meta":{}},{"ancestorTitles":["AutoSkip Segment Action Filtering","Configuration Loading"],"fullName":"AutoSkip Segment Action Filtering Configuration Loading should ignore segments with action=ignore","status":"passed","title":"should ignore segments with action=ignore","duration":0.274599999999964,"failureMessages":[],"meta":{}},{"ancestorTitles":["AutoSkip Segment Action Filtering","Configuration Loading"],"fullName":"AutoSkip Segment Action Filtering Configuration Loading should speed segments with action=speed","status":"passed","title":"should speed segments with action=speed","duration":0.5790999999999258,"failureMessages":[],"meta":{}},{"ancestorTitles":["AutoSkip Segment Action Filtering","Default Actions"],"fullName":"AutoSkip Segment Action Filtering Default Actions should default content to ignore","status":"passed","title":"should default content to ignore","duration":0.6621000000000095,"failureMessages":[],"meta":{}},{"ancestorTitles":["AutoSkip Segment Action Filtering","Default Actions"],"fullName":"AutoSkip Segment Action Filtering Default Actions should default highlight to ignore","status":"passed","title":"should default highlight to ignore","duration":0.38350000000014006,"failureMessages":[],"meta":{}},{"ancestorTitles":["AutoSkip Segment Action Filtering","Default Actions"],"fullName":"AutoSkip Segment Action Filtering Default Actions should default exclusive_access to ignore","status":"passed","title":"should default exclusive_access to ignore","duration":0.3610000000001037,"failureMessages":[],"meta":{}}],"startTime":1764490701442,"endTime":1764490701478.361,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/autoskip-integration.test.js"},{"assertionResults":[{"ancestorTitles":["CommentsExtractor"],"fullName":"CommentsExtractor should be able to extract comments from DOM structure","status":"passed","title":"should be able to extract comments from DOM structure","duration":1.6439000000000306,"failureMessages":[],"meta":{}}],"startTime":1764490701473,"endTime":1764490701474.6438,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/comments.test.js"},{"assertionResults":[{"ancestorTitles":["Comprehensive Segment Settings Tests","Segment Categories Structure"],"fullName":"Comprehensive Segment Settings Tests Segment Categories Structure should have all segment categories","status":"passed","title":"should have all segment categories","duration":4.65300000000002,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Segment Categories Structure"],"fullName":"Comprehensive Segment Settings Tests Segment Categories Structure should have unique colors for all categories","status":"passed","title":"should have unique colors for all categories","duration":0.514699999999948,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Default Segment Configuration"],"fullName":"Comprehensive Segment Settings Tests Default Segment Configuration should default to ignore for DEFAULT_SEGMENT_CONFIG","status":"passed","title":"should default to ignore for DEFAULT_SEGMENT_CONFIG","duration":0.49060000000008586,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Default Segment Configuration"],"fullName":"Comprehensive Segment Settings Tests Default Segment Configuration should default poi_highlight to ignore","status":"passed","title":"should default poi_highlight to ignore","duration":0.5466000000001259,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Default Segment Configuration"],"fullName":"Comprehensive Segment Settings Tests Default Segment Configuration should default exclusive_access to ignore","status":"passed","title":"should default exclusive_access to ignore","duration":0.3027999999999338,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Default Segment Configuration"],"fullName":"Comprehensive Segment Settings Tests Default Segment Configuration should default sponsor to skip","status":"passed","title":"should default sponsor to skip","duration":0.3266000000000986,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Default Segment Configuration"],"fullName":"Comprehensive Segment Settings Tests Default Segment Configuration should default filler to ignore","status":"passed","title":"should default filler to ignore","duration":0.41390000000001237,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Default Segment Configuration"],"fullName":"Comprehensive Segment Settings Tests Default Segment Configuration should have speed=2 for all categories except content","status":"passed","title":"should have speed=2 for all categories except content","duration":0.6259000000000015,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Settings Persistence"],"fullName":"Comprehensive Segment Settings Tests Settings Persistence should persist segment settings changes","status":"passed","title":"should persist segment settings changes","duration":0.5117999999999938,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Settings Persistence"],"fullName":"Comprehensive Segment Settings Tests Settings Persistence should update speed value correctly","status":"passed","title":"should update speed value correctly","duration":0.27899999999999636,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Settings Persistence"],"fullName":"Comprehensive Segment Settings Tests Settings Persistence should preserve all segments after partial update","status":"passed","title":"should preserve all segments after partial update","duration":0.20810000000005857,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Settings Merge"],"fullName":"Comprehensive Segment Settings Tests Settings Merge should merge loaded settings with defaults","status":"passed","title":"should merge loaded settings with defaults","duration":0.2982999999999265,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Settings Merge"],"fullName":"Comprehensive Segment Settings Tests Settings Merge should preserve enabled flag","status":"passed","title":"should preserve enabled flag","duration":0.2096999999998843,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Segment Actions Validation"],"fullName":"Comprehensive Segment Settings Tests Segment Actions Validation should support ignore action","status":"passed","title":"should support ignore action","duration":0.09429999999997563,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Segment Actions Validation"],"fullName":"Comprehensive Segment Settings Tests Segment Actions Validation should support skip action","status":"passed","title":"should support skip action","duration":0.06700000000000728,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Segment Actions Validation"],"fullName":"Comprehensive Segment Settings Tests Segment Actions Validation should support speed action","status":"passed","title":"should support speed action","duration":0.06520000000000437,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Settings Export/Import"],"fullName":"Comprehensive Segment Settings Tests Settings Export/Import should export settings as JSON","status":"passed","title":"should export settings as JSON","duration":0.6622999999999593,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Settings Export/Import"],"fullName":"Comprehensive Segment Settings Tests Settings Export/Import should import settings from JSON","status":"passed","title":"should import settings from JSON","duration":0.20109999999999673,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Settings Reset"],"fullName":"Comprehensive Segment Settings Tests Settings Reset should reset all settings to defaults","status":"passed","title":"should reset all settings to defaults","duration":0.12740000000007967,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Notification Settings"],"fullName":"Comprehensive Segment Settings Tests Notification Settings should default showNotifications to true","status":"passed","title":"should default showNotifications to true","duration":0.0805000000000291,"failureMessages":[],"meta":{}},{"ancestorTitles":["Comprehensive Segment Settings Tests","Notification Settings"],"fullName":"Comprehensive Segment Settings Tests Notification Settings should persist notification changes","status":"passed","title":"should persist notification changes","duration":0.07130000000006476,"failureMessages":[],"meta":{}}],"startTime":1764490701518,"endTime":1764490701529.2012,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/comprehensive-settings.test.js"},{"assertionResults":[{"ancestorTitles":["Content Protection"],"fullName":"Content Protection should NEVER skip Content segments","status":"passed","title":"should NEVER skip Content segments","duration":11.147399999999834,"failureMessages":[],"meta":{}},{"ancestorTitles":["Content Protection"],"fullName":"Content Protection should NEVER skip Main Content segments","status":"passed","title":"should NEVER skip Main Content segments","duration":1.0148999999998978,"failureMessages":[],"meta":{}},{"ancestorTitles":["Content Protection"],"fullName":"Content Protection should filter out Content segments from actionable list","status":"passed","title":"should filter out Content segments from actionable list","duration":0.5960000000000036,"failureMessages":[],"meta":{}},{"ancestorTitles":["Content Protection"],"fullName":"Content Protection should be disabled by default","status":"passed","title":"should be disabled by default","duration":0.6650999999999385,"failureMessages":[],"meta":{}},{"ancestorTitles":["Content Protection"],"fullName":"Content Protection should require both enabled and autoSkip to be true","status":"passed","title":"should require both enabled and autoSkip to be true","duration":0.439600000000155,"failureMessages":[],"meta":{}},{"ancestorTitles":["Content Protection"],"fullName":"Content Protection should ignore segments with action set to ignore","status":"passed","title":"should ignore segments with action set to ignore","duration":0.5992000000001099,"failureMessages":[],"meta":{}},{"ancestorTitles":["Content Protection"],"fullName":"Content Protection should respect minSegmentDuration filter","status":"passed","title":"should respect minSegmentDuration filter","duration":1.4346999999997934,"failureMessages":[],"meta":{}}],"startTime":1764490701501,"endTime":1764490701516.4348,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/content-protection.test.js"},{"assertionResults":[{"ancestorTitles":["ErrorHandler"],"fullName":"ErrorHandler should classify auth error","status":"passed","title":"should classify auth error","duration":1.9040999999999713,"failureMessages":[],"meta":{}},{"ancestorTitles":["ErrorHandler"],"fullName":"ErrorHandler should classify rate limit error","status":"passed","title":"should classify rate limit error","duration":0.394800000000032,"failureMessages":[],"meta":{}},{"ancestorTitles":["ErrorHandler"],"fullName":"ErrorHandler should classify bad request","status":"passed","title":"should classify bad request","duration":0.2615000000000691,"failureMessages":[],"meta":{}},{"ancestorTitles":["ErrorHandler"],"fullName":"ErrorHandler should classify server error","status":"passed","title":"should classify server error","duration":0.3686999999999898,"failureMessages":[],"meta":{}},{"ancestorTitles":["ErrorHandler"],"fullName":"ErrorHandler should classify timeout","status":"passed","title":"should classify timeout","duration":0.5121999999998934,"failureMessages":[],"meta":{}},{"ancestorTitles":["ErrorHandler"],"fullName":"ErrorHandler should classify network error","status":"passed","title":"should classify network error","duration":0.24499999999989086,"failureMessages":[],"meta":{}},{"ancestorTitles":["ErrorHandler"],"fullName":"ErrorHandler should create user error","status":"passed","title":"should create user error","duration":0.33409999999980755,"failureMessages":[],"meta":{}},{"ancestorTitles":["ErrorHandler"],"fullName":"ErrorHandler should handle unknown errors","status":"passed","title":"should handle unknown errors","duration":0.1879999999998745,"failureMessages":[],"meta":{}}],"startTime":1764490701472,"endTime":1764490701476.334,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/error-handler.test.js"},{"assertionResults":[{"ancestorTitles":["Import Integrity"],"fullName":"Import Integrity validates all imports have matching exports","status":"passed","title":"validates all imports have matching exports","duration":35.483200000000124,"failureMessages":[],"meta":{}},{"ancestorTitles":["Import Integrity"],"fullName":"Import Integrity validates no default exports","status":"passed","title":"validates no default exports","duration":15.33569999999986,"failureMessages":[],"meta":{}},{"ancestorTitles":["Import Integrity"],"fullName":"Import Integrity validates no duplicate shortcut names","status":"passed","title":"validates no duplicate shortcut names","duration":1.7547000000001844,"failureMessages":[],"meta":{}}],"startTime":1764490701424,"endTime":1764490701476.7546,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/import-integrity.test.js"},{"assertionResults":[{"ancestorTitles":["AutoSave"],"fullName":"AutoSave should save settings after delay","status":"passed","title":"should save settings after delay","duration":6.512199999999893,"failureMessages":[],"meta":{}},{"ancestorTitles":["AutoSave"],"fullName":"AutoSave should debounce multiple saves","status":"passed","title":"should debounce multiple saves","duration":1.5809999999999036,"failureMessages":[],"meta":{}},{"ancestorTitles":["AutoSave"],"fullName":"AutoSave should handle save errors","status":"passed","title":"should handle save errors","duration":0.7494999999998981,"failureMessages":[],"meta":{}}],"startTime":1764490701498,"endTime":1764490701507.7495,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/options.test.js"},{"assertionResults":[{"ancestorTitles":["ScrollManager"],"fullName":"ScrollManager should be a singleton","status":"passed","title":"should be a singleton","duration":47.02279999999996,"failureMessages":[],"meta":{}},{"ancestorTitles":["ScrollManager"],"fullName":"ScrollManager should scroll to comments using smart scroll","status":"passed","title":"should scroll to comments using smart scroll","duration":1.6326999999998861,"failureMessages":[],"meta":{}}],"startTime":1764490701444,"endTime":1764490701492.6328,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/scroll-manager.test.js"},{"assertionResults":[{"ancestorTitles":["Segment Configuration"],"fullName":"Segment Configuration default config includes all segment categories","status":"passed","title":"default config includes all segment categories","duration":3.5190999999999804,"failureMessages":[],"meta":{}},{"ancestorTitles":["Segment Configuration"],"fullName":"Segment Configuration merges loaded settings preserving custom category configs","status":"passed","title":"merges loaded settings preserving custom category configs","duration":1.1103999999997995,"failureMessages":[],"meta":{}}],"startTime":1764490701516,"endTime":1764490701521.1104,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/segments-config.test.js"},{"assertionResults":[{"ancestorTitles":["Segments UI Module Tests","Initialization"],"fullName":"Segments UI Module Tests Initialization should initialize with settings manager","status":"passed","title":"should initialize with settings manager","duration":2.6341999999999643,"failureMessages":[],"meta":{}},{"ancestorTitles":["Segments UI Module Tests","Initialization"],"fullName":"Segments UI Module Tests Initialization should read enabled state from settings","status":"passed","title":"should read enabled state from settings","duration":0.5602999999998701,"failureMessages":[],"meta":{}},{"ancestorTitles":["Segments UI Module Tests","Bulk Operations"],"fullName":"Segments UI Module Tests Bulk Operations should setAll to skip except content","status":"passed","title":"should setAll to skip except content","duration":3.7258999999999105,"failureMessages":[],"meta":{}},{"ancestorTitles":["Segments UI Module Tests","Bulk Operations"],"fullName":"Segments UI Module Tests Bulk Operations should setAll to speed except content","status":"passed","title":"should setAll to speed except content","duration":1.4966999999999189,"failureMessages":[],"meta":{}},{"ancestorTitles":["Segments UI Module Tests","Bulk Operations"],"fullName":"Segments UI Module Tests Bulk Operations should setAll to ignore","status":"passed","title":"should setAll to ignore","duration":1.382799999999861,"failureMessages":[],"meta":{}},{"ancestorTitles":["Segments UI Module Tests","Bulk Operations"],"fullName":"Segments UI Module Tests Bulk Operations should preserve speed when changing action","status":"passed","title":"should preserve speed when changing action","duration":1.3403000000000702,"failureMessages":[],"meta":{}},{"ancestorTitles":["Segments UI Module Tests","Individual Updates"],"fullName":"Segments UI Module Tests Individual Updates should update single category action","status":"passed","title":"should update single category action","duration":0.21329999999989013,"failureMessages":[],"meta":{}},{"ancestorTitles":["Segments UI Module Tests","Individual Updates"],"fullName":"Segments UI Module Tests Individual Updates should update single category speed","status":"passed","title":"should update single category speed","duration":0.1692000000000462,"failureMessages":[],"meta":{}},{"ancestorTitles":["Segments UI Module Tests","Individual Updates"],"fullName":"Segments UI Module Tests Individual Updates should create category config if missing","status":"passed","title":"should create category config if missing","duration":0.2927999999999429,"failureMessages":[],"meta":{}},{"ancestorTitles":["Segments UI Module Tests","Settings Synchronization"],"fullName":"Segments UI Module Tests Settings Synchronization should call SettingsManager save on update","status":"passed","title":"should call SettingsManager save on update","duration":0.6709000000000742,"failureMessages":[],"meta":{}},{"ancestorTitles":["Segments UI Module Tests","Settings Synchronization"],"fullName":"Segments UI Module Tests Settings Synchronization should call SettingsManager save on setAll","status":"passed","title":"should call SettingsManager save on setAll","duration":0.9492000000000189,"failureMessages":[],"meta":{}}],"startTime":1764490701518,"endTime":1764490701532.9492,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/segments-ui.test.js"},{"assertionResults":[{"ancestorTitles":["SettingsManager"],"fullName":"SettingsManager initializes with default segment categories populated","status":"passed","title":"initializes with default segment categories populated","duration":2.5989999999999327,"failureMessages":[],"meta":{}},{"ancestorTitles":["SettingsManager"],"fullName":"SettingsManager includes all segment categories in defaults","status":"passed","title":"includes all segment categories in defaults","duration":1.323799999999892,"failureMessages":[],"meta":{}},{"ancestorTitles":["SettingsManager"],"fullName":"SettingsManager sets sponsor category to skip by default","status":"passed","title":"sets sponsor category to skip by default","duration":0.31490000000007967,"failureMessages":[],"meta":{}},{"ancestorTitles":["SettingsManager"],"fullName":"SettingsManager sets poi_highlight to ignore by default","status":"passed","title":"sets poi_highlight to ignore by default","duration":0.5209999999999582,"failureMessages":[],"meta":{}},{"ancestorTitles":["SettingsManager"],"fullName":"SettingsManager sets segments disabled by default","status":"passed","title":"sets segments disabled by default","duration":0.31510000000002947,"failureMessages":[],"meta":{}},{"ancestorTitles":["SettingsManager"],"fullName":"SettingsManager sets most categories to ignore by default","status":"passed","title":"sets most categories to ignore by default","duration":0.3330000000000837,"failureMessages":[],"meta":{}},{"ancestorTitles":["SettingsManager"],"fullName":"SettingsManager merges loaded settings with defaults preserving custom values","status":"passed","title":"merges loaded settings with defaults preserving custom values","duration":0.5679000000000087,"failureMessages":[],"meta":{}},{"ancestorTitles":["SettingsManager"],"fullName":"SettingsManager handles empty loaded settings gracefully","status":"passed","title":"handles empty loaded settings gracefully","duration":0.26319999999986976,"failureMessages":[],"meta":{}}],"startTime":1764490701516,"endTime":1764490701522.2632,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/settings-manager.test.js"},{"assertionResults":[{"ancestorTitles":["AutoSkip"],"fullName":"AutoSkip should skip sponsor segments when enabled","status":"passed","title":"should skip sponsor segments when enabled","duration":12.887499999999818,"failureMessages":[],"meta":{}},{"ancestorTitles":["AutoSkip"],"fullName":"AutoSkip should speed up intro segments when configured","status":"passed","title":"should speed up intro segments when configured","duration":0.7227000000000317,"failureMessages":[],"meta":{}},{"ancestorTitles":["AutoSkip"],"fullName":"AutoSkip should restore speed after segment","status":"passed","title":"should restore speed after segment","duration":0.49530000000004293,"failureMessages":[],"meta":{}}],"startTime":1764490701500,"endTime":1764490701514.4954,"status":"passed","message":"","name":"C:/AM/GitHub/YouTube-AI-Navigator/tests/skipping.test.js"}]}
+{
+  "numTotalTestSuites": 38,
+  "numPassedTestSuites": 38,
+  "numFailedTestSuites": 0,
+  "numPendingTestSuites": 0,
+  "numTotalTests": 76,
+  "numPassedTests": 76,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "snapshot": {
+    "added": 0,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0,
+    "didUpdate": false
+  },
+  "startTime": 1764490699899,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["AutoSkip Segment Action Filtering", "Configuration Loading"],
+          "fullName": "AutoSkip Segment Action Filtering Configuration Loading should properly load segment configuration from storage",
+          "status": "passed",
+          "title": "should properly load segment configuration from storage",
+          "duration": 32.8886,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["AutoSkip Segment Action Filtering", "Configuration Loading"],
+          "fullName": "AutoSkip Segment Action Filtering Configuration Loading should skip segments with action=skip",
+          "status": "passed",
+          "title": "should skip segments with action=skip",
+          "duration": 0.46420000000011896,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["AutoSkip Segment Action Filtering", "Configuration Loading"],
+          "fullName": "AutoSkip Segment Action Filtering Configuration Loading should ignore segments with action=ignore",
+          "status": "passed",
+          "title": "should ignore segments with action=ignore",
+          "duration": 0.274599999999964,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["AutoSkip Segment Action Filtering", "Configuration Loading"],
+          "fullName": "AutoSkip Segment Action Filtering Configuration Loading should speed segments with action=speed",
+          "status": "passed",
+          "title": "should speed segments with action=speed",
+          "duration": 0.5790999999999258,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["AutoSkip Segment Action Filtering", "Default Actions"],
+          "fullName": "AutoSkip Segment Action Filtering Default Actions should default content to ignore",
+          "status": "passed",
+          "title": "should default content to ignore",
+          "duration": 0.6621000000000095,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["AutoSkip Segment Action Filtering", "Default Actions"],
+          "fullName": "AutoSkip Segment Action Filtering Default Actions should default highlight to ignore",
+          "status": "passed",
+          "title": "should default highlight to ignore",
+          "duration": 0.38350000000014006,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["AutoSkip Segment Action Filtering", "Default Actions"],
+          "fullName": "AutoSkip Segment Action Filtering Default Actions should default exclusive_access to ignore",
+          "status": "passed",
+          "title": "should default exclusive_access to ignore",
+          "duration": 0.3610000000001037,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701442,
+      "endTime": 1764490701478.361,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/autoskip-integration.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["CommentsExtractor"],
+          "fullName": "CommentsExtractor should be able to extract comments from DOM structure",
+          "status": "passed",
+          "title": "should be able to extract comments from DOM structure",
+          "duration": 1.6439000000000306,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701473,
+      "endTime": 1764490701474.6438,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/comments.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "Comprehensive Segment Settings Tests",
+            "Segment Categories Structure"
+          ],
+          "fullName": "Comprehensive Segment Settings Tests Segment Categories Structure should have all segment categories",
+          "status": "passed",
+          "title": "should have all segment categories",
+          "duration": 4.65300000000002,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": [
+            "Comprehensive Segment Settings Tests",
+            "Segment Categories Structure"
+          ],
+          "fullName": "Comprehensive Segment Settings Tests Segment Categories Structure should have unique colors for all categories",
+          "status": "passed",
+          "title": "should have unique colors for all categories",
+          "duration": 0.514699999999948,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": [
+            "Comprehensive Segment Settings Tests",
+            "Default Segment Configuration"
+          ],
+          "fullName": "Comprehensive Segment Settings Tests Default Segment Configuration should default to ignore for DEFAULT_SEGMENT_CONFIG",
+          "status": "passed",
+          "title": "should default to ignore for DEFAULT_SEGMENT_CONFIG",
+          "duration": 0.49060000000008586,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": [
+            "Comprehensive Segment Settings Tests",
+            "Default Segment Configuration"
+          ],
+          "fullName": "Comprehensive Segment Settings Tests Default Segment Configuration should default poi_highlight to ignore",
+          "status": "passed",
+          "title": "should default poi_highlight to ignore",
+          "duration": 0.5466000000001259,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": [
+            "Comprehensive Segment Settings Tests",
+            "Default Segment Configuration"
+          ],
+          "fullName": "Comprehensive Segment Settings Tests Default Segment Configuration should default exclusive_access to ignore",
+          "status": "passed",
+          "title": "should default exclusive_access to ignore",
+          "duration": 0.3027999999999338,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": [
+            "Comprehensive Segment Settings Tests",
+            "Default Segment Configuration"
+          ],
+          "fullName": "Comprehensive Segment Settings Tests Default Segment Configuration should default sponsor to skip",
+          "status": "passed",
+          "title": "should default sponsor to skip",
+          "duration": 0.3266000000000986,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": [
+            "Comprehensive Segment Settings Tests",
+            "Default Segment Configuration"
+          ],
+          "fullName": "Comprehensive Segment Settings Tests Default Segment Configuration should default filler to ignore",
+          "status": "passed",
+          "title": "should default filler to ignore",
+          "duration": 0.41390000000001237,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": [
+            "Comprehensive Segment Settings Tests",
+            "Default Segment Configuration"
+          ],
+          "fullName": "Comprehensive Segment Settings Tests Default Segment Configuration should have speed=2 for all categories except content",
+          "status": "passed",
+          "title": "should have speed=2 for all categories except content",
+          "duration": 0.6259000000000015,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Settings Persistence"],
+          "fullName": "Comprehensive Segment Settings Tests Settings Persistence should persist segment settings changes",
+          "status": "passed",
+          "title": "should persist segment settings changes",
+          "duration": 0.5117999999999938,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Settings Persistence"],
+          "fullName": "Comprehensive Segment Settings Tests Settings Persistence should update speed value correctly",
+          "status": "passed",
+          "title": "should update speed value correctly",
+          "duration": 0.27899999999999636,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Settings Persistence"],
+          "fullName": "Comprehensive Segment Settings Tests Settings Persistence should preserve all segments after partial update",
+          "status": "passed",
+          "title": "should preserve all segments after partial update",
+          "duration": 0.20810000000005857,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Settings Merge"],
+          "fullName": "Comprehensive Segment Settings Tests Settings Merge should merge loaded settings with defaults",
+          "status": "passed",
+          "title": "should merge loaded settings with defaults",
+          "duration": 0.2982999999999265,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Settings Merge"],
+          "fullName": "Comprehensive Segment Settings Tests Settings Merge should preserve enabled flag",
+          "status": "passed",
+          "title": "should preserve enabled flag",
+          "duration": 0.2096999999998843,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Segment Actions Validation"],
+          "fullName": "Comprehensive Segment Settings Tests Segment Actions Validation should support ignore action",
+          "status": "passed",
+          "title": "should support ignore action",
+          "duration": 0.09429999999997563,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Segment Actions Validation"],
+          "fullName": "Comprehensive Segment Settings Tests Segment Actions Validation should support skip action",
+          "status": "passed",
+          "title": "should support skip action",
+          "duration": 0.06700000000000728,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Segment Actions Validation"],
+          "fullName": "Comprehensive Segment Settings Tests Segment Actions Validation should support speed action",
+          "status": "passed",
+          "title": "should support speed action",
+          "duration": 0.06520000000000437,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Settings Export/Import"],
+          "fullName": "Comprehensive Segment Settings Tests Settings Export/Import should export settings as JSON",
+          "status": "passed",
+          "title": "should export settings as JSON",
+          "duration": 0.6622999999999593,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Settings Export/Import"],
+          "fullName": "Comprehensive Segment Settings Tests Settings Export/Import should import settings from JSON",
+          "status": "passed",
+          "title": "should import settings from JSON",
+          "duration": 0.20109999999999673,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Settings Reset"],
+          "fullName": "Comprehensive Segment Settings Tests Settings Reset should reset all settings to defaults",
+          "status": "passed",
+          "title": "should reset all settings to defaults",
+          "duration": 0.12740000000007967,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Notification Settings"],
+          "fullName": "Comprehensive Segment Settings Tests Notification Settings should default showNotifications to true",
+          "status": "passed",
+          "title": "should default showNotifications to true",
+          "duration": 0.0805000000000291,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Comprehensive Segment Settings Tests", "Notification Settings"],
+          "fullName": "Comprehensive Segment Settings Tests Notification Settings should persist notification changes",
+          "status": "passed",
+          "title": "should persist notification changes",
+          "duration": 0.07130000000006476,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701518,
+      "endTime": 1764490701529.2012,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/comprehensive-settings.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Content Protection"],
+          "fullName": "Content Protection should NEVER skip Content segments",
+          "status": "passed",
+          "title": "should NEVER skip Content segments",
+          "duration": 11.147399999999834,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Content Protection"],
+          "fullName": "Content Protection should NEVER skip Main Content segments",
+          "status": "passed",
+          "title": "should NEVER skip Main Content segments",
+          "duration": 1.0148999999998978,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Content Protection"],
+          "fullName": "Content Protection should filter out Content segments from actionable list",
+          "status": "passed",
+          "title": "should filter out Content segments from actionable list",
+          "duration": 0.5960000000000036,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Content Protection"],
+          "fullName": "Content Protection should be disabled by default",
+          "status": "passed",
+          "title": "should be disabled by default",
+          "duration": 0.6650999999999385,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Content Protection"],
+          "fullName": "Content Protection should require both enabled and autoSkip to be true",
+          "status": "passed",
+          "title": "should require both enabled and autoSkip to be true",
+          "duration": 0.439600000000155,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Content Protection"],
+          "fullName": "Content Protection should ignore segments with action set to ignore",
+          "status": "passed",
+          "title": "should ignore segments with action set to ignore",
+          "duration": 0.5992000000001099,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Content Protection"],
+          "fullName": "Content Protection should respect minSegmentDuration filter",
+          "status": "passed",
+          "title": "should respect minSegmentDuration filter",
+          "duration": 1.4346999999997934,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701501,
+      "endTime": 1764490701516.4348,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/content-protection.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ErrorHandler"],
+          "fullName": "ErrorHandler should classify auth error",
+          "status": "passed",
+          "title": "should classify auth error",
+          "duration": 1.9040999999999713,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["ErrorHandler"],
+          "fullName": "ErrorHandler should classify rate limit error",
+          "status": "passed",
+          "title": "should classify rate limit error",
+          "duration": 0.394800000000032,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["ErrorHandler"],
+          "fullName": "ErrorHandler should classify bad request",
+          "status": "passed",
+          "title": "should classify bad request",
+          "duration": 0.2615000000000691,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["ErrorHandler"],
+          "fullName": "ErrorHandler should classify server error",
+          "status": "passed",
+          "title": "should classify server error",
+          "duration": 0.3686999999999898,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["ErrorHandler"],
+          "fullName": "ErrorHandler should classify timeout",
+          "status": "passed",
+          "title": "should classify timeout",
+          "duration": 0.5121999999998934,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["ErrorHandler"],
+          "fullName": "ErrorHandler should classify network error",
+          "status": "passed",
+          "title": "should classify network error",
+          "duration": 0.24499999999989086,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["ErrorHandler"],
+          "fullName": "ErrorHandler should create user error",
+          "status": "passed",
+          "title": "should create user error",
+          "duration": 0.33409999999980755,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["ErrorHandler"],
+          "fullName": "ErrorHandler should handle unknown errors",
+          "status": "passed",
+          "title": "should handle unknown errors",
+          "duration": 0.1879999999998745,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701472,
+      "endTime": 1764490701476.334,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/error-handler.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Import Integrity"],
+          "fullName": "Import Integrity validates all imports have matching exports",
+          "status": "passed",
+          "title": "validates all imports have matching exports",
+          "duration": 35.483200000000124,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Import Integrity"],
+          "fullName": "Import Integrity validates no default exports",
+          "status": "passed",
+          "title": "validates no default exports",
+          "duration": 15.33569999999986,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Import Integrity"],
+          "fullName": "Import Integrity validates no duplicate shortcut names",
+          "status": "passed",
+          "title": "validates no duplicate shortcut names",
+          "duration": 1.7547000000001844,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701424,
+      "endTime": 1764490701476.7546,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/import-integrity.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["AutoSave"],
+          "fullName": "AutoSave should save settings after delay",
+          "status": "passed",
+          "title": "should save settings after delay",
+          "duration": 6.512199999999893,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["AutoSave"],
+          "fullName": "AutoSave should debounce multiple saves",
+          "status": "passed",
+          "title": "should debounce multiple saves",
+          "duration": 1.5809999999999036,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["AutoSave"],
+          "fullName": "AutoSave should handle save errors",
+          "status": "passed",
+          "title": "should handle save errors",
+          "duration": 0.7494999999998981,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701498,
+      "endTime": 1764490701507.7495,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/options.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ScrollManager"],
+          "fullName": "ScrollManager should be a singleton",
+          "status": "passed",
+          "title": "should be a singleton",
+          "duration": 47.02279999999996,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["ScrollManager"],
+          "fullName": "ScrollManager should scroll to comments using smart scroll",
+          "status": "passed",
+          "title": "should scroll to comments using smart scroll",
+          "duration": 1.6326999999998861,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701444,
+      "endTime": 1764490701492.6328,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/scroll-manager.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Segment Configuration"],
+          "fullName": "Segment Configuration default config includes all segment categories",
+          "status": "passed",
+          "title": "default config includes all segment categories",
+          "duration": 3.5190999999999804,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Segment Configuration"],
+          "fullName": "Segment Configuration merges loaded settings preserving custom category configs",
+          "status": "passed",
+          "title": "merges loaded settings preserving custom category configs",
+          "duration": 1.1103999999997995,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701516,
+      "endTime": 1764490701521.1104,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/segments-config.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Segments UI Module Tests", "Initialization"],
+          "fullName": "Segments UI Module Tests Initialization should initialize with settings manager",
+          "status": "passed",
+          "title": "should initialize with settings manager",
+          "duration": 2.6341999999999643,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Segments UI Module Tests", "Initialization"],
+          "fullName": "Segments UI Module Tests Initialization should read enabled state from settings",
+          "status": "passed",
+          "title": "should read enabled state from settings",
+          "duration": 0.5602999999998701,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Segments UI Module Tests", "Bulk Operations"],
+          "fullName": "Segments UI Module Tests Bulk Operations should setAll to skip except content",
+          "status": "passed",
+          "title": "should setAll to skip except content",
+          "duration": 3.7258999999999105,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Segments UI Module Tests", "Bulk Operations"],
+          "fullName": "Segments UI Module Tests Bulk Operations should setAll to speed except content",
+          "status": "passed",
+          "title": "should setAll to speed except content",
+          "duration": 1.4966999999999189,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Segments UI Module Tests", "Bulk Operations"],
+          "fullName": "Segments UI Module Tests Bulk Operations should setAll to ignore",
+          "status": "passed",
+          "title": "should setAll to ignore",
+          "duration": 1.382799999999861,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Segments UI Module Tests", "Bulk Operations"],
+          "fullName": "Segments UI Module Tests Bulk Operations should preserve speed when changing action",
+          "status": "passed",
+          "title": "should preserve speed when changing action",
+          "duration": 1.3403000000000702,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Segments UI Module Tests", "Individual Updates"],
+          "fullName": "Segments UI Module Tests Individual Updates should update single category action",
+          "status": "passed",
+          "title": "should update single category action",
+          "duration": 0.21329999999989013,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Segments UI Module Tests", "Individual Updates"],
+          "fullName": "Segments UI Module Tests Individual Updates should update single category speed",
+          "status": "passed",
+          "title": "should update single category speed",
+          "duration": 0.1692000000000462,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Segments UI Module Tests", "Individual Updates"],
+          "fullName": "Segments UI Module Tests Individual Updates should create category config if missing",
+          "status": "passed",
+          "title": "should create category config if missing",
+          "duration": 0.2927999999999429,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Segments UI Module Tests", "Settings Synchronization"],
+          "fullName": "Segments UI Module Tests Settings Synchronization should call SettingsManager save on update",
+          "status": "passed",
+          "title": "should call SettingsManager save on update",
+          "duration": 0.6709000000000742,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["Segments UI Module Tests", "Settings Synchronization"],
+          "fullName": "Segments UI Module Tests Settings Synchronization should call SettingsManager save on setAll",
+          "status": "passed",
+          "title": "should call SettingsManager save on setAll",
+          "duration": 0.9492000000000189,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701518,
+      "endTime": 1764490701532.9492,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/segments-ui.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["SettingsManager"],
+          "fullName": "SettingsManager initializes with default segment categories populated",
+          "status": "passed",
+          "title": "initializes with default segment categories populated",
+          "duration": 2.5989999999999327,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["SettingsManager"],
+          "fullName": "SettingsManager includes all segment categories in defaults",
+          "status": "passed",
+          "title": "includes all segment categories in defaults",
+          "duration": 1.323799999999892,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["SettingsManager"],
+          "fullName": "SettingsManager sets sponsor category to skip by default",
+          "status": "passed",
+          "title": "sets sponsor category to skip by default",
+          "duration": 0.31490000000007967,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["SettingsManager"],
+          "fullName": "SettingsManager sets poi_highlight to ignore by default",
+          "status": "passed",
+          "title": "sets poi_highlight to ignore by default",
+          "duration": 0.5209999999999582,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["SettingsManager"],
+          "fullName": "SettingsManager sets segments disabled by default",
+          "status": "passed",
+          "title": "sets segments disabled by default",
+          "duration": 0.31510000000002947,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["SettingsManager"],
+          "fullName": "SettingsManager sets most categories to ignore by default",
+          "status": "passed",
+          "title": "sets most categories to ignore by default",
+          "duration": 0.3330000000000837,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["SettingsManager"],
+          "fullName": "SettingsManager merges loaded settings with defaults preserving custom values",
+          "status": "passed",
+          "title": "merges loaded settings with defaults preserving custom values",
+          "duration": 0.5679000000000087,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["SettingsManager"],
+          "fullName": "SettingsManager handles empty loaded settings gracefully",
+          "status": "passed",
+          "title": "handles empty loaded settings gracefully",
+          "duration": 0.26319999999986976,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701516,
+      "endTime": 1764490701522.2632,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/settings-manager.test.js"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["AutoSkip"],
+          "fullName": "AutoSkip should skip sponsor segments when enabled",
+          "status": "passed",
+          "title": "should skip sponsor segments when enabled",
+          "duration": 12.887499999999818,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["AutoSkip"],
+          "fullName": "AutoSkip should speed up intro segments when configured",
+          "status": "passed",
+          "title": "should speed up intro segments when configured",
+          "duration": 0.7227000000000317,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["AutoSkip"],
+          "fullName": "AutoSkip should restore speed after segment",
+          "status": "passed",
+          "title": "should restore speed after segment",
+          "duration": 0.49530000000004293,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1764490701500,
+      "endTime": 1764490701514.4954,
+      "status": "passed",
+      "message": "",
+      "name": "C:/AM/GitHub/YouTube-AI-Navigator/tests/skipping.test.js"
+    }
+  ]
+}
