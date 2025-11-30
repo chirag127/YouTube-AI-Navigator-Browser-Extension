@@ -6,20 +6,8 @@ const { showPlaceholder } = await import(gu('content/ui/components/loading.js'))
 
 const { seekVideo } = await import(gu('content/utils/dom.js'));
 const { formatTime } = await import(gu('content/utils/time.js'));
-const { qs, ae, qsa: $$ } = await import(gu('utils/shortcuts/dom.js'));
-const colors = {
-  Sponsor: '#00d26a',
-  'Self Promotion': '#ffff00',
-  'Unpaid/Self Promotion': '#ffff00',
-  'Exclusive Access': '#008b45',
-  'Interaction Reminder (Subscribe)': '#a020f0',
-  Highlight: '#ff0055',
-  'Intermission/Intro Animation': '#00ffff',
-  'Endcards/Credits': '#0000ff',
-  'Preview/Recap': '#00bfff',
-  'Hook/Greetings': '#4169e1',
-  'Tangents/Jokes': '#9400d3',
-};
+const { qs, ae, qsa: $ } = await import(gu('utils/shortcuts/dom.js'));
+const { CM: colors, LM } = await import(gu('utils/shortcuts/segments.js'));
 export function renderSegments(c, data) {
   try {
     const s = isa(data) ? data : data?.segments || [];
@@ -27,7 +15,7 @@ export function renderSegments(c, data) {
     const b = qs('#yt-ai-full-video-label');
     if (b) {
       if (fl) {
-        b.textContent = fl;
+        b.textContent = LM[fl] || fl;
         b.style.display = 'inline-block';
         b.style.backgroundColor = colors[fl] || '#999';
         b.style.color = '#000';
@@ -58,7 +46,7 @@ export function renderSegments(c, data) {
       })
       .join('');
     c.innerHTML = `<div class="yt-ai-segments-list">${h}</div>`;
-    $$('.yt-ai-timestamp', c).forEach(e => {
+    $('.yt-ai-timestamp', c).forEach(e => {
       e.style.cursor = 'pointer';
       e.style.textDecoration = 'underline';
       ae(e, 'click', evt => {
