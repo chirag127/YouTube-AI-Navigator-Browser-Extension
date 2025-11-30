@@ -1,11 +1,12 @@
 import { gu } from '../../utils/shortcuts/runtime.js';
-
-const { e } = await import(gu('utils/shortcuts/log.js'));
-const { js, to } = await import(gu('utils/shortcuts/global.js'));
-const { ae, qsa: $ } = await import(gu('utils/shortcuts/dom.js'));
-const { sg, slg: lg } = await import(gu('utils/shortcuts/storage.js'));
-const { ft } = await import(gu('utils/shortcuts/network.js'));
-const { mp, jn } = await import(gu('utils/shortcuts/array.js'));
+import { e } from '../../utils/shortcuts/log.js';
+import { to } from '../../utils/shortcuts/global.js';
+import { js } from '../../utils/shortcuts/core.js';
+import { ae, qsa as $ } from '../../utils/shortcuts/dom.js';
+import { sg, slg as lg } from '../../utils/shortcuts/storage.js';
+import { ft } from '../../utils/shortcuts/network.js';
+import { mp } from '../../utils/shortcuts/core.js';
+import { jn } from '../../utils/shortcuts/string.js';
 class CommentsExtractor {
   constructor() {
     try {
@@ -80,9 +81,12 @@ class CommentsExtractor {
   async getConfig() {
     try {
       const r = await sg('config');
-      return r.config || {};
+      const c = r.config || {};
+      // Ensure comments config exists with default enabled=true
+      if (!c.comments) c.comments = { enabled: true };
+      return c;
     } catch (x) {
-      return {};
+      return { comments: { enabled: true } };
     }
   }
   async checkCache(vid) {
@@ -102,7 +106,7 @@ class CommentsExtractor {
   }
   async scrollToComments() {
     try {
-      const { getScrollManager } = await import(gu('content/utils/scroll-manager.js'));
+      const { getScrollManager } = await import('../utils/scroll-manager.js');
       const sm = getScrollManager();
       await sm.scrollToComments();
     } catch (err) {

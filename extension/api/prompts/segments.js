@@ -73,6 +73,7 @@ STRATEGY:
 3. Merge adjacent only if same specific topic
 4. If Community Segments provided: use as ground truth (exact times/categories, refine descriptions)
 5. If category >50% duration: fullVideoLabel, no segments for it
+6. The start time and the end time should match of the adjacent Segments.
 
 DESCRIPTIONS: 1-2 sentences. Summarize in your own words. NO raw transcript quotes.
 
