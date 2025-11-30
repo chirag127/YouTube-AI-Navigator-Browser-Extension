@@ -78,9 +78,9 @@ describe('Comprehensive Segment Settings Tests', () => {
       expect(defs.segments.categories.sponsor.action).toBe('skip');
     });
 
-    it('should default filler to speed', () => {
+    it('should default filler to ignore', () => {
       const defs = sm.getDefaults();
-      expect(defs.segments.categories.filler.action).toBe('speed');
+      expect(defs.segments.categories.filler.action).toBe('ignore');
     });
 
     it('should have speed=2 for all categories', () => {

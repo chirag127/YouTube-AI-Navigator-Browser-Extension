@@ -7,10 +7,12 @@ AI-powered YouTube analysis extension. Transcripts, insights, segments, comments
 - **AI Analysis**: Gemini-powered summaries, insights, FAQ (configurable length, insights count, FAQ count)
 - **Smart Transcripts**: Multi-strategy fetching (DOM Automation, Genius, Speech-to-Text) - auto-closes YouTube panel, scrolls to top
 - **Segment Classification**: Auto-detect sponsors, intros, off-topic sections with skip/speed actions (10 SponsorBlock categories: sponsor, self promotion, interaction, intro, outro, preview, off-topic, highlight, filler, exclusive access)
-  - **Smart Defaults**: Highlight/Exclusive Access default to "ignore", Sponsors/Intros/Outros/Self Promo default to "skip", Filler defaults to "speed"
+  - **DISABLED BY DEFAULT**: Segment detection and auto-skip are OFF by default to protect video content
+  - **Content Protection**: "Content" and "Main Content" segments are NEVER skipped or modified
+  - **Conservative Defaults**: Only sponsor/selfpromo default to "skip"; all others default to "ignore"
+  - **Explicit Opt-In**: Users must enable segment features in settings
   - **Granular Control**: Configure each segment type individually (ignore/skip/speed) with adjustable speed (1-16x)
   - **Bulk Operations**: Set all segments to skip/speed/ignore with one click
-  - **Unified Categories**: Self Promotion and Unpaid Promotion merged into single "selfpromo" key (matches SponsorBlock API)
 - **Comment Analysis**: Sentiment analysis, key themes
 - **Configurable Output**: Control summary length (short/medium/long), max insights (3-20), max FAQ (3-15), timestamps on/off
 - **DeArrow Integration**: Community-sourced clickbait-free titles
@@ -36,10 +38,14 @@ Load `extension/` folder in Chrome as unpacked extension.
    - Max Key Insights: 3-20 (default: 8)
    - Max FAQ Items: 3-15 (default: 5)
    - Include Timestamps: Add [MM:SS] references (default: on)
-4. Configure segment actions (default settings):
-   - **Ignored**: Content, Highlight, Exclusive Access (watch normally)
-   - **Skipped**: Sponsor, Self Promotion, Interaction, Intro, Outro, Preview, Off-Topic (instant skip)
-   - **Sped Up**: Filler/Tangent (2x speed by default, adjustable 1-16x)
+4. **Enable Segment Detection** (DISABLED by default):
+   - Navigate to Options → Segments & Actions
+   - Toggle "Enable Segment Detection" ON
+   - Toggle "Enable Auto-Skip" ON (if desired)
+   - Configure segment actions (default settings):
+     - **Always Ignored**: Content, Main Content (NEVER skipped)
+     - **Skipped by Default**: Sponsor, Self Promotion
+     - **Ignored by Default**: Interaction, Intro, Outro, Preview, Off-Topic, Filler, Highlight, Exclusive Access
 5. Configure transcript methods, UI preferences
 
 ## Architecture
@@ -68,6 +74,7 @@ Load `extension/` folder in Chrome as unpacked extension.
   - `comprehensive-settings.test.js` - Tests all 12 segment categories, defaults, persistence, export/import
   - `segments-ui.test.js` - Tests UI module bulk operations (setAll) and individual updates
   - `autoskip-integration.test.js` - Integration tests for segment action filtering
+  - `content-protection.test.js` - Ensures Content segments are NEVER skipped, validates disabled-by-default behavior
 
 ### Storage Keys (Compressed)
 
@@ -93,19 +100,21 @@ Load `extension/` folder in Chrome as unpacked extension.
 
 ## Segment Categories & Default Actions
 
-| Category           | Label                | Default Action | Description                  |
-| ------------------ | -------------------- | -------------- | ---------------------------- |
-| `sponsor`          | Sponsor              | Skip           | Paid sponsorships            |
-| `selfpromo`        | Self Promotion       | Skip           | Self-promotion (paid/unpaid) |
-| `interaction`      | Interaction Reminder | Skip           | Like/subscribe reminders     |
-| `intro`            | Intermission/Intro   | Skip           | Intro animations             |
-| `outro`            | Endcards/Credits     | Skip           | End credits                  |
-| `preview`          | Preview/Recap        | Skip           | Episode recaps               |
-| `music_offtopic`   | Off-Topic            | Skip           | Off-topic content            |
-| `filler`           | Filler/Tangent       | Speed (2x)     | Tangential discussions       |
-| `poi_highlight`    | Highlight            | **Ignore**     | Important moments            |
-| `exclusive_access` | Exclusive Access     | **Ignore**     | Premium content              |
-| `content`          | Content              | **Ignore**     | Main video content           |
+| Category           | Label                | Default Action    | Description                  |
+| ------------------ | -------------------- | ----------------- | ---------------------------- |
+| `sponsor`          | Sponsor              | Skip              | Paid sponsorships            |
+| `selfpromo`        | Self Promotion       | Skip              | Self-promotion (paid/unpaid) |
+| `interaction`      | Interaction Reminder | **Ignore**        | Like/subscribe reminders     |
+| `intro`            | Intermission/Intro   | **Ignore**        | Intro animations             |
+| `outro`            | Endcards/Credits     | **Ignore**        | End credits                  |
+| `preview`          | Preview/Recap        | **Ignore**        | Episode recaps               |
+| `music_offtopic`   | Off-Topic            | **Ignore**        | Off-topic content            |
+| `filler`           | Filler/Tangent       | **Ignore**        | Tangential discussions       |
+| `poi_highlight`    | Highlight            | **Ignore**        | Important moments            |
+| `exclusive_access` | Exclusive Access     | **Ignore**        | Premium content              |
+| `content`          | Content              | **NEVER SKIPPED** | Main video content           |
+
+**Global Defaults**: Segment detection **DISABLED**, Auto-skip **DISABLED**
 
 **Actions**: `ignore` = watch normally, `skip` = instant skip, `speed` = watch at higher playback speed (1-16x)
 

@@ -88,7 +88,18 @@ describe('AutoSkip', () => {
     vi.clearAllMocks();
   });
 
-  it('should skip sponsor segments', async () => {
+  it('should skip sponsor segments when enabled', async () => {
+    sg.mockResolvedValue({
+      config: {
+        segments: {
+          enabled: true,
+          autoSkip: true,
+          categories: {
+            sponsor: { action: 'skip', speed: 2 },
+          },
+        },
+      },
+    });
     const segments = [{ label: 'Sponsor', start: 10, end: 20 }];
     await setupAutoSkip(segments);
 
@@ -98,7 +109,18 @@ describe('AutoSkip', () => {
     expect(videoMock.currentTime).toBeCloseTo(20.1);
   });
 
-  it('should speed up intro segments', async () => {
+  it('should speed up intro segments when configured', async () => {
+    sg.mockResolvedValue({
+      config: {
+        segments: {
+          enabled: true,
+          autoSkip: true,
+          categories: {
+            intro: { action: 'speed', speed: 2 },
+          },
+        },
+      },
+    });
     const segments = [{ label: 'Intermission/Intro Animation', start: 0, end: 10 }];
     await setupAutoSkip(segments);
 
@@ -109,15 +131,24 @@ describe('AutoSkip', () => {
   });
 
   it('should restore speed after segment', async () => {
+    sg.mockResolvedValue({
+      config: {
+        segments: {
+          enabled: true,
+          autoSkip: true,
+          categories: {
+            intro: { action: 'speed', speed: 2 },
+          },
+        },
+      },
+    });
     const segments = [{ label: 'Intermission/Intro Animation', start: 0, end: 10 }];
     await setupAutoSkip(segments);
 
-    // Enter segment
     videoMock.currentTime = 5;
     handleAutoSkip();
     expect(videoMock.playbackRate).toBe(2);
 
-    // Exit segment
     videoMock.currentTime = 11;
     handleAutoSkip();
     expect(videoMock.playbackRate).toBe(1);

@@ -24,7 +24,8 @@ describe('SettingsManager', () => {
 
   it('initializes with default segment categories populated', () => {
     const defaults = manager.getDefaults();
-    expect(defaults.segments.enabled).toBe(true);
+    expect(defaults.segments.enabled).toBe(false);
+    expect(defaults.segments.autoSkip).toBe(false);
     expect(defaults.segments.categories).toBeDefined();
     expect(Object.keys(defaults.segments.categories).length).toBeGreaterThan(0);
   });
@@ -46,6 +47,19 @@ describe('SettingsManager', () => {
   it('sets poi_highlight to ignore by default', () => {
     const defaults = manager.getDefaults();
     expect(defaults.segments.categories.poi_highlight.action).toBe('ignore');
+  });
+
+  it('sets segments disabled by default', () => {
+    const defaults = manager.getDefaults();
+    expect(defaults.segments.enabled).toBe(false);
+    expect(defaults.segments.autoSkip).toBe(false);
+  });
+
+  it('sets most categories to ignore by default', () => {
+    const defaults = manager.getDefaults();
+    expect(defaults.segments.categories.intro.action).toBe('ignore');
+    expect(defaults.segments.categories.outro.action).toBe('ignore');
+    expect(defaults.segments.categories.filler.action).toBe('ignore');
   });
 
   it('merges loaded settings with defaults preserving custom values', () => {
