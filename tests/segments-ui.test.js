@@ -74,19 +74,27 @@ describe('Segments UI Module Tests', () => {
   });
 
   describe('Bulk Operations', () => {
-    it('should setAll to skip', async () => {
+    it('should setAll to skip except content', async () => {
       await sc.setAll('skip');
       const cats = sm.get('segments.categories');
       SEGMENT_CATEGORIES.forEach(cat => {
-        expect(cats[cat.id].action).toBe('skip');
+        if (cat.id === 'content') {
+          expect(cats[cat.id].action).toBe('ignore');
+        } else {
+          expect(cats[cat.id].action).toBe('skip');
+        }
       });
     });
 
-    it('should setAll to speed', async () => {
+    it('should setAll to speed except content', async () => {
       await sc.setAll('speed');
       const cats = sm.get('segments.categories');
       SEGMENT_CATEGORIES.forEach(cat => {
-        expect(cats[cat.id].action).toBe('speed');
+        if (cat.id === 'content') {
+          expect(cats[cat.id].action).toBe('ignore');
+        } else {
+          expect(cats[cat.id].action).toBe('speed');
+        }
       });
     });
 

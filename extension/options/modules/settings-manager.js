@@ -5,7 +5,7 @@ import { isa } from '../../utils/shortcuts/array.js';
 
 export const SEGMENT_CATEGORIES = [
   { id: 'sponsor', label: 'Sponsor', color: '#00d400' },
-  { id: 'selfpromo', label: 'Unpaid/Self Promotion', color: '#ffff00' },
+  { id: 'selfpromo', label: 'Self Promotion/Unpaid Promotion', color: '#ffff00' },
   { id: 'interaction', label: 'Interaction Reminder', color: '#cc00ff' },
   { id: 'intro', label: 'Intermission/Intro', color: '#00ffff' },
   { id: 'outro', label: 'Endcards/Credits', color: '#0202ed' },
@@ -14,6 +14,7 @@ export const SEGMENT_CATEGORIES = [
   { id: 'poi_highlight', label: 'Highlight', color: '#ff1684' },
   { id: 'filler', label: 'Filler/Tangent', color: '#7300ff' },
   { id: 'exclusive_access', label: 'Exclusive Access', color: '#008a5c' },
+  { id: 'content', label: 'Content (Main Video)', color: '#999999' },
 ];
 export const DEFAULT_SEGMENT_CONFIG = { action: 'ignore', speed: 2 };
 
@@ -188,11 +189,14 @@ export class SettingsManager {
           poi_highlight: { action: 'ignore', speed: 2 },
           filler: { action: 'ignore', speed: 2 },
           exclusive_access: { action: 'ignore', speed: 2 },
+          content: { action: 'ignore', speed: 1 },
         },
         autoSkip: false,
         showNotifications: true,
         skipTolerance: 0.5,
         minSegmentDuration: 1,
+        showMarkers: true,
+        colorCodeMarkers: true,
         userOverrides: {},
       },
       externalApis: {

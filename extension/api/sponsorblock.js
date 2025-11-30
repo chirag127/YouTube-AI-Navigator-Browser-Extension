@@ -18,7 +18,7 @@ const CM = {
 };
 const LM = {
   S: 'Sponsor',
-  SP: 'Self Promotion',
+  SP: 'Self Promotion/Unpaid Promotion',
   IR: 'Interaction Reminder',
   I: 'Intermission/Intro Animation',
   EC: 'Endcards/Credits',

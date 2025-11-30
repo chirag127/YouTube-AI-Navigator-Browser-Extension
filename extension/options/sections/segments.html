@@ -1,7 +1,7 @@
 <section id="segments" class="tab-content">
   <header class="section-header">
     <h2>Segments & Actions</h2>
-    <p>Control how different video segments are handled</p>
+    <p>Control how different video segments are handled (DISABLED by default)</p>
   </header>
 
   <div class="card highlight-card">
@@ -15,16 +15,76 @@
         <span class="slider round"></span>
       </label>
     </div>
+
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="enableAutoSkip">Enable Auto-Skip</label>
+        <p class="help-text">Automatically skip or speed up segments based on settings below.</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="enableAutoSkip" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="showSegmentNotifications">Show Notifications</label>
+        <p class="help-text">Display on-screen notifications when skipping/speeding segments.</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="showSegmentNotifications" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="showSegmentMarkers">Show Progress Bar Markers</label>
+        <p class="help-text">Display colored markers on video progress bar for segments.</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="showSegmentMarkers" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Advanced Settings</h3>
+
+    <div class="form-group">
+      <label for="skipTolerance">Skip Tolerance (seconds)</label>
+      <p class="help-text">Buffer time before/after segment boundaries (0.1-2.0s)</p>
+      <div class="slider-group">
+        <input type="range" id="skipTolerance" min="0.1" max="2" step="0.1" value="0.5" />
+        <span id="skipToleranceValue" class="slider-value">0.5s</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="minSegmentDuration">Minimum Segment Duration (seconds)</label>
+      <p class="help-text">Ignore segments shorter than this (0.5-10s)</p>
+      <div class="slider-group">
+        <input type="range" id="minSegmentDuration" min="0.5" max="10" step="0.5" value="1" />
+        <span id="minSegmentDurationValue" class="slider-value">1s</span>
+      </div>
+    </div>
   </div>
 
   <div class="card" id="segmentSettingsContainer">
     <div class="card-header-row">
       <h3>Category Actions</h3>
       <div class="global-actions">
+        <button id="ignoreAllBtn" class="btn btn-sm btn-primary">Set All to Ignore</button>
         <button id="skipAllBtn" class="btn btn-sm btn-secondary">Set All to Skip</button>
         <button id="speedAllBtn" class="btn btn-sm btn-secondary">Set All to Speed Up</button>
-        <button id="resetAllBtn" class="btn btn-sm btn-outline">Reset</button>
+        <button id="resetAllBtn" class="btn btn-sm btn-outline">Reset to Defaults</button>
       </div>
+    </div>
+
+    <div class="help-banner">
+      <strong>⚠️ Content Protection:</strong> "Content (Main Video)" segments are NEVER skipped regardless of settings.
     </div>
 
     <div class="segments-grid" id="segmentsGrid">

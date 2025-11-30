@@ -15,8 +15,8 @@ export const LC = {
 };
 export const LM = {
     S: 'Sponsor',
-    SP: 'Self Promotion',
-    UP: 'Unpaid/Self Promotion',
+    SP: 'Self Promotion/Unpaid Promotion',
+    UP: 'Self Promotion/Unpaid Promotion',
     IR: 'Interaction Reminder',
     I: 'Intermission/Intro Animation',
     EC: 'Endcards/Credits',
@@ -48,6 +48,7 @@ export const lk = l => {
     const fm = {
         Sponsor: 'sponsor',
         'Self Promotion': 'selfpromo',
+        'Self Promotion/Unpaid Promotion': 'selfpromo',
         'Unpaid/Self Promotion': 'selfpromo',
         'Interaction Reminder': 'interaction',
         'Intermission/Intro Animation': 'intro',
@@ -63,6 +64,7 @@ export const lk = l => {
         'Hook/Greetings': 'intro',
         Content: 'content',
         'Main Content': 'content',
+        'Content (Main Video)': 'content',
     };
     return fm[l] || l.toLowerCase().replace(/\s+/g, '_');
 };

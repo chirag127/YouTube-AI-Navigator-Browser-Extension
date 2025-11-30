@@ -44,8 +44,9 @@ describe('Comprehensive Segment Settings Tests', () => {
         'poi_highlight',
         'filler',
         'exclusive_access',
+        'content',
       ];
-      expect(SEGMENT_CATEGORIES.length).toBe(10);
+      expect(SEGMENT_CATEGORIES.length).toBe(11);
       const ids = SEGMENT_CATEGORIES.map(c => c.id);
       expected.forEach(id => expect(ids).toContain(id));
     });
@@ -83,10 +84,14 @@ describe('Comprehensive Segment Settings Tests', () => {
       expect(defs.segments.categories.filler.action).toBe('ignore');
     });
 
-    it('should have speed=2 for all categories', () => {
+    it('should have speed=2 for all categories except content', () => {
       const defs = sm.getDefaults();
-      Object.values(defs.segments.categories).forEach(cat => {
-        expect(cat.speed).toBe(2);
+      Object.entries(defs.segments.categories).forEach(([id, cat]) => {
+        if (id === 'content') {
+          expect(cat.speed).toBe(1);
+        } else {
+          expect(cat.speed).toBe(2);
+        }
       });
     });
   });
