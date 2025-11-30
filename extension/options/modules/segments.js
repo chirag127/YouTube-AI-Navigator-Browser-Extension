@@ -60,7 +60,8 @@ export class SegmentsConfig {
       cats = { ...(c.segments?.categories || {}) };
     if (!cats[id]) cats[id] = { ...DEFAULT_SEGMENT_CONFIG };
     cats[id] = { ...cats[id], ...u };
-    await this.a.save('segments.categories', cats);
+    this.s.set('segments.categories', cats);
+    await this.s.save();
   }
   async setAll(a) {
     const c = this.s.get(),
@@ -69,7 +70,8 @@ export class SegmentsConfig {
       if (!cats[cat.id]) cats[cat.id] = { ...DEFAULT_SEGMENT_CONFIG };
       cats[cat.id] = { ...cats[cat.id], action: a };
     });
-    await this.a.save('segments.categories', cats);
+    this.s.set('segments.categories', cats);
+    await this.s.save();
     const g = i('#segmentsGrid');
     if (g) this.render(g);
   }

@@ -6,7 +6,7 @@ import { ce } from '../utils/shortcuts/dom.js';
 const API_BASE = 'https://sponsor.ajay.app/api';
 const CM = {
   sponsor: 'Sponsor',
-  selfpromo: 'Self Promotion',
+  selfpromo: 'Unpaid/Self Promotion',
   interaction: 'Interaction Reminder',
   intro: 'Intermission/Intro',
   outro: 'Endcards/Credits',
@@ -15,7 +15,6 @@ const CM = {
   poi_highlight: 'Highlight',
   filler: 'Filler/Tangent',
   exclusive_access: 'Exclusive Access',
-  chapter: 'Chapter',
 };
 
 async function _gh(vid) {

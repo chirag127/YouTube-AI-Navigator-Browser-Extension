@@ -16,6 +16,7 @@ describe('Segment Configuration', () => {
     expect(d.segments.categories.poi_highlight).toEqual({ action: 'ignore', speed: 2 });
     expect(d.segments.categories.filler).toEqual({ action: 'speed', speed: 2 });
     expect(d.segments.categories.exclusive_access).toEqual({ action: 'ignore', speed: 2 });
+    expect(d.segments.categories.content).toBeUndefined();
   });
 
   it('merges loaded settings preserving custom category configs', () => {

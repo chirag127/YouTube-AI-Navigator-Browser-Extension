@@ -5,7 +5,7 @@ import { isa } from '../../utils/shortcuts/array.js';
 
 export const SEGMENT_CATEGORIES = [
   { id: 'sponsor', label: 'Sponsor', color: '#00d400' },
-  { id: 'selfpromo', label: 'Self Promotion', color: '#ffff00' },
+  { id: 'selfpromo', label: 'Unpaid/Self Promotion', color: '#ffff00' },
   { id: 'interaction', label: 'Interaction Reminder', color: '#cc00ff' },
   { id: 'intro', label: 'Intermission/Intro', color: '#00ffff' },
   { id: 'outro', label: 'Endcards/Credits', color: '#0202ed' },
@@ -15,7 +15,7 @@ export const SEGMENT_CATEGORIES = [
   { id: 'filler', label: 'Filler/Tangent', color: '#7300ff' },
   { id: 'exclusive_access', label: 'Exclusive Access', color: '#008a5c' },
 ];
-export const DEFAULT_SEGMENT_CONFIG = { action: 'skip', speed: 2 };
+export const DEFAULT_SEGMENT_CONFIG = { action: 'ignore', speed: 2 };
 
 export class SettingsManager {
   constructor() {

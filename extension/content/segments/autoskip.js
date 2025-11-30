@@ -54,16 +54,17 @@ function getLabelKey(l) {
   const m = {
     Sponsor: 'sponsor',
     'Self Promotion': 'selfpromo',
+    'Unpaid/Self Promotion': 'selfpromo',
     'Interaction Reminder': 'interaction',
     'Intermission/Intro Animation': 'intro',
+    'Intermission/Intro': 'intro',
     'Endcards/Credits': 'outro',
     'Preview/Recap': 'preview',
     'Tangents/Jokes': 'filler',
+    'Filler/Tangent': 'filler',
     Highlight: 'poi_highlight',
     'Exclusive Access': 'exclusive_access',
-    'Unpaid Promotion': 'music_offtopic',
-    'Hook/Greetings': 'intro',
-    Content: 'content',
+    'Off-Topic': 'music_offtopic',
   };
   return m[l] || l.toLowerCase().replace(/\s+/g, '_');
 }
