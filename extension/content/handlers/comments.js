@@ -74,7 +74,6 @@ class CommentsExtractor {
       }
     }
     if (this.hasIntercepted && this.comments.length > 0) return this.comments;
-    if (cfg.scroll?.autoScrollToComments) await this.scrollToComments();
     const result = await this.fetchCommentsFromDOM();
     return result;
   }
@@ -175,10 +174,10 @@ class CommentsExtractor {
     }
   }
   async fetchCommentsFromDOM() {
-    const maxRetries = 3;
-    const baseDelay = 1500;
+    const maxRetries = 5;
+    const baseDelay = 800;
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      if (attempt > 1) await new Promise(r => to(r, baseDelay));
+      if (attempt > 1) await new Promise(r => to(r, baseDelay * attempt));
       try {
         const c = [];
         const selectors = [

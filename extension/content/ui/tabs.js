@@ -2,7 +2,7 @@ const gu = p => chrome.runtime.getURL(p);
 
 const { state } = await import(gu('content/core/state.js'));
 const { renderSummary } = await import(gu('content/ui/renderers/summary.js'));
-const { renderTranscript } = await import(gu('content/ui/renderers/transcript.js'));
+
 const { renderSegments } = await import(gu('content/ui/renderers/segments.js'));
 const { renderChat } = await import(gu('content/ui/renderers/chat.js'));
 const { renderComments } = await import(gu('content/ui/renderers/comments.js'));
@@ -32,9 +32,7 @@ export function switchTab(n, container) {
         case 'summary':
           renderSummary(a, state.analysisData || {});
           break;
-        case 'transcript':
-          renderTranscript(a, state.currentTranscript || []);
-          break;
+
         case 'segments':
           renderSegments(a, state.analysisData || {});
           break;

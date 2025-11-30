@@ -8,7 +8,8 @@ const { rs } = await import(gu('utils/shortcuts/runtime.js'));
 const { sg } = await import(gu('utils/shortcuts/storage.js'));
 const { to } = await import(gu('utils/shortcuts/global.js'));
 const { e } = await import(gu('utils/shortcuts/log.js'));
-const { mp, jn, slc } = await import(gu('utils/shortcuts/array.js'));
+const { mp } = await import(gu('utils/shortcuts/core.js'));
+const { jn, slc } = await import(gu('utils/shortcuts/string.js'));
 const { ce, ap, ih, dc: doc, txt } = await import(gu('utils/shortcuts/dom.js'));
 export async function renderComments(c) {
   try {
@@ -17,9 +18,16 @@ export async function renderComments(c) {
       ih(c, `<div class="yt-ai-markdown">${html}</div>`);
       return;
     }
-    showLoading(c, 'Fetching comments...');
+    showLoading(c, 'Loading comments section...');
+    const cfg = await getConfig();
+    const origPos = window.scrollY;
+    await forceLoadComments();
+    showLoading(c, 'Extracting comments...');
+    await to(() => {}, 800);
     try {
       const cm = await getComments();
+      if (cfg.scroll?.scrollBackAfterComments !== false)
+        scrollBackToTop(origPos, cfg.scroll?.showScrollNotification ?? true);
       if (!cm.length) {
         showPlaceholder(c, 'No comments found.');
         return;
@@ -27,9 +35,6 @@ export async function renderComments(c) {
       showLoading(c, 'Analyzing...');
       const r = await rs({ action: 'ANALYZE_COMMENTS', comments: cm });
       if (r.success) {
-        const cfg = await getConfig();
-        if (cfg.scroll?.scrollBackAfterComments)
-          scrollBackToTop(cfg.scroll?.showScrollNotification ?? true);
         if (!state.analysisData) state.analysisData = {};
         state.analysisData.commentAnalysis = r.analysis;
         const html = await parseMarkdown(r.analysis);
@@ -46,6 +51,7 @@ export async function renderComments(c) {
         );
       }
     } catch (x) {
+      if (cfg.scroll?.scrollBackAfterComments !== false) scrollBackToTop(origPos, false);
       ih(c, `<div class="yt-ai-error-msg">Failed: ${x.message}</div>`);
       e('Err:renderComments', x);
     }
@@ -61,26 +67,42 @@ async function getConfig() {
     return {};
   }
 }
-function scrollBackToTop(sn = true) {
+async function forceLoadComments() {
   try {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    void document.body.offsetHeight;
+    const cs = doc.querySelector('ytd-comments#comments');
+    if (cs) {
+      cs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      await to(() => {}, 1200);
+      window.scrollBy(0, 200);
+      await to(() => {}, 600);
+      return;
+    }
+    window.scrollTo({ top: doc.documentElement.scrollHeight, behavior: 'smooth' });
+    await to(() => {}, 1500);
+  } catch (err) {
+    e('Err:forceLoadComments', err);
+  }
+}
+function scrollBackToTop(pos = 0, sn = true) {
+  try {
+    window.scrollTo({ top: pos, behavior: 'smooth' });
+    doc.documentElement.scrollTop = pos;
+    doc.body.scrollTop = pos;
+    void doc.body.offsetHeight;
     if (typeof requestAnimationFrame === 'function') {
       requestAnimationFrame(() => {
-        if (window.scrollY > 0) {
-          window.scrollTo(0, 0);
-          document.documentElement.scrollTop = 0;
-          document.body.scrollTop = 0;
+        if (Math.abs(window.scrollY - pos) > 10) {
+          window.scrollTo(pos, pos);
+          doc.documentElement.scrollTop = pos;
+          doc.body.scrollTop = pos;
         }
       });
     } else {
       to(() => {
-        if (window.scrollY > 0) {
-          window.scrollTo(0, 0);
-          document.documentElement.scrollTop = 0;
-          document.body.scrollTop = 0;
+        if (Math.abs(window.scrollY - pos) > 10) {
+          window.scrollTo(pos, pos);
+          doc.documentElement.scrollTop = pos;
+          doc.body.scrollTop = pos;
         }
       }, 16);
     }

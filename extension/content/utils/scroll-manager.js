@@ -47,10 +47,16 @@ export class ScrollManager {
     this.isScrolling = true;
     try {
       this.savePosition();
-      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
-      await this.waitForScroll(3000);
-      this.restorePosition();
-      await this.waitForScroll(2000);
+      const cs = $('ytd-comments#comments');
+      if (cs) {
+        cs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        await this.waitForScroll(1200);
+        window.scrollBy(0, 200);
+        await this.waitForScroll(600);
+      } else {
+        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+        await this.waitForScroll(1500);
+      }
       const loaded = await this.waitForCommentsToLoad();
       this.isScrolling = false;
       return loaded;

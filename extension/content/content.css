@@ -126,12 +126,14 @@
 .yt-ai-content {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 16px;
   min-height: 200px;
-  max-height: 500px;
+  max-height: 70vh;
   font-size: 14px;
   line-height: 1.6;
   animation: fadeIn 0.4s ease-in;
+  scroll-behavior: smooth;
 }
 
 @keyframes fadeIn {
@@ -517,8 +519,9 @@
   flex-direction: column;
   gap: 12px;
   padding: 16px;
-  max-height: 400px;
+  max-height: 60vh;
   overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .yt-ai-chat-msg {

@@ -40,13 +40,15 @@ describe('Comprehensive Segment Settings Tests', () => {
         'intro',
         'outro',
         'preview',
+        'hook',
         'music_offtopic',
         'poi_highlight',
         'filler',
         'exclusive_access',
+        'chapter',
         'content',
       ];
-      expect(SEGMENT_CATEGORIES.length).toBe(11);
+      expect(SEGMENT_CATEGORIES.length).toBe(13);
       const ids = SEGMENT_CATEGORIES.map(c => c.id);
       expected.forEach(id => expect(ids).toContain(id));
     });
@@ -84,10 +86,10 @@ describe('Comprehensive Segment Settings Tests', () => {
       expect(defs.segments.categories.filler.action).toBe('ignore');
     });
 
-    it('should have speed=2 for all categories except content', () => {
+    it('should have speed=2 for all categories except content and chapter', () => {
       const defs = sm.getDefaults();
       Object.entries(defs.segments.categories).forEach(([id, cat]) => {
-        if (id === 'content') {
+        if (id === 'content' || id === 'chapter') {
           expect(cat.speed).toBe(1);
         } else {
           expect(cat.speed).toBe(2);

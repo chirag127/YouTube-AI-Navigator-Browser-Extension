@@ -81,9 +81,12 @@ describe('ScrollManager', () => {
     expect(sm1).toBe(sm2);
   });
 
-  it('should scroll to comments using smart scroll', async () => {
+  it('should scroll to comments section directly when found', async () => {
     const sm = getScrollManager();
-
+    const mockCommentsSection = {
+      scrollIntoView: vi.fn(),
+    };
+    mockQs.mockReturnValue(mockCommentsSection);
     mockQsa.mockReturnValue([
       {
         querySelector: sel => {
@@ -93,10 +96,49 @@ describe('ScrollManager', () => {
         },
       },
     ]);
-
     const result = await sm.scrollToComments();
-
+    expect(mockCommentsSection.scrollIntoView).toHaveBeenCalledWith({
+      behavior: 'smooth',
+      block: 'start',
+    });
+    expect(global.window.scrollBy).toHaveBeenCalledWith(0, 200);
     expect(result).toBe(true);
-    expect(global.window.scrollTo).toHaveBeenCalled();
+  });
+
+  it('should fallback to bottom scroll when comments section not found', async () => {
+    const sm = getScrollManager();
+    mockQs.mockReturnValue(null);
+    mockQsa.mockReturnValue([
+      {
+        querySelector: sel => {
+          if (sel === '#author-text') return { textContent: 'Author' };
+          if (sel === '#content-text') return { textContent: 'Comment' };
+          return null;
+        },
+      },
+    ]);
+    const result = await sm.scrollToComments();
+    expect(global.window.scrollTo).toHaveBeenCalledWith({
+      top: 5000,
+      behavior: 'smooth',
+    });
+    expect(result).toBe(true);
+  });
+
+  it('should wait for comments to load in DOM', async () => {
+    const sm = getScrollManager();
+    mockQs.mockReturnValue(null);
+    mockQsa.mockReturnValueOnce([]).mockReturnValue([
+      {
+        querySelector: sel => {
+          if (sel === '#author-text') return { textContent: 'Author' };
+          if (sel === '#content-text') return { textContent: 'Comment' };
+          return null;
+        },
+      },
+    ]);
+    const result = await sm.scrollToComments();
+    expect(result).toBe(true);
+    expect(mockQsa).toHaveBeenCalledWith('ytd-comment-thread-renderer');
   });
 });
