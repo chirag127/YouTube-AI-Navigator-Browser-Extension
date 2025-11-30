@@ -1,493 +1,747 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube AI Master - Settings</title>
+    <link rel="stylesheet" href="options.css" />
+    <link rel="stylesheet" href="banner-styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YouTube AI Master - Settings</title>
-  <link rel="stylesheet" href="options.css" />
-  <link rel="stylesheet" href="banner-styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-</head>
-
-<body>
-  <div class="app-container">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="logo-icon">⚡</div>
-        <h1>AI Master</h1>
-      </div>
-      <nav class="nav-menu">
-        <button class="nav-item active" data-tab="general">
-          <span class="icon">⚙️</span> General
-        </button>
-        <button class="nav-item" data-tab="cache"><span class="icon">💾</span> Cache</button>
-        <button class="nav-item" data-tab="transcript">
-          <span class="icon">📝</span> Transcript
-        </button>
-        <button class="nav-item" data-tab="comments">
-          <span class="icon">💬</span> Comments
-        </button>
-        <button class="nav-item" data-tab="metadata">
-          <span class="icon">📊</span> Metadata
-        </button>
-        <button class="nav-item" data-tab="scroll">
-          <span class="icon">📜</span> Scroll & UI
-        </button>
-        <button class="nav-item" data-tab="widget"><span class="icon">🎨</span> Widget</button>
-        <button class="nav-item" data-tab="ai-config">
-          <span class="icon">🤖</span> AI Configuration
-        </button>
-        <button class="nav-item" data-tab="segments">
-          <span class="icon">🎯</span> Segments
-        </button>
-        <button class="nav-item" data-tab="performance">
-          <span class="icon">⚡</span> Performance
-        </button>
-        <button class="nav-item" data-tab="external-apis">
-          <span class="icon">🌐</span> External APIs
-        </button>
-        <button class="nav-item" data-tab="notifications">
-          <span class="icon">🔔</span> Notifications
-        </button>
-        <button class="nav-item" data-tab="advanced">
-          <span class="icon">🔧</span> Advanced
-        </button>
-      </nav>
-      <div class="sidebar-footer">
-        <p>v1.0.0</p>
-        <a href="https://github.com/chirag127/youtube-ai-master" target="_blank">GitHub</a>
-      </div>
-    </aside>
-
-    <main class="content-area">
-      <!-- Welcome Banner (shown for new users) -->
-      <div id="welcome-banner" class="welcome-banner" style="display: none">
-        <div class="banner-content">
-          <span class="banner-icon">👋</span>
-          <div class="banner-text">
-            <strong>Welcome to YouTube AI Master!</strong>
-            <p>Complete the setup guide to get started with AI-powered video analysis.</p>
-          </div>
-          <button id="start-setup-btn" class="btn btn-primary">Start Setup</button>
-          <button id="dismiss-banner-btn" class="btn-icon">✕</button>
+  <body>
+    <div class="app-container">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo-icon">⚡</div>
+          <h1>AI Master</h1>
         </div>
-      </div>
+        <nav class="nav-menu">
+          <button class="nav-item active" data-tab="general">
+            <span class="icon">⚙️</span> General
+          </button>
+          <button class="nav-item" data-tab="cache"><span class="icon">💾</span> Cache</button>
+          <button class="nav-item" data-tab="transcript">
+            <span class="icon">📝</span> Transcript
+          </button>
+          <button class="nav-item" data-tab="comments">
+            <span class="icon">💬</span> Comments
+          </button>
+          <button class="nav-item" data-tab="metadata">
+            <span class="icon">📊</span> Metadata
+          </button>
+          <button class="nav-item" data-tab="scroll">
+            <span class="icon">📜</span> Scroll & UI
+          </button>
+          <button class="nav-item" data-tab="widget"><span class="icon">🎨</span> Widget</button>
+          <button class="nav-item" data-tab="ai-config">
+            <span class="icon">🤖</span> AI Configuration
+          </button>
+          <button class="nav-item" data-tab="segments">
+            <span class="icon">🎯</span> Segments
+          </button>
+          <button class="nav-item" data-tab="performance">
+            <span class="icon">⚡</span> Performance
+          </button>
+          <button class="nav-item" data-tab="external-apis">
+            <span class="icon">🌐</span> External APIs
+          </button>
+          <button class="nav-item" data-tab="integrations">
+            <span class="icon">🔗</span> Integrations
+          </button>
+          <button class="nav-item" data-tab="prompts"><span class="icon">✍️</span> Prompts</button>
+          <button class="nav-item" data-tab="notifications">
+            <span class="icon">🔔</span> Notifications
+          </button>
+          <button class="nav-item" data-tab="advanced">
+            <span class="icon">🔧</span> Advanced
+          </button>
+        </nav>
+        <div class="sidebar-footer">
+          <p>v1.0.0</p>
+          <a href="https://github.com/chirag127/YouTube-AI-Navigator" target="_blank">GitHub</a>
+        </div>
+      </aside>
 
-      <!-- Tabs will be loaded dynamically here -->
-
-      <!-- AI Configuration -->
-      <section id="ai-config" class="tab-content">
-        <header class="section-header">
-          <h2>AI Configuration</h2>
-          <p>Manage your Gemini API connection and model settings</p>
-        </header>
-
-        <div class="card">
-          <h3>API Connection</h3>
-          <div class="form-group">
-            <label for="apiKey">Gemini API Key</label>
-            <div class="input-with-button">
-              <input type="password" id="apiKey" class="form-input" placeholder="Enter your API key" />
-              <button id="toggleApiKey" class="btn-icon" title="Show/Hide">👁️</button>
+      <main class="content-area">
+        <!-- Welcome Banner (shown for new users) -->
+        <div id="welcome-banner" class="welcome-banner" style="display: none">
+          <div class="banner-content">
+            <span class="banner-icon">👋</span>
+            <div class="banner-text">
+              <strong>Welcome to YouTube AI Master!</strong>
+              <p>Complete the setup guide to get started with AI-powered video analysis.</p>
             </div>
-            <p class="help-text">
-              Get your free key from
-              <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>.
-            </p>
+            <button id="start-setup-btn" class="btn btn-primary">Start Setup</button>
+            <button id="dismiss-banner-btn" class="btn-icon">✕</button>
           </div>
-          <div class="form-actions">
-            <button id="testConnection" class="btn btn-secondary">Test Connection</button>
-          </div>
-          <div id="apiStatus" class="status-indicator hidden"></div>
         </div>
 
-        <div class="card">
-          <h3>Model Selection</h3>
-          <div class="form-group">
-            <label for="modelSelect">Gemini Model</label>
-            <div class="select-wrapper">
-              <select id="modelSelect" class="form-select">
-                <option value="" disabled selected>Loading models...</option>
-              </select>
-              <button id="refreshModels" class="btn-icon" title="Refresh Models">🔄</button>
+        <!-- Tabs will be loaded dynamically here -->
+
+        <!-- Widget Tab -->
+        <div id="widget-tab-container">
+          <section id="widget" class="tab-content">
+            <header class="section-header">
+              <h2>Widget Customization</h2>
+              <p>Customize the look and feel of the overlay widget</p>
+            </header>
+
+            <div class="card">
+              <h3>Appearance</h3>
+              <div class="form-group">
+                <label for="widgetOpacity">Background Opacity</label>
+                <div class="range-with-value">
+                  <input
+                    type="range"
+                    id="widgetOpacity"
+                    class="form-range"
+                    min="20"
+                    max="100"
+                    step="5"
+                    value="95"
+                  />
+                  <span id="widgetOpacityValue" class="range-value">95%</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="widgetBorderRadius">Border Radius</label>
+                <div class="range-with-value">
+                  <input
+                    type="range"
+                    id="widgetBorderRadius"
+                    class="form-range"
+                    min="0"
+                    max="24"
+                    step="2"
+                    value="12"
+                  />
+                  <span id="widgetBorderRadiusValue" class="range-value">12px</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="widgetAccentColor">Accent Color</label>
+                <div class="color-picker-wrapper">
+                  <input type="color" id="widgetAccentColor" class="form-color" value="#3ea6ff" />
+                  <span id="widgetAccentColorValue" class="color-value">#3ea6ff</span>
+                </div>
+              </div>
             </div>
-            <p class="help-text">
-              Select the AI model to use. Newer models may be faster or smarter.
-            </p>
-          </div>
-        </div>
 
-        <div class="card">
-          <h3>System Prompt</h3>
-          <div class="form-group">
-            <label for="customPrompt">Custom Instructions</label>
-            <textarea id="customPrompt" class="form-textarea" rows="4"
-              placeholder="e.g., Focus on technical details, use bullet points..."></textarea>
-            <p class="help-text">Optional instructions to guide the AI's behavior.</p>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Comprehensive Analysis Settings</h3>
-          <div class="form-group">
-            <label for="summaryLength">Summary Length</label>
-            <div class="select-wrapper">
-              <select id="summaryLength" class="form-select">
-                <option value="short">Short (2-3 paragraphs)</option>
-                <option value="medium" selected>Medium (4-6 paragraphs)</option>
-                <option value="long">Long (8-12 paragraphs)</option>
-              </select>
+            <div class="card">
+              <h3>Behavior</h3>
+              <div class="form-group">
+                <label for="widgetHideOnChannels">Hide on Channels (Blacklist)</label>
+                <textarea
+                  id="widgetHideOnChannels"
+                  class="form-textarea"
+                  rows="3"
+                  placeholder="Enter channel names or IDs, separated by commas..."
+                ></textarea>
+                <p class="help-text">The widget will not appear on videos from these channels.</p>
+              </div>
             </div>
-            <p class="help-text">Control the detail level of video summaries.</p>
-          </div>
-          <div class="form-group">
-            <label for="maxInsights">Max Key Insights</label>
-            <input type="number" id="maxInsights" class="form-input" min="3" max="20" value="8" />
-            <p class="help-text">Number of key takeaways to extract (3-20).</p>
-          </div>
-          <div class="form-group">
-            <label for="maxFAQ">Max FAQ Items</label>
-            <input type="number" id="maxFAQ" class="form-input" min="3" max="15" value="5" />
-            <p class="help-text">Number of FAQ questions to generate (3-15).</p>
-          </div>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="includeTimestamps">Include Timestamps</label>
-              <p class="help-text">Add [MM:SS] timestamps to summaries and insights.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="includeTimestamps" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div>
-      </section>
-
-      <!-- Segments & Actions -->
-      <section id="segments" class="tab-content">
-        <header class="section-header">
-          <h2>Segments & Actions</h2>
-          <p>Control how different video segments are handled</p>
-        </header>
-
-        <div class="card highlight-card">
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="enableSegments">Enable Segment Detection</label>
-              <p class="help-text">Analyze video to identify sponsors, intros, and more.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="enableSegments" />
-              <span class="slider round"></span>
-            </label>
-          </div>
+          </section>
         </div>
 
-        <div class="card" id="segmentSettingsContainer">
-          <div class="card-header-row">
-            <h3>Category Actions</h3>
-            <div class="global-actions">
-              <button id="skipAllBtn" class="btn btn-sm btn-secondary">Set All to Skip</button>
-              <button id="speedAllBtn" class="btn btn-sm btn-secondary">
-                Set All to Speed Up
+        <!-- General Tab (Dynamically loaded or static? It was static in nav but dynamic in content? No, it was missing in body. Adding it now.) -->
+        <section id="general" class="tab-content active">
+          <header class="section-header">
+            <h2>General Settings</h2>
+            <p>Global preferences for the extension</p>
+          </header>
+
+          <div class="card">
+            <h3>Interface</h3>
+            <div class="form-group">
+              <label for="uiFontFamily">Font Family</label>
+              <div class="select-wrapper">
+                <select id="uiFontFamily" class="form-select">
+                  <option value="Inter" selected>Inter (Default)</option>
+                  <option value="Roboto">Roboto</option>
+                  <option value="Open Sans">Open Sans</option>
+                  <option value="Lato">Lato</option>
+                  <option value="System">System Default</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="uiIconStyle">Icon Style</label>
+              <div class="select-wrapper">
+                <select id="uiIconStyle" class="form-select">
+                  <option value="default" selected>Default (Emoji/Simple)</option>
+                  <option value="minimal">Minimal</option>
+                  <option value="solid">Solid</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Integrations Tab -->
+        <div id="integrations-tab-container"></div>
+
+        <!-- Prompts Tab -->
+        <div id="prompts-tab-container"></div>
+
+        <!-- Notifications Tab -->
+        <div id="notifications-tab-container"></div>
+
+        <!-- AI Configuration -->
+        <section id="ai-config" class="tab-content">
+          <header class="section-header">
+            <h2>AI Configuration</h2>
+            <p>Manage your Gemini API connection and model settings</p>
+          </header>
+
+          <div class="card">
+            <h3>API Connection</h3>
+            <div class="form-group">
+              <label for="apiKey">Gemini API Key</label>
+              <div class="input-with-button">
+                <input
+                  type="password"
+                  id="apiKey"
+                  class="form-input"
+                  placeholder="Enter your API key"
+                />
+                <button id="toggleApiKey" class="btn-icon" title="Show/Hide">👁️</button>
+              </div>
+              <p class="help-text">
+                Get your free key from
+                <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a
+                >.
+              </p>
+            </div>
+            <div class="form-actions">
+              <button id="testConnection" class="btn btn-secondary">Test Connection</button>
+            </div>
+            <div id="apiStatus" class="status-indicator hidden"></div>
+          </div>
+
+          <div class="card">
+            <h3>Model Selection</h3>
+            <div class="form-group">
+              <label for="modelSelect">Gemini Model</label>
+              <div class="select-wrapper">
+                <select id="modelSelect" class="form-select">
+                  <option value="" disabled selected>Loading models...</option>
+                </select>
+                <button id="refreshModels" class="btn-icon" title="Refresh Models">🔄</button>
+              </div>
+              <p class="help-text">
+                Select the AI model to use. Newer models may be faster or smarter.
+              </p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>System Prompt</h3>
+            <div class="form-group">
+              <label for="customPrompt">Custom Instructions</label>
+              <textarea
+                id="customPrompt"
+                class="form-textarea"
+                rows="4"
+                placeholder="e.g., Focus on technical details, use bullet points..."
+              ></textarea>
+              <p class="help-text">Optional instructions to guide the AI's behavior.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Advanced Model Parameters</h3>
+            <div class="form-group">
+              <label for="aiBaseUrl">Base URL (Optional)</label>
+              <input
+                type="text"
+                id="aiBaseUrl"
+                class="form-input"
+                placeholder="https://generativelanguage.googleapis.com"
+              />
+              <p class="help-text">
+                Override the default API endpoint (for proxies or enterprise).
+              </p>
+            </div>
+            <div class="form-group">
+              <label for="aiTopP">Top P (Nucleus Sampling)</label>
+              <div class="range-with-value">
+                <input
+                  type="range"
+                  id="aiTopP"
+                  class="form-range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value="0.95"
+                />
+                <span id="aiTopPValue" class="range-value">0.95</span>
+              </div>
+              <p class="help-text">Controls diversity. Lower values are more deterministic.</p>
+            </div>
+            <div class="form-group">
+              <label for="aiTopK">Top K</label>
+              <div class="range-with-value">
+                <input
+                  type="range"
+                  id="aiTopK"
+                  class="form-range"
+                  min="1"
+                  max="100"
+                  step="1"
+                  value="40"
+                />
+                <span id="aiTopKValue" class="range-value">40</span>
+              </div>
+              <p class="help-text">Limits the set of tokens to consider for each step.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Comprehensive Analysis Settings</h3>
+            <div class="form-group">
+              <label for="summaryLength">Summary Length</label>
+              <div class="select-wrapper">
+                <select id="summaryLength" class="form-select">
+                  <option value="short">Short (2-3 paragraphs)</option>
+                  <option value="medium" selected>Medium (4-6 paragraphs)</option>
+                  <option value="long">Long (8-12 paragraphs)</option>
+                </select>
+              </div>
+              <p class="help-text">Control the detail level of video summaries.</p>
+            </div>
+            <div class="form-group">
+              <label for="maxInsights">Max Key Insights</label>
+              <input type="number" id="maxInsights" class="form-input" min="3" max="20" value="8" />
+              <p class="help-text">Number of key takeaways to extract (3-20).</p>
+            </div>
+            <div class="form-group">
+              <label for="maxFAQ">Max FAQ Items</label>
+              <input type="number" id="maxFAQ" class="form-input" min="3" max="15" value="5" />
+              <p class="help-text">Number of FAQ questions to generate (3-15).</p>
+            </div>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="includeTimestamps">Include Timestamps</label>
+                <p class="help-text">Add [MM:SS] timestamps to summaries and insights.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="includeTimestamps" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- Segments & Actions -->
+        <section id="segments" class="tab-content">
+          <header class="section-header">
+            <h2>Segments & Actions</h2>
+            <p>Control how different video segments are handled</p>
+          </header>
+
+          <div class="card highlight-card">
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="enableSegments">Enable Segment Detection</label>
+                <p class="help-text">Analyze video to identify sponsors, intros, and more.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="enableSegments" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card" id="segmentSettingsContainer">
+            <div class="card-header-row">
+              <h3>Category Actions</h3>
+              <div class="global-actions">
+                <button id="skipAllBtn" class="btn btn-sm btn-secondary">Set All to Skip</button>
+                <button id="speedAllBtn" class="btn btn-sm btn-secondary">
+                  Set All to Speed Up
+                </button>
+                <button id="resetAllBtn" class="btn btn-sm btn-outline">Reset</button>
+              </div>
+            </div>
+
+            <div class="segments-grid" id="segmentsGrid">
+              <!-- Generated dynamically by JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- External APIs -->
+        <section id="external-apis" class="tab-content">
+          <header class="section-header">
+            <h2>External APIs</h2>
+            <p>Configure external data sources for enhanced context</p>
+          </header>
+
+          <div class="card">
+            <h3>Entertainment & Media APIs</h3>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="tmdbEnabled">Enable TMDB (Movies/TV)</label>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="tmdbEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="tmdbApiKey">TMDB API Key</label>
+              <input
+                type="password"
+                id="tmdbApiKey"
+                class="form-input"
+                placeholder="Enter TMDB API Key"
+              />
+              <p class="help-text">
+                Free key:
+                <a href="https://www.themoviedb.org/settings/api" target="_blank">TheMovieDB</a>
+              </p>
+            </div>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="igdbEnabled">Enable IGDB (Gaming)</label>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="igdbEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="igdbClientId">IGDB Client ID</label>
+              <input
+                type="text"
+                id="igdbClientId"
+                class="form-input"
+                placeholder="Twitch Client ID"
+              />
+            </div>
+            <div class="form-group">
+              <label for="igdbAccessToken">IGDB Access Token</label>
+              <input
+                type="password"
+                id="igdbAccessToken"
+                class="form-input"
+                placeholder="Twitch Access Token"
+              />
+              <p class="help-text">
+                Get from <a href="https://dev.twitch.tv/console" target="_blank">Twitch Dev</a>
+              </p>
+            </div>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="musicBrainzEnabled">Enable MusicBrainz (Music Metadata)</label>
+                <p class="help-text">No API key required. Public database.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="musicBrainzEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="geniusLyricsEnabled">Enable Genius Lyrics</label>
+                <p class="help-text">No API key required. Scrapes public lyrics.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="geniusLyricsEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>News & Research APIs</h3>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="newsDataEnabled">Enable NewsData.io</label>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="newsDataEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="newsDataApiKey">NewsData.io API Key</label>
+              <input
+                type="password"
+                id="newsDataApiKey"
+                class="form-input"
+                placeholder="Enter NewsData API Key"
+              />
+              <p class="help-text">
+                Free tier: <a href="https://newsdata.io/" target="_blank">NewsData.io</a>
+              </p>
+            </div>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="googleFactCheckEnabled">Enable Google Fact Check</label>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="googleFactCheckEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="googleFactCheckApiKey">Google Fact Check API Key</label>
+              <input
+                type="password"
+                id="googleFactCheckApiKey"
+                class="form-input"
+                placeholder="Google Cloud API Key"
+              />
+              <p class="help-text">Requires GCP project with Fact Check Tools API enabled.</p>
+            </div>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="semanticScholarEnabled"
+                  >Enable Semantic Scholar (Academic Papers)</label
+                >
+                <p class="help-text">No API key required. Public research database.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="semanticScholarEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Knowledge & Reference APIs</h3>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="wikidataEnabled">Enable Wikidata</label>
+                <p class="help-text">No API key required. Structured knowledge base.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="wikidataEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="openLibraryEnabled">Enable Open Library (Books)</label>
+                <p class="help-text">No API key required. Public book database.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="openLibraryEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="datamuseEnabled">Enable Datamuse (Word Relations)</label>
+                <p class="help-text">No API key required. Linguistic API.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="datamuseEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="openMeteoEnabled">Enable Open-Meteo (Weather)</label>
+                <p class="help-text">No API key required. Free weather API.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="openMeteoEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>YouTube Enhancement APIs</h3>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="sponsorBlockEnabled">Enable SponsorBlock</label>
+                <p class="help-text">Community-sourced segment database. No API key required.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="sponsorBlockEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="sponsorBlockTimeout">SponsorBlock Timeout (ms)</label>
+              <input
+                type="number"
+                id="sponsorBlockTimeout"
+                class="form-input"
+                min="1000"
+                max="30000"
+                step="1000"
+                value="5000"
+              />
+            </div>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="deArrowEnabled">Enable DeArrow (Clickbait-Free Titles)</label>
+                <p class="help-text">Community-sourced title replacements. No API key required.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="deArrowEnabled" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="deArrowUsePrivateAPI"
+                  >Use DeArrow Private API (Better Performance)</label
+                >
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="deArrowUsePrivateAPI" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="deArrowTimeout">DeArrow Timeout (ms)</label>
+              <input
+                type="number"
+                id="deArrowTimeout"
+                class="form-input"
+                min="1000"
+                max="30000"
+                step="1000"
+                value="5000"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Advanced -->
+        <section id="advanced" class="tab-content">
+          <header class="section-header">
+            <h2>Advanced</h2>
+            <p>Performance, backup, restore, and debug</p>
+          </header>
+
+          <div class="card">
+            <h3>Performance</h3>
+            <div class="form-group">
+              <label for="maxConcurrentRequests">Max Concurrent Requests</label>
+              <input
+                type="number"
+                id="maxConcurrentRequests"
+                class="form-input"
+                min="1"
+                max="10"
+                value="3"
+              />
+              <p class="help-text">Maximum parallel API requests (1-10)</p>
+            </div>
+            <div class="form-group">
+              <label for="rateLimitDelay">Rate Limit Delay (ms)</label>
+              <input
+                type="number"
+                id="rateLimitDelay"
+                class="form-input"
+                min="0"
+                max="5000"
+                step="100"
+                value="1000"
+              />
+              <p class="help-text">Delay between API requests (0-5000ms)</p>
+            </div>
+            <div class="form-group">
+              <label for="retryAttempts">Retry Attempts</label>
+              <input
+                type="number"
+                id="retryAttempts"
+                class="form-input"
+                min="0"
+                max="10"
+                value="3"
+              />
+              <p class="help-text">Number of retry attempts on failure (0-10)</p>
+            </div>
+            <div class="form-group">
+              <label for="retryDelay">Retry Delay (ms)</label>
+              <input
+                type="number"
+                id="retryDelay"
+                class="form-input"
+                min="0"
+                max="10000"
+                step="100"
+                value="2000"
+              />
+              <p class="help-text">Delay before retry (0-10000ms)</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Backup & Restore</h3>
+            <div class="form-group">
+              <label for="exportFormat">Export Format</label>
+              <div class="select-wrapper">
+                <select id="exportFormat" class="form-select">
+                  <option value="json" selected>JSON</option>
+                  <option value="txt">Text (Readable)</option>
+                </select>
+              </div>
+              <p class="help-text">Format for exported settings and history.</p>
+            </div>
+            <div class="form-actions">
+              <button id="exportSettings" class="btn btn-secondary">Export Settings</button>
+              <button id="importSettings" class="btn btn-secondary">Import Settings</button>
+              <input type="file" id="importFile" accept=".json,.txt" style="display: none" />
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Troubleshooting</h3>
+            <div class="form-group checkbox-row">
+              <div class="checkbox-label">
+                <label for="debugMode">Debug Mode</label>
+                <p class="help-text">Enable detailed logging to the console.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="debugMode" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="form-actions mt-4">
+              <button id="resetDefaults" class="btn btn-danger">
+                Reset All Settings to Default
               </button>
-              <button id="resetAllBtn" class="btn btn-sm btn-outline">Reset</button>
             </div>
           </div>
+        </section>
+      </main>
 
-          <div class="segments-grid" id="segmentsGrid">
-            <!-- Generated dynamically by JS -->
-          </div>
-        </div>
-      </section>
-
-      <!-- External APIs -->
-      <section id="external-apis" class="tab-content">
-        <header class="section-header">
-          <h2>External APIs</h2>
-          <p>Configure external data sources for enhanced context</p>
-        </header>
-
-        <div class="card">
-          <h3>Entertainment & Media APIs</h3>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="tmdbEnabled">Enable TMDB (Movies/TV)</label>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="tmdbEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-group">
-            <label for="tmdbApiKey">TMDB API Key</label>
-            <input type="password" id="tmdbApiKey" class="form-input" placeholder="Enter TMDB API Key" />
-            <p class="help-text">
-              Free key:
-              <a href="https://www.themoviedb.org/settings/api" target="_blank">TheMovieDB</a>
-            </p>
-          </div>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="igdbEnabled">Enable IGDB (Gaming)</label>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="igdbEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-group">
-            <label for="igdbClientId">IGDB Client ID</label>
-            <input type="text" id="igdbClientId" class="form-input" placeholder="Twitch Client ID" />
-          </div>
-          <div class="form-group">
-            <label for="igdbAccessToken">IGDB Access Token</label>
-            <input type="password" id="igdbAccessToken" class="form-input" placeholder="Twitch Access Token" />
-            <p class="help-text">
-              Get from <a href="https://dev.twitch.tv/console" target="_blank">Twitch Dev</a>
-            </p>
-          </div>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="musicBrainzEnabled">Enable MusicBrainz (Music Metadata)</label>
-              <p class="help-text">No API key required. Public database.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="musicBrainzEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="geniusLyricsEnabled">Enable Genius Lyrics</label>
-              <p class="help-text">No API key required. Scrapes public lyrics.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="geniusLyricsEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>News & Research APIs</h3>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="newsDataEnabled">Enable NewsData.io</label>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="newsDataEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-group">
-            <label for="newsDataApiKey">NewsData.io API Key</label>
-            <input type="password" id="newsDataApiKey" class="form-input" placeholder="Enter NewsData API Key" />
-            <p class="help-text">
-              Free tier: <a href="https://newsdata.io/" target="_blank">NewsData.io</a>
-            </p>
-          </div>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="googleFactCheckEnabled">Enable Google Fact Check</label>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="googleFactCheckEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-group">
-            <label for="googleFactCheckApiKey">Google Fact Check API Key</label>
-            <input type="password" id="googleFactCheckApiKey" class="form-input" placeholder="Google Cloud API Key" />
-            <p class="help-text">Requires GCP project with Fact Check Tools API enabled.</p>
-          </div>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="semanticScholarEnabled">Enable Semantic Scholar (Academic Papers)</label>
-              <p class="help-text">No API key required. Public research database.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="semanticScholarEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Knowledge & Reference APIs</h3>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="wikidataEnabled">Enable Wikidata</label>
-              <p class="help-text">No API key required. Structured knowledge base.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="wikidataEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="openLibraryEnabled">Enable Open Library (Books)</label>
-              <p class="help-text">No API key required. Public book database.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="openLibraryEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="datamuseEnabled">Enable Datamuse (Word Relations)</label>
-              <p class="help-text">No API key required. Linguistic API.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="datamuseEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="openMeteoEnabled">Enable Open-Meteo (Weather)</label>
-              <p class="help-text">No API key required. Free weather API.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="openMeteoEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>YouTube Enhancement APIs</h3>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="sponsorBlockEnabled">Enable SponsorBlock</label>
-              <p class="help-text">Community-sourced segment database. No API key required.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="sponsorBlockEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-group">
-            <label for="sponsorBlockTimeout">SponsorBlock Timeout (ms)</label>
-            <input type="number" id="sponsorBlockTimeout" class="form-input" min="1000" max="30000" step="1000"
-              value="5000" />
-          </div>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="deArrowEnabled">Enable DeArrow (Clickbait-Free Titles)</label>
-              <p class="help-text">Community-sourced title replacements. No API key required.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="deArrowEnabled" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="deArrowUsePrivateAPI">Use DeArrow Private API (Better Performance)</label>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="deArrowUsePrivateAPI" checked />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-group">
-            <label for="deArrowTimeout">DeArrow Timeout (ms)</label>
-            <input type="number" id="deArrowTimeout" class="form-input" min="1000" max="30000" step="1000"
-              value="5000" />
-          </div>
-        </div>
-      </section>
-
-      <!-- Advanced -->
-      <section id="advanced" class="tab-content">
-        <header class="section-header">
-          <h2>Advanced</h2>
-          <p>Performance, backup, restore, and debug</p>
-        </header>
-
-        <div class="card">
-          <h3>Performance</h3>
-          <div class="form-group">
-            <label for="maxConcurrentRequests">Max Concurrent Requests</label>
-            <input type="number" id="maxConcurrentRequests" class="form-input" min="1" max="10" value="3" />
-            <p class="help-text">Maximum parallel API requests (1-10)</p>
-          </div>
-          <div class="form-group">
-            <label for="rateLimitDelay">Rate Limit Delay (ms)</label>
-            <input type="number" id="rateLimitDelay" class="form-input" min="0" max="5000" step="100" value="1000" />
-            <p class="help-text">Delay between API requests (0-5000ms)</p>
-          </div>
-          <div class="form-group">
-            <label for="retryAttempts">Retry Attempts</label>
-            <input type="number" id="retryAttempts" class="form-input" min="0" max="10" value="3" />
-            <p class="help-text">Number of retry attempts on failure (0-10)</p>
-          </div>
-          <div class="form-group">
-            <label for="retryDelay">Retry Delay (ms)</label>
-            <input type="number" id="retryDelay" class="form-input" min="0" max="10000" step="100" value="2000" />
-            <p class="help-text">Delay before retry (0-10000ms)</p>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Backup & Restore</h3>
-          <div class="form-actions">
-            <button id="exportSettings" class="btn btn-secondary">Export Settings JSON</button>
-            <button id="importSettings" class="btn btn-secondary">Import Settings JSON</button>
-            <input type="file" id="importFile" accept=".json" style="display: none" />
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Troubleshooting</h3>
-          <div class="form-group checkbox-row">
-            <div class="checkbox-label">
-              <label for="debugMode">Debug Mode</label>
-              <p class="help-text">Enable detailed logging to the console.</p>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="debugMode" />
-              <span class="slider round"></span>
-            </label>
-          </div>
-          <div class="form-actions mt-4">
-            <button id="resetDefaults" class="btn btn-danger">
-              Reset All Settings to Default
-            </button>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <div id="toast" class="toast">Settings saved</div>
-  </div>
-
-  <!-- Template for Segment Item -->
-  <template id="segmentItemTemplate">
-    <div class="segment-item" data-category="">
-      <div class="segment-info">
-        <span class="segment-color"></span>
-        <span class="segment-name">Category Name</span>
-      </div>
-      <div class="segment-controls">
-        <select class="segment-action form-select-sm">
-          <option value="ignore">Ignore</option>
-          <option value="skip">Skip</option>
-          <option value="speed">Speed Up</option>
-        </select>
-        <div class="speed-control hidden">
-          <input type="range" class="speed-slider" min="1" max="16" step="0.5" value="2" />
-          <span class="speed-value">2x</span>
-        </div>
-      </div>
+      <div id="toast" class="toast">Settings saved</div>
     </div>
-  </template>
 
-  <script src="options.js" type="module"></script>
-</body>
+    <!-- Template for Segment Item -->
+    <template id="segmentItemTemplate">
+      <div class="segment-item" data-category="">
+        <div class="segment-info">
+          <span class="segment-color"></span>
+          <span class="segment-name">Category Name</span>
+        </div>
+        <div class="segment-controls">
+          <select class="segment-action form-select-sm">
+            <option value="ignore">Ignore</option>
+            <option value="skip">Skip</option>
+            <option value="speed">Speed Up</option>
+          </select>
+          <div class="speed-control hidden">
+            <input type="range" class="speed-slider" min="1" max="16" step="0.5" value="2" />
+            <span class="speed-value">2x</span>
+          </div>
+        </div>
+      </div>
+    </template>
 
+    <script src="options.js" type="module"></script>
+  </body>
 </html>

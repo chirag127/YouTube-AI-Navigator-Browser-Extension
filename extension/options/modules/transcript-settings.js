@@ -16,6 +16,7 @@ export class TranscriptSettings {
     this.chk('transcriptAutoClose', c.autoClose ?? true);
     this.set('transcriptAutoCloseDelay', c.autoCloseDelay || 1000);
     this.chk('transcriptAutoCloseOnCached', c.autoCloseOnCached ?? false);
+    this.chk('transcriptAutoScroll', c.autoScroll ?? true);
     this.a.attachToAll({
       transcriptMethod: { path: 'transcript.method' },
       transcriptLanguage: { path: 'transcript.language' },
@@ -26,6 +27,7 @@ export class TranscriptSettings {
       transcriptAutoClose: { path: 'transcript.autoClose' },
       transcriptAutoCloseDelay: { path: 'transcript.autoCloseDelay', transform: v => pi(v) },
       transcriptAutoCloseOnCached: { path: 'transcript.autoCloseOnCached' },
+      transcriptAutoScroll: { path: 'transcript.autoScroll' },
     });
   }
   set(id, v) {

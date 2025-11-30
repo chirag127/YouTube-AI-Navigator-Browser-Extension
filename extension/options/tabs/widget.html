@@ -38,42 +38,69 @@ id="widget-position" class="setting-input"\u003e \u003coption value="right"\u003
 \u003c/select\u003e \u003c/label\u003e \u003cp class="setting-hint"\u003ePosition of the widget on
 YouTube pages (requires page reload)\u003c/p\u003e \u003c/div\u003e
 
-  <hr/>
-  <h3>Appearance</h3>
-  <p class="setting-hint">Customize the visual style of the widget</p>
+<hr />
+<h3>Appearance</h3>
+<p class="setting-hint">Customize the visual style of the widget</p>
 
-  <div class="setting-group">
-    <label class="setting-label">
-      <span>Background Opacity (%)</span>
-      <input type="range" id="widget-opacity" min="50" max="100" step="5" class="setting-range" />
-      <span class="range-value"></span>
-    </label>
-    <p class="setting-hint">Adjust transparency of the widget background</p>
-  </div>
+<div class="setting-group">
+  <label class="setting-label">
+    <span>Background Opacity (%)</span>
+    <input type="range" id="widget-opacity" min="50" max="100" step="5" class="setting-range" />
+    <span class="range-value"></span>
+  </label>
+  <p class="setting-hint">Adjust transparency of the widget background</p>
+</div>
 
-  <div class="setting-group">
-    <label class="setting-label">
-      <span>Glass Blur (px)</span>
-      <input type="range" id="widget-blur" min="0" max="40" step="2" class="setting-range" />
-      <span class="range-value"></span>
-    </label>
-    <p class="setting-hint">Strength of the background blur effect</p>
-  </div>
+<div class="setting-group">
+  <label class="setting-label">
+    <span>Glass Blur (px)</span>
+    <input type="range" id="widget-blur" min="0" max="40" step="2" class="setting-range" />
+    <span class="range-value"></span>
+  </label>
+  <p class="setting-hint">Strength of the background blur effect</p>
+</div>
 
-  <div class="setting-group">
-    <label class="setting-label">
-      <span>UI Scale (%)</span>
-      <input type="range" id="widget-scale" min="80" max="120" step="5" class="setting-range" />
-      <span class="range-value"></span>
-    </label>
-    <p class="setting-hint">Adjust the overall size of widget elements</p>
-  </div>
+<div class="setting-group">
+  <label class="setting-label">
+    <span>UI Scale (%)</span>
+    <input type="range" id="widget-scale" min="80" max="120" step="5" class="setting-range" />
+    <span class="range-value"></span>
+  </label>
+  <p class="setting-hint">Adjust the overall size of widget elements</p>
+</div>
 
-  <hr/>
+<div class="setting-group">
+  <label class="setting-checkbox">
+    <input type="checkbox" id="widget-dynamic-height" checked />
+    <span>Dynamic Viewport Height</span>
+  </label>
+  <p class="setting-hint">
+    Automatically constrain height to fit within the screen (prevents clipping)
+  </p>
+</div>
+
+<div class="setting-group">
+  <label class="setting-label">
+    <span>Viewport Bottom Margin (px)</span>
+    <input
+      type="number"
+      id="widget-viewport-margin"
+      min="0"
+      max="200"
+      step="10"
+      class="setting-input"
+    />
+  </label>
+  <p class="setting-hint">
+    Space to leave at the bottom of the screen (useful for status bars/docked consoles)
+  </p>
+</div>
+
+<hr />
 \u003ch3\u003eVisible Tabs\u003c/h3\u003e \u003cp class="setting-hint"\u003eSelect which tabs to
 display in the widget\u003c/p\u003e \u003cdiv class="setting-group"\u003e \u003clabel
 class="setting-checkbox"\u003e \u003cinput type="checkbox" id="widget-tab-summary" /\u003e
-\u003cspan\u003eSummary Tab\u003c/span\u003e \u003c/label\u003e \u003clabel
+\u003cspan\u003eDefault Tab\u003c/span\u003e \u003c/label\u003e \u003clabel
 class="setting-checkbox"\u003e \u003cinput type="checkbox" id="widget-tab-segments" /\u003e
 \u003cspan\u003eSegments Tab\u003c/span\u003e \u003c/label\u003e \u003clabel
 class="setting-checkbox"\u003e \u003cinput type="checkbox" id="widget-tab-chat" /\u003e

@@ -292,7 +292,8 @@
 }
 
 /* Markdown & Typography */
-.yt-ai-markdown h1, .yt-ai-markdown h2 {
+.yt-ai-markdown h1,
+.yt-ai-markdown h2 {
   font-size: 1.2em;
   margin: 1.5em 0 0.8em;
   color: var(--yt-ai-text);
@@ -320,7 +321,11 @@
   animation: spin 0.8s linear infinite;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* Chat Messages */
 .yt-ai-chat-msg {
@@ -330,7 +335,7 @@
   font-size: 14px;
   line-height: 1.5;
   margin-bottom: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .yt-ai-chat-msg.user {

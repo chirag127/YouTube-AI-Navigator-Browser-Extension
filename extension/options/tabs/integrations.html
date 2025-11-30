@@ -1,0 +1,191 @@
+<section id="integrations" class="tab-content">
+  <header class="section-header">
+    <h2>Integrations & APIs</h2>
+    <p>Configure external services and API keys</p>
+  </header>
+
+  <div class="card">
+    <h3>Knowledge & Facts</h3>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-datamuse-enabled">Datamuse</label>
+        <p class="help-text">Enable word-finding query engine</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-datamuse-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-google-factcheck-enabled">Google FactCheck</label>
+        <p class="help-text">Verify claims using Google's Fact Check Tools</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-google-factcheck-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group" id="group-google-factcheck-key">
+      <label for="api-google-factcheck-key">API Key</label>
+      <input
+        type="password"
+        id="api-google-factcheck-key"
+        class="form-input"
+        placeholder="Enter API Key"
+      />
+    </div>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-wikidata-enabled">Wikidata</label>
+        <p class="help-text">Fetch structured data from Wikidata</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-wikidata-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-semanticscholar-enabled">Semantic Scholar</label>
+        <p class="help-text">Access academic papers and citations</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-semanticscholar-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group" id="group-semanticscholar-key">
+      <label for="api-semanticscholar-key">API Key (Optional)</label>
+      <input
+        type="password"
+        id="api-semanticscholar-key"
+        class="form-input"
+        placeholder="Enter API Key"
+      />
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Media & Entertainment</h3>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-tmdb-enabled">TMDB (The Movie Database)</label>
+        <p class="help-text">Fetch movie and TV show metadata</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-tmdb-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group" id="group-tmdb-key">
+      <label for="api-tmdb-key">API Key</label>
+      <input type="password" id="api-tmdb-key" class="form-input" placeholder="Enter API Key" />
+    </div>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-igdb-enabled">IGDB (Internet Game Database)</label>
+        <p class="help-text">Fetch video game metadata</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-igdb-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group" id="group-igdb-client">
+      <label for="api-igdb-client">Client ID</label>
+      <input type="text" id="api-igdb-client" class="form-input" placeholder="Client ID" />
+    </div>
+    <div class="form-group" id="group-igdb-token">
+      <label for="api-igdb-token">Access Token</label>
+      <input type="password" id="api-igdb-token" class="form-input" placeholder="Access Token" />
+    </div>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-musicbrainz-enabled">MusicBrainz</label>
+        <p class="help-text">Open music encyclopedia</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-musicbrainz-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-genius-lyrics-enabled">Genius Lyrics</label>
+        <p class="help-text">Fetch song lyrics and annotations</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-genius-lyrics-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group" id="group-genius-token">
+      <label for="api-genius-lyrics-token">Access Token</label>
+      <input
+        type="password"
+        id="api-genius-lyrics-token"
+        class="form-input"
+        placeholder="Access Token"
+      />
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Utilities & Tools</h3>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-sponsorblock-enabled">SponsorBlock</label>
+        <p class="help-text">Skip sponsors, intros, and more</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-sponsorblock-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-dearrow-enabled">DeArrow</label>
+        <p class="help-text">Crowdsourced titles and thumbnails</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-dearrow-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-openmeteo-enabled">OpenMeteo</label>
+        <p class="help-text">Weather data</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-openmeteo-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-newsdata-enabled">NewsData</label>
+        <p class="help-text">Global news API</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-newsdata-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group" id="group-newsdata-key">
+      <label for="api-newsdata-key">API Key</label>
+      <input type="password" id="api-newsdata-key" class="form-input" placeholder="Enter API Key" />
+    </div>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="api-openlibrary-enabled">OpenLibrary</label>
+        <p class="help-text">Book metadata</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="api-openlibrary-enabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</section>

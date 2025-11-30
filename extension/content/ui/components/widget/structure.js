@@ -3,7 +3,7 @@ export function createWidgetHTML(cfg = {}) {
   let tabsHTML = '';
   if (tabs.summary)
     tabsHTML +=
-      '\u003cdiv class="yt-ai-tab active" data-tab="summary"\u003eSummary\u003c/div\u003e';
+      '\u003cdiv class="yt-ai-tab active" data-tab="summary"\u003eDefault\u003c/div\u003e';
   if (tabs.segments)
     tabsHTML += '\u003cdiv class="yt-ai-tab" data-tab="segments"\u003eSegments\u003c/div\u003e';
   if (tabs.chat)

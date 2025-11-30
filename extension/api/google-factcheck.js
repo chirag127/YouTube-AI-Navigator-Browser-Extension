@@ -7,8 +7,9 @@ export class GoogleFactCheckAPI {
   constructor(apiKey) {
     this.apiKey = apiKey;
   }
+
   async searchClaims(query) {
-    if (!this.apiKey) return null;
+    if (!this.apiKey) return [];
     try {
       const data = await safeFetch(
         `${BASE_URL}/claims:search?key=${this.apiKey}&query=${enc(query)}`

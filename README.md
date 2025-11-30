@@ -29,23 +29,29 @@ npm test  # Run headless test suite (Vitest + JSDOM)
 ```
 
 Load `extension/` folder in Chrome as unpacked extension.
+
 ## 🎨 Customization
 
 The extension offers extensive customization options to tailor the experience to your preferences:
 
 ### Widget Appearance
+
 - **Glassmorphism UI:** Modern, semi-transparent design with backdrop blur.
 - **Opacity & Blur:** Adjust the transparency and blur strength of the widget background.
 - **UI Scale:** Resize the entire widget interface to fit your screen or preference.
 - **Positioning:** Choose between Left or Right sidebar placement.
 - **Resizability:** Fully resizable width and height with drag handles.
+- **Dynamic Height:** Automatically constrains widget height to fit within the viewport (prevents clipping when console is open).
+- **Viewport Margin:** Configurable bottom safety margin.
 
 ### Widget Behavior
+
 - **Tab Visibility:** Toggle Summary, Segments, Chat, and Comments tabs.
 - **Default State:** Choose whether the widget starts expanded or collapsed.
 - **Memory:** Remembers your last used state (collapsed/expanded).
 
 ### Segment Filtering
+
 - **Granular Control:** Toggle visibility for specific segment types (Sponsors, Self-promo, Intros, etc.).
 
 ## Configuration
@@ -111,7 +117,7 @@ The extension offers extensive customization options to tailor the experience to
 
 ## Transcript Strategies (Priority Order)
 
-1. **DOM Automation** - Automates YouTube UI to extract captions
+1. **DOM Automation** - Automates YouTube UI to extract captions (Auto-scrolls page back to original position)
 2. **Genius Lyrics** - Music videos only
 3. **Speech-to-Text** - Gemini audio transcription fallback
 

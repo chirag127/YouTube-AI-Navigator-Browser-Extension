@@ -123,6 +123,7 @@ export class SettingsManager {
         autoTranslate: true,
         showOriginal: false,
         highlightKeywords: true,
+        autoScroll: true,
       },
       comments: {
         enabled: true,
@@ -155,6 +156,10 @@ export class SettingsManager {
         fontSize: 'medium',
         animationsEnabled: true,
         showTooltips: true,
+        iconStyle: 'default',
+        fontFamily: 'Inter',
+        accentColor: '#3ea6ff',
+        borderRadius: 12,
       },
       widget: {
         height: 500,
@@ -162,6 +167,8 @@ export class SettingsManager {
         maxHeight: 1200,
         resizable: true,
         tabs: { summary: true, segments: true, chat: true, comments: true },
+        opacity: 95,
+        hideOnChannels: [],
       },
       ai: {
         apiKey: '',
@@ -177,6 +184,9 @@ export class SettingsManager {
         maxInsights: 8,
         maxFAQ: 5,
         includeTimestamps: true,
+        baseUrl: '',
+        topP: 0.95,
+        topK: 40,
       },
       automation: {
         autoAnalyze: true,
@@ -233,6 +243,7 @@ export class SettingsManager {
         enableTelemetry: false,
         experimentalFeatures: false,
         verboseLogging: false,
+        exportFormat: 'json',
       },
       performance: {
         maxConcurrentRequests: 3,

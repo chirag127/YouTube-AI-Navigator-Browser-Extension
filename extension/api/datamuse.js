@@ -16,4 +16,3 @@ export class DatamuseAPI {
     }
   }
 }
-export const datamuseAPI = new DatamuseAPI();

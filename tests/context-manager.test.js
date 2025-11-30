@@ -1,8 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ContextManager } from '../extension/services/context-manager.js';
+
 describe('ContextManager', () => {
   let cm;
   let mockSettings;
+
   beforeEach(() => {
     mockSettings = {
       tmdb: { key: 'tmdb-key', enabled: true },
@@ -18,6 +20,7 @@ describe('ContextManager', () => {
     };
     cm = new ContextManager(mockSettings);
   });
+
   it('should initialize all API clients', () => {
     expect(cm.apis.tmdb).toBeDefined();
     expect(cm.apis.musicbrainz).toBeDefined();
@@ -30,6 +33,7 @@ describe('ContextManager', () => {
     expect(cm.apis.datamuse).toBeDefined();
     expect(cm.apis.openmeteo).toBeDefined();
   });
+
   it('should pass API keys to clients', () => {
     expect(cm.apis.tmdb.apiKey).toBe('tmdb-key');
     expect(cm.apis.newsdata.apiKey).toBe('news-key');
@@ -37,11 +41,13 @@ describe('ContextManager', () => {
     expect(cm.apis.igdb.clientId).toBe('igdb-id');
     expect(cm.apis.igdb.accessToken).toBe('igdb-token');
   });
+
   it('should track enabled state for all APIs', () => {
     expect(cm.enabled.tmdb).toBe(true);
     expect(cm.enabled.musicbrainz).toBe(true);
     expect(cm.enabled.wikidata).toBe(true);
   });
+
   it('should respect disabled APIs', () => {
     const disabledSettings = {
       ...mockSettings,
@@ -53,12 +59,14 @@ describe('ContextManager', () => {
     expect(cm2.enabled.wikidata).toBe(false);
     expect(cm2.enabled.musicbrainz).toBe(true);
   });
+
   it('should default to enabled if flag missing', () => {
     const minSettings = { tmdb: { key: 'key' } };
     const cm3 = new ContextManager(minSettings);
     expect(cm3.enabled.tmdb).toBe(true);
     expect(cm3.enabled.musicbrainz).toBe(true);
   });
+
   it('should handle empty settings gracefully', () => {
     const cm4 = new ContextManager({});
     expect(cm4.apis.tmdb).toBeDefined();

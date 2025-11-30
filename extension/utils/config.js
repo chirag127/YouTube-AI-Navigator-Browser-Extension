@@ -12,6 +12,7 @@ export const DC = {
     mt: 'auto',
     ts: 1,
     so: ['dom-automation', 'genius', 'speech-to-text'],
+    as: 1,
   },
   co: { en: 1, lm: 20, ir: 0, sb: 'top', as: 1 },
   md: { ti: 1, au: 1, vw: 1, du: 1, ds: 1, tg: 1, ud: 1 },

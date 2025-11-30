@@ -30,8 +30,12 @@
         if (vd?.segments?.length) {
           const { setupAutoSkip } = await import(gu('content/segments/autoskip.js'));
           const { injectSegmentMarkers } = await import(gu('content/segments/markers.js'));
+          const { injectVideoLabel } = await import(gu('content/ui/components/video-label.js'));
+
           await setupAutoSkip(vd.segments);
           injectSegmentMarkers(vd.segments);
+          injectVideoLabel(vd.segments);
+
           e(`[Init] Loaded ${vd.segments.length} cached segments`);
         }
       }
@@ -110,13 +114,14 @@
           e('[Tr] Auto-close err:', x);
         }
       }
-      to(() => {
-        try {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } catch (x) {
-          e('[Tr] Scroll err:', x);
-        }
-      }, 1500);
+      // Scroll handled by strategy if needed
+      // to(() => {
+      //   try {
+      //     window.scrollTo({ top: 0, behavior: 'smooth' });
+      //   } catch (x) {
+      //     e('[Tr] Scroll err:', x);
+      //   }
+      // }, 1500);
       p({ success: true, transcript: t });
     } catch (x) {
       e('Err:hGT', x);
@@ -171,6 +176,11 @@
       if (m.segments?.length) {
         await setupAutoSkip(m.segments);
         injectSegmentMarkers(m.segments);
+
+        // Inject video label
+        const { injectVideoLabel } = await import(gu('content/ui/components/video-label.js'));
+        injectVideoLabel(m.segments);
+
         e(`[SHOW_SEGMENTS] Applied ${m.segments.length} segments`);
       }
       p({ success: true });

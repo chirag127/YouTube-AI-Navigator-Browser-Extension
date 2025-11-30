@@ -27,10 +27,36 @@ function updateWidgetHeight() {
 
     // Dynamic viewport constraint
     const viewportHeight = window.innerHeight;
-    const maxAllowedHeight = viewportHeight - 40; // 20px padding top/bottom
+    const rect = widgetContainer.getBoundingClientRect();
 
-    // Apply constraint
-    widgetContainer.style.maxHeight = `${maxAllowedHeight}px`;
+    // Calculate available height from the top of the widget to the bottom of the viewport
+    // We use a safety margin (default 20px) to ensure it doesn't touch the very edge
+    const safetyMargin = widgetConfig.viewportMargin || 20;
+
+    // If rect.top is negative (scrolled past), we still want to constrain max-height relative to viewport
+    // but usually we care about the bottom not being clipped.
+    // If widget is fixed/sticky, rect.top is constant. If relative, it changes.
+    // We want: height + rect.top <= viewportHeight - margin
+    // So: height <= viewportHeight - rect.top - margin
+
+    // However, if rect.top is very small (or negative), we don't want the widget to disappear.
+    // Let's clamp rect.top to a minimum of 0 for this calculation if we want to ensure full visibility
+    // when top is visible.
+    // But if user scrolls down, rect.top < 0. The widget moves up.
+    // The issue is usually when rect.top > 0.
+
+    let availableHeight = viewportHeight - Math.max(0, rect.top) - safetyMargin;
+
+    // Enforce a reasonable minimum so it doesn't collapse completely
+    availableHeight = Math.max(availableHeight, 200);
+
+    // Apply constraint if Dynamic Height is enabled (default true)
+    if (widgetConfig.dynamicHeight !== false) {
+      widgetContainer.style.maxHeight = `${availableHeight}px`;
+    } else {
+      // Fallback to configured max height if dynamic is disabled
+      widgetContainer.style.maxHeight = `${widgetConfig.maxHeight || 1200}px`;
+    }
 
     const p = $('#movie_player') || $('.html5-video-player');
     if (p) {
@@ -43,21 +69,20 @@ function updateWidgetHeight() {
     const header = $('.yt-ai-header', widgetContainer);
     const tabs = $('.yt-ai-tabs', widgetContainer);
     const chatInput = $('.yt-ai-chat-input', widgetContainer);
-    const resizeHandle = $('#yt-ai-resize-handle', widgetContainer);
 
     if (header && tabs && chatInput) {
-      const occupied = header.offsetHeight + tabs.offsetHeight + chatInput.offsetHeight + (resizeHandle?.offsetHeight || 0);
       const contentArea = $('#yt-ai-content-area', widgetContainer);
       if (contentArea) {
-        // Calculate available space for content
-        // If widget height is set fixed, we might need to adjust it if it exceeds viewport
-        const currentWidgetHeight = widgetContainer.offsetHeight;
-        if (currentWidgetHeight > maxAllowedHeight) {
-           widgetContainer.style.height = `${maxAllowedHeight}px`;
-        }
+        // The container's max-height is now set.
+        // We just need to ensure the content area takes up the remaining space properly
+        // Flexbox on the container (display: flex; flex-direction: column) handles this naturally
+        // provided the content area has flex: 1 and overflow-y: auto (which it does in CSS).
 
-        // Adjust content area max-height to ensure scrolling works within the container
-        contentArea.style.maxHeight = `${maxAllowedHeight - occupied}px`;
+        // However, if we want to force a specific height:
+        const currentHeight = widgetContainer.offsetHeight;
+        if (widgetConfig.dynamicHeight !== false && currentHeight > availableHeight) {
+          widgetContainer.style.height = `${availableHeight}px`;
+        }
       }
     }
   } catch (err) {
@@ -258,7 +283,7 @@ async function loadWidgetConfig() {
   }
 }
 
-function applyWidgetConfig() {
+async function applyWidgetConfig() {
   try {
     if (!widgetContainer || !widgetConfig) return;
     const ca = $('#yt-ai-content-area', widgetContainer);
@@ -273,6 +298,25 @@ function applyWidgetConfig() {
     if (widgetConfig.opacity !== undefined) {
       const opacity = widgetConfig.opacity / 100;
       widgetContainer.style.setProperty('--yt-ai-bg-glass', `rgba(15, 15, 15, ${opacity})`);
+    }
+
+    if (widgetConfig.borderRadius !== undefined) {
+      widgetContainer.style.setProperty('--yt-ai-radius', `${widgetConfig.borderRadius}px`);
+    }
+
+    if (widgetConfig.accentColor) {
+      widgetContainer.style.setProperty('--yt-ai-accent', widgetConfig.accentColor);
+    }
+
+    // Load UI settings for font
+    const r = await sg('config');
+    const ui = r.config?.ui || {};
+    if (ui.fontFamily) {
+      const font =
+        ui.fontFamily === 'System'
+          ? '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
+          : `"${ui.fontFamily}", sans-serif`;
+      widgetContainer.style.setProperty('--yt-ai-font', font);
     }
 
     if (widgetConfig.blur !== undefined) {

@@ -1,4 +1,5 @@
 import { SettingsManager } from './modules/settings-manager.js';
+import { UIAppearance } from './modules/ui-appearance.js';
 import { AutoSave } from './modules/auto-save.js';
 import { UIManager } from './modules/ui-manager.js';
 import { TabLoader } from './modules/tab-loader.js';
@@ -16,6 +17,8 @@ import { CommentsSettings } from './modules/comments-settings.js';
 import { MetadataSettings } from './modules/metadata-settings.js';
 import { ScrollSettings } from './modules/scroll-settings.js';
 import { WidgetSettings } from './modules/widget-settings.js';
+import { IntegrationsSettings } from './modules/integrations.js';
+import { PromptsSettings } from './modules/prompts.js';
 import { on, id as i } from '../utils/shortcuts/dom.js';
 import { e } from '../utils/shortcuts/log.js';
 import { vl as vs } from '../utils/shortcuts/core.js';
@@ -48,6 +51,7 @@ on(document, 'DOMContentLoaded', async () => {
   uiManager.setupTabs();
   const modules = {
     general: new GeneralSettings(settingsManager, autoSave),
+    uiAppearance: new UIAppearance(settingsManager, autoSave),
     aiConfig: new AIConfig(settingsManager, autoSave),
     segments: new SegmentsConfig(settingsManager, autoSave),
     externalApis: new ExternalAPIs(settingsManager, autoSave),
@@ -60,6 +64,8 @@ on(document, 'DOMContentLoaded', async () => {
     metadata: new MetadataSettings(settingsManager, autoSave),
     scroll: new ScrollSettings(settingsManager, autoSave),
     widget: new WidgetSettings(settingsManager, notificationManager),
+    integrations: new IntegrationsSettings(settingsManager, autoSave),
+    prompts: new PromptsSettings(settingsManager, autoSave),
   };
   vs(modules).forEach(m => {
     try {

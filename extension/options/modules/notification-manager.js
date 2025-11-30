@@ -31,7 +31,9 @@ export class NotificationManager {
     n.style.cssText = `display:flex;align-items:center;gap:12px;padding:12px 20px;background:${this.getBackground(t)};color:${this.getColor(t)};border-radius:8px;font-size:14px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,0.3);transform:translateX(400px);transition:transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275);pointer-events:auto;border:1px solid ${this.getBorderColor(t)};`;
     ap(this.container, n);
     raf(() => {
-      n.style.transform = 'translateX(0)';
+      raf(() => {
+        n.style.transform = 'translateX(0)';
+      });
     });
     to(() => {
       n.style.transform = 'translateX(400px)';

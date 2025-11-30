@@ -7,8 +7,9 @@ export class NewsDataAPI {
   constructor(apiKey) {
     this.apiKey = apiKey;
   }
+
   async searchNews(query, language = 'en') {
-    if (!this.apiKey) return null;
+    if (!this.apiKey) return [];
     try {
       const data = await safeFetch(
         `${BASE_URL}/news?apikey=${this.apiKey}&q=${enc(query)}&language=${language}`

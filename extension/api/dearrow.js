@@ -35,6 +35,18 @@ export async function fetchBranding(vid, opt = {}) {
   }
 }
 
+import { sg } from '../utils/shortcuts/storage.js';
+
+export async function getBranding(videoId) {
+  const cfg = await sg('integrations');
+  if (cfg.integrations?.dearrow?.enabled === false) return null;
+
+  const url = `https://sponsor.ajay.app/api/branding?videoID=${videoId}`;
+  const res = await fetch(url);
+  if (!res.ok) return null;
+  return await res.json();
+}
+
 export async function fetchBrandingPrivate(vid, opt = {}) {
   const hp = await gsp(vid);
   const { returnUserID = false, fetchAll = false, timeout = 5000 } = opt;

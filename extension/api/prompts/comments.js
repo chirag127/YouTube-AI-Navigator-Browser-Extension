@@ -1,15 +1,14 @@
 import { e } from '../../utils/shortcuts/log.js';
 
-export const comments = comments => {
+export const comments = commentList => {
   try {
-    if (!comments || comments.length === 0) {
-      return `No comments available to analyze.`;
-    }
+    if (!commentList || !commentList.length) return '';
 
-    const text = comments
+    const text = commentList
+      .slice(0, 50)
       .map(c => {
-        const author = c.author || c.authorText?.simpleText || 'Unknown';
-        const content = c.text || c.contentText || 'No text';
+        const author = c.authorText || 'Unknown';
+        const content = c.textDisplay || '';
         return `- ${author}: ${content}`;
       })
       .join('\n');
@@ -34,5 +33,6 @@ export const comments = comments => {
     return result;
   } catch (err) {
     e('Err:Comments', err);
+    return '';
   }
 };

@@ -1,15 +1,20 @@
 import { gu } from '../../../utils/shortcuts/runtime.js';
+import { $, $$ } from '../../../utils/shortcuts/dom.js';
+import { e } from '../../../utils/shortcuts/log.js';
+import { getCfg } from '../../../utils/config.js';
+import { stt as to } from '../../../utils/shortcuts/time.js';
+import { now as nw } from '../../../utils/shortcuts/core.js';
+import { trm } from '../../../utils/shortcuts/string.js';
 
-const { $, $$ } = await import(gu('utils/shortcuts/dom.js'));
-const { e } = await import(gu('utils/shortcuts/log.js'));
-const { stt: to } = await import(gu('utils/shortcuts/time.js'));
-const { now: nw } = await import(gu('utils/shortcuts/core.js'));
-const { trm } = await import(gu('utils/shortcuts/string.js'));
 export const name = 'DOM Automation';
 export const priority = 10;
 
 export const extract = async () => {
   try {
+    const cfg = await getCfg().load();
+    const autoScroll = cfg.tr?.as ?? true;
+    const initialScroll = window.scrollY;
+
     let tc = $(
       'ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"]'
     );
@@ -23,6 +28,11 @@ export const extract = async () => {
     if (!wasOpen) {
       await closePanel();
     }
+
+    if (autoScroll) {
+      window.scrollTo({ top: initialScroll, behavior: 'smooth' });
+    }
+
     return s;
   } catch (x) {
     e('Err:extract', x);

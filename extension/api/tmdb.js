@@ -7,6 +7,7 @@ export class TmdbAPI {
   constructor(apiKey) {
     this.apiKey = apiKey;
   }
+
   async searchMovie(query) {
     if (!this.apiKey) return null;
     try {
@@ -19,6 +20,7 @@ export class TmdbAPI {
       return null;
     }
   }
+
   async searchTV(query) {
     if (!this.apiKey) return null;
     try {
@@ -31,6 +33,7 @@ export class TmdbAPI {
       return null;
     }
   }
+
   async getDetails(id, type = 'movie') {
     if (!this.apiKey || !id) return null;
     try {
