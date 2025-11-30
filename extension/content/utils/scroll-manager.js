@@ -108,7 +108,12 @@ export class ScrollManager {
   isInViewport(el) {
     try {
       const r = el.getBoundingClientRect();
-      return r.top >= 0 && r.left >= 0 && r.bottom <= (window.innerHeight || document.documentElement.clientHeight) && r.right <= (window.innerWidth || document.documentElement.clientWidth);
+      return (
+        r.top >= 0 &&
+        r.left >= 0 &&
+        r.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        r.right <= (window.innerWidth || document.documentElement.clientWidth)
+      );
     } catch (err) {
       e('Err:isInViewport', err);
       return false;

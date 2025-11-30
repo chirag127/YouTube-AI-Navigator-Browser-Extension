@@ -33,7 +33,11 @@ class CommentsExtractor {
             nc.push({
               id: c.commentId,
               author: c.authorText?.simpleText || 'Unknown',
-              text: jn(mp(c.contentText?.runs || [], r => r.text), '') || '',
+              text:
+                jn(
+                  mp(c.contentText?.runs || [], r => r.text),
+                  ''
+                ) || '',
               likes: c.voteCount?.simpleText || '0',
               publishedTime: c.publishedTimeText?.runs?.[0]?.text || '',
             });
@@ -142,7 +146,9 @@ class CommentsExtractor {
     try {
       const contents = data?.contents?.twoColumnWatchNextResults?.results?.results?.contents;
       if (!contents) return [];
-      const commentsSection = contents.find(c => c.itemSectionRenderer?.contents?.[0]?.commentsEntryPointHeaderRenderer);
+      const commentsSection = contents.find(
+        c => c.itemSectionRenderer?.contents?.[0]?.commentsEntryPointHeaderRenderer
+      );
       if (!commentsSection) return [];
       const commentThreads = contents.filter(c => c.commentThreadRenderer);
       const comments = [];
@@ -152,7 +158,11 @@ class CommentsExtractor {
           comments.push({
             id: c.commentId,
             author: c.authorText?.simpleText || 'Unknown',
-            text: jn(mp(c.contentText?.runs || [], r => r.text), '') || '',
+            text:
+              jn(
+                mp(c.contentText?.runs || [], r => r.text),
+                ''
+              ) || '',
             likes: c.voteCount?.simpleText || '0',
             publishedTime: c.publishedTimeText?.runs?.[0]?.text || '',
           });
@@ -171,7 +181,11 @@ class CommentsExtractor {
       if (attempt > 1) await new Promise(r => to(r, baseDelay));
       try {
         const c = [];
-        const selectors = ['ytd-comment-thread-renderer', 'ytd-comment-renderer', 'ytd-comment-view-model'];
+        const selectors = [
+          'ytd-comment-thread-renderer',
+          'ytd-comment-renderer',
+          'ytd-comment-view-model',
+        ];
         let el = [];
         for (const sel of selectors) {
           el = $(sel);
@@ -192,11 +206,39 @@ class CommentsExtractor {
           if (c.length >= 20) break;
           const elm = el[i];
           try {
-            const a = getText(elm, ['#author-text', '#author-text yt-formatted-string', '[author]', '.ytd-channel-name', '#author-text span']);
-            const t = getText(elm, ['#content-text', '#content-text yt-formatted-string', '[content]', '.yt-core-attributed-string']);
-            const lk = getText(elm, ['#vote-count-middle', '#vote-count-left', '#vote-count', '[aria-label*="likes"]']) || '0';
-            const pt = getText(elm, ['#published-time-text', '#published-time', '.ytd-comment-view-model > div > span']);
-            if (a && t) c.push({ id: elm.id || `dom_${i}`, author: a, text: t, likes: lk, publishedTime: pt });
+            const a = getText(elm, [
+              '#author-text',
+              '#author-text yt-formatted-string',
+              '[author]',
+              '.ytd-channel-name',
+              '#author-text span',
+            ]);
+            const t = getText(elm, [
+              '#content-text',
+              '#content-text yt-formatted-string',
+              '[content]',
+              '.yt-core-attributed-string',
+            ]);
+            const lk =
+              getText(elm, [
+                '#vote-count-middle',
+                '#vote-count-left',
+                '#vote-count',
+                '[aria-label*="likes"]',
+              ]) || '0';
+            const pt = getText(elm, [
+              '#published-time-text',
+              '#published-time',
+              '.ytd-comment-view-model > div > span',
+            ]);
+            if (a && t)
+              c.push({
+                id: elm.id || `dom_${i}`,
+                author: a,
+                text: t,
+                likes: lk,
+                publishedTime: pt,
+              });
           } catch (x) {
             e(`[CE] Err ${i + 1}:`, x);
           }
@@ -210,7 +252,10 @@ class CommentsExtractor {
   }
   async fetchCommentsActive(k, t, c) {
     try {
-      const r = await ft(`https://www.youtube.com/youtubei/v1/next?key=${k}`, { method: 'POST', body: js({ context: c, continuation: t }) });
+      const r = await ft(`https://www.youtube.com/youtubei/v1/next?key=${k}`, {
+        method: 'POST',
+        body: js({ context: c, continuation: t }),
+      });
       const d = await r.json();
       const result = this.parseComments(d);
       return result;
@@ -237,7 +282,11 @@ class CommentsExtractor {
             c.push({
               id: cm.commentId,
               author: cm.authorText?.simpleText || 'Unknown',
-              text: jn(mp(cm.contentText?.runs || [], r => r.text), '') || '',
+              text:
+                jn(
+                  mp(cm.contentText?.runs || [], r => r.text),
+                  ''
+                ) || '',
               likes: cm.voteCount?.simpleText || '0',
               publishedTime: cm.publishedTimeText?.runs?.[0]?.text || '',
             });

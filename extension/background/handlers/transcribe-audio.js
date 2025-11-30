@@ -17,7 +17,7 @@ export async function handleTranscribeAudio(req, rsp) {
     if (!ar.ok) throw new Error(`Failed to fetch audio: ${ar.status}`);
     const ab = await ar.arrayBuffer();
     const b64 = btoa(new Uint8Array(ab).reduce((d, b) => d + String.fromCharCode(b), ''));
-    const pt = `Transcribe the following audio into a JSON array of segments. Language: ${lang || 'en'}. Format: JSON only. No markdown. Structure: [{"start": number (seconds), "text": "string", "category": "Content" | "Sponsor" | "SelfPromo" | "Intro" | "Outro" | "Interaction"}]. If the audio is music or no speech, return [].`;
+    const pt = `Transcribe the following audio into a JSON array of segments. Language: ${lang || 'en'}. Format: JSON only. No markdown. Structure: [{"start": number (seconds), "text": "string", "category": "Content" | "Sponsor" | "SelfPromo" | "Intro" | "Outro"}]. If the audio is music or no speech, return [].`;
     const parts = [{ inlineData: { mimeType: 'audio/mp4', data: b64 } }, { text: pt }];
     const txt = await c.generateContent(parts, m);
     let seg = [];

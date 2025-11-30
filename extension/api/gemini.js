@@ -146,7 +146,6 @@ Instructions:
     const lm = {
       S: 'Sponsor',
       SP: 'Self Promotion',
-      UP: 'Unpaid Promotion',
       EA: 'Exclusive Access',
       IR: 'Interaction Reminder (Subscribe)',
       H: 'Highlight',

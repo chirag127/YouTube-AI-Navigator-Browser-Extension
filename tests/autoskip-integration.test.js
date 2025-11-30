@@ -51,7 +51,14 @@ vi.mock('../extension/utils/shortcuts/dom.js', () => ({
   qs: vi.fn(),
   ae: vi.fn(),
   re: vi.fn(),
-  ce: vi.fn(() => ({ style: {}, id: '', textContent: '', animate: vi.fn(), remove: vi.fn(), parentNode: {} })),
+  ce: vi.fn(() => ({
+    style: {},
+    id: '',
+    textContent: '',
+    animate: vi.fn(),
+    remove: vi.fn(),
+    parentNode: {},
+  })),
 }));
 
 describe('AutoSkip Segment Action Filtering', () => {

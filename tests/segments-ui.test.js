@@ -1,6 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { SegmentsConfig } from '../extension/options/modules/segments.js';
-import { SettingsManager, SEGMENT_CATEGORIES } from '../extension/options/modules/settings-manager.js';
+import {
+  SettingsManager,
+  SEGMENT_CATEGORIES,
+} from '../extension/options/modules/settings-manager.js';
 
 vi.mock('../extension/utils/shortcuts/storage.js', () => ({
   sg: vi.fn(() => Promise.resolve({ config: {} })),
@@ -22,10 +25,24 @@ vi.mock('../extension/utils/shortcuts/array.js', () => ({
   isa: vi.fn(x => Array.isArray(x)),
 }));
 vi.mock('../extension/utils/shortcuts/dom.js', () => ({
-  qs: vi.fn((sel) => {
+  qs: vi.fn(sel => {
     if (sel === '#enableSegments') return { checked: true };
     if (sel === '#segmentsGrid') return { innerHTML: '', appendChild: vi.fn() };
-    if (sel === '#segmentItemTemplate') return { content: { cloneNode: () => ({ querySelector: vi.fn(() => ({ dataset: {}, style: {}, textContent: '', value: '', classList: { add: vi.fn(), remove: vi.fn() } })), appendChild: vi.fn() }) } };
+    if (sel === '#segmentItemTemplate')
+      return {
+        content: {
+          cloneNode: () => ({
+            querySelector: vi.fn(() => ({
+              dataset: {},
+              style: {},
+              textContent: '',
+              value: '',
+              classList: { add: vi.fn(), remove: vi.fn() },
+            })),
+            appendChild: vi.fn(),
+          }),
+        },
+      };
     return null;
   }),
   on: vi.fn(),

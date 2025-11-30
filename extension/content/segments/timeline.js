@@ -5,7 +5,7 @@ const { qs: $, ce } = await import(gu('utils/shortcuts/dom.js'));
 const colors = {
   Sponsor: '#00d26a',
   'Self Promotion': '#ffff00',
-  'Unpaid Promotion': '#ff8800',
+  'Unpaid/Self Promotion': '#ffff00',
   'Exclusive Access': '#008b45',
   'Interaction Reminder (Subscribe)': '#a020f0',
   Highlight: '#ff0055',

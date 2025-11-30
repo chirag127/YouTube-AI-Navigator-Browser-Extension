@@ -4,10 +4,9 @@ import * as interaction from './rules/interaction.js';
 import * as intro from './rules/intro.js';
 import * as preview from './rules/preview.js';
 import * as selfPromo from './rules/self-promotion.js';
-import * as unpaidPromo from './rules/unpaid-promotion.js';
 import * as sponsor from './rules/sponsor.js';
 
-const rules = [filler, highlight, interaction, intro, preview, selfPromo, unpaidPromo, sponsor];
+const rules = [filler, highlight, interaction, intro, preview, selfPromo, sponsor];
 
 export function annotateTranscript(transcriptSegments, metadata) {
   const result = transcriptSegments
