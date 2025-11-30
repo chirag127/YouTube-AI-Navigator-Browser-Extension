@@ -7,7 +7,7 @@ const { renderSegments } = await import(gu('content/ui/renderers/segments.js'));
 const { renderChat } = await import(gu('content/ui/renderers/chat.js'));
 const { renderComments } = await import(gu('content/ui/renderers/comments.js'));
 const { qs: $, qsa: $$, id: ge, on } = await import(gu('utils/shortcuts/dom.js'));
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 
 export function initTabs(c) {
   try {

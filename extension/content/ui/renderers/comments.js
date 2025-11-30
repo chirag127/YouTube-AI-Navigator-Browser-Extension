@@ -7,7 +7,7 @@ const { parseMarkdown } = await import(gu('lib/marked-loader.js'));
 const { rs } = await import(gu('utils/shortcuts/runtime.js'));
 const { sg } = await import(gu('utils/shortcuts/storage.js'));
 const { to } = await import(gu('utils/shortcuts/global.js'));
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { mp, jn, slc } = await import(gu('utils/shortcuts/array.js'));
 const { ce, ap, ih, dc: doc, txt } = await import(gu('utils/shortcuts/dom.js'));
 export async function renderComments(c) {

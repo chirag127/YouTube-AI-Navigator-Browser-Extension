@@ -1,6 +1,6 @@
 const gu = p => chrome.runtime.getURL(p);
 
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { flr: mf } = await import(gu('utils/shortcuts/math.js'));
 export function formatTime(s) {
   try {

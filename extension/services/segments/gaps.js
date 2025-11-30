@@ -1,14 +1,14 @@
-import { l, e } from '../../utils/shortcuts/log.js';
+import { e } from '../../utils/shortcuts/log.js';
 
 export function fillContentGaps(c, o) {
   if (!o || !o.length) {
-    l('[Gaps] No transcript provided to fillContentGaps');
+    e('[Gaps] No transcript provided to fillContentGaps');
     return [];
   }
   try {
     const last = o[o.length - 1];
     if (!last || typeof last.start === 'undefined') {
-      l('[Gaps] Invalid transcript format');
+      e('[Gaps] Invalid transcript format');
       return [];
     }
     const end = last.start + (last.duration || 0),

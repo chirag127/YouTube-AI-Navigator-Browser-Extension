@@ -1,6 +1,5 @@
 import { videoCache as vc } from '../cache/video-cache.js';
 import { msg } from '../../utils/shortcuts/runtime.js';
-import { l } from '../../utils/shortcuts/log.js';
 
 class VideoDataService {
   constructor() {
@@ -52,7 +51,6 @@ class VideoDataService {
     }
     const k = `${id}:${t}`;
     if (this.p.has(k)) {
-      l(`[VideoDataService] Waiting for pending: ${k}`);
       return this.p.get(k);
     }
     const p = fn()

@@ -1,6 +1,6 @@
 const gu = p => chrome.runtime.getURL(p);
 
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { to } = await import(gu('utils/shortcuts/global.js'));
 export async function retry(fn, max = 3, d = 1000) {
   try {

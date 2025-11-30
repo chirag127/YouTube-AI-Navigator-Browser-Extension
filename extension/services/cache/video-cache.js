@@ -1,5 +1,4 @@
 import { sl } from '../../utils/shortcuts/storage.js';
-import { l } from '../../utils/shortcuts/log.js';
 import { nw as nt, ok as keys } from '../../utils/shortcuts/core.js';
 
 const V = 1,
@@ -13,7 +12,6 @@ class VideoCache {
     if (this.m.has(k)) {
       const c = this.m.get(k);
       if (nt() - c.ts < E) {
-        l(`[VideoCache] Memory hit: ${k}`);
         return c.d;
       }
       this.m.delete(k);
@@ -23,7 +21,6 @@ class VideoCache {
     if (r[sk]) {
       const c = r[sk];
       if (c.v === V && nt() - c.ts < E) {
-        l(`[VideoCache] Storage hit: ${sk}`);
         this.m.set(k, { d: c.d, ts: c.ts });
         return c.d;
       }
@@ -37,7 +34,6 @@ class VideoCache {
       ts = nt();
     this.m.set(k, { d, ts });
     await sl({ [sk]: { v: V, ts, d } });
-    l(`[VideoCache] Cached: ${sk}`);
   }
   async clear(id) {
     if (id) {

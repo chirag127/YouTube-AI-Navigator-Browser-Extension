@@ -4,7 +4,7 @@ const w = window,
   if (window.top !== window) return;
   const extId = document.currentScript?.src.split('://')[1]?.split('/')[0];
   const baseUrl = extId ? `chrome-extension://${extId}/` : '../';
-  const { l, e } = await import(baseUrl + 'utils/shortcuts/log.js');
+  const { e } = await import(baseUrl + 'utils/shortcuts/log.js');
   const { jp, to: st } = await import(baseUrl + 'utils/shortcuts/core.js');
   const { qs: $, qsa, on } = await import(baseUrl + 'utils/shortcuts/dom.js');
   const uc = s => s.toUpperCase();
@@ -74,7 +74,6 @@ const w = window,
     }
     async htu(u) {
       if (this.iu.has(u)) return;
-      l('[YTE] Cap tr:', u);
       this.iu.add(u);
       try {
         const r = await this.of(u);
@@ -84,7 +83,6 @@ const w = window,
           return;
         }
         const d = await r.json();
-        l('[YTE] Got tr');
         this.e('transcript', d);
         st(() => this.iu.delete(u), 1e4);
       } catch (err) {
@@ -96,7 +94,6 @@ const w = window,
       try {
         on(d, 'yt-navigate-finish', ev => {
           const vid = ev.detail?.response?.playerResponse?.videoDetails?.videoId;
-          l('[YTE] Nav:', vid);
           this.e('navigation', { videoId: vid, detail: ev.detail });
         });
       } catch (err) {

@@ -8,7 +8,7 @@ const { trm } = await import(gu('utils/shortcuts/string.js'));
 export const name = 'DOM Automation';
 export const priority = 10;
 
-export const extract = async vid => {
+export const extract = async () => {
   try {
     let tc = $(
       'ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"]'

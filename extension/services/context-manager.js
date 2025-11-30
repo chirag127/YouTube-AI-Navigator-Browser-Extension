@@ -8,9 +8,8 @@ import { GoogleFactCheckAPI } from '../api/google-factcheck.js';
 import { WikidataAPI } from '../api/wikidata.js';
 import { DatamuseAPI } from '../api/datamuse.js';
 import { OpenMeteoAPI } from '../api/openmeteo.js';
-import { l, w } from '../utils/shortcuts/log.js';
+import { w } from '../utils/shortcuts/log.js';
 import { ps } from '../utils/shortcuts/async.js';
-import { ok } from '../utils/shortcuts/core.js';
 import { aia } from '../utils/shortcuts/array.js';
 
 export class ContextManager {
@@ -30,7 +29,6 @@ export class ContextManager {
     };
   }
   async fetchContext(m) {
-    l('[ContextManager] Fetching context for:', m.title);
     const tasks = [],
       ctx = {};
     const add = (n, p) => tasks.push(p.then(res => ({ n, res })).catch(err => ({ n, err })));
@@ -73,16 +71,13 @@ export class ContextManager {
         })
       );
     }
-    l(`[ContextManager] Starting ${tasks.length} parallel API calls...`);
     const r = await ps(tasks);
-    l(`[ContextManager] Processing ${r.length} API call results...`);
     r.forEach(res => {
       if (res.status === 'fulfilled') {
         const { n, res: d } = res.value;
         if (d && (aia(d) ? d.length > 0 : true)) {
           ctx[n] = d;
-          l(`[ContextManager] ✓ ${n}: ${aia(d) ? d.length + ' items' : 'data received'}`);
-        } else l(`[ContextManager] - ${n}: no valid data returned`);
+        }
       } else {
         const { n, err: e } = res.reason;
         w(`[ContextManager] ✗ ${n}:`, e.message || e);
@@ -94,7 +89,6 @@ export class ContextManager {
         else w(`[ContextManager] ${n} unexpected error`);
       }
     });
-    l('[ContextManager] Context fetched:', ok(ctx));
     return ctx;
   }
 }

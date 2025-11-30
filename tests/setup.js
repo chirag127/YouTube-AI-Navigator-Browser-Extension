@@ -65,6 +65,26 @@ global.Headers = vi.fn();
 global.FormData = vi.fn();
 global.URLSearchParams = URLSearchParams;
 
+// Mock shortcuts that reference chrome at top level
+vi.mock('../extension/utils/shortcuts/global.js', () => ({
+  wn: global.chrome.windows,
+  loc: null,
+  to: setTimeout,
+  co: clearTimeout,
+  rAF: vi.fn(),
+  pi: parseInt,
+  pf: parseFloat,
+  cf: vi.fn(() => false),
+  al: vi.fn(),
+  pm: vi.fn(() => null),
+  en: encodeURIComponent,
+  de: decodeURIComponent,
+  si: setInterval,
+  ci: clearInterval,
+  clt: clearTimeout,
+  pI: parseInt,
+}));
+
 // Mock DOM globals if needed (jsdom handles most)
 if (typeof window !== 'undefined') {
   window.chrome = global.chrome;

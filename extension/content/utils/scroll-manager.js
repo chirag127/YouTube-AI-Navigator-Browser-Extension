@@ -1,7 +1,7 @@
 const gu = p => chrome.runtime.getURL(p);
 
 const { qs: $, qsa: $$ } = await import(gu('utils/shortcuts/dom.js'));
-const { l, e, w } = await import(gu('utils/shortcuts/log.js'));
+const { e, w } = await import(gu('utils/shortcuts/log.js'));
 const { to } = await import(gu('utils/shortcuts/global.js'));
 export class ScrollManager {
   constructor() {
@@ -59,7 +59,6 @@ export class ScrollManager {
       await this.waitForScroll(1000);
       window.scrollBy({ top: -100, behavior: 'smooth' });
       await this.waitForScroll(500);
-      l('[SM] ✅ Scrolled');
       await this.waitForCommentsToLoad();
       this.isScrolling = false;
       return true;
@@ -76,7 +75,6 @@ export class ScrollManager {
     while (el < max) {
       const ce = $$('ytd-comment-thread-renderer');
       if (ce.length > 0) {
-        l(`[SM] ✅ Loaded: ${ce.length}`);
         return true;
       }
       await this.waitForScroll(int);

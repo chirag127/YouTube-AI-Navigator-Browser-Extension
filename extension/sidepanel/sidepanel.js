@@ -173,14 +173,10 @@ async function analyzeVideo(rc = 0) {
       return { comments: [] };
     });
     const cms = cr?.comments || [];
-    l('[Sidepanel] Received comments:', cms);
-    l('[Sidepanel] Comments count:', cms.length);
     let ca = 'No comments available to analyze.';
     if (cms.length > 0) {
       try {
-        l('[Sidepanel] Sending comments to Gemini:', cms);
         ca = await gs.analyzeCommentSentiment(cms);
-        l('[Sidepanel] Comment analysis result:', ca);
       } catch (x) {
         e('Comment analysis failed:', x);
         ca = `Failed to analyze comments: ${x.message}`;

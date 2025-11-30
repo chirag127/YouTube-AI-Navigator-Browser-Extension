@@ -1,6 +1,6 @@
 const gu = p => chrome.runtime.getURL(p);
 
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { seekVideo } = await import(gu('content/utils/dom.js'));
 const { on, fc, ap, tx, txt, dc: doc, ce, gt: tc } = await import(gu('utils/shortcuts/dom.js'));
 const { pi: pI } = await import(gu('utils/shortcuts/global.js'));

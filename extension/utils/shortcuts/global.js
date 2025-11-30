@@ -1,4 +1,4 @@
-export const wn = chrome.windows;
+export const wn = chrome?.windows;
 export const loc = typeof location !== 'undefined' ? location : null;
 export const to = setTimeout;
 export const co = clearTimeout;

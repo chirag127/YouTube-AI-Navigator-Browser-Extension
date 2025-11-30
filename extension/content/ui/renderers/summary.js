@@ -1,6 +1,6 @@
 const gu = p => chrome.runtime.getURL(p);
 
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { showPlaceholder } = await import(gu('content/ui/components/loading.js'));
 const { makeTimestampsClickable } = await import(gu('content/utils/timestamps.js'));
 const { parseMarkdown } = await import(gu('lib/marked-loader.js'));

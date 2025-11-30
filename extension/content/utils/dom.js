@@ -1,5 +1,5 @@
 const gu = p => chrome.runtime.getURL(p);
-const { l, e } = await import(gu('utils/shortcuts/log.js'));
+const { e } = await import(gu('utils/shortcuts/log.js'));
 const { ce, qs } = await import(gu('utils/shortcuts/dom.js'));
 export function findSecondaryColumn() {
   try {
