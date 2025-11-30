@@ -155,14 +155,39 @@ Load `extension/` folder in Chrome as unpacked extension.
 
 ```
 extension/
-├── api/           # External API clients (compressed)
-├── background/    # Service worker, message handlers
-├── content/       # Content scripts, UI injection
-├── services/      # Core services (transcript, segments, storage)
-├── utils/         # Shortcuts, config, helpers
-├── options/       # Settings UI
-├── sidepanel/     # Analysis panel
+├── api/                    # External API clients (14 APIs)
+│   ├── gemini.js          # AI analysis, transcription
+│   ├── sponsorblock.js    # Segment database (13 categories)
+│   ├── dearrow.js         # Clickbait-free titles
+│   ├── genius-lyrics.js   # Music lyrics
+│   ├── tmdb.js            # Movie/TV metadata
+│   ├── igdb.js            # Game metadata
+│   ├── musicbrainz.js     # Music metadata
+│   ├── newsdata.js        # News articles
+│   ├── google-factcheck.js # Fact-checking
+│   ├── semanticscholar.js # Academic papers
+│   ├── wikidata.js        # Knowledge base
+│   ├── openlibrary.js     # Book metadata
+│   ├── datamuse.js        # Word relations
+│   ├── openmeteo.js       # Weather data
+│   └── API_REFERENCE.md   # Complete API documentation
+├── background/            # Service worker, message handlers
+├── content/               # Content scripts, UI injection
+├── services/              # Core services (transcript, segments, storage)
+│   └── context-manager.js # Orchestrates all external APIs
+├── utils/                 # Shortcuts, config, helpers
+├── options/               # Settings UI
+│   ├── modules/
+│   │   ├── external-apis.js # API settings module
+│   │   └── settings-manager.js # Settings persistence
+│   └── sections/
+│       └── external-apis.html # API configuration UI
+├── sidepanel/             # Analysis panel
 └── manifest.json
+tests/
+├── api-settings.test.js   # API configuration tests
+├── context-manager.test.js # API integration tests
+└── ...                    # 17 test files total
 ```
 
 ## API Auto-Detection

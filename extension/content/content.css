@@ -128,7 +128,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   padding: 16px;
-  padding-bottom: 48px; /* Increased to ensure last segment is fully scrollable */
+  padding-bottom: 80px;
   min-height: 200px;
   height: 500px;
   font-size: 14px;
@@ -136,6 +136,7 @@
   animation: fadeIn 0.4s ease-in;
   scroll-behavior: smooth;
   position: relative;
+  scroll-padding-bottom: 80px;
 }
 
 @keyframes fadeIn {
@@ -558,7 +559,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding-bottom: 16px; /* Extra padding to ensure last item is fully visible */
+  padding-bottom: 32px;
+  margin-bottom: 16px;
 }
 
 .yt-ai-segment-legend {
