@@ -5,9 +5,10 @@ import { SegmentsConfig } from '../../../extension/options/modules/segments.js';
 vi.mock('../../../extension/utils/shortcuts/dom.js', () => ({
   qs: vi.fn(),
   ce: vi.fn(),
+  on: vi.fn(),
 }));
 
-import { qs, ce } from '../../../extension/utils/shortcuts/dom.js';
+import { qs, ce, on } from '../../../extension/utils/shortcuts/dom.js';
 
 describe('SegmentsConfig', () => {
   let settingsManager;
@@ -28,6 +29,10 @@ describe('SegmentsConfig', () => {
                           appendChild: vi.fn(),
                           value: '',
                           style: {},
+                          dataset: {},
+                          classList: { add: vi.fn(), remove: vi.fn() },
+                          textContent: '',
+                          disabled: false,
                       })
                   })
               }

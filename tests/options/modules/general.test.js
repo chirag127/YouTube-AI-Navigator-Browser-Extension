@@ -4,6 +4,17 @@ import { GeneralSettings } from '../../../extension/options/modules/general.js';
 // Mock dependencies
 vi.mock('../../../extension/utils/shortcuts/dom.js', () => ({
   qs: vi.fn(),
+  ce: vi.fn().mockReturnValue({
+      className: '',
+      dataset: {},
+      innerHTML: '',
+      appendChild: vi.fn(),
+      addEventListener: vi.fn(),
+  }),
+  on: vi.fn(),
+  $$: vi.fn().mockReturnValue([]),
+  ac: vi.fn(),
+  rc: vi.fn(),
 }));
 
 import { qs } from '../../../extension/utils/shortcuts/dom.js';
@@ -23,6 +34,8 @@ describe('GeneralSettings', () => {
           value: '',
           checked: false,
           type: 'text',
+          appendChild: vi.fn(),
+          innerHTML: '',
         };
       }
       return mockElements[id];

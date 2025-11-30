@@ -43,6 +43,6 @@ describe('UIAppearance', () => {
 
   it('should initialize with default values', () => {
     uiAppearance.init();
-    expect(autoSave.attachToAll).toHaveBeenCalled();
+    expect(id).toHaveBeenCalled();
   });
 });

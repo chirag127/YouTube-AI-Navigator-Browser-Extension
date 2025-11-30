@@ -20,10 +20,7 @@ export class TranscriptSettings {
     this.a.attachToAll({
       transcriptMethod: { path: 'transcript.method' },
       transcriptLanguage: { path: 'transcript.language' },
-      includeTimestamps: {
-        path: 'transcript.includeTimestamps',
-        selector: '#transcript-includeTimestamps'
-      },
+      'transcript-includeTimestamps': { path: 'transcript.includeTimestamps' },
       transcriptAutoTranslate: { path: 'transcript.autoTranslate' },
       transcriptShowOriginal: { path: 'transcript.showOriginal' },
       transcriptHighlightKeywords: { path: 'transcript.highlightKeywords' },

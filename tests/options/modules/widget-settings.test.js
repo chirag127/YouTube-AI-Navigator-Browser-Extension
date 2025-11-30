@@ -58,6 +58,6 @@ describe('WidgetSettings', () => {
 
   it('should initialize with default values', () => {
     widgetSettings.init();
-    expect(qs).toHaveBeenCalled();
+    expect(id).toHaveBeenCalled();
   });
 });

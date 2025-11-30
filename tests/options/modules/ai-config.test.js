@@ -5,9 +5,10 @@ import { AIConfig } from '../../../extension/options/modules/ai-config.js';
 vi.mock('../../../extension/utils/shortcuts/dom.js', () => ({
   qs: vi.fn(),
   id: vi.fn(),
+  on: vi.fn(),
 }));
 
-import { qs, id } from '../../../extension/utils/shortcuts/dom.js';
+import { qs, id, on } from '../../../extension/utils/shortcuts/dom.js';
 
 describe('AIConfig', () => {
   let settingsManager;
