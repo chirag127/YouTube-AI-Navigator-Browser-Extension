@@ -10,7 +10,8 @@ export const LC = {
   H: 'poi_highlight',
   T: 'filler',
   EA: 'exclusive_access',
-  G: 'intro',
+  G: 'hook',
+  CH: 'chapter',
   C: 'content',
 };
 export const LM = {
@@ -26,6 +27,7 @@ export const LM = {
   T: 'Tangents/Jokes',
   EA: 'Exclusive Access',
   G: 'Hook/Greetings',
+  CH: 'Chapter',
   C: 'Content',
 };
 export const CM = {
@@ -40,6 +42,7 @@ export const CM = {
   T: '#9400d3',
   EA: '#008b45',
   G: '#4169e1',
+  CH: '#1e90ff',
   C: '#999999',
 };
 export const lk = l => {
@@ -61,7 +64,8 @@ export const lk = l => {
     'Exclusive Access': 'exclusive_access',
     'Off-Topic': 'music_offtopic',
     'Music: Non-Music Section': 'music_offtopic',
-    'Hook/Greetings': 'intro',
+    'Hook/Greetings': 'hook',
+    Chapter: 'chapter',
     Content: 'content',
     'Main Content': 'content',
     'Content (Main Video)': 'content',

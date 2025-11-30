@@ -15,6 +15,9 @@ const CM = {
   poi_highlight: 'H',
   filler: 'T',
   exclusive_access: 'EA',
+  hook: 'G',
+  chapter: 'CH',
+  content: 'C',
 };
 const LM = {
   S: 'Sponsor',
@@ -28,6 +31,7 @@ const LM = {
   T: 'Tangents/Jokes',
   EA: 'Exclusive Access',
   G: 'Hook/Greetings',
+  CH: 'Chapter',
   C: 'Content',
 };
 
