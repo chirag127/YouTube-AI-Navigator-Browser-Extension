@@ -29,12 +29,21 @@ export class WidgetSettings {
       const op = id('widget-opacity');
       const bl = id('widget-blur');
       const sc = id('widget-scale');
+      const dh = id('widget-dynamic-height');
+      const vm = id('widget-viewport-margin');
       const ts = id('widget-tab-summary');
       const tg = id('widget-tab-segments');
       const tc = id('widget-tab-chat');
       const tm = id('widget-tab-comments');
       const dc = id('widget-default-collapsed');
       const rs = id('widget-remember-state');
+      const wop = id('widgetOpacity');
+      const wbr = id('widgetBorderRadius');
+      const wac = id('widgetAccentColor');
+      const whc = id('widgetHideOnChannels');
+      const wopv = id('widgetOpacityValue');
+      const wbrv = id('widgetBorderRadiusValue');
+      const wacv = id('widgetAccentColorValue');
 
       // Segment type filters
       const ss = id('widget-show-sponsor');
@@ -59,12 +68,27 @@ export class WidgetSettings {
       if (op) op.value = cfg.opacity || 95;
       if (bl) bl.value = cfg.blur || 12;
       if (sc) sc.value = cfg.scale || 100;
+      if (dh) dh.checked = cfg.dynamicHeight !== false;
+      if (vm) vm.value = cfg.viewportMargin || 20;
       if (ts) ts.checked = cfg.tabs?.summary !== false;
       if (tg) tg.checked = cfg.tabs?.segments !== false;
       if (tc) tc.checked = cfg.tabs?.chat !== false;
       if (tm) tm.checked = cfg.tabs?.comments !== false;
       if (dc) dc.checked = cfg.defaultCollapsed === true;
       if (rs) rs.checked = cfg.rememberState !== false;
+      if (wop) {
+        wop.value = cfg.opacity !== undefined ? cfg.opacity : 95;
+        if (wopv) wopv.textContent = `${wop.value}%`;
+      }
+      if (wbr) {
+        wbr.value = cfg.borderRadius !== undefined ? cfg.borderRadius : 12;
+        if (wbrv) wbrv.textContent = `${wbr.value}px`;
+      }
+      if (wac) {
+        wac.value = cfg.accentColor || '#3ea6ff';
+        if (wacv) wacv.textContent = wac.value;
+      }
+      if (whc) whc.value = (cfg.hideOnChannels || []).join(', ');
 
       // Load segment filters (default to true)
       const filters = cfg.segmentFilters || {};
@@ -95,12 +119,21 @@ export class WidgetSettings {
       const op = id('widget-opacity');
       const bl = id('widget-blur');
       const sc = id('widget-scale');
+      const dh = id('widget-dynamic-height');
+      const vm = id('widget-viewport-margin');
       const ts = id('widget-tab-summary');
       const tg = id('widget-tab-segments');
       const tc = id('widget-tab-chat');
       const tm = id('widget-tab-comments');
       const dc = id('widget-default-collapsed');
       const rs = id('widget-remember-state');
+      const wop = id('widgetOpacity');
+      const wbr = id('widgetBorderRadius');
+      const wac = id('widgetAccentColor');
+      const whc = id('widgetHideOnChannels');
+      const wopv = id('widgetOpacityValue');
+      const wbrv = id('widgetBorderRadiusValue');
+      const wacv = id('widgetAccentColorValue');
       const rb = id('widget-reset');
 
       // Segment filters
@@ -128,12 +161,33 @@ export class WidgetSettings {
       if (op) on(op, 'change', () => this.save());
       if (bl) on(bl, 'change', () => this.save());
       if (sc) on(sc, 'change', () => this.save());
+      if (dh) on(dh, 'change', () => this.save());
+      if (vm) on(vm, 'change', () => this.save());
       if (ts) on(ts, 'change', () => this.save());
       if (tg) on(tg, 'change', () => this.save());
       if (tc) on(tc, 'change', () => this.save());
       if (tm) on(tm, 'change', () => this.save());
       if (dc) on(dc, 'change', () => this.save());
       if (rs) on(rs, 'change', () => this.save());
+      if (wop) {
+        on(wop, 'input', e => {
+          if (wopv) wopv.textContent = `${e.target.value}%`;
+        });
+        on(wop, 'change', () => this.save());
+      }
+      if (wbr) {
+        on(wbr, 'input', e => {
+          if (wbrv) wbrv.textContent = `${e.target.value}px`;
+        });
+        on(wbr, 'change', () => this.save());
+      }
+      if (wac) {
+        on(wac, 'input', e => {
+          if (wacv) wacv.textContent = e.target.value;
+        });
+        on(wac, 'change', () => this.save());
+      }
+      if (whc) on(whc, 'change', () => this.save());
 
       // Attach listeners for all segment filters
       filters.forEach(f => {
@@ -160,6 +214,8 @@ export class WidgetSettings {
       const op = id('widget-opacity');
       const bl = id('widget-blur');
       const sc = id('widget-scale');
+      const dh = id('widget-dynamic-height');
+      const vm = id('widget-viewport-margin');
       const ts = id('widget-tab-summary');
       const tg = id('widget-tab-segments');
       const tc = id('widget-tab-chat');
@@ -179,12 +235,29 @@ export class WidgetSettings {
       this.sm.set('widget.opacity', parseInt(op?.value || 95));
       this.sm.set('widget.blur', parseInt(bl?.value || 12));
       this.sm.set('widget.scale', parseInt(sc?.value || 100));
+      this.sm.set('widget.dynamicHeight', dh?.checked !== false);
+      this.sm.set('widget.viewportMargin', parseInt(vm?.value || 20));
       this.sm.set('widget.tabs.summary', ts?.checked !== false);
       this.sm.set('widget.tabs.segments', tg?.checked !== false);
       this.sm.set('widget.tabs.chat', tc?.checked !== false);
       this.sm.set('widget.tabs.comments', tm?.checked !== false);
       this.sm.set('widget.defaultCollapsed', dc?.checked === true);
       this.sm.set('widget.rememberState', rs?.checked !== false);
+
+      const wop = id('widgetOpacity');
+      const wbr = id('widgetBorderRadius');
+      const wac = id('widgetAccentColor');
+      const whc = id('widgetHideOnChannels');
+
+      this.sm.set('widget.opacity', parseInt(wop?.value || 95));
+      this.sm.set('widget.borderRadius', parseInt(wbr?.value || 12));
+      this.sm.set('widget.accentColor', wac?.value || '#3ea6ff');
+
+      const channels = (whc?.value || '')
+        .split(',')
+        .map(s => s.trim())
+        .filter(s => s.length > 0);
+      this.sm.set('widget.hideOnChannels', channels);
 
       // Save segment filters
       const filters = {
@@ -222,6 +295,8 @@ export class WidgetSettings {
         opacity: 95,
         blur: 12,
         scale: 100,
+        dynamicHeight: true,
+        viewportMargin: 20,
         tabs: { summary: true, segments: true, chat: true, comments: true },
         defaultCollapsed: false,
         rememberState: true,
@@ -236,6 +311,10 @@ export class WidgetSettings {
           highlight: true,
           exclusive: true,
         },
+
+        borderRadius: 12,
+        accentColor: '#3ea6ff',
+        hideOnChannels: [],
       });
       await this.sm.save();
       this.loadSettings();

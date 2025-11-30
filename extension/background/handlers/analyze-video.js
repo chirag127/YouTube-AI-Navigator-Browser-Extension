@@ -7,7 +7,7 @@ import { w, e } from '../../utils/shortcuts/log.js';
 import { si, ci, to as to } from '../../utils/shortcuts/global.js';
 import { r as cr } from '../../utils/shortcuts/runtime.js';
 import { sg, ss } from '../../utils/shortcuts/storage.js';
-import { ok } from '../../utils/shortcuts/core.js';
+
 import { inc as ic, lwc } from '../../utils/shortcuts/string.js';
 import { np, pc } from '../../utils/shortcuts/async.js';
 let ka = null;
