@@ -9,10 +9,16 @@ export class GoogleFactCheckAPI {
   }
   async searchClaims(query) {
     if (!this.apiKey) return null;
-
-    const data = await safeFetch(
-      `${BASE_URL}/claims:search?key=${this.apiKey}&query=${enc(query)}`
-    );
-    return data?.claims || [];
+    try {
+      const data = await safeFetch(
+        `${BASE_URL}/claims:search?key=${this.apiKey}&query=${enc(query)}`
+      );
+      return data?.claims || [];
+    } catch (x) {
+      import('../utils/shortcuts/log.js').then(({ e }) =>
+        e('[GoogleFactCheck] searchClaims fail:', x.message)
+      );
+      return [];
+    }
   }
 }

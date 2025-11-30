@@ -21,11 +21,12 @@ export async function renderComments(c) {
     showLoading(c, 'Loading comments section...');
     const cfg = await getConfig();
     const origPos = window.scrollY;
+    const retries = cfg.comments?.retries ?? 5;
     await forceLoadComments();
     showLoading(c, 'Extracting comments...');
     await to(() => {}, 800);
     try {
-      const cm = await getComments();
+      const cm = await getComments(retries);
       if (cfg.scroll?.scrollBackAfterComments !== false)
         scrollBackToTop(origPos, cfg.scroll?.showScrollNotification ?? true);
       if (!cm.length) {

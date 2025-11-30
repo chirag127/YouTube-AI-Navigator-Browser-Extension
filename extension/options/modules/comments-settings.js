@@ -8,6 +8,7 @@ export class CommentsSettings {
   init() {
     const c = this.s.get().comments || {};
     this.chk('commentsEnabled', c.enabled ?? true);
+    this.set('commentsRetries', c.retries ?? 5);
     this.set('commentsLimit', c.limit || 20);
     this.chk('includeReplies', c.includeReplies ?? true);
     this.set('commentsSortBy', c.sortBy || 'top');
@@ -17,6 +18,7 @@ export class CommentsSettings {
     this.chk('highlightPinned', c.highlightPinned ?? true);
     this.a.attachToAll({
       commentsEnabled: { path: 'comments.enabled' },
+      commentsRetries: { path: 'comments.retries', transform: v => pi(v) },
       commentsLimit: { path: 'comments.limit', transform: v => pi(v) },
       includeReplies: { path: 'comments.includeReplies' },
       commentsSortBy: { path: 'comments.sortBy' },

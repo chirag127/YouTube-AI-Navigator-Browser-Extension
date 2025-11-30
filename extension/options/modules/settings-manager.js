@@ -156,6 +156,13 @@ export class SettingsManager {
         animationsEnabled: true,
         showTooltips: true,
       },
+      widget: {
+        height: 500,
+        minHeight: 200,
+        maxHeight: 1200,
+        resizable: true,
+        tabs: { summary: true, segments: true, chat: true, comments: true },
+      },
       ai: {
         apiKey: '',
         model: 'gemini-2.5-flash-lite-preview-09-2025',

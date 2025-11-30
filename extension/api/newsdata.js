@@ -9,10 +9,16 @@ export class NewsDataAPI {
   }
   async searchNews(query, language = 'en') {
     if (!this.apiKey) return null;
-
-    const data = await safeFetch(
-      `${BASE_URL}/news?apikey=${this.apiKey}&q=${enc(query)}&language=${language}`
-    );
-    return data?.results || [];
+    try {
+      const data = await safeFetch(
+        `${BASE_URL}/news?apikey=${this.apiKey}&q=${enc(query)}&language=${language}`
+      );
+      return data?.results || [];
+    } catch (x) {
+      import('../utils/shortcuts/log.js').then(({ e }) =>
+        e('[NewsData] searchNews fail:', x.message)
+      );
+      return [];
+    }
   }
 }

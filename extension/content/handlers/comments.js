@@ -52,7 +52,7 @@ class CommentsExtractor {
       e('[CE] Err int:', x);
     }
   }
-  async getComments() {
+  async getComments(retries = 1) {
     const vid = this.getCurrentVideoId();
     const cfg = await this.getConfig();
     if (!cfg.comments?.enabled) return [];
@@ -74,7 +74,7 @@ class CommentsExtractor {
       }
     }
     if (this.hasIntercepted && this.comments.length > 0) return this.comments;
-    const result = await this.fetchCommentsFromDOM();
+    const result = await this.fetchCommentsFromDOM(retries);
     return result;
   }
   async getConfig() {
@@ -173,11 +173,9 @@ class CommentsExtractor {
       return [];
     }
   }
-  async fetchCommentsFromDOM() {
-    const maxRetries = 5;
-    const baseDelay = 800;
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      if (attempt > 1) await new Promise(r => to(r, baseDelay * attempt));
+  async fetchCommentsFromDOM(retries = 1) {
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      if (attempt > 1) await new Promise(r => to(r, 500));
       try {
         const c = [];
         const selectors = [
@@ -191,7 +189,7 @@ class CommentsExtractor {
           if (el.length > 0) break;
         }
         if (el.length === 0) {
-          e(`[CE] No comments in DOM (${attempt}/${maxRetries})`);
+          if (retries > 1) e(`[CE] No comments in DOM (${attempt}/${retries})`);
           continue;
         }
         const getText = (elm, sels) => {
@@ -302,4 +300,4 @@ class CommentsExtractor {
   }
 }
 const ex = new CommentsExtractor();
-export const getComments = ex.getComments.bind(ex);
+export const getComments = (retries = 1) => ex.getComments(retries);

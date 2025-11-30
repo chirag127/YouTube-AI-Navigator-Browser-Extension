@@ -128,12 +128,14 @@
   overflow-y: auto;
   overflow-x: hidden;
   padding: 16px;
+  padding-bottom: 24px;
   min-height: 200px;
-  max-height: 70vh;
+  height: 500px;
   font-size: 14px;
   line-height: 1.6;
   animation: fadeIn 0.4s ease-in;
   scroll-behavior: smooth;
+  position: relative;
 }
 
 @keyframes fadeIn {
@@ -705,6 +707,31 @@
 /* Smooth scrolling animations */
 html {
   scroll-behavior: smooth;
+}
+
+/* Resize Handle */
+.yt-ai-resize-handle {
+  height: 12px;
+  background: linear-gradient(180deg, transparent 0%, var(--yt-ai-border) 50%, transparent 100%);
+  cursor: ns-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--yt-ai-text-secondary);
+  font-size: 16px;
+  user-select: none;
+  transition: all 0.2s ease;
+  border-top: 1px solid var(--yt-ai-border);
+}
+
+.yt-ai-resize-handle:hover {
+  background: linear-gradient(180deg, transparent 0%, var(--yt-ai-accent) 50%, transparent 100%);
+  color: var(--yt-ai-accent);
+}
+
+.yt-ai-resize-handle:active {
+  background: var(--yt-ai-accent);
+  color: white;
 }
 
 /* Scroll notification animations */

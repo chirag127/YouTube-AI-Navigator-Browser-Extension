@@ -15,6 +15,7 @@ import { TranscriptSettings } from './modules/transcript-settings.js';
 import { CommentsSettings } from './modules/comments-settings.js';
 import { MetadataSettings } from './modules/metadata-settings.js';
 import { ScrollSettings } from './modules/scroll-settings.js';
+import { WidgetSettings } from './modules/widget-settings.js';
 import { on, id as i } from '../utils/shortcuts/dom.js';
 import { e } from '../utils/shortcuts/log.js';
 import { vl as vs } from '../utils/shortcuts/core.js';
@@ -58,6 +59,7 @@ on(document, 'DOMContentLoaded', async () => {
     comments: new CommentsSettings(settingsManager, autoSave),
     metadata: new MetadataSettings(settingsManager, autoSave),
     scroll: new ScrollSettings(settingsManager, autoSave),
+    widget: new WidgetSettings(settingsManager, notificationManager),
   };
   vs(modules).forEach(m => {
     try {

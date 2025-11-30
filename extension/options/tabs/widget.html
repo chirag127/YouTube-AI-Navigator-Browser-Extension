@@ -1,0 +1,86 @@
+<div class="settings-section">
+  <h2>Widget Configuration</h2>
+  <p class="section-description">Customize widget appearance, size, and visible tabs</p>
+
+  <div class="setting-group">
+    <label class="setting-label">
+      <span>Widget Height (px)</span>
+      <input
+        type="number"
+        id="widget-height"
+        min="200"
+        max="1200"
+        step="50"
+        class="setting-input"
+      />
+    </label>
+    <p class="setting-hint">Default content area height (200-1200px)</p>
+  </div>
+
+  <div class="setting-group">
+    <label class="setting-label">
+      <span>Minimum Height (px)</span>
+      <input
+        type="number"
+        id="widget-min-height"
+        min="100"
+        max="600"
+        step="50"
+        class="setting-input"
+      />
+    </label>
+    <p class="setting-hint">Minimum resizable height</p>
+  </div>
+
+  <div class="setting-group">
+    <label class="setting-label">
+      <span>Maximum Height (px)</span>
+      <input
+        type="number"
+        id="widget-max-height"
+        min="400"
+        max="2000"
+        step="100"
+        class="setting-input"
+      />
+    </label>
+    <p class="setting-hint">Maximum resizable height</p>
+  </div>
+
+  <div class="setting-group">
+    <label class="setting-checkbox">
+      <input type="checkbox" id="widget-resizable" />
+      <span>Enable Resizable Widget</span>
+    </label>
+    <p class="setting-hint">Allow dragging resize handle to adjust height</p>
+  </div>
+
+  <div class="setting-group">
+    <h3>Visible Tabs</h3>
+    <p class="setting-hint">Select which tabs to display in the widget</p>
+
+    <label class="setting-checkbox">
+      <input type="checkbox" id="widget-tab-summary" />
+      <span>Summary Tab</span>
+    </label>
+
+    <label class="setting-checkbox">
+      <input type="checkbox" id="widget-tab-segments" />
+      <span>Segments Tab</span>
+    </label>
+
+    <label class="setting-checkbox">
+      <input type="checkbox" id="widget-tab-chat" />
+      <span>Chat Tab</span>
+    </label>
+
+    <label class="setting-checkbox">
+      <input type="checkbox" id="widget-tab-comments" />
+      <span>Comments Tab</span>
+    </label>
+  </div>
+
+  <div class="setting-actions">
+    <button id="widget-reset" class="btn-secondary">Reset to Defaults</button>
+  </div>
+</div>

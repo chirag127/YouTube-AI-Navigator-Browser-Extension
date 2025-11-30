@@ -58,6 +58,27 @@
   </div>
 
   <div class="card">
+    <h3>Comments</h3>
+    <div class="form-group checkbox-row">
+      <div class="checkbox-label">
+        <label for="commentsEnabled">Enable Comments Analysis</label>
+        <p class="help-text">Extract and analyze video comments.</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="commentsEnabled" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="commentsRetries">Extraction Retry Attempts</label>
+      <input type="number" id="commentsRetries" class="form-input" min="1" max="10" value="5" />
+      <p class="help-text">
+        Number of retry attempts when extracting comments from DOM (1-10, default: 5).
+      </p>
+    </div>
+  </div>
+
+  <div class="card">
     <h3>Automation</h3>
     <div class="form-group checkbox-row">
       <div class="checkbox-label">

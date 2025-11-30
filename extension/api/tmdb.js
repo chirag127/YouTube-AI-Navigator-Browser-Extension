@@ -9,24 +9,37 @@ export class TmdbAPI {
   }
   async searchMovie(query) {
     if (!this.apiKey) return null;
-
-    const data = await safeFetch(
-      `${BASE_URL}/search/movie?api_key=${this.apiKey}&query=${enc(query)}`
-    );
-    return data?.results?.[0] || null;
+    try {
+      const data = await safeFetch(
+        `${BASE_URL}/search/movie?api_key=${this.apiKey}&query=${enc(query)}`
+      );
+      return data?.results?.[0] || null;
+    } catch (x) {
+      import('../utils/shortcuts/log.js').then(({ e }) => e('[TMDB] searchMovie fail:', x.message));
+      return null;
+    }
   }
   async searchTV(query) {
     if (!this.apiKey) return null;
-
-    const data = await safeFetch(
-      `${BASE_URL}/search/tv?api_key=${this.apiKey}&query=${enc(query)}`
-    );
-    return data?.results?.[0] || null;
+    try {
+      const data = await safeFetch(
+        `${BASE_URL}/search/tv?api_key=${this.apiKey}&query=${enc(query)}`
+      );
+      return data?.results?.[0] || null;
+    } catch (x) {
+      import('../utils/shortcuts/log.js').then(({ e }) => e('[TMDB] searchTV fail:', x.message));
+      return null;
+    }
   }
   async getDetails(id, type = 'movie') {
     if (!this.apiKey || !id) return null;
-    return await safeFetch(
-      `${BASE_URL}/${type}/${id}?api_key=${this.apiKey}&append_to_response=credits,similar`
-    );
+    try {
+      return await safeFetch(
+        `${BASE_URL}/${type}/${id}?api_key=${this.apiKey}&append_to_response=credits,similar`
+      );
+    } catch (x) {
+      import('../utils/shortcuts/log.js').then(({ e }) => e('[TMDB] getDetails fail:', x.message));
+      return null;
+    }
   }
 }

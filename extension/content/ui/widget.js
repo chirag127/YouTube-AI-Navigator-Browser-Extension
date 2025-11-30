@@ -9,12 +9,17 @@ const { qs: $, id: ge, on, el: ce, wfe, mo } = await import(gu('utils/shortcuts/
 const { e } = await import(gu('utils/shortcuts/log.js'));
 const { si, ci, to } = await import(gu('utils/shortcuts/global.js'));
 const { log } = await import(gu('utils/shortcuts/core.js'));
+const { sg, ss } = await import(gu('utils/shortcuts/storage.js'));
 
 let widgetContainer = null,
   resizeObserver = null,
   containerObserver = null,
   positionCheckInterval = null,
-  lastKnownContainer = null;
+  lastKnownContainer = null,
+  widgetConfig = null,
+  isResizing = false,
+  startY = 0,
+  startHeight = 0;
 
 function updateWidgetHeight() {
   try {
@@ -86,6 +91,8 @@ function startPositionMonitoring() {
 
 export async function injectWidget() {
   try {
+    const cfg = await loadWidgetConfig();
+    widgetConfig = cfg;
     const ex = ge('yt-ai-master-widget');
     if (ex) {
       if (isWidgetProperlyVisible(ex)) {
@@ -93,6 +100,7 @@ export async function injectWidget() {
         const c = ex.parentElement;
         lastKnownContainer = c;
         ensureWidgetAtTop(c);
+        applyWidgetConfig();
         setupObservers(c);
         startPositionMonitoring();
         log('Widget already properly visible, reusing existing');
@@ -135,14 +143,98 @@ export async function injectWidget() {
     widgetContainer = ce('div');
     widgetContainer.id = 'yt-ai-master-widget';
     widgetContainer.style.order = '-9999';
-    widgetContainer.innerHTML = createWidgetHTML();
+    widgetContainer.innerHTML = createWidgetHTML(cfg);
     sc.insertBefore(widgetContainer, sc.firstChild);
     lastKnownContainer = sc;
+    applyWidgetConfig();
     setupWidgetLogic(widgetContainer);
     setupObservers(sc);
     startPositionMonitoring();
   } catch (err) {
     e('Err:injectWidget', err);
+  }
+}
+
+async function loadWidgetConfig() {
+  try {
+    const r = await sg('config');
+    return (
+      r.config?.widget || {
+        height: 500,
+        minHeight: 200,
+        maxHeight: 1200,
+        resizable: true,
+        tabs: { summary: true, segments: true, chat: true, comments: true },
+      }
+    );
+  } catch (err) {
+    e('Err:loadWidgetConfig', err);
+    return {
+      height: 500,
+      minHeight: 200,
+      maxHeight: 1200,
+      resizable: true,
+      tabs: { summary: true, segments: true, chat: true, comments: true },
+    };
+  }
+}
+
+function applyWidgetConfig() {
+  try {
+    if (!widgetContainer || !widgetConfig) return;
+    const ca = $('#yt-ai-content-area', widgetContainer);
+    if (ca) ca.style.height = `${widgetConfig.height}px`;
+    const rh = $('#yt-ai-resize-handle', widgetContainer);
+    if (rh) rh.style.display = widgetConfig.resizable ? 'block' : 'none';
+  } catch (err) {
+    e('Err:applyWidgetConfig', err);
+  }
+}
+
+async function saveWidgetHeight(h) {
+  try {
+    const r = await sg('config');
+    const cfg = r.config || {};
+    cfg.widget = cfg.widget || {};
+    cfg.widget.height = h;
+    await ss({ config: cfg });
+  } catch (err) {
+    e('Err:saveWidgetHeight', err);
+  }
+}
+
+function setupResizeHandle(c) {
+  try {
+    const rh = $('#yt-ai-resize-handle', c);
+    if (!rh || !widgetConfig?.resizable) return;
+    on(rh, 'mousedown', ev => {
+      ev.preventDefault();
+      isResizing = true;
+      startY = ev.clientY;
+      const ca = $('#yt-ai-content-area', c);
+      startHeight = ca ? ca.offsetHeight : widgetConfig.height;
+      document.body.style.cursor = 'ns-resize';
+      document.body.style.userSelect = 'none';
+    });
+    on(document, 'mousemove', ev => {
+      if (!isResizing) return;
+      ev.preventDefault();
+      const dy = ev.clientY - startY;
+      let nh = startHeight + dy;
+      nh = Math.max(widgetConfig.minHeight, Math.min(widgetConfig.maxHeight, nh));
+      const ca = $('#yt-ai-content-area', c);
+      if (ca) ca.style.height = `${nh}px`;
+    });
+    on(document, 'mouseup', async () => {
+      if (!isResizing) return;
+      isResizing = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      const ca = $('#yt-ai-content-area', c);
+      if (ca) await saveWidgetHeight(ca.offsetHeight);
+    });
+  } catch (err) {
+    e('Err:setupResizeHandle', err);
   }
 }
 
@@ -163,6 +255,7 @@ function setupWidgetLogic(c) {
         }
       });
     }
+    setupResizeHandle(c);
     initTabs(c);
     attachEventListeners(c);
   } catch (err) {

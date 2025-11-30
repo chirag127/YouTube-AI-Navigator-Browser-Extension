@@ -1,23 +1,9 @@
 import { cwr as cw } from '../utils/shortcuts/chrome.js';
 import { am, ajn, af } from '../utils/shortcuts/array.js';
 import { ce } from '../utils/shortcuts/dom.js';
+import { LM } from '../utils/shortcuts/segments.js';
 
 const API_BASE = 'https://sponsor.ajay.app/api';
-const LM = {
-  sponsor: 'Sponsor',
-  selfpromo: 'Self Promotion',
-  interaction: 'Interaction Reminder',
-  intro: 'Intro',
-  outro: 'Outro',
-  preview: 'Preview',
-  music_offtopic: 'Music: Off-Topic',
-  poi_highlight: 'Highlight',
-  filler: 'Filler',
-  exclusive_access: 'Exclusive Access',
-  hook: 'Hook',
-  chapter: 'Chapter',
-  content: 'Content',
-};
 
 async function _gh(vid) {
   const e = new TextEncoder();
@@ -40,6 +26,8 @@ const CATEGORIES = [
   'poi_highlight',
   'filler',
   'exclusive_access',
+  'chapter',
+  'content',
 ];
 
 export async function fetchSegments(vid) {
