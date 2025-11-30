@@ -1,20 +1,22 @@
+import { describe, it, expect, beforeEach, vi, test } from 'vitest';
 import { comments } from '../../../extension/api/prompts/comments.js';
 import { sg } from '../../../extension/utils/shortcuts/storage.js';
+import { detectSpam } from '../../../extension/utils/patterns/comments.js';
 
 // Mock storage
-jest.mock('../../../extension/utils/shortcuts/storage.js', () => ({
-  sg: jest.fn(),
+vi.mock('../../../extension/utils/shortcuts/storage.js', () => ({
+  sg: vi.fn(),
 }));
 
 // Mock utils
-jest.mock('../../../extension/utils/shortcuts/log.js', () => ({
-  e: jest.fn(),
+vi.mock('../../../extension/utils/shortcuts/log.js', () => ({
+  e: vi.fn(),
 }));
 
-jest.mock('../../../extension/utils/patterns/comments.js', () => ({
-  analyzeSentiment: jest.fn(() => 'positive'),
-  detectSpam: jest.fn(() => false),
-  isQuestion: jest.fn(() => false),
+vi.mock('../../../extension/utils/patterns/comments.js', () => ({
+  analyzeSentiment: vi.fn(() => 'positive'),
+  detectSpam: vi.fn(() => false),
+  isQuestion: vi.fn(() => false),
 }));
 
 describe('Comments Prompt Generator', () => {
@@ -24,7 +26,7 @@ describe('Comments Prompt Generator', () => {
   ];
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('should return empty string for empty comment list', async () => {
@@ -40,7 +42,6 @@ describe('Comments Prompt Generator', () => {
       },
     });
 
-    const { detectSpam } = require('../../../extension/utils/patterns/comments.js');
     detectSpam.mockImplementation(text => text === 'Spam comment');
 
     const result = await comments(mockComments);
