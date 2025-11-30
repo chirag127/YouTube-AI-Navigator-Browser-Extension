@@ -62,6 +62,12 @@ Load `extension/` folder in Chrome as unpacked extension.
 2. **Genius Lyrics** - Music videos only
 3. **Speech-to-Text** - Gemini audio transcription fallback
 
+## Comment Extraction Strategies (Priority Order)
+
+1. **Initial Data** - Extracts comments from ytInitialData before page load
+2. **API Interception** - Captures YouTube API responses for real-time comments
+3. **DOM Scraping** - Fallback to scraping rendered comment elements with dynamic selectors
+
 ## APIs Used
 
 | Service | Purpose                    | Key Required |

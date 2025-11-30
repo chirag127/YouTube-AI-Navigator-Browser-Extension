@@ -75,12 +75,22 @@ export class ScrollManager {
     while (el < max) {
       const ce = $$('ytd-comment-thread-renderer');
       if (ce.length > 0) {
-        return true;
+        let loaded = false;
+        for (let i = 0; i < Math.min(ce.length, 5); i++) {
+          const c = ce[i];
+          const a = c.querySelector('#author-text')?.textContent?.trim();
+          const t = c.querySelector('#content-text')?.textContent?.trim();
+          if (a && t) {
+            loaded = true;
+            break;
+          }
+        }
+        if (loaded) return true;
       }
       await this.waitForScroll(int);
       el += int;
     }
-    w('[SM] Timeout');
+    w('[SM] Timeout waiting for comments to load');
     return false;
   }
   async scrollToElement(sel, opt = {}) {

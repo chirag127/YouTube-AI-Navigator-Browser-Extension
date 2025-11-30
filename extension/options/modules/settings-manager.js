@@ -163,6 +163,10 @@ export class SettingsManager {
         streamResponse: true,
         contextWindow: 'auto',
         safetySettings: 'default',
+        summaryLength: 'medium',
+        maxInsights: 8,
+        maxFAQ: 5,
+        includeTimestamps: true,
       },
       automation: {
         autoAnalyze: true,

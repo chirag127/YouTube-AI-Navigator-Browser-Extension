@@ -18,7 +18,43 @@ export class GeminiService {
     return this.models.fetch();
   }
   async chatWithVideo(q, c, m = null, md = null) {
-    return this.generateContent(prompts.chat(q, c, md), m);
+    const ctx = {
+      transcript: c,
+      metadata: md || {},
+      comments: [],
+      lyrics: null,
+      sponsorBlockSegments: md?.sponsorBlockSegments || [],
+    };
+    const p = `
+Role: AI assistant for YouTube video.
+
+${this._buildCtx(ctx)}
+
+User Question: ${q}
+
+Instructions:
+- Answer ONLY from video context.
+- Reference timestamps [MM:SS] when relevant.
+- SponsorBlock segments = VERIFIED GROUND TRUTH.
+- If answer not in video, state clearly.
+`;
+    return this.generateContent(p, m);
+  }
+  _buildCtx(ctx) {
+    let s = `Video: ${ctx.metadata?.title || 'Unknown'}\n`;
+    s += `Channel: ${ctx.metadata?.author || 'Unknown'}\n`;
+    if (ctx.metadata?.description) s += `Description: ${ctx.metadata.description.substring(0, 500)}...\n`;
+    if (ctx.sponsorBlockSegments?.length) {
+      s += '\nSponsorBlock Segments (VERIFIED):\n';
+      ctx.sponsorBlockSegments.forEach(seg => {
+        const st = Math.floor(seg.start / 60);
+        const ss = Math.floor(seg.start % 60);
+        const et = Math.floor(seg.end / 60);
+        const es = Math.floor(seg.end % 60);
+        s += `- [${seg.category}] ${st}:${('00' + ss).slice(-2)} - ${et}:${('00' + es).slice(-2)}\n`;
+      });
+    }
+    return s;
   }
   async analyzeCommentSentiment(c, m = null) {
     if (!c || !c.length) {
@@ -34,16 +70,29 @@ export class GeminiService {
       const s = this._extractSection(r, 'Summary');
       const i = this._extractSection(r, 'Key Insights');
       const f = this._extractSection(r, 'FAQ');
+      const ts = this._extractTimestamps(s);
       return {
         summary: s || r,
         insights: i || '',
         faq: f || '',
-        timestamps: [],
+        timestamps: ts,
       };
     } catch (x) {
       e('error:generateComprehensiveAnalysis fail:', x);
       throw x;
     }
+  }
+  _extractTimestamps(t) {
+    if (!t) return [];
+    const r = /\[(\d{1,2}):(\d{2})\]/g;
+    const ts = [];
+    let m;
+    while ((m = r.exec(t)) !== null) {
+      const min = parseInt(m[1], 10);
+      const sec = parseInt(m[2], 10);
+      ts.push(min * 60 + sec);
+    }
+    return [...new Set(ts)].sort((a, b) => a - b);
   }
   async extractSegments(ctx) {
     try {

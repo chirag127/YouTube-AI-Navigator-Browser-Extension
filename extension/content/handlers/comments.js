@@ -214,12 +214,27 @@ class CommentsExtractor {
           if (c.length >= 20) break;
           const elm = el[i];
           try {
-            const a = getText(elm, ['#author-text', '#author-text yt-formatted-string', '[author]']);
-            const t = getText(elm, ['#content-text', '#content-text yt-formatted-string', '[content]']);
-            const lk = getText(elm, ['#vote-count-middle', '#vote-count-left', '#vote-count']) || '0';
+            const a = getText(elm, [
+              '#author-text',
+              '#author-text yt-formatted-string',
+              '[author]',
+            ]);
+            const t = getText(elm, [
+              '#content-text',
+              '#content-text yt-formatted-string',
+              '[content]',
+            ]);
+            const lk =
+              getText(elm, ['#vote-count-middle', '#vote-count-left', '#vote-count']) || '0';
             const pt = getText(elm, ['#published-time-text', '#published-time']);
             if (a && t) {
-              c.push({ id: elm.id || `dom_${i}`, author: a, text: t, likes: lk, publishedTime: pt });
+              c.push({
+                id: elm.id || `dom_${i}`,
+                author: a,
+                text: t,
+                likes: lk,
+                publishedTime: pt,
+              });
             } else {
               e(`Failed to extract comment ${i + 1}: missing author or text`);
             }
