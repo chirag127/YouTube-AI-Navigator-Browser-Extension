@@ -40,16 +40,16 @@ export const segments = context => {
        - **FORBIDDEN**: Do NOT include raw transcript text or direct quotes
        - **REQUIRED**: Summarize the topic/content in your own words
        - Focus on WHAT is being discussed, not HOW it's being said
-    3. **JSON FORMAT**: Use SHORT keys (S, SP, UP, IR, etc.) for labels in the JSON.
+    3. **JSON FORMAT**: Use EXACT SponsorBlock API category names (sponsor, selfpromo, interaction, intro, outro, preview, hook, filler, music_offtopic, poi_highlight, exclusive_access, chapter, content) for the "l" field.
     4. **OUTPUT FORMAT**: Return ONLY the JSON object. NO markdown code blocks, NO explanations, NO additional text.
     5. FULL VIDEO LABEL RULE:
        - Calculate the total duration of the video based on the transcript.
-       - If a single category (e.g., Sponsor, Self Promotion, etc.) occupies MORE THAN 50% of the video's total duration:
-         - Set "fullVideoLabel" to that category's code (e.g., "S")
+       - If a single category occupies MORE THAN 50% of the video's total duration:
+         - Set "fullVideoLabel" to that category's EXACT API name (e.g., "sponsor", "exclusive_access")
          - **DO NOT create segments for that specific category** (the fullVideoLabel covers it)
-         - **ONLY create segments for OTHER categories** (e.g., if full video is Sponsor, still mark Intermissions or Self Promotion if they exist)
+         - **ONLY create segments for OTHER categories** (e.g., if full video is sponsor, still mark intro or selfpromo)
        - If NO category exceeds 50%, set "fullVideoLabel" to null
-       - Many videos are completely sponsored by one company - these should use fullVideoLabel: "S"
+       - Many videos are completely sponsored - these should use fullVideoLabel: "sponsor"
     6. SPONSORBLOCK REFERENCE (STRICT ADHERENCE):
        - **Community Segments (SponsorBlock) are VERIFIED GROUND TRUTH** - they have been confirmed by multiple users
        - IF Community Segments are provided:
@@ -60,19 +60,28 @@ export const segments = context => {
        - IF NOT provided: Analyze transcript independently to identify all categories
        - Include Chapter titles from video description if available
 
-    Categories(LABEL_CODE):
-    - Sponsor(S): Part of a video promoting a product or service not directly related to the creator. The creator will receive payment or compensation in the form of money or free products. If the entire video is about the product or service, use a Full Video Label.
-    - Self Promotion/Unpaid Promotion(SP): Promoting a product or service that is directly related to the creator themselves. This includes merchandise, monetized platforms, charity drives, free shout outs for products or other people they like. This category merges both paid and unpaid self-promotion to match SponsorBlock API structure.
-    - Interaction Reminder(IR): Explicit reminders to like, subscribe or interact with them on any paid or free platform(s) (e.g. click on a video). If about something specific it should be Self Promotion instead. Can be bundled with Self Promotion into Endcards/Credits.
-    - Intermission/Intro Animation(I): Segments typically found at the start of a video that include an animation, still frame or clip which are also seen in other videos by the same creator. This can include livestream pauses with no content (looping animations or chat windows) and Copyright/ Fair Use disclaimers. Do not include disclaimers to protect viewers, preparation or cleanup clips. Do not include skits, time-lapses, slow-motion clips (possibly Tangents/Jokes).
-    - Endcards/Credits(EC): Typically near or at the end of the video when the credits pop up and/or endcards are shown. This should not be based solely on the YouTube annotations. Interaction Reminder or Self Promotion can be included.
-    - Preview/Recap(P): Collection of clips that show what is coming up in in this video or other videos in a series where all information is repeated later in the video. Do not include recap clips that only appear in the video or clips from a recapped video that is not directly linked to the current video.
-    - Hook/Greetings(G): Narrated trailers for the upcoming video, greetings and goodbyes. Do not include conclusions with information.
-    - Tangents/Jokes(T): Tangents/ Jokes is only for tangential scenes that are not required to understand the main content of the video. This can also include: Timelapses/ B-Roll, Fake Sponsors and slow-motion clips that do not provide any context or are used as replays or B-roll.
-    - Music: Non-Music Section(NM): Only to be used on videos which feature music as the primary content. Segments should only include music not present in the official or Spotify music release. Make sure to only include complete silence.
-    - Exclusive Access(EA): (Full Video Label Only) When the creator showcases a product, service or location that they've received free or subsidised access to in the video that cannot be completely removed by cuts.
-    - Highlight(H)
-    - Content(C): The primary content of the video. Use this for sections that do not fit into any other specific category.
+    SPONSORBLOCK API CATEGORIES (USE EXACT LOWERCASE NAMES):
+    - **sponsor**: Paid promotion of product/service not directly related to creator. If entire video is sponsored, use fullVideoLabel.
+    - **selfpromo**: Creator's own products, merchandise, monetized platforms, charity drives, unpaid shout-outs.
+    - **interaction**: Explicit reminders to like, subscribe, follow, or interact. If about something specific, use selfpromo.
+    - **intro**: Intro animations, still frames, clips seen in other videos. Includes livestream pauses, copyright disclaimers.
+    - **outro**: Endcards/credits near video end. Can include interaction or selfpromo.
+    - **preview**: Clips showing what's coming up where information is repeated later. Do NOT include unique recaps.
+    - **hook**: Narrated trailers, greetings, goodbyes. Do NOT include conclusions with new information.
+    - **filler**: Tangential scenes not required for understanding. Includes time-lapses, B-roll, fake sponsors, slow-motion replays.
+    - **music_offtopic**: (Music videos only) Non-music sections not in official release. Only complete silence or off-topic.
+    - **poi_highlight**: (Point of Interest) Specific highlight moment where start = end time.
+    - **exclusive_access**: (Full Video Label Only) Showcasing product/service/location with free/subsidized access.
+    - **chapter**: Chapter markers for navigation.
+    - **content**: Primary video content not fitting other categories.
+
+    CATEGORY DETECTION KEYWORDS:
+    - **sponsor**: "sponsored by", "thanks to [brand]", "partnered with", "brought to you by"
+    - **selfpromo**: "my course", "my merch", "check out my", "link in description", "my patreon"
+    - **interaction**: "like and subscribe", "hit the bell", "leave a comment", "smash that like"
+    - **intro**: Opening animations, channel branding, "hey guys", "welcome back"
+    - **outro**: "that's it for today", "see you next time", end screens, credits
+    - **hook**: "in today's video", "coming up", opening teasers before intro
 
     ADVANCED TIMING PREDICTION TECHNIQUES:
     1. **Speaking Rate Analysis**:
@@ -95,18 +104,20 @@ export const segments = context => {
        - Avoid cutting mid-sentence unless absolutely necessary
        - If uncertain between two possible boundaries, choose the one that creates more balanced segment lengths
 
-    JSON Format:
+    JSON Format (CRITICAL - Use EXACT SponsorBlock API category names):
     {
         "segments": [
             {
             "s": number (start sec),
             "e": number (end sec, use ${context.metadata?.lengthSeconds || -1} if unknown),
-            "l": "LABEL_CODE",
+            "l": "sponsor" | "selfpromo" | "interaction" | "intro" | "outro" | "preview" | "hook" | "filler" | "music_offtopic" | "poi_highlight" | "exclusive_access" | "chapter" | "content",
             "t": "Title",
             "d": "Description"
         }],
-        "fullVideoLabel": "LABEL_CODE" | null
+        "fullVideoLabel": "sponsor" | "selfpromo" | "exclusive_access" | null
     }
+
+    VALID CATEGORY VALUES (copy exactly): sponsor, selfpromo, interaction, intro, outro, preview, hook, filler, music_offtopic, poi_highlight, exclusive_access, chapter, content
 
     Transcript:
     ${transcript}
