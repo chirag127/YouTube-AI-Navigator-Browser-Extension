@@ -43,7 +43,8 @@ Instructions:
   _buildCtx(ctx) {
     let s = `Video: ${ctx.metadata?.title || 'Unknown'}\n`;
     s += `Channel: ${ctx.metadata?.author || 'Unknown'}\n`;
-    if (ctx.metadata?.description) s += `Description: ${ctx.metadata.description.substring(0, 500)}...\n`;
+    if (ctx.metadata?.description)
+      s += `Description: ${ctx.metadata.description.substring(0, 500)}...\n`;
     if (ctx.sponsorBlockSegments?.length) {
       s += '\nSponsorBlock Segments (VERIFIED):\n';
       ctx.sponsorBlockSegments.forEach(seg => {

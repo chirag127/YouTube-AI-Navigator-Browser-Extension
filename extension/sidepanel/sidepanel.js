@@ -159,7 +159,13 @@ async function analyzeVideo(rc = 0) {
       w('Segment classification failed:', x);
       renderTranscript(ts.map(t => ({ ...t, label: null })));
     }
-    const cfg = await sl.get(['summaryLength', 'targetLanguage', 'maxInsights', 'maxFAQ', 'includeTimestamps']);
+    const cfg = await sl.get([
+      'summaryLength',
+      'targetLanguage',
+      'maxInsights',
+      'maxFAQ',
+      'includeTimestamps',
+    ]);
     const so = {
       summaryLength: cfg.summaryLength || 'medium',
       language: cfg.targetLanguage || 'en',
@@ -168,7 +174,10 @@ async function analyzeVideo(rc = 0) {
       includeTimestamps: cfg.includeTimestamps !== false,
     };
     setStatus('loading', 'Generating summary...');
-    const an = await gs.generateComprehensiveAnalysis({ transcript: ctx, metadata: md, comments: [], lyrics: null, sponsorBlockSegments: [] }, so);
+    const an = await gs.generateComprehensiveAnalysis(
+      { transcript: ctx, metadata: md, comments: [], lyrics: null, sponsorBlockSegments: [] },
+      so
+    );
     await renderMd(an.summary, sc);
     setStatus('loading', 'Analyzing comments...');
     const cr = await ct.sendMessage(tab.id, { action: 'GET_COMMENTS' }).catch(x => {
