@@ -44,14 +44,18 @@ export const handleGetVideoData = async req => {
         }
         break;
       case 'transcript':
-        r = await handleGetTranscript({ videoId, lang: options.lang || 'en' });
+        r = await new Promise((resolve) => {
+          handleGetTranscript({ videoId, lang: options.lang || 'en' }, resolve);
+        });
         if (r.success) {
-          await setCache(videoId, dataType, r.segments);
-          return { success: true, data: r.segments, fromCache: false };
+          await setCache(videoId, dataType, r.transcript || r.segments);
+          return { success: true, data: r.transcript || r.segments, fromCache: false };
         }
         break;
       case 'comments':
-        r = await handleGetComments({ videoId, limit: options.limit || 20 });
+        r = await new Promise((resolve) => {
+          handleGetComments({ videoId, limit: options.limit || 20 }, resolve);
+        });
         if (r.success) {
           await setCache(videoId, dataType, r.comments);
           return { success: true, data: r.comments, fromCache: false };
