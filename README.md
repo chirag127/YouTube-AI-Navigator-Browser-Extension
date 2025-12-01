@@ -1,179 +1,254 @@
-# YouTube AI Navigator
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/chirag127/chirag127/main/assets/repository_placeholders/youtube-ai-navigator.png" alt="YouTube AI Navigator Hero Banner" width="800"/>
+  <a href="https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension">
+    <img src="https://raw.githubusercontent.com/chirag127/YouTube-AI-Navigator-Browser-Extension/main/.github/assets/hero-banner.png" alt="YouTube AI Navigator Browser Extension Hero Banner" width="800">
+  </a>
 </p>
 
 <p align="center">
-    <a href="https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/chirag127/YouTube-AI-Navigator-Browser-Extension/ci.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white" alt="Build Status"></a>
-    <a href="https://codecov.io/gh/chirag127/YouTube-AI-Navigator-Browser-Extension"><img src="https://img.shields.io/codecov/c/github/chirag127/YouTube-AI-Navigator-Browser-Extension?style=flat-square&logo=codecov&logoColor=white" alt="Code Coverage"></a>
-    <img src="https://img.shields.io/badge/TypeScript-Strict-blue?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript">
-    <img src="https://img.shields.io/badge/Framework-WXT-orange?style=flat-square&logo=googlechrome&logoColor=white" alt="WXT Framework">
-    <img src="https://img.shields.io/badge/Linter-Biome-blueviolet?style=flat-square&logo=biome&logoColor=white" alt="Biome Linter">
-    <a href="https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/blob/main/LICENSE"><img src="https://img.shields.io/github/license/chirag127/YouTube-AI-Navigator-Browser-Extension?style=flat-square&color=black" alt="License"></a>
-    <a href="https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/stargazers"><img src="https://img.shields.io/github/stars/chirag127/YouTube-AI-Navigator-Browser-Extension?style=flat-square&logo=github&logoColor=white" alt="GitHub Stars"></a>
+  <a href="https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/actions/workflows/ci.yml">
+    <img src="https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/actions/workflows/ci.yml/badge.svg?branch=main&event=push&style=flat-square" alt="Build Status">
+  </a>
+  <a href="https://codecov.io/gh/chirag127/YouTube-AI-Navigator-Browser-Extension" target="_blank">
+    <img src="https://codecov.io/gh/chirag127/YouTube-AI-Navigator-Browser-Extension/branch/main/graph/badge.svg?token=YOUR_CODECOV_TOKEN_HERE&style=flat-square" alt="Code Coverage">
+  </a>
+  <img src="https://img.shields.io/badge/Tech-TypeScript%20%7C%20WXT%20%7C%20Gemini%20AI-blueviolet?style=flat-square" alt="Tech Stack">
+  <img src="https://img.shields.io/badge/Lint/Format-Biome-00B3A6?style=flat-square" alt="Lint/Format">
+  <a href="https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg?style=flat-square" alt="License">
+  </a>
+  <a href="https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/stargazers">
+    <img src="https://img.shields.io/github/stars/chirag127/YouTube-AI-Navigator-Browser-Extension?style=flat-square&label=Stars&color=yellow" alt="GitHub Stars">
+  </a>
 </p>
 
-<p align="center">
-  <strong>Apex-grade, privacy-first browser extension for real-time, AI-powered YouTube analysis.</strong>
-  <br />
-  Features Gemini summaries, smart transcripts, SponsorBlock, and advanced comment analysis. Privacy-first, zero-config.
-</p>
+<h3 align="center">Star ⭐ this Repo! Your support fuels innovation!</h3>
 
-<p align="center">
-  <a href="https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/stargazers"><strong>Star ⭐ this Repo</strong></a> if you find it useful!
-</p>
+--- 
 
----
+## 🚀 YouTube-AI-Navigator-Browser-Extension
 
-## Table of Contents
+YouTube-AI-Navigator-Browser-Extension is an apex-grade, privacy-first browser extension designed for real-time, AI-powered YouTube content analysis. It provides intelligent summaries using Google Gemini, smart interactive transcripts, integrated SponsorBlock functionality, and advanced comment analysis to enhance your viewing and research experience.
 
-- [✨ Key Features](#-key-features)
-- [🏛️ Architecture](#️-architecture)
-- [🚀 Getting Started](#-getting-started)
-- [🤖 AI Agent Directives](#-ai-agent-directives)
-- [🤝 Contributing](#-contributing)
-- [🛡️ Security Policy](#️-security-policy)
-- [📄 License](#-license)
+This extension empowers users with unparalleled control over YouTube content, offering deep insights, efficient navigation, and a cleaner viewing environment, all while upholding a strict privacy-first policy with zero-configuration overhead.
 
-## ✨ Key Features
+## 🌟 Features
 
-- **🧠 Gemini-Powered Summaries:** Get instant, concise summaries of any video, saving you hours of viewing time.
-- **💬 Smart Transcripts:** Navigate videos with searchable, time-stamped transcripts that are easy to read and reference.
-- **🚫 Integrated SponsorBlock:** Automatically skip sponsors, intros, outros, and other annoying segments.
-- **📊 Advanced Comment Analysis:** Instantly gauge sentiment and identify key topics in the comments section.
-- **🔐 Privacy First:** All processing is done to maximize your privacy. No user data is stored or tracked.
-- **⚙️ Zero-Config:** Install and go. The extension works out-of-the-box with sensible defaults.
+*   **AI-Powered Summaries (Gemini):** Get instant, concise summaries of YouTube videos using Google's advanced Gemini AI model, saving valuable time.
+*   **Smart Interactive Transcripts:** Seamlessly navigate video content with synchronized, searchable transcripts. Jump to any point in the video by clicking on text.
+*   **Integrated SponsorBlock:** Automatically skip sponsored segments, introductions, outros, and other non-content sections for an uninterrupted viewing experience.
+*   **Advanced Comment Analysis:** Utilize AI to categorize, summarize, and highlight key discussions within comment sections, helping you quickly gauge sentiment and find relevant information.
+*   **Privacy-First Design:** Operates with a strong commitment to user privacy, processing data locally where possible and minimizing external requests.
+*   **Zero-Configuration:** Installs and works out-of-the-box, providing powerful features without complex setup.
+*   **Real-time Analysis:** Delivers insights as you browse, making your YouTube experience more productive and enjoyable.
 
-## 🏛️ Architecture
+## 🛠️ Architecture
 
-This repository follows a strict Feature-Sliced Design (FSD) for maximum scalability and maintainability. All source code is contained within the `extension/` directory, and all tests are isolated in the `tests/` directory.
+This project adheres to the **Feature-Sliced Design (FSD)** architecture, ensuring a scalable, maintainable, and highly modular structure for browser extensions. Each feature is self-contained, promoting clear separation of concerns and ease of development.
 
-sh
-.YouTube-AI-Navigator-Browser-Extension/
-├── .github/                # GitHub Actions, issue templates, PR templates
-├── .vscode/                # VSCode settings for consistent development
-├── extension/              # PRODUCTION-ONLY ZONE: All source code
-│   ├── assets/             # Icons, fonts, and other static assets
-│   ├── entrypoints/        # Content scripts, background service workers, popups
-│   │   ├── background.ts
-│   │   └── content.ts
-│   ├── features/           # Feature-Sliced Design: Self-contained features
-│   │   ├── summary-generator/
-│   │   └── transcript-navigator/
-│   ├── services/           # Shared services (e.g., Gemini API client)
-│   ├── types/              # Global TypeScript type definitions
-│   └── wxt.config.ts       # WXT framework configuration
-├── tests/                  # VERIFICATION-ONLY ZONE: All tests and validation scripts
-│   ├── e2e/                # Playwright end-to-end tests
-│   ├── unit/               # Vitest unit tests
-│   └── scripts/            # Verification and validation scripts
-├── .gitignore
-├── LICENSE
-├── package.json
-└── README.md
+mermaid
+graph TD
+    A[Extension Root] --> B[manifest.json];
+    A --> C[src/entrypoints];
+    A --> D[src/shared];
+    A --> E[src/features];
+    A --> F[src/widgets];
+    A --> G[src/pages];
+
+    C --> C1[content.ts];
+    C --> C2[background.ts];
+    C --> C3[popup.html];
+
+    D --> D1[ui/];
+    D --> D2[lib/api/];
+    D3[lib/utils/];
+    D4[config/];
+
+    E --> E1[gemini-summary/];
+    E --> E2[transcript-viewer/];
+    E --> E3[sponsor-block/];
+    E --> E4[comment-analyzer/];
+    E --> E5[settings/];
+
+    F --> F1[PopupWidget];
+    F --> F2[ContentOverlayWidget];
+
+    G --> G1[options/];
+
+    E1 --> D;
+    E2 --> D;
+    E3 --> D;
+    E4 --> D;
+    F1 --> E;
+    F2 --> E;
 
 
-## 🚀 Getting Started
+## 📖 Table of Contents
 
-### Prerequisites
+*   [🌟 Features](#-features)
+*   [🛠️ Architecture](#%EF%B8%8F-architecture)
+*   [🤖 AI Agent Directives](#-ai-agent-directives-youtube-ai-navigator-browser-extension)
+*   [⚙️ Installation & Usage](#%EF%B8%8F-installation--usage)
+    *   [Development Setup](#development-setup)
+    *   [Building for Production](#building-for-production)
+    *   [Loading the Extension](#loading-the-extension)
+*   [🧑‍💻 Development Standards](#-development-standards)
+    *   [Principles](#principles)
+    *   [Scripts](#scripts)
+*   [🤝 Contributing](#-contributing)
+*   [📄 License](#-license)
+*   [🛡️ Security](#%EF%B8%8F-security)
+*   [🙏 Acknowledgments](#-acknowledgments)
 
-- Node.js (v20+)
-- pnpm (or npm/yarn)
+--- 
 
-### Installation & Setup
+## 🤖 AI AGENT DIRECTIVES: YouTube-AI-Navigator-Browser-Extension
 
-1.  **Clone the repository:**
-    sh
+<details>
+<summary>Expand for AI Agent Directives</summary>
+
+This section provides critical directives for AI agents, ensuring consistent development, high-quality output, and adherence to the project's architectural vision.
+
+## 1. PROJECT OVERVIEW
+*   **Project Name:** YouTube-AI-Navigator-Browser-Extension
+*   **Primary Function:** Apex-grade, privacy-first browser extension for real-time, AI-powered YouTube analysis.
+*   **Core Technologies:** WXT (Vite-powered web extension framework), TypeScript (Strict), Google Gemini API, Biome, Vitest, Playwright.
+
+## 2. ARCHITECTURAL PRINCIPLES & PATTERNS
+*   **Architectural Pattern:** **Feature-Sliced Design (FSD)**.
+    *   **Layers:** `app`, `shared`, `entities`, `features`, `widgets`, `pages`, `processes`.
+    *   **Strict Dependency Rule:** Dependencies flow downwards (e.g., `features` can depend on `entities` and `shared`, but `shared` cannot depend on `features`).
+    *   **Purpose:** Ensures strict separation of concerns, scalability, and maintainability crucial for complex browser extensions.
+*   **Design Principles:**
+    *   **SOLID:** Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion.
+    *   **DRY (Don't Repeat Yourself):** Abstract common logic, especially for API interactions and UI components.
+    *   **YAGNI (You Ain't Gonna Need It):** Implement only features that are explicitly required. Avoid over-engineering.
+    *   **Privacy-First:** All data handling and API interactions must prioritize user privacy. No telemetry without explicit consent. Local storage preference over remote where possible.
+    *   **Performance:** Optimize content script and background script execution for minimal browser impact. Debouncing, throttling, and efficient DOM manipulation are critical.
+
+## 3. CORE TECHNOLOGY STACK
+*   **Framework:** WXT (Vite-powered Web Extension Framework).
+    *   **Configuration:** `wxt.config.ts`.
+    *   **Entrypoints:** `src/entrypoints/` for background, content scripts, popups, and options pages.
+*   **Language:** TypeScript (Strict Mode).
+    *   **Linting & Formatting:** **Biome**. Enforce strict rules defined in `biome.json`.
+    *   **Type Safety:** All public interfaces and API interactions must have explicit types.
+*   **AI Integration:** Google Gemini API (`gemini-pro`).
+    *   **Client:** Utilize official Google Gemini SDKs or well-maintained community wrappers.
+    *   **Error Handling:** Implement robust retry mechanisms, rate-limit handling, and clear error messaging for all AI interactions.
+    *   **Prompt Engineering:** Store prompts versioned and externalized where possible, allowing for iterative refinement.
+*   **State Management:** Utilize native browser extension messaging (`chrome.runtime.sendMessage`) for communication between entrypoints. For complex local state, consider simple React Context or Pinia/Zustand if a UI framework is introduced for specific components.
+*   **Styling (Optional but Recommended):** TailwindCSS v4. Use for rapid UI development and maintainability.
+
+## 4. DEVELOPMENT WORKFLOW & VERIFICATION
+*   **Setup Commands:**
+    bash
+    git clone https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension.git
+    cd YouTube-AI-Navigator-Browser-Extension
+    npm install # Use npm for WXT/TS projects
+    
+*   **Build & Run Commands:**
+    *   **Development:** `npm run dev` (starts WXT dev server with HMR).
+    *   **Production Build:** `npm run build` (creates production-ready extension package).
+    *   **Extension Loading:** Load the `dist` folder as an unpacked extension in your browser.
+*   **Linting & Formatting Commands:**
+    *   **Check:** `npm run lint` (runs Biome check).
+    *   **Fix:** `npm run format` (runs Biome fix).
+    *   **Pre-commit Hook:** Ensure Biome checks are integrated via Git hooks (e.g., Husky) to maintain code quality.
+*   **Testing Commands:**
+    *   **Unit/Integration Tests:** `npm run test` (executes Vitest tests).
+    *   **End-to-End Tests:** `npm run test:e2e` (executes Playwright tests for extension interaction).
+*   **Verification Protocols:**
+    *   All new features **MUST** include corresponding unit and integration tests.
+    *   Critical user flows **MUST** be covered by E2E tests.
+    *   Code **MUST** pass all Biome linting and formatting checks before merge.
+    *   AI prompt changes **MUST** be tested against a diverse set of YouTube videos to ensure consistent, unbiased, and accurate output.
+    *   Privacy implications of any new data handling **MUST** be thoroughly reviewed.
+
+</details>
+
+--- 
+
+## ⚙️ Installation & Usage
+
+### Development Setup
+
+To get started with local development, follow these steps:
+
+1.  **Clone the Repository:**
+    bash
     git clone https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension.git
     cd YouTube-AI-Navigator-Browser-Extension
     
 
-2.  **Install dependencies:**
-    sh
-    pnpm install
+2.  **Install Dependencies:**
+    This project uses `npm` for package management.
+    bash
+    npm install
     
 
-3.  **Run the development server:**
-    sh
-    pnpm dev
+3.  **Start Development Server:**
+    WXT provides a development server with Hot Module Replacement (HMR) for rapid iteration.
+    bash
+    npm run dev
     
 
-4.  **Load the extension in your browser:**
-    - **Chrome:** Go to `chrome://extensions`, enable "Developer mode", and load the `extension/.output/chrome-mv3` directory.
-    - **Firefox:** Go to `about:debugging`, click "This Firefox", and load the `extension/.output/firefox-mv2/manifest.json` file.
+### Building for Production
 
-### Available Scripts
+To create a production-ready build of the extension:
 
-| Script | Description                                   |
-| :------- | :-------------------------------------------- |
-| `pnpm dev`   | Starts the development server with hot-reloading. |
-| `pnpm build` | Builds the extension for production.          |
-| `pnpm test`  | Runs the unit test suite (Vitest).            |
-| `pnpm lint`  | Lints and formats the codebase using Biome.   |
-| `pnpm zip`   | Zips the production builds for distribution.  |
+bash
+npm run build
 
----
+This command will generate the compiled extension files in the `dist` directory.
 
-## 🤖 AI Agent Directives
+### Loading the Extension
 
-<details>
-<summary><strong>Expand for Apex Technical Authority Instructions (2026 Standard)</strong></summary>
+Once built, you can load the extension into your browser:
 
-### SYSTEM: APEX TECHNICAL AUTHORITY & ELITE ARCHITECT (DECEMBER 2025 EDITION)
+1.  Open your browser's extension management page (e.g., `chrome://extensions` for Chrome, `about:debugging#/runtime/this-firefox` for Firefox).
+2.  Enable "Developer mode" (usually a toggle in the top right).
+3.  Click "Load unpacked" or "Load Temporary Add-on".
+4.  Navigate to the `dist` folder within your cloned repository and select it.
 
-#### 1. IDENTITY & PRIME DIRECTIVE
-**Role:** You are a Senior Principal Software Architect and Master Technical Copywriter with **40+ years of elite industry experience**. You operate with absolute precision, enforcing FAANG-level standards.
-**Context:** Current Date is **December 2025**. You are building for the 2026 standard.
-**Output Standard:** Deliver **EXECUTION-ONLY** results.
-**Philosophy:** "Zero-Defect, High-Velocity, Future-Proof."
+## 🧑‍💻 Development Standards
 
-#### 2. CONTEXT-AWARE APEX TECH STACKS (LATE 2025 STANDARDS)
-This project is identified as **SCENARIO A: WEB / APP / EXTENSION (TypeScript)**. You **MUST** adhere to this toolchain.
+### Principles
 
-*   **Stack:** **TypeScript 6.x** (Strict), **Vite 7** (via Rolldown), **WXT** (Web Extension Framework).
-*   **State Management:** **Signals** (Standardized Pattern).
-*   **Linting/Formatting:** **Biome** (Primary). Enforce 100% compliance.
-*   **Testing:** **Vitest** (Unit/Integration), **Playwright** (E2E).
+*   **SOLID:** Adhere to the Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion principles.
+*   **DRY (Don't Repeat Yourself):** Avoid redundant code. Abstract common functionalities and components.
+*   **YAGNI (You Ain't Gonna Need It):** Implement only what is necessary, avoiding premature optimization or feature creep.
+*   **Code Clarity:** Write clean, readable, and well-commented code.
+*   **Type Safety:** Leverage TypeScript's strict mode to prevent common errors and enhance code maintainability.
 
-#### 3. AI ORCHESTRATION & GEMINI PROTOCOL (DECEMBER 2025)
-This extension uses Gemini. Follow this **Fallback Cascade** for all AI integrations.
-*   **Tier 1 (Intelligence):** `gemini-3-pro` - Multimodal Reasoning.
-*   **Tier 2 (Reasoning):** `gemini-2.5-pro` - Deep analysis/STEM.
-*   **Tier 3 (Balanced):** `gemini-2.5-flash` - High Volume/Low Latency.
-*   **Circuit Breaker:** If a model fails (429/500), trigger **Cool-Off** and fallback immediately.
+### Scripts
 
-#### 4. RECURSIVE PERFECTION LOOP (THE "ZERO-ERROR" MANDATE)
-The Loop: **Analyze -> Fix -> Lint -> Test -> DECISION GATE**. Do not stop until the build is perfectly clean.
+Here are the essential development scripts:
 
-#### 5. CORE ARCHITECTURAL PRINCIPLES
-*   **SOLID MANDATE:** SRP, OCP, LSP, ISP, DIP.
-*   **ROOT DIRECTORY HYGIENE:** The root is for config ONLY. All source code is in `extension/`. All verification code is in `tests/`.
-*   **MODULARITY:** Feature-First Structure (`extension/features/summary-generator`), not by type (`controllers/`, `views/`).
-
-#### 6. COMPREHENSIVE TESTING & VERIFICATION STRATEGY
-*   **FOLDER SEPARATION PROTOCOL (STRICT):**
-    *   **Production Purity:** The `extension/` folder is a **Production-Only Zone**. It must contain **ZERO** test files or scripts.
-    *   **Total Containment:** **ALL** verification scripts, validation runners, and test specs must reside exclusively in `tests/`.
-    *   **Structure:** `tests/unit/`, `tests/e2e/`, `tests/scripts/`.
-*   **COVERAGE MANDATE:** Aim for 100% Branch Coverage. Every source file in `extension/` MUST have a corresponding test file in `tests/`.
-
-#### 7. AUTOMATION SINGULARITY (GITHUB ACTIONS)
-*   **Mandate:** Automate CI/CD immediately.
-*   **Workflows:** `ci.yml` for linting/testing, `release.yml` for semantic versioning and artifact upload.
-
-</details>
-
----
+| Script              | Description                                                                 |
+| :------------------ | :-------------------------------------------------------------------------- |
+| `npm run dev`       | Starts the development server with HMR for local development.               |
+| `npm run build`     | Compiles the extension for production, outputting to `dist/`.               |
+| `npm run lint`      | Runs Biome linter to check for code quality and style issues.               |
+| `npm run format`    | Runs Biome formatter to automatically fix code style issues.                |
+| `npm run test`      | Executes unit and integration tests using Vitest.                           |
+| `npm run test:e2e`  | Executes end-to-end tests using Playwright for browser interaction.         |
+| `npm run preview`   | Builds and serves the extension for local testing without publishing.       |
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow the guidelines outlined in [CONTRIBUTING.md](https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/blob/main/.github/CONTRIBUTING.md). We adhere to a strict code of conduct and expect all contributors to do the same.
-
-## 🛡️ Security Policy
-
-For information on reporting security vulnerabilities, please refer to our [SECURITY.md](https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/blob/main/.github/SECURITY.md) file.
+We welcome contributions! Please refer to our [CONTRIBUTING.md](https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/blob/main/.github/CONTRIBUTING.md) for guidelines on how to submit bug reports, feature requests, and pull requests.
 
 ## 📄 License
 
-This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License** - see the [LICENSE](https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/blob/main/LICENSE) file for details.
+This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) License**. See the [LICENSE](https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/blob/main/LICENSE) file for details.
+
+## 🛡️ Security
+
+We prioritize security. For information on how to report vulnerabilities and our security practices, please refer to [SECURITY.md](https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/blob/main/.github/SECURITY.md).
+
+## 🙏 Acknowledgments
+
+*   [Google Gemini API](https://ai.google.dev/) for powerful AI capabilities.
+*   [WXT](https://wxt.dev/) for an excellent web extension development experience.
+*   [Biome](https://biomejs.dev/) for blazing-fast linting and formatting.
+*   [SponsorBlock](https://sponsor.ajay.app/) for the open-source community-driven skipping functionality.
