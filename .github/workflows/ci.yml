@@ -1,0 +1,50 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build_test_lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Using latest LTS Node.js for 2026 standards
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Biome Linter and Formatter
+        run: npm run lint # Assumes 'lint' script in package.json runs Biome
+
+      - name: Run Vitest Unit Tests with Coverage
+        run: npm run test:unit -- --coverage # Assumes 'test:unit' script runs Vitest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          verbose: true
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright E2E Tests
+        run: npm run test:e2e # Assumes 'test:e2e' script runs Playwright tests
+
+      - name: Build Browser Extension
+        run: npm run build # Assumes 'build' script builds the WXT extension
