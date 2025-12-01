@@ -1,0 +1,25 @@
+badges:
+  - name: Build Status
+    image_url: "https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/actions/workflows/ci.yml/badge.svg?branch=main&style=flat-square"
+    url: "https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/actions/workflows/ci.yml"
+    markdown: "[![Build Status](https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/actions/workflows/ci.yml/badge.svg?branch=main&style=flat-square)](https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/actions/workflows/ci.yml)"
+  - name: Code Coverage
+    image_url: "https://codecov.io/gh/chirag127/YouTube-AI-Navigator-Browser-Extension/branch/main/graph/badge.svg?style=flat-square"
+    url: "https://codecov.io/gh/chirag127/YouTube-AI-Navigator-Browser-Extension"
+    markdown: "[![Code Coverage](https://codecov.io/gh/chirag127/YouTube-AI-Navigator-Browser-Extension/branch/main/graph/badge.svg?style=flat-square)](https://codecov.io/gh/chirag127/YouTube-AI-Navigator-Browser-Extension)"
+  - name: Tech Stack
+    image_url: "https://img.shields.io/badge/Stack-TS%20%7C%20Vite%20%7C%20WXT-007ACC?style=flat-square&logo=typescript&logoColor=white"
+    url: "https://www.typescriptlang.org/"
+    markdown: "[![Tech Stack](https://img.shields.io/badge/Stack-TS%20%7C%20Vite%20%7C%20WXT-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)"
+  - name: Lint & Format
+    image_url: "https://img.shields.io/badge/Lint%20%26%20Format-Biome-34C68B?style=flat-square&logo=biome&logoColor=white"
+    url: "https://biomejs.dev/"
+    markdown: "[![Lint & Format](https://img.shields.io/badge/Lint%20%26%20Format-Biome-34C68B?style=flat-square&logo=biome&logoColor=white)](https://biomejs.dev/)"
+  - name: License
+    image_url: "https://img.shields.io/badge/License-CC%20BY--NC%204.0-blue.svg?style=flat-square"
+    url: "https://creativecommons.org/licenses/by-nc/4.0/"
+    markdown: "[![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-blue.svg?style=flat-square)](https://creativecommons.org/licenses/by-nc/4.0/)"
+  - name: GitHub Stars
+    image_url: "https://img.shields.io/github/stars/chirag127/YouTube-AI-Navigator-Browser-Extension?style=flat-square&cacheSeconds=3600"
+    url: "https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/stargazers"
+    markdown: "[![GitHub Stars](https://img.shields.io/github/stars/chirag127/YouTube-AI-Navigator-Browser-Extension?style=flat-square&cacheSeconds=3600)](https://github.com/chirag127/YouTube-AI-Navigator-Browser-Extension/stargazers)"
